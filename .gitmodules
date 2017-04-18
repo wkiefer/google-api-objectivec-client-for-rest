@@ -8,7 +8,7 @@
 	branch = master
 [submodule "Deps/AppAuth"]
 	path = Deps/AppAuth
-	url = https://github.com/openid/AppAuth-iOS.git
+	url = https://github.com/wkiefer/AppAuth-iOS.git
 [submodule "Deps/GTMAppAuth"]
 	path = Deps/GTMAppAuth
-	url = https://github.com/google/GTMAppAuth.git
+	url = https://github.com/wkiefer/GTMAppAuth.git
