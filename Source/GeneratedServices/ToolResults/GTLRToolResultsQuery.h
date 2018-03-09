@@ -26,6 +26,11 @@
 @class GTLRToolResults_PublishXunitXmlFilesRequest;
 @class GTLRToolResults_Step;
 
+// Generated comments include content from the discovery document; avoid them
+// causing warnings since clang's checks are some what arbitrary.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdocumentation"
+
 NS_ASSUME_NONNULL_BEGIN
 
 // ----------------------------------------------------------------------------
@@ -143,6 +148,121 @@ GTLR_EXTERN NSString * const kGTLRToolResultsFilterPerfMetricTypeUnspecified;
  */
 + (instancetype)queryWithObject:(GTLRToolResults_History *)object
                       projectId:(NSString *)projectId;
+
+@end
+
+/**
+ *  Retrieves a single screenshot cluster by its ID
+ *
+ *  Method: toolresults.projects.histories.executions.clusters.get
+ */
+@interface GTLRToolResultsQuery_ProjectsHistoriesExecutionsClustersGet : GTLRToolResultsQuery
+// Previous library name was
+//   +[GTLQueryToolResults queryForProjectsHistoriesExecutionsClustersGetWithprojectId:historyId:executionId:clusterId:]
+
+/**
+ *  A Cluster id
+ *  Required.
+ */
+@property(nonatomic, copy, nullable) NSString *clusterId;
+
+/**
+ *  An Execution id.
+ *  Required.
+ */
+@property(nonatomic, copy, nullable) NSString *executionId;
+
+/**
+ *  A History id.
+ *  Required.
+ */
+@property(nonatomic, copy, nullable) NSString *historyId;
+
+/**
+ *  A Project id.
+ *  Required.
+ */
+@property(nonatomic, copy, nullable) NSString *projectId;
+
+/**
+ *  Fetches a @c GTLRToolResults_ScreenshotCluster.
+ *
+ *  Retrieves a single screenshot cluster by its ID
+ *
+ *  @param projectId A Project id.
+ *    Required.
+ *  @param historyId A History id.
+ *    Required.
+ *  @param executionId An Execution id.
+ *    Required.
+ *  @param clusterId A Cluster id
+ *    Required.
+ *
+ *  @returns GTLRToolResultsQuery_ProjectsHistoriesExecutionsClustersGet
+ */
++ (instancetype)queryWithProjectId:(NSString *)projectId
+                         historyId:(NSString *)historyId
+                       executionId:(NSString *)executionId
+                         clusterId:(NSString *)clusterId;
+
+@end
+
+/**
+ *  Lists Screenshot Clusters
+ *  Returns the list of screenshot clusters corresponding to an execution.
+ *  Screenshot clusters are created after the execution is finished. Clusters
+ *  are created from a set of screenshots. Between any two screenshots, a
+ *  matching score is calculated based off their metadata that determines how
+ *  similar they are. Screenshots are placed in the cluster that has screens
+ *  which have the highest matching scores.
+ *
+ *  Method: toolresults.projects.histories.executions.clusters.list
+ */
+@interface GTLRToolResultsQuery_ProjectsHistoriesExecutionsClustersList : GTLRToolResultsQuery
+// Previous library name was
+//   +[GTLQueryToolResults queryForProjectsHistoriesExecutionsClustersListWithprojectId:historyId:executionId:]
+
+/**
+ *  An Execution id.
+ *  Required.
+ */
+@property(nonatomic, copy, nullable) NSString *executionId;
+
+/**
+ *  A History id.
+ *  Required.
+ */
+@property(nonatomic, copy, nullable) NSString *historyId;
+
+/**
+ *  A Project id.
+ *  Required.
+ */
+@property(nonatomic, copy, nullable) NSString *projectId;
+
+/**
+ *  Fetches a @c GTLRToolResults_ListScreenshotClustersResponse.
+ *
+ *  Lists Screenshot Clusters
+ *  Returns the list of screenshot clusters corresponding to an execution.
+ *  Screenshot clusters are created after the execution is finished. Clusters
+ *  are created from a set of screenshots. Between any two screenshots, a
+ *  matching score is calculated based off their metadata that determines how
+ *  similar they are. Screenshots are placed in the cluster that has screens
+ *  which have the highest matching scores.
+ *
+ *  @param projectId A Project id.
+ *    Required.
+ *  @param historyId A History id.
+ *    Required.
+ *  @param executionId An Execution id.
+ *    Required.
+ *
+ *  @returns GTLRToolResultsQuery_ProjectsHistoriesExecutionsClustersList
+ */
++ (instancetype)queryWithProjectId:(NSString *)projectId
+                         historyId:(NSString *)historyId
+                       executionId:(NSString *)executionId;
 
 @end
 
@@ -744,10 +864,10 @@ GTLR_EXTERN NSString * const kGTLRToolResultsFilterPerfMetricTypeUnspecified;
 @end
 
 /**
- *  Creates a PerfMetricsSummary resource.
- *  May return any of the following error code(s): - ALREADY_EXISTS - A
- *  PerfMetricSummary already exists for the given Step - NOT_FOUND - The
- *  containing Step does not exist
+ *  Creates a PerfMetricsSummary resource. Returns the existing one if it has
+ *  already been created.
+ *  May return any of the following error code(s): - NOT_FOUND - The containing
+ *  Step does not exist
  *
  *  Method: toolresults.projects.histories.executions.steps.perfMetricsSummary.create
  *
@@ -773,10 +893,10 @@ GTLR_EXTERN NSString * const kGTLRToolResultsFilterPerfMetricTypeUnspecified;
 /**
  *  Fetches a @c GTLRToolResults_PerfMetricsSummary.
  *
- *  Creates a PerfMetricsSummary resource.
- *  May return any of the following error code(s): - ALREADY_EXISTS - A
- *  PerfMetricSummary already exists for the given Step - NOT_FOUND - The
- *  containing Step does not exist
+ *  Creates a PerfMetricsSummary resource. Returns the existing one if it has
+ *  already been created.
+ *  May return any of the following error code(s): - NOT_FOUND - The containing
+ *  Step does not exist
  *
  *  @param object The @c GTLRToolResults_PerfMetricsSummary to include in the
  *    query.
@@ -1388,20 +1508,22 @@ GTLR_EXTERN NSString * const kGTLRToolResultsFilterPerfMetricTypeUnspecified;
 /**
  *  Creates resources for settings which have not yet been set.
  *  Currently, this creates a single resource: a Google Cloud Storage bucket, to
- *  be used as the default bucket for this project. The bucket is created in the
- *  name of the user calling. Except in rare cases, calling this method in
+ *  be used as the default bucket for this project. The bucket is created in an
+ *  FTL-own storage project. Except for in rare cases, calling this method in
  *  parallel from multiple clients will only create a single bucket. In order to
  *  avoid unnecessary storage charges, the bucket is configured to automatically
  *  delete objects older than 90 days.
- *  The bucket is created with the project-private ACL: All project team members
- *  are given permissions to the bucket and objects created within it according
- *  to their roles. Project owners have owners rights, and so on. The default
- *  ACL on objects created in the bucket is project-private as well. See Google
- *  Cloud Storage documentation for more details.
+ *  The bucket is created with the following permissions: - Owner access for
+ *  owners of central storage project (FTL-owned) - Writer access for
+ *  owners/editors of customer project - Reader access for viewers of customer
+ *  project The default ACL on objects created in the bucket is: - Owner access
+ *  for owners of central storage project - Reader access for
+ *  owners/editors/viewers of customer project See Google Cloud Storage
+ *  documentation for more details.
  *  If there is already a default bucket set and the project can access the
  *  bucket, this call does nothing. However, if the project doesn't have the
- *  permission to access the bucket or the bucket is deteleted, a new bucket
- *  will be created.
+ *  permission to access the bucket or the bucket is deleted, a new bucket will
+ *  be created.
  *  May return any canonical error codes, including the following:
  *  - PERMISSION_DENIED - if the user is not authorized to write to project -
  *  Any error code raised by Google Cloud Storage
@@ -1426,20 +1548,22 @@ GTLR_EXTERN NSString * const kGTLRToolResultsFilterPerfMetricTypeUnspecified;
  *
  *  Creates resources for settings which have not yet been set.
  *  Currently, this creates a single resource: a Google Cloud Storage bucket, to
- *  be used as the default bucket for this project. The bucket is created in the
- *  name of the user calling. Except in rare cases, calling this method in
+ *  be used as the default bucket for this project. The bucket is created in an
+ *  FTL-own storage project. Except for in rare cases, calling this method in
  *  parallel from multiple clients will only create a single bucket. In order to
  *  avoid unnecessary storage charges, the bucket is configured to automatically
  *  delete objects older than 90 days.
- *  The bucket is created with the project-private ACL: All project team members
- *  are given permissions to the bucket and objects created within it according
- *  to their roles. Project owners have owners rights, and so on. The default
- *  ACL on objects created in the bucket is project-private as well. See Google
- *  Cloud Storage documentation for more details.
+ *  The bucket is created with the following permissions: - Owner access for
+ *  owners of central storage project (FTL-owned) - Writer access for
+ *  owners/editors of customer project - Reader access for viewers of customer
+ *  project The default ACL on objects created in the bucket is: - Owner access
+ *  for owners of central storage project - Reader access for
+ *  owners/editors/viewers of customer project See Google Cloud Storage
+ *  documentation for more details.
  *  If there is already a default bucket set and the project can access the
  *  bucket, this call does nothing. However, if the project doesn't have the
- *  permission to access the bucket or the bucket is deteleted, a new bucket
- *  will be created.
+ *  permission to access the bucket or the bucket is deleted, a new bucket will
+ *  be created.
  *  May return any canonical error codes, including the following:
  *  - PERMISSION_DENIED - if the user is not authorized to write to project -
  *  Any error code raised by Google Cloud Storage
@@ -1454,3 +1578,5 @@ GTLR_EXTERN NSString * const kGTLRToolResultsFilterPerfMetricTypeUnspecified;
 @end
 
 NS_ASSUME_NONNULL_END
+
+#pragma clang diagnostic pop

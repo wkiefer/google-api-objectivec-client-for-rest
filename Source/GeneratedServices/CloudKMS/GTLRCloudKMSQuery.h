@@ -4,7 +4,7 @@
 // API:
 //   Google Cloud Key Management Service (KMS) API (cloudkms/v1)
 // Description:
-//   Manages encryption for your cloud services the same way you do on-premise.
+//   Manages encryption for your cloud services the same way you do on-premises.
 //   You can generate, use, rotate, and destroy AES256 encryption keys.
 // Documentation:
 //   https://cloud.google.com/kms/
@@ -29,6 +29,11 @@
 @class GTLRCloudKMS_SetIamPolicyRequest;
 @class GTLRCloudKMS_TestIamPermissionsRequest;
 @class GTLRCloudKMS_UpdateCryptoKeyPrimaryVersionRequest;
+
+// Generated comments include content from the discovery document; avoid them
+// causing warnings since clang's checks are some what arbitrary.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdocumentation"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -418,7 +423,7 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 /**
- *  Decrypt data that was protected by Encrypt.
+ *  Decrypts data that was protected by Encrypt.
  *
  *  Method: cloudkms.projects.locations.keyRings.cryptoKeys.decrypt
  *
@@ -438,7 +443,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  *  Fetches a @c GTLRCloudKMS_DecryptResponse.
  *
- *  Decrypt data that was protected by Encrypt.
+ *  Decrypts data that was protected by Encrypt.
  *
  *  @param object The @c GTLRCloudKMS_DecryptRequest to include in the query.
  *  @param name Required. The resource name of the CryptoKey to use for
@@ -453,7 +458,7 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 /**
- *  Encrypt data, so that it can only be recovered by a call to Decrypt.
+ *  Encrypts data, so that it can only be recovered by a call to Decrypt.
  *
  *  Method: cloudkms.projects.locations.keyRings.cryptoKeys.encrypt
  *
@@ -475,7 +480,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  *  Fetches a @c GTLRCloudKMS_EncryptResponse.
  *
- *  Encrypt data, so that it can only be recovered by a call to Decrypt.
+ *  Encrypts data, so that it can only be recovered by a call to Decrypt.
  *
  *  @param object The @c GTLRCloudKMS_EncryptRequest to include in the query.
  *  @param name Required. The resource name of the CryptoKey or CryptoKeyVersion
@@ -1006,3 +1011,5 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 NS_ASSUME_NONNULL_END
+
+#pragma clang diagnostic pop

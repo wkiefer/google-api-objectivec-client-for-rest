@@ -4,7 +4,7 @@
 // API:
 //   CustomSearch API (customsearch/v1)
 // Description:
-//   Lets you search over a website or collection of websites
+//   Searches over a website or collection of websites
 // Documentation:
 //   https://developers.google.com/custom-search/v1/using_rest
 
@@ -33,6 +33,11 @@
 @class GTLRCustomsearch_Search_SearchInformation;
 @class GTLRCustomsearch_Search_Spelling;
 @class GTLRCustomsearch_Search_Url;
+
+// Generated comments include content from the discovery document; avoid them
+// causing warnings since clang's checks are some what arbitrary.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdocumentation"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -124,7 +129,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, strong, nullable) NSNumber *count;
 
 @property(nonatomic, copy, nullable) NSString *cr;
-@property(nonatomic, copy, nullable) NSString *cref;
 @property(nonatomic, copy, nullable) NSString *cx;
 @property(nonatomic, copy, nullable) NSString *dateRestrict;
 @property(nonatomic, copy, nullable) NSString *disableCnTwTranslation;
@@ -383,3 +387,5 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 NS_ASSUME_NONNULL_END
+
+#pragma clang diagnostic pop

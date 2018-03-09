@@ -38,6 +38,11 @@
 @class GTLRYouTube_Video;
 @class GTLRYouTube_VideoAbuseReport;
 
+// Generated comments include content from the discovery document; avoid them
+// causing warnings since clang's checks are some what arbitrary.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdocumentation"
+
 NS_ASSUME_NONNULL_BEGIN
 
 // ----------------------------------------------------------------------------
@@ -1117,6 +1122,18 @@ GTLR_EXTERN NSString * const kGTLRYouTubeVideoTypeMovie;
 @interface GTLRYouTubeQuery_ChannelBannersInsert : GTLRYouTubeQuery
 // Previous library name was
 //   +[GTLQueryYouTube queryForChannelBannersInsertWithObject:]
+
+/**
+ *  The channelId parameter identifies the YouTube channel to which the banner
+ *  is uploaded. The channelId parameter was introduced as a required parameter
+ *  in May 2017. As this was a backward-incompatible change,
+ *  channelBanners.insert requests that do not specify this parameter will not
+ *  return an error until six months have passed from the time that the
+ *  parameter was introduced. Please see the API Terms of Service for the
+ *  official policy regarding backward incompatible changes and the API revision
+ *  history for the exact date that the parameter was introduced.
+ */
+@property(nonatomic, copy, nullable) NSString *channelId;
 
 /**
  *  Note: This parameter is intended exclusively for YouTube content partners.
@@ -5160,7 +5177,7 @@ GTLR_EXTERN NSString * const kGTLRYouTubeVideoTypeMovie;
  *  be returned in the result set.
  *
  *  @note If not set, the documented server-side default will be 5 (from the
- *        range 0..50).
+ *        range 1..50).
  */
 @property(nonatomic, assign) NSUInteger maxResults;
 
@@ -6024,3 +6041,5 @@ GTLR_EXTERN NSString * const kGTLRYouTubeVideoTypeMovie;
 @end
 
 NS_ASSUME_NONNULL_END
+
+#pragma clang diagnostic pop

@@ -4,11 +4,8 @@
 // API:
 //   Google Safe Browsing API (safebrowsing/v4)
 // Description:
-//   The Safe Browsing API is an experimental API that allows client
-//   applications to check URLs against Google's constantly-updated blacklists
-//   of suspected phishing and malware pages. Your client application can use
-//   the API to download an encrypted table for local, client-side lookups of
-//   URLs.
+//   Enables client applications to check web resources (most commonly URLs)
+//   against Google-generated lists of unsafe web resources.
 // Documentation:
 //   https://developers.google.com/safe-browsing/
 
@@ -75,6 +72,26 @@
   query.bodyObject = object;
   query.expectedObjectClass = [GTLRSafeBrowsing_FindFullHashesResponse class];
   query.loggingName = @"safebrowsing.fullHashes.find";
+  return query;
+}
+
+@end
+
+@implementation GTLRSafeBrowsingQuery_ThreatHitsCreate
+
++ (instancetype)queryWithObject:(GTLRSafeBrowsing_ThreatHit *)object {
+  if (object == nil) {
+    GTLR_DEBUG_ASSERT(object != nil, @"Got a nil object");
+    return nil;
+  }
+  NSString *pathURITemplate = @"v4/threatHits";
+  GTLRSafeBrowsingQuery_ThreatHitsCreate *query =
+    [[self alloc] initWithPathURITemplate:pathURITemplate
+                               HTTPMethod:@"POST"
+                       pathParameterNames:nil];
+  query.bodyObject = object;
+  query.expectedObjectClass = [GTLRSafeBrowsing_Empty class];
+  query.loggingName = @"safebrowsing.threatHits.create";
   return query;
 }
 

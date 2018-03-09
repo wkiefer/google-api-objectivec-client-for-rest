@@ -2,11 +2,11 @@
 
 // ----------------------------------------------------------------------------
 // API:
-//   Google Cloud Natural Language API (language/v1)
+//   Cloud Natural Language API (language/v1)
 // Description:
-//   Google Cloud Natural Language API provides natural language understanding
-//   technologies to developers. Examples include sentiment analysis, entity
-//   recognition, and text annotations.
+//   Provides natural language understanding technologies to developers.
+//   Examples include sentiment analysis, entity recognition, entity sentiment
+//   analysis, and text annotations.
 // Documentation:
 //   https://cloud.google.com/natural-language/
 
@@ -35,6 +35,26 @@
   query.bodyObject = object;
   query.expectedObjectClass = [GTLRCloudNaturalLanguage_AnalyzeEntitiesResponse class];
   query.loggingName = @"language.documents.analyzeEntities";
+  return query;
+}
+
+@end
+
+@implementation GTLRCloudNaturalLanguageQuery_DocumentsAnalyzeEntitySentiment
+
++ (instancetype)queryWithObject:(GTLRCloudNaturalLanguage_AnalyzeEntitySentimentRequest *)object {
+  if (object == nil) {
+    GTLR_DEBUG_ASSERT(object != nil, @"Got a nil object");
+    return nil;
+  }
+  NSString *pathURITemplate = @"v1/documents:analyzeEntitySentiment";
+  GTLRCloudNaturalLanguageQuery_DocumentsAnalyzeEntitySentiment *query =
+    [[self alloc] initWithPathURITemplate:pathURITemplate
+                               HTTPMethod:@"POST"
+                       pathParameterNames:nil];
+  query.bodyObject = object;
+  query.expectedObjectClass = [GTLRCloudNaturalLanguage_AnalyzeEntitySentimentResponse class];
+  query.loggingName = @"language.documents.analyzeEntitySentiment";
   return query;
 }
 
@@ -95,6 +115,26 @@
   query.bodyObject = object;
   query.expectedObjectClass = [GTLRCloudNaturalLanguage_AnnotateTextResponse class];
   query.loggingName = @"language.documents.annotateText";
+  return query;
+}
+
+@end
+
+@implementation GTLRCloudNaturalLanguageQuery_DocumentsClassifyText
+
++ (instancetype)queryWithObject:(GTLRCloudNaturalLanguage_ClassifyTextRequest *)object {
+  if (object == nil) {
+    GTLR_DEBUG_ASSERT(object != nil, @"Got a nil object");
+    return nil;
+  }
+  NSString *pathURITemplate = @"v1/documents:classifyText";
+  GTLRCloudNaturalLanguageQuery_DocumentsClassifyText *query =
+    [[self alloc] initWithPathURITemplate:pathURITemplate
+                               HTTPMethod:@"POST"
+                       pathParameterNames:nil];
+  query.bodyObject = object;
+  query.expectedObjectClass = [GTLRCloudNaturalLanguage_ClassifyTextResponse class];
+  query.loggingName = @"language.documents.classifyText";
   return query;
 }
 

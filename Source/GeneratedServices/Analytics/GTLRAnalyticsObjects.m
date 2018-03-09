@@ -146,6 +146,49 @@
 
 // ----------------------------------------------------------------------------
 //
+//   GTLRAnalytics_AccountTreeRequest
+//
+
+@implementation GTLRAnalytics_AccountTreeRequest
+@dynamic accountName, accountSettings, kind, profileName, timezone,
+         webpropertyName, websiteUrl;
+@end
+
+
+// ----------------------------------------------------------------------------
+//
+//   GTLRAnalytics_AccountTreeRequest_AccountSettings
+//
+
+@implementation GTLRAnalytics_AccountTreeRequest_AccountSettings
+@dynamic admobReporting, sharingWithGoogleAnySales, sharingWithGoogleProducts,
+         sharingWithGoogleSales, sharingWithGoogleSupport, sharingWithOthers;
+@end
+
+
+// ----------------------------------------------------------------------------
+//
+//   GTLRAnalytics_AccountTreeResponse
+//
+
+@implementation GTLRAnalytics_AccountTreeResponse
+@dynamic account, accountSettings, kind, profile, webproperty;
+@end
+
+
+// ----------------------------------------------------------------------------
+//
+//   GTLRAnalytics_AccountTreeResponse_AccountSettings
+//
+
+@implementation GTLRAnalytics_AccountTreeResponse_AccountSettings
+@dynamic admobReporting, sharingWithGoogleAnySales, sharingWithGoogleProducts,
+         sharingWithGoogleSales, sharingWithGoogleSupport, sharingWithOthers;
+@end
+
+
+// ----------------------------------------------------------------------------
+//
 //   GTLRAnalytics_AdWordsAccount
 //
 
@@ -213,8 +256,8 @@
 
 @implementation GTLRAnalytics_CustomDataSource
 @dynamic accountId, childLink, created, descriptionProperty, identifier,
-         importBehavior, kind, name, parentLink, profilesLinked, selfLink, type,
-         updated, uploadType, webPropertyId;
+         importBehavior, kind, name, parentLink, profilesLinked, schema,
+         selfLink, type, updated, uploadType, webPropertyId;
 
 + (NSDictionary<NSString *, NSString *> *)propertyToJSONKeyMap {
   NSDictionary<NSString *, NSString *> *map = @{
@@ -226,7 +269,8 @@
 
 + (NSDictionary<NSString *, Class> *)arrayPropertyToClassMap {
   NSDictionary<NSString *, Class> *map = @{
-    @"profilesLinked" : [NSString class]
+    @"profilesLinked" : [NSString class],
+    @"schema" : [NSString class]
   };
   return map;
 }
@@ -1513,7 +1557,8 @@
 //
 
 @implementation GTLRAnalytics_Upload
-@dynamic accountId, customDataSourceId, errors, identifier, kind, status;
+@dynamic accountId, customDataSourceId, errors, identifier, kind, status,
+         uploadTime;
 
 + (NSDictionary<NSString *, NSString *> *)propertyToJSONKeyMap {
   return @{ @"identifier" : @"id" };

@@ -2,7 +2,7 @@
 
 // ----------------------------------------------------------------------------
 // API:
-//   Google Storage Transfer API (storagetransfer/v1)
+//   Storage Transfer API (storagetransfer/v1)
 // Description:
 //   Transfers data from external data sources to a Google Cloud Storage bucket
 //   or between Google Cloud Storage buckets.
@@ -23,6 +23,11 @@
 @class GTLRStorageTransfer_ResumeTransferOperationRequest;
 @class GTLRStorageTransfer_TransferJob;
 @class GTLRStorageTransfer_UpdateTransferJobRequest;
+
+// Generated comments include content from the discovery document; avoid them
+// causing warnings since clang's checks are some what arbitrary.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdocumentation"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -326,8 +331,13 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  *  Lists operations that match the specified filter in the request. If the
  *  server doesn't support this method, it returns `UNIMPLEMENTED`.
- *  NOTE: the `name` binding below allows API services to override the binding
- *  to use different resource name schemes, such as `users/ * /operations`.
+ *  NOTE: the `name` binding allows API services to override the binding
+ *  to use different resource name schemes, such as `users/ * /operations`. To
+ *  override the binding, API services can add a binding such as
+ *  `"/v1/{name=users/ *}/operations"` to their service configuration.
+ *  For backwards compatibility, the default name includes the operations
+ *  collection id, however overriding users must ensure the name binding
+ *  is the parent resource, without the operations collection id.
  *
  *  Method: storagetransfer.transferOperations.list
  *
@@ -363,8 +373,13 @@ NS_ASSUME_NONNULL_BEGIN
  *
  *  Lists operations that match the specified filter in the request. If the
  *  server doesn't support this method, it returns `UNIMPLEMENTED`.
- *  NOTE: the `name` binding below allows API services to override the binding
- *  to use different resource name schemes, such as `users/ * /operations`.
+ *  NOTE: the `name` binding allows API services to override the binding
+ *  to use different resource name schemes, such as `users/ * /operations`. To
+ *  override the binding, API services can add a binding such as
+ *  `"/v1/{name=users/ *}/operations"` to their service configuration.
+ *  For backwards compatibility, the default name includes the operations
+ *  collection id, however overriding users must ensure the name binding
+ *  is the parent resource, without the operations collection id.
  *
  *  @param name The value `transferOperations`.
  *
@@ -449,3 +464,5 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 NS_ASSUME_NONNULL_END
+
+#pragma clang diagnostic pop

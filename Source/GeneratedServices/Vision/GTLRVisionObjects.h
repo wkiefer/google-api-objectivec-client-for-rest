@@ -35,6 +35,9 @@
 @class GTLRVision_EntityAnnotation;
 @class GTLRVision_FaceAnnotation;
 @class GTLRVision_Feature;
+@class GTLRVision_GoogleCloudVisionV1p2beta1AsyncAnnotateFileResponse;
+@class GTLRVision_GoogleCloudVisionV1p2beta1GcsDestination;
+@class GTLRVision_GoogleCloudVisionV1p2beta1OutputConfig;
 @class GTLRVision_Image;
 @class GTLRVision_ImageContext;
 @class GTLRVision_ImageProperties;
@@ -43,6 +46,9 @@
 @class GTLRVision_LatLng;
 @class GTLRVision_LatLongRect;
 @class GTLRVision_LocationInfo;
+@class GTLRVision_Operation;
+@class GTLRVision_Operation_Metadata;
+@class GTLRVision_Operation_Response;
 @class GTLRVision_Page;
 @class GTLRVision_Paragraph;
 @class GTLRVision_Position;
@@ -55,10 +61,17 @@
 @class GTLRVision_TextProperty;
 @class GTLRVision_Vertex;
 @class GTLRVision_WebDetection;
+@class GTLRVision_WebDetectionParams;
 @class GTLRVision_WebEntity;
 @class GTLRVision_WebImage;
+@class GTLRVision_WebLabel;
 @class GTLRVision_WebPage;
 @class GTLRVision_Word;
+
+// Generated comments include content from the discovery document; avoid them
+// causing warnings since clang's checks are some what arbitrary.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdocumentation"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -115,14 +128,13 @@ GTLR_EXTERN NSString * const kGTLRVision_Block_BlockType_Unknown;
  */
 GTLR_EXTERN NSString * const kGTLRVision_DetectedBreak_Type_EolSureSpace;
 /**
- *  End-line hyphen that is not present in text; does
+ *  End-line hyphen that is not present in text; does not co-occur with
+ *  `SPACE`, `LEADER_SPACE`, or `LINE_BREAK`.
  *
  *  Value: "HYPHEN"
  */
 GTLR_EXTERN NSString * const kGTLRVision_DetectedBreak_Type_Hyphen;
 /**
- *  not co-occur with SPACE, LEADER_SPACE, or
- *  LINE_BREAK.
  *  Line break that ends a paragraph.
  *
  *  Value: "LINE_BREAK"
@@ -438,7 +450,7 @@ GTLR_EXTERN NSString * const kGTLRVision_FaceAnnotation_UnderExposedLikelihood_V
 GTLR_EXTERN NSString * const kGTLRVision_Feature_Type_CropHints;
 /**
  *  Run dense text document OCR. Takes precedence when both
- *  DOCUMENT_TEXT_DETECTION and TEXT_DETECTION are present.
+ *  `DOCUMENT_TEXT_DETECTION` and `TEXT_DETECTION` are present.
  *
  *  Value: "DOCUMENT_TEXT_DETECTION"
  */
@@ -450,7 +462,8 @@ GTLR_EXTERN NSString * const kGTLRVision_Feature_Type_DocumentTextDetection;
  */
 GTLR_EXTERN NSString * const kGTLRVision_Feature_Type_FaceDetection;
 /**
- *  Compute a set of image properties, such as the image's dominant colors.
+ *  Compute a set of image properties, such as the
+ *  image's dominant colors.
  *
  *  Value: "IMAGE_PROPERTIES"
  */
@@ -474,13 +487,16 @@ GTLR_EXTERN NSString * const kGTLRVision_Feature_Type_LandmarkDetection;
  */
 GTLR_EXTERN NSString * const kGTLRVision_Feature_Type_LogoDetection;
 /**
- *  Run computer vision models to compute image safe-search properties.
+ *  Run Safe Search to detect potentially unsafe
+ *  or undesirable content.
  *
  *  Value: "SAFE_SEARCH_DETECTION"
  */
 GTLR_EXTERN NSString * const kGTLRVision_Feature_Type_SafeSearchDetection;
 /**
- *  Run OCR.
+ *  Run text detection / optical character recognition (OCR). Text detection
+ *  is optimized for areas of text within a larger image; if the image is
+ *  a document, use `DOCUMENT_TEXT_DETECTION` instead.
  *
  *  Value: "TEXT_DETECTION"
  */
@@ -497,6 +513,40 @@ GTLR_EXTERN NSString * const kGTLRVision_Feature_Type_TypeUnspecified;
  *  Value: "WEB_DETECTION"
  */
 GTLR_EXTERN NSString * const kGTLRVision_Feature_Type_WebDetection;
+
+// ----------------------------------------------------------------------------
+// GTLRVision_GoogleCloudVisionV1p2beta1OperationMetadata.state
+
+/**
+ *  The batch processing was cancelled.
+ *
+ *  Value: "CANCELLED"
+ */
+GTLR_EXTERN NSString * const kGTLRVision_GoogleCloudVisionV1p2beta1OperationMetadata_State_Cancelled;
+/**
+ *  Request is received.
+ *
+ *  Value: "CREATED"
+ */
+GTLR_EXTERN NSString * const kGTLRVision_GoogleCloudVisionV1p2beta1OperationMetadata_State_Created;
+/**
+ *  The batch processing is done.
+ *
+ *  Value: "DONE"
+ */
+GTLR_EXTERN NSString * const kGTLRVision_GoogleCloudVisionV1p2beta1OperationMetadata_State_Done;
+/**
+ *  Request is actively being processed.
+ *
+ *  Value: "RUNNING"
+ */
+GTLR_EXTERN NSString * const kGTLRVision_GoogleCloudVisionV1p2beta1OperationMetadata_State_Running;
+/**
+ *  Invalid.
+ *
+ *  Value: "STATE_UNSPECIFIED"
+ */
+GTLR_EXTERN NSString * const kGTLRVision_GoogleCloudVisionV1p2beta1OperationMetadata_State_StateUnspecified;
 
 // ----------------------------------------------------------------------------
 // GTLRVision_Landmark.type
@@ -793,6 +843,46 @@ GTLR_EXTERN NSString * const kGTLRVision_SafeSearchAnnotation_Medical_VeryLikely
 GTLR_EXTERN NSString * const kGTLRVision_SafeSearchAnnotation_Medical_VeryUnlikely;
 
 // ----------------------------------------------------------------------------
+// GTLRVision_SafeSearchAnnotation.racy
+
+/**
+ *  It is likely that the image belongs to the specified vertical.
+ *
+ *  Value: "LIKELY"
+ */
+GTLR_EXTERN NSString * const kGTLRVision_SafeSearchAnnotation_Racy_Likely;
+/**
+ *  It is possible that the image belongs to the specified vertical.
+ *
+ *  Value: "POSSIBLE"
+ */
+GTLR_EXTERN NSString * const kGTLRVision_SafeSearchAnnotation_Racy_Possible;
+/**
+ *  Unknown likelihood.
+ *
+ *  Value: "UNKNOWN"
+ */
+GTLR_EXTERN NSString * const kGTLRVision_SafeSearchAnnotation_Racy_Unknown;
+/**
+ *  It is unlikely that the image belongs to the specified vertical.
+ *
+ *  Value: "UNLIKELY"
+ */
+GTLR_EXTERN NSString * const kGTLRVision_SafeSearchAnnotation_Racy_Unlikely;
+/**
+ *  It is very likely that the image belongs to the specified vertical.
+ *
+ *  Value: "VERY_LIKELY"
+ */
+GTLR_EXTERN NSString * const kGTLRVision_SafeSearchAnnotation_Racy_VeryLikely;
+/**
+ *  It is very unlikely that the image belongs to the specified vertical.
+ *
+ *  Value: "VERY_UNLIKELY"
+ */
+GTLR_EXTERN NSString * const kGTLRVision_SafeSearchAnnotation_Racy_VeryUnlikely;
+
+// ----------------------------------------------------------------------------
 // GTLRVision_SafeSearchAnnotation.spoof
 
 /**
@@ -1004,6 +1094,13 @@ GTLR_EXTERN NSString * const kGTLRVision_SafeSearchAnnotation_Violence_VeryUnlik
  */
 @property(nonatomic, strong, nullable) GTLRVision_BoundingPoly *boundingBox;
 
+/**
+ *  Confidence of the OCR results on the block. Range [0, 1].
+ *
+ *  Uses NSNumber of floatValue.
+ */
+@property(nonatomic, strong, nullable) NSNumber *confidence;
+
 /** List of paragraphs in this block (if this blocks is of type text). */
 @property(nonatomic, strong, nullable) NSArray<GTLRVision_Paragraph *> *paragraphs;
 
@@ -1021,6 +1118,13 @@ GTLR_EXTERN NSString * const kGTLRVision_SafeSearchAnnotation_Violence_VeryUnlik
 /** The bounding polygon vertices. */
 @property(nonatomic, strong, nullable) NSArray<GTLRVision_Vertex *> *vertices;
 
+@end
+
+
+/**
+ *  The request message for Operations.CancelOperation.
+ */
+@interface GTLRVision_CancelOperationRequest : GTLRObject
 @end
 
 
@@ -1272,11 +1376,10 @@ GTLR_EXTERN NSString * const kGTLRVision_SafeSearchAnnotation_Violence_VeryUnlik
  *    @arg @c kGTLRVision_DetectedBreak_Type_EolSureSpace Line-wrapping break.
  *        (Value: "EOL_SURE_SPACE")
  *    @arg @c kGTLRVision_DetectedBreak_Type_Hyphen End-line hyphen that is not
- *        present in text; does (Value: "HYPHEN")
- *    @arg @c kGTLRVision_DetectedBreak_Type_LineBreak not co-occur with SPACE,
- *        LEADER_SPACE, or
- *        LINE_BREAK.
- *        Line break that ends a paragraph. (Value: "LINE_BREAK")
+ *        present in text; does not co-occur with
+ *        `SPACE`, `LEADER_SPACE`, or `LINE_BREAK`. (Value: "HYPHEN")
+ *    @arg @c kGTLRVision_DetectedBreak_Type_LineBreak Line break that ends a
+ *        paragraph. (Value: "LINE_BREAK")
  *    @arg @c kGTLRVision_DetectedBreak_Type_Space Regular space. (Value:
  *        "SPACE")
  *    @arg @c kGTLRVision_DetectedBreak_Type_SureSpace Sure space (very wide).
@@ -1323,19 +1426,31 @@ GTLR_EXTERN NSString * const kGTLRVision_SafeSearchAnnotation_Violence_VeryUnlik
 
 
 /**
+ *  A generic empty message that you can re-use to avoid defining duplicated
+ *  empty messages in your APIs. A typical example is to use it as the request
+ *  or the response type of an API method. For instance:
+ *  service Foo {
+ *  rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty);
+ *  }
+ *  The JSON representation for `Empty` is empty JSON object `{}`.
+ */
+@interface GTLRVision_Empty : GTLRObject
+@end
+
+
+/**
  *  Set of detected entity features.
  */
 @interface GTLRVision_EntityAnnotation : GTLRObject
 
 /**
- *  Image region to which this entity belongs. Currently not produced
- *  for `LABEL_DETECTION` features. For `TEXT_DETECTION` (OCR), `boundingPoly`s
- *  are produced for the entire text detected in an image region, followed by
- *  `boundingPoly`s for each word within the detected text.
+ *  Image region to which this entity belongs. Not produced
+ *  for `LABEL_DETECTION` features.
  */
 @property(nonatomic, strong, nullable) GTLRVision_BoundingPoly *boundingPoly;
 
 /**
+ *  **Deprecated. Use `score` instead.**
  *  The accuracy of the entity detection in an image.
  *  For example, for an image in which the "Eiffel Tower" entity is detected,
  *  this field represents the confidence that there is a tower in the query
@@ -1632,19 +1747,26 @@ GTLR_EXTERN NSString * const kGTLRVision_SafeSearchAnnotation_Violence_VeryUnlik
 
 
 /**
- *  Users describe the type of Google Cloud Vision API tasks to perform over
- *  images by using *Feature*s. Each Feature indicates a type of image
- *  detection task to perform. Features encode the Cloud Vision API
- *  vertical to operate on and the number of top-scoring results to return.
+ *  The type of Google Cloud Vision API detection to perform, and the maximum
+ *  number of results to return for that type. Multiple `Feature` objects can
+ *  be specified in the `features` list.
  */
 @interface GTLRVision_Feature : GTLRObject
 
 /**
- *  Maximum number of results of this type.
+ *  Maximum number of results of this type. Does not apply to
+ *  `TEXT_DETECTION`, `DOCUMENT_TEXT_DETECTION`, or `CROP_HINTS`.
  *
  *  Uses NSNumber of intValue.
  */
 @property(nonatomic, strong, nullable) NSNumber *maxResults;
+
+/**
+ *  Model to use for the feature.
+ *  Supported values: "builtin/stable" (the default if unset) and
+ *  "builtin/latest".
+ */
+@property(nonatomic, copy, nullable) NSString *model;
 
 /**
  *  The feature type.
@@ -1654,23 +1776,26 @@ GTLR_EXTERN NSString * const kGTLRVision_SafeSearchAnnotation_Violence_VeryUnlik
  *        "CROP_HINTS")
  *    @arg @c kGTLRVision_Feature_Type_DocumentTextDetection Run dense text
  *        document OCR. Takes precedence when both
- *        DOCUMENT_TEXT_DETECTION and TEXT_DETECTION are present. (Value:
+ *        `DOCUMENT_TEXT_DETECTION` and `TEXT_DETECTION` are present. (Value:
  *        "DOCUMENT_TEXT_DETECTION")
  *    @arg @c kGTLRVision_Feature_Type_FaceDetection Run face detection. (Value:
  *        "FACE_DETECTION")
  *    @arg @c kGTLRVision_Feature_Type_ImageProperties Compute a set of image
- *        properties, such as the image's dominant colors. (Value:
- *        "IMAGE_PROPERTIES")
+ *        properties, such as the
+ *        image's dominant colors. (Value: "IMAGE_PROPERTIES")
  *    @arg @c kGTLRVision_Feature_Type_LabelDetection Run label detection.
  *        (Value: "LABEL_DETECTION")
  *    @arg @c kGTLRVision_Feature_Type_LandmarkDetection Run landmark detection.
  *        (Value: "LANDMARK_DETECTION")
  *    @arg @c kGTLRVision_Feature_Type_LogoDetection Run logo detection. (Value:
  *        "LOGO_DETECTION")
- *    @arg @c kGTLRVision_Feature_Type_SafeSearchDetection Run computer vision
- *        models to compute image safe-search properties. (Value:
- *        "SAFE_SEARCH_DETECTION")
- *    @arg @c kGTLRVision_Feature_Type_TextDetection Run OCR. (Value:
+ *    @arg @c kGTLRVision_Feature_Type_SafeSearchDetection Run Safe Search to
+ *        detect potentially unsafe
+ *        or undesirable content. (Value: "SAFE_SEARCH_DETECTION")
+ *    @arg @c kGTLRVision_Feature_Type_TextDetection Run text detection /
+ *        optical character recognition (OCR). Text detection
+ *        is optimized for areas of text within a larger image; if the image is
+ *        a document, use `DOCUMENT_TEXT_DETECTION` instead. (Value:
  *        "TEXT_DETECTION")
  *    @arg @c kGTLRVision_Feature_Type_TypeUnspecified Unspecified feature type.
  *        (Value: "TYPE_UNSPECIFIED")
@@ -1683,13 +1808,118 @@ GTLR_EXTERN NSString * const kGTLRVision_SafeSearchAnnotation_Violence_VeryUnlik
 
 
 /**
+ *  The response for a single offline file annotation request.
+ */
+@interface GTLRVision_GoogleCloudVisionV1p2beta1AsyncAnnotateFileResponse : GTLRObject
+
+/** The output location and metadata from AsyncAnnotateFileRequest. */
+@property(nonatomic, strong, nullable) GTLRVision_GoogleCloudVisionV1p2beta1OutputConfig *outputConfig;
+
+@end
+
+
+/**
+ *  Response to an async batch file annotation request.
+ */
+@interface GTLRVision_GoogleCloudVisionV1p2beta1AsyncBatchAnnotateFilesResponse : GTLRObject
+
+/**
+ *  The list of file annotation responses, one for each request in
+ *  AsyncBatchAnnotateFilesRequest.
+ */
+@property(nonatomic, strong, nullable) NSArray<GTLRVision_GoogleCloudVisionV1p2beta1AsyncAnnotateFileResponse *> *responses;
+
+@end
+
+
+/**
+ *  The Google Cloud Storage location where the output will be written to.
+ */
+@interface GTLRVision_GoogleCloudVisionV1p2beta1GcsDestination : GTLRObject
+
+/**
+ *  Google Cloud Storage URI where the results will be stored. Results will
+ *  be in JSON format and preceded by its corresponding input URI. This field
+ *  can either represent a single file, or a prefix for multiple outputs.
+ *  Prefixes must end in a `/`.
+ *  Examples:
+ *  * File: gs://bucket-name/filename.json
+ *  * Prefix: gs://bucket-name/prefix/here/
+ *  * File: gs://bucket-name/prefix/here
+ *  If multiple outputs, each response is still AnnotateFileResponse, each of
+ *  which contains some subset of the full list of AnnotateImageResponse.
+ *  Multiple outputs can happen if, for example, the output JSON is too large
+ *  and overflows into multiple sharded files.
+ */
+@property(nonatomic, copy, nullable) NSString *uri;
+
+@end
+
+
+/**
+ *  Contains metadata for the BatchAnnotateImages operation.
+ */
+@interface GTLRVision_GoogleCloudVisionV1p2beta1OperationMetadata : GTLRObject
+
+/** The time when the batch request was received. */
+@property(nonatomic, strong, nullable) GTLRDateTime *createTime;
+
+/**
+ *  Current state of the batch operation.
+ *
+ *  Likely values:
+ *    @arg @c kGTLRVision_GoogleCloudVisionV1p2beta1OperationMetadata_State_Cancelled
+ *        The batch processing was cancelled. (Value: "CANCELLED")
+ *    @arg @c kGTLRVision_GoogleCloudVisionV1p2beta1OperationMetadata_State_Created
+ *        Request is received. (Value: "CREATED")
+ *    @arg @c kGTLRVision_GoogleCloudVisionV1p2beta1OperationMetadata_State_Done
+ *        The batch processing is done. (Value: "DONE")
+ *    @arg @c kGTLRVision_GoogleCloudVisionV1p2beta1OperationMetadata_State_Running
+ *        Request is actively being processed. (Value: "RUNNING")
+ *    @arg @c kGTLRVision_GoogleCloudVisionV1p2beta1OperationMetadata_State_StateUnspecified
+ *        Invalid. (Value: "STATE_UNSPECIFIED")
+ */
+@property(nonatomic, copy, nullable) NSString *state;
+
+/** The time when the operation result was last updated. */
+@property(nonatomic, strong, nullable) GTLRDateTime *updateTime;
+
+@end
+
+
+/**
+ *  The desired output location and metadata.
+ */
+@interface GTLRVision_GoogleCloudVisionV1p2beta1OutputConfig : GTLRObject
+
+/**
+ *  The max number of response protos to put into each output JSON file on GCS.
+ *  The valid range is [1, 100]. If not specified, the default value is 20.
+ *  For example, for one pdf file with 100 pages, 100 response protos will
+ *  be generated. If `batch_size` = 20, then 5 json files each
+ *  containing 20 response protos will be written under the prefix
+ *  `gcs_destination`.`uri`.
+ *  Currently, batch_size only applies to GcsDestination, with potential future
+ *  support for other output configurations.
+ *
+ *  Uses NSNumber of intValue.
+ */
+@property(nonatomic, strong, nullable) NSNumber *batchSize;
+
+/** The Google Cloud Storage location to write the output(s) to. */
+@property(nonatomic, strong, nullable) GTLRVision_GoogleCloudVisionV1p2beta1GcsDestination *gcsDestination;
+
+@end
+
+
+/**
  *  Client image to perform Google Cloud Vision API tasks over.
  */
 @interface GTLRVision_Image : GTLRObject
 
 /**
  *  Image content, represented as a stream of bytes.
- *  Note: as with all `bytes` fields, protobuffers use a pure binary
+ *  Note: As with all `bytes` fields, protobuffers use a pure binary
  *  representation, whereas JSON representations use base64.
  *
  *  Contains encoded binary data; GTLRBase64 can encode/decode (probably
@@ -1698,9 +1928,9 @@ GTLR_EXTERN NSString * const kGTLRVision_SafeSearchAnnotation_Violence_VeryUnlik
 @property(nonatomic, copy, nullable) NSString *content;
 
 /**
- *  Google Cloud Storage image location. If both `content` and `source`
- *  are provided for an image, `content` takes precedence and is
- *  used to perform the image annotation request.
+ *  Google Cloud Storage image location, or publicly-accessible image
+ *  URL. If both `content` and `source` are provided for an image, `content`
+ *  takes precedence and is used to perform the image annotation request.
  */
 @property(nonatomic, strong, nullable) GTLRVision_ImageSource *source;
 
@@ -1730,6 +1960,9 @@ GTLR_EXTERN NSString * const kGTLRVision_SafeSearchAnnotation_Violence_VeryUnlik
 /** lat/long rectangle that specifies the location of the image. */
 @property(nonatomic, strong, nullable) GTLRVision_LatLongRect *latLongRect;
 
+/** Parameters for web detection. */
+@property(nonatomic, strong, nullable) GTLRVision_WebDetectionParams *webDetectionParams;
+
 @end
 
 
@@ -1745,30 +1978,33 @@ GTLR_EXTERN NSString * const kGTLRVision_SafeSearchAnnotation_Violence_VeryUnlik
 
 
 /**
- *  External image source (Google Cloud Storage image location).
+ *  External image source (Google Cloud Storage or web URL image location).
  */
 @interface GTLRVision_ImageSource : GTLRObject
 
 /**
- *  NOTE: For new code `image_uri` below is preferred.
- *  Google Cloud Storage image URI, which must be in the following form:
- *  `gs://bucket_name/object_name` (for details, see
+ *  **Use `image_uri` instead.**
+ *  The Google Cloud Storage URI of the form
+ *  `gs://bucket_name/object_name`. Object versioning is not supported. See
  *  [Google Cloud Storage Request
- *  URIs](https://cloud.google.com/storage/docs/reference-uris)).
- *  NOTE: Cloud Storage object versioning is not supported.
+ *  URIs](https://cloud.google.com/storage/docs/reference-uris) for more info.
  */
 @property(nonatomic, copy, nullable) NSString *gcsImageUri;
 
 /**
- *  Image URI which supports:
- *  1) Google Cloud Storage image URI, which must be in the following form:
- *  `gs://bucket_name/object_name` (for details, see
+ *  The URI of the source image. Can be either:
+ *  1. A Google Cloud Storage URI of the form
+ *  `gs://bucket_name/object_name`. Object versioning is not supported. See
  *  [Google Cloud Storage Request
- *  URIs](https://cloud.google.com/storage/docs/reference-uris)).
- *  NOTE: Cloud Storage object versioning is not supported.
- *  2) Publicly accessible image HTTP/HTTPS URL.
- *  This is preferred over the legacy `gcs_image_uri` above. When both
- *  `gcs_image_uri` and `image_uri` are specified, `image_uri` takes
+ *  URIs](https://cloud.google.com/storage/docs/reference-uris) for more
+ *  info.
+ *  2. A publicly-accessible image HTTP/HTTPS URL. When fetching images from
+ *  HTTP/HTTPS URLs, Google cannot guarantee that the request will be
+ *  completed. Your request may fail if the specified host denies the
+ *  request (e.g. due to request throttling or DOS prevention), or if Google
+ *  throttles requests to the site for abuse prevention. You should not
+ *  depend on externally-hosted images for production applications.
+ *  When both `gcs_image_uri` and `image_uri` are specified, `image_uri` takes
  *  precedence.
  */
 @property(nonatomic, copy, nullable) NSString *imageUri;
@@ -1778,10 +2014,6 @@ GTLR_EXTERN NSString * const kGTLRVision_SafeSearchAnnotation_Violence_VeryUnlik
 
 /**
  *  A face-specific landmark (for example, a face feature).
- *  Landmark positions may fall outside the bounds of the image
- *  if the face is near one or more edges of the image.
- *  Therefore it is NOT guaranteed that `0 <= x < width` or
- *  `0 <= y < height`.
  */
 @interface GTLRVision_Landmark : GTLRObject
 
@@ -1870,38 +2102,6 @@ GTLR_EXTERN NSString * const kGTLRVision_SafeSearchAnnotation_Violence_VeryUnlik
  *  specified otherwise, this must conform to the
  *  <a href="http://www.unoosa.org/pdf/icg/2012/template/WGS_84.pdf">WGS84
  *  standard</a>. Values must be within normalized ranges.
- *  Example of normalization code in Python:
- *  def NormalizeLongitude(longitude):
- *  """Wraps decimal degrees longitude to [-180.0, 180.0]."""
- *  q, r = divmod(longitude, 360.0)
- *  if r > 180.0 or (r == 180.0 and q <= -1.0):
- *  return r - 360.0
- *  return r
- *  def NormalizeLatLng(latitude, longitude):
- *  """Wraps decimal degrees latitude and longitude to
- *  [-90.0, 90.0] and [-180.0, 180.0], respectively."""
- *  r = latitude % 360.0
- *  if r <= 90.0:
- *  return r, NormalizeLongitude(longitude)
- *  elif r >= 270.0:
- *  return r - 360, NormalizeLongitude(longitude)
- *  else:
- *  return 180 - r, NormalizeLongitude(longitude + 180.0)
- *  assert 180.0 == NormalizeLongitude(180.0)
- *  assert -180.0 == NormalizeLongitude(-180.0)
- *  assert -179.0 == NormalizeLongitude(181.0)
- *  assert (0.0, 0.0) == NormalizeLatLng(360.0, 0.0)
- *  assert (0.0, 0.0) == NormalizeLatLng(-360.0, 0.0)
- *  assert (85.0, 180.0) == NormalizeLatLng(95.0, 0.0)
- *  assert (-85.0, -170.0) == NormalizeLatLng(-95.0, 10.0)
- *  assert (90.0, 10.0) == NormalizeLatLng(90.0, 10.0)
- *  assert (-90.0, -10.0) == NormalizeLatLng(-90.0, -10.0)
- *  assert (0.0, -170.0) == NormalizeLatLng(-180.0, 10.0)
- *  assert (0.0, -170.0) == NormalizeLatLng(180.0, 10.0)
- *  assert (-90.0, 10.0) == NormalizeLatLng(270.0, 10.0)
- *  assert (90.0, 10.0) == NormalizeLatLng(-270.0, 10.0)
- *  The code in logs/storage/validator/logs_validator_traits.cc treats this type
- *  as if it were annotated as ST_LOCATION.
  */
 @interface GTLRVision_LatLng : GTLRObject
 
@@ -1937,6 +2137,30 @@ GTLR_EXTERN NSString * const kGTLRVision_SafeSearchAnnotation_Violence_VeryUnlik
 
 
 /**
+ *  The response message for Operations.ListOperations.
+ *
+ *  @note This class supports NSFastEnumeration and indexed subscripting over
+ *        its "operations" property. If returned as the result of a query, it
+ *        should support automatic pagination (when @c shouldFetchNextPages is
+ *        enabled).
+ */
+@interface GTLRVision_ListOperationsResponse : GTLRCollectionObject
+
+/** The standard List next-page token. */
+@property(nonatomic, copy, nullable) NSString *nextPageToken;
+
+/**
+ *  A list of operations that matches the specified filter in the request.
+ *
+ *  @note This property is used to support NSFastEnumeration and indexed
+ *        subscripting on this class.
+ */
+@property(nonatomic, strong, nullable) NSArray<GTLRVision_Operation *> *operations;
+
+@end
+
+
+/**
  *  Detected entity location information.
  */
 @interface GTLRVision_LocationInfo : GTLRObject
@@ -1944,6 +2168,88 @@ GTLR_EXTERN NSString * const kGTLRVision_SafeSearchAnnotation_Violence_VeryUnlik
 /** lat/long location coordinates. */
 @property(nonatomic, strong, nullable) GTLRVision_LatLng *latLng;
 
+@end
+
+
+/**
+ *  This resource represents a long-running operation that is the result of a
+ *  network API call.
+ */
+@interface GTLRVision_Operation : GTLRObject
+
+/**
+ *  If the value is `false`, it means the operation is still in progress.
+ *  If `true`, the operation is completed, and either `error` or `response` is
+ *  available.
+ *
+ *  Uses NSNumber of boolValue.
+ */
+@property(nonatomic, strong, nullable) NSNumber *done;
+
+/** The error result of the operation in case of failure or cancellation. */
+@property(nonatomic, strong, nullable) GTLRVision_Status *error;
+
+/**
+ *  Service-specific metadata associated with the operation. It typically
+ *  contains progress information and common metadata such as create time.
+ *  Some services might not provide such metadata. Any method that returns a
+ *  long-running operation should document the metadata type, if any.
+ */
+@property(nonatomic, strong, nullable) GTLRVision_Operation_Metadata *metadata;
+
+/**
+ *  The server-assigned name, which is only unique within the same service that
+ *  originally returns it. If you use the default HTTP mapping, the
+ *  `name` should have the format of `operations/some/unique/name`.
+ */
+@property(nonatomic, copy, nullable) NSString *name;
+
+/**
+ *  The normal response of the operation in case of success. If the original
+ *  method returns no data on success, such as `Delete`, the response is
+ *  `google.protobuf.Empty`. If the original method is standard
+ *  `Get`/`Create`/`Update`, the response should be the resource. For other
+ *  methods, the response should have the type `XxxResponse`, where `Xxx`
+ *  is the original method name. For example, if the original method name
+ *  is `TakeSnapshot()`, the inferred response type is
+ *  `TakeSnapshotResponse`.
+ */
+@property(nonatomic, strong, nullable) GTLRVision_Operation_Response *response;
+
+@end
+
+
+/**
+ *  Service-specific metadata associated with the operation. It typically
+ *  contains progress information and common metadata such as create time.
+ *  Some services might not provide such metadata. Any method that returns a
+ *  long-running operation should document the metadata type, if any.
+ *
+ *  @note This class is documented as having more properties of any valid JSON
+ *        type. Use @c -additionalJSONKeys and @c -additionalPropertyForName: to
+ *        get the list of properties and then fetch them; or @c
+ *        -additionalProperties to fetch them all at once.
+ */
+@interface GTLRVision_Operation_Metadata : GTLRObject
+@end
+
+
+/**
+ *  The normal response of the operation in case of success. If the original
+ *  method returns no data on success, such as `Delete`, the response is
+ *  `google.protobuf.Empty`. If the original method is standard
+ *  `Get`/`Create`/`Update`, the response should be the resource. For other
+ *  methods, the response should have the type `XxxResponse`, where `Xxx`
+ *  is the original method name. For example, if the original method name
+ *  is `TakeSnapshot()`, the inferred response type is
+ *  `TakeSnapshotResponse`.
+ *
+ *  @note This class is documented as having more properties of any valid JSON
+ *        type. Use @c -additionalJSONKeys and @c -additionalPropertyForName: to
+ *        get the list of properties and then fetch them; or @c
+ *        -additionalProperties to fetch them all at once.
+ */
+@interface GTLRVision_Operation_Response : GTLRObject
 @end
 
 
@@ -1956,7 +2262,15 @@ GTLR_EXTERN NSString * const kGTLRVision_SafeSearchAnnotation_Violence_VeryUnlik
 @property(nonatomic, strong, nullable) NSArray<GTLRVision_Block *> *blocks;
 
 /**
- *  Page height in pixels.
+ *  Confidence of the OCR results on the page. Range [0, 1].
+ *
+ *  Uses NSNumber of floatValue.
+ */
+@property(nonatomic, strong, nullable) NSNumber *confidence;
+
+/**
+ *  Page height. For PDFs the unit is points. For images (including
+ *  TIFFs) the unit is pixels.
  *
  *  Uses NSNumber of intValue.
  */
@@ -1966,7 +2280,8 @@ GTLR_EXTERN NSString * const kGTLRVision_SafeSearchAnnotation_Violence_VeryUnlik
 @property(nonatomic, strong, nullable) GTLRVision_TextProperty *property;
 
 /**
- *  Page width in pixels.
+ *  Page width. For PDFs the unit is points. For images (including
+ *  TIFFs) the unit is pixels.
  *
  *  Uses NSNumber of intValue.
  */
@@ -1998,6 +2313,13 @@ GTLR_EXTERN NSString * const kGTLRVision_SafeSearchAnnotation_Violence_VeryUnlik
  *  and the vertice order will still be (0, 1, 2, 3).
  */
 @property(nonatomic, strong, nullable) GTLRVision_BoundingPoly *boundingBox;
+
+/**
+ *  Confidence of the OCR results for the paragraph. Range [0, 1].
+ *
+ *  Uses NSNumber of floatValue.
+ */
+@property(nonatomic, strong, nullable) NSNumber *confidence;
 
 /** Additional information detected for the paragraph. */
 @property(nonatomic, strong, nullable) GTLRVision_TextProperty *property;
@@ -2068,7 +2390,9 @@ GTLR_EXTERN NSString * const kGTLRVision_SafeSearchAnnotation_Violence_VeryUnlik
 @interface GTLRVision_SafeSearchAnnotation : GTLRObject
 
 /**
- *  Represents the adult content likelihood for the image.
+ *  Represents the adult content likelihood for the image. Adult content may
+ *  contain elements such as nudity, pornographic images or cartoons, or
+ *  sexual activities.
  *
  *  Likely values:
  *    @arg @c kGTLRVision_SafeSearchAnnotation_Adult_Likely It is likely that
@@ -2110,6 +2434,30 @@ GTLR_EXTERN NSString * const kGTLRVision_SafeSearchAnnotation_Violence_VeryUnlik
 @property(nonatomic, copy, nullable) NSString *medical;
 
 /**
+ *  Likelihood that the request image contains racy content. Racy content may
+ *  include (but is not limited to) skimpy or sheer clothing, strategically
+ *  covered nudity, lewd or provocative poses, or close-ups of sensitive
+ *  body areas.
+ *
+ *  Likely values:
+ *    @arg @c kGTLRVision_SafeSearchAnnotation_Racy_Likely It is likely that the
+ *        image belongs to the specified vertical. (Value: "LIKELY")
+ *    @arg @c kGTLRVision_SafeSearchAnnotation_Racy_Possible It is possible that
+ *        the image belongs to the specified vertical. (Value: "POSSIBLE")
+ *    @arg @c kGTLRVision_SafeSearchAnnotation_Racy_Unknown Unknown likelihood.
+ *        (Value: "UNKNOWN")
+ *    @arg @c kGTLRVision_SafeSearchAnnotation_Racy_Unlikely It is unlikely that
+ *        the image belongs to the specified vertical. (Value: "UNLIKELY")
+ *    @arg @c kGTLRVision_SafeSearchAnnotation_Racy_VeryLikely It is very likely
+ *        that the image belongs to the specified vertical. (Value:
+ *        "VERY_LIKELY")
+ *    @arg @c kGTLRVision_SafeSearchAnnotation_Racy_VeryUnlikely It is very
+ *        unlikely that the image belongs to the specified vertical. (Value:
+ *        "VERY_UNLIKELY")
+ */
+@property(nonatomic, copy, nullable) NSString *racy;
+
+/**
  *  Spoof likelihood. The likelihood that an modification
  *  was made to the image's canonical version to make it appear
  *  funny or offensive.
@@ -2133,7 +2481,7 @@ GTLR_EXTERN NSString * const kGTLRVision_SafeSearchAnnotation_Violence_VeryUnlik
 @property(nonatomic, copy, nullable) NSString *spoof;
 
 /**
- *  Violence likelihood.
+ *  Likelihood that this image contains violent content.
  *
  *  Likely values:
  *    @arg @c kGTLRVision_SafeSearchAnnotation_Violence_Likely It is likely that
@@ -2173,7 +2521,7 @@ GTLR_EXTERN NSString * const kGTLRVision_SafeSearchAnnotation_Violence_VeryUnlik
  *  error message is needed, put the localized message in the error details or
  *  localize it in the client. The optional error details may contain arbitrary
  *  information about the error. There is a predefined set of error detail types
- *  in the package `google.rpc` which can be used for common error conditions.
+ *  in the package `google.rpc` that can be used for common error conditions.
  *  # Language mapping
  *  The `Status` message is the logical representation of the error model, but
  *  it
@@ -2191,7 +2539,7 @@ GTLR_EXTERN NSString * const kGTLRVision_SafeSearchAnnotation_Violence_VeryUnlik
  *  it may embed the `Status` in the normal response to indicate the partial
  *  errors.
  *  - Workflow errors. A typical workflow has multiple steps. Each step may
- *  have a `Status` message for error reporting purpose.
+ *  have a `Status` message for error reporting.
  *  - Batch operations. If a client uses batch request and batch response, the
  *  `Status` message should be used directly inside batch response, one for
  *  each error sub-response.
@@ -2211,8 +2559,8 @@ GTLR_EXTERN NSString * const kGTLRVision_SafeSearchAnnotation_Violence_VeryUnlik
 @property(nonatomic, strong, nullable) NSNumber *code;
 
 /**
- *  A list of messages that carry the error details. There will be a
- *  common set of message types for APIs to use.
+ *  A list of messages that carry the error details. There is a common set of
+ *  message types for APIs to use.
  */
 @property(nonatomic, strong, nullable) NSArray<GTLRVision_Status_Details_Item *> *details;
 
@@ -2262,6 +2610,13 @@ GTLR_EXTERN NSString * const kGTLRVision_SafeSearchAnnotation_Violence_VeryUnlik
  */
 @property(nonatomic, strong, nullable) GTLRVision_BoundingPoly *boundingBox;
 
+/**
+ *  Confidence of the OCR results for the symbol. Range [0, 1].
+ *
+ *  Uses NSNumber of floatValue.
+ */
+@property(nonatomic, strong, nullable) NSNumber *confidence;
+
 /** Additional information detected for the symbol. */
 @property(nonatomic, strong, nullable) GTLRVision_TextProperty *property;
 
@@ -2277,8 +2632,9 @@ GTLR_EXTERN NSString * const kGTLRVision_SafeSearchAnnotation_Violence_VeryUnlik
  *  TextAnnotation -> Page -> Block -> Paragraph -> Word -> Symbol
  *  Each structural component, starting from Page, may further have their own
  *  properties. Properties describe detected languages, breaks etc.. Please
- *  refer to the google.cloud.vision.v1.TextAnnotation.TextProperty message
- *  definition below for more detail.
+ *  refer
+ *  to the TextAnnotation.TextProperty message definition below for more
+ *  detail.
  */
 @interface GTLRVision_TextAnnotation : GTLRObject
 
@@ -2333,10 +2689,12 @@ GTLR_EXTERN NSString * const kGTLRVision_SafeSearchAnnotation_Violence_VeryUnlik
  */
 @interface GTLRVision_WebDetection : GTLRObject
 
+/** Best guess text labels for the request image. */
+@property(nonatomic, strong, nullable) NSArray<GTLRVision_WebLabel *> *bestGuessLabels;
+
 /**
  *  Fully matching images from the Internet.
- *  They're definite neardups and most often a copy of the query image with
- *  merely a size change.
+ *  Can include resized copies of the query image.
  */
 @property(nonatomic, strong, nullable) NSArray<GTLRVision_WebImage *> *fullMatchingImages;
 
@@ -2355,6 +2713,21 @@ GTLR_EXTERN NSString * const kGTLRVision_SafeSearchAnnotation_Violence_VeryUnlik
 
 /** Deduced entities from similar images on the Internet. */
 @property(nonatomic, strong, nullable) NSArray<GTLRVision_WebEntity *> *webEntities;
+
+@end
+
+
+/**
+ *  Parameters for web detection request.
+ */
+@interface GTLRVision_WebDetectionParams : GTLRObject
+
+/**
+ *  Whether to include results derived from the geo information in the image.
+ *
+ *  Uses NSNumber of boolValue.
+ */
+@property(nonatomic, strong, nullable) NSNumber *includeGeoResults;
 
 @end
 
@@ -2391,8 +2764,7 @@ GTLR_EXTERN NSString * const kGTLRVision_SafeSearchAnnotation_Violence_VeryUnlik
 @interface GTLRVision_WebImage : GTLRObject
 
 /**
- *  Overall relevancy score for the image.
- *  Not normalized and not comparable across different image queries.
+ *  (Deprecated) Overall relevancy score for the image.
  *
  *  Uses NSNumber of floatValue.
  */
@@ -2405,13 +2777,47 @@ GTLR_EXTERN NSString * const kGTLRVision_SafeSearchAnnotation_Violence_VeryUnlik
 
 
 /**
+ *  Label to provide extra metadata for the web detection.
+ */
+@interface GTLRVision_WebLabel : GTLRObject
+
+/** Label for extra metadata. */
+@property(nonatomic, copy, nullable) NSString *label;
+
+/**
+ *  The BCP-47 language code for `label`, such as "en-US" or "sr-Latn".
+ *  For more information, see
+ *  http://www.unicode.org/reports/tr35/#Unicode_locale_identifier.
+ */
+@property(nonatomic, copy, nullable) NSString *languageCode;
+
+@end
+
+
+/**
  *  Metadata for web pages.
  */
 @interface GTLRVision_WebPage : GTLRObject
 
 /**
- *  Overall relevancy score for the web page.
- *  Not normalized and not comparable across different image queries.
+ *  Fully matching images on the page.
+ *  Can include resized copies of the query image.
+ */
+@property(nonatomic, strong, nullable) NSArray<GTLRVision_WebImage *> *fullMatchingImages;
+
+/** Title for the web page, may contain HTML markups. */
+@property(nonatomic, copy, nullable) NSString *pageTitle;
+
+/**
+ *  Partial matching images on the page.
+ *  Those images are similar enough to share some key-point features. For
+ *  example an original image will likely have partial matching for its
+ *  crops.
+ */
+@property(nonatomic, strong, nullable) NSArray<GTLRVision_WebImage *> *partialMatchingImages;
+
+/**
+ *  (Deprecated) Overall relevancy score for the web page.
  *
  *  Uses NSNumber of floatValue.
  */
@@ -2447,6 +2853,13 @@ GTLR_EXTERN NSString * const kGTLRVision_SafeSearchAnnotation_Violence_VeryUnlik
  */
 @property(nonatomic, strong, nullable) GTLRVision_BoundingPoly *boundingBox;
 
+/**
+ *  Confidence of the OCR results for the word. Range [0, 1].
+ *
+ *  Uses NSNumber of floatValue.
+ */
+@property(nonatomic, strong, nullable) NSNumber *confidence;
+
 /** Additional information detected for the word. */
 @property(nonatomic, strong, nullable) GTLRVision_TextProperty *property;
 
@@ -2459,3 +2872,5 @@ GTLR_EXTERN NSString * const kGTLRVision_SafeSearchAnnotation_Violence_VeryUnlik
 @end
 
 NS_ASSUME_NONNULL_END
+
+#pragma clang diagnostic pop

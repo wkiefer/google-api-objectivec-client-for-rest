@@ -2,9 +2,9 @@
 
 // ----------------------------------------------------------------------------
 // API:
-//   Google Cloud Speech API (speech/v1beta1)
+//   Google Cloud Speech API (speech/v1)
 // Description:
-//   Google Cloud Speech API.
+//   Converts audio to text by applying powerful neural network models.
 // Documentation:
 //   https://cloud.google.com/speech/
 
@@ -19,7 +19,6 @@
 #endif
 
 @class GTLRSpeech_Context;
-@class GTLRSpeech_Operation;
 @class GTLRSpeech_Operation_Metadata;
 @class GTLRSpeech_Operation_Response;
 @class GTLRSpeech_RecognitionAlternative;
@@ -28,6 +27,12 @@
 @class GTLRSpeech_RecognitionResult;
 @class GTLRSpeech_Status;
 @class GTLRSpeech_Status_Details_Item;
+@class GTLRSpeech_WordInfo;
+
+// Generated comments include content from the discovery document; avoid them
+// causing warnings since clang's checks are some what arbitrary.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdocumentation"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -38,38 +43,36 @@ NS_ASSUME_NONNULL_BEGIN
 // GTLRSpeech_RecognitionConfig.encoding
 
 /**
- *  Adaptive Multi-Rate Narrowband codec. `sample_rate` must be 8000 Hz.
+ *  Adaptive Multi-Rate Narrowband codec. `sample_rate_hertz` must be 8000.
  *
  *  Value: "AMR"
  */
 GTLR_EXTERN NSString * const kGTLRSpeech_RecognitionConfig_Encoding_Amr;
 /**
- *  Adaptive Multi-Rate Wideband codec. `sample_rate` must be 16000 Hz.
+ *  Adaptive Multi-Rate Wideband codec. `sample_rate_hertz` must be 16000.
  *
  *  Value: "AMR_WB"
  */
 GTLR_EXTERN NSString * const kGTLRSpeech_RecognitionConfig_Encoding_AmrWb;
 /**
- *  Not specified. Will return result google.rpc.Code.INVALID_ARGUMENT.
+ *  Not specified.
  *
  *  Value: "ENCODING_UNSPECIFIED"
  */
 GTLR_EXTERN NSString * const kGTLRSpeech_RecognitionConfig_Encoding_EncodingUnspecified;
 /**
- *  This is the recommended encoding for `SyncRecognize` and
- *  `StreamingRecognize` because it uses lossless compression; therefore
- *  recognition accuracy is not compromised by a lossy codec.
- *  The stream FLAC (Free Lossless Audio Codec) encoding is specified at:
- *  http://flac.sourceforge.net/documentation.html.
- *  16-bit and 24-bit samples are supported.
- *  Not all fields in STREAMINFO are supported.
+ *  [`FLAC`](https://xiph.org/flac/documentation.html) (Free Lossless Audio
+ *  Codec) is the recommended encoding because it is
+ *  lossless--therefore recognition is not compromised--and
+ *  requires only about half the bandwidth of `LINEAR16`. `FLAC` stream
+ *  encoding supports 16-bit and 24-bit samples, however, not all fields in
+ *  `STREAMINFO` are supported.
  *
  *  Value: "FLAC"
  */
 GTLR_EXTERN NSString * const kGTLRSpeech_RecognitionConfig_Encoding_Flac;
 /**
  *  Uncompressed 16-bit signed little-endian samples (Linear PCM).
- *  This is the only encoding that may be used by `AsyncRecognize`.
  *
  *  Value: "LINEAR16"
  */
@@ -80,23 +83,32 @@ GTLR_EXTERN NSString * const kGTLRSpeech_RecognitionConfig_Encoding_Linear16;
  *  Value: "MULAW"
  */
 GTLR_EXTERN NSString * const kGTLRSpeech_RecognitionConfig_Encoding_Mulaw;
-
 /**
- *  The top-level message sent by the client for the `AsyncRecognize` method.
+ *  Opus encoded audio frames in Ogg container
+ *  ([OggOpus](https://wiki.xiph.org/OggOpus)).
+ *  `sample_rate_hertz` must be one of 8000, 12000, 16000, 24000, or 48000.
+ *
+ *  Value: "OGG_OPUS"
  */
-@interface GTLRSpeech_AsyncRecognizeRequest : GTLRObject
-
-/** *Required* The audio data to be recognized. */
-@property(nonatomic, strong, nullable) GTLRSpeech_RecognitionAudio *audio;
-
+GTLR_EXTERN NSString * const kGTLRSpeech_RecognitionConfig_Encoding_OggOpus;
 /**
- *  *Required* Provides information to the recognizer that specifies how to
- *  process the request.
+ *  Although the use of lossy encodings is not recommended, if a very low
+ *  bitrate encoding is required, `OGG_OPUS` is highly preferred over
+ *  Speex encoding. The [Speex](https://speex.org/) encoding supported by
+ *  Cloud Speech API has a header byte in each block, as in MIME type
+ *  `audio/x-speex-with-header-byte`.
+ *  It is a variant of the RTP Speex encoding defined in
+ *  [RFC 5574](https://tools.ietf.org/html/rfc5574).
+ *  The stream is a sequence of blocks, one block per RTP packet. Each block
+ *  starts with a byte containing the length of the block, in bytes, followed
+ *  by one or more frames of Speex data, padded to an integral number of
+ *  bytes (octets) as specified in RFC 5574. In other words, each RTP header
+ *  is replaced with a single byte containing the block length. Only Speex
+ *  wideband is supported. `sample_rate_hertz` must be 16000.
+ *
+ *  Value: "SPEEX_WITH_HEADER_BYTE"
  */
-@property(nonatomic, strong, nullable) GTLRSpeech_RecognitionConfig *config;
-
-@end
-
+GTLR_EXTERN NSString * const kGTLRSpeech_RecognitionConfig_Encoding_SpeexWithHeaderByte;
 
 /**
  *  Provides "hints" to the speech recognizer to favor specific words and
@@ -119,38 +131,19 @@ GTLR_EXTERN NSString * const kGTLRSpeech_RecognitionConfig_Encoding_Mulaw;
 
 
 /**
- *  A generic empty message that you can re-use to avoid defining duplicated
- *  empty messages in your APIs. A typical example is to use it as the request
- *  or the response type of an API method. For instance:
- *  service Foo {
- *  rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty);
- *  }
- *  The JSON representation for `Empty` is empty JSON object `{}`.
+ *  The top-level message sent by the client for the `LongRunningRecognize`
+ *  method.
  */
-@interface GTLRSpeech_Empty : GTLRObject
-@end
+@interface GTLRSpeech_LongRunningRecognizeRequest : GTLRObject
 
+/** *Required* The audio data to be recognized. */
+@property(nonatomic, strong, nullable) GTLRSpeech_RecognitionAudio *audio;
 
 /**
- *  The response message for Operations.ListOperations.
- *
- *  @note This class supports NSFastEnumeration and indexed subscripting over
- *        its "operations" property. If returned as the result of a query, it
- *        should support automatic pagination (when @c shouldFetchNextPages is
- *        enabled).
+ *  *Required* Provides information to the recognizer that specifies how to
+ *  process the request.
  */
-@interface GTLRSpeech_ListOperationsResponse : GTLRCollectionObject
-
-/** The standard List next-page token. */
-@property(nonatomic, copy, nullable) NSString *nextPageToken;
-
-/**
- *  A list of operations that matches the specified filter in the request.
- *
- *  @note This property is used to support NSFastEnumeration and indexed
- *        subscripting on this class.
- */
-@property(nonatomic, strong, nullable) NSArray<GTLRSpeech_Operation *> *operations;
+@property(nonatomic, strong, nullable) GTLRSpeech_RecognitionConfig *config;
 
 @end
 
@@ -163,7 +156,7 @@ GTLR_EXTERN NSString * const kGTLRSpeech_RecognitionConfig_Encoding_Mulaw;
 
 /**
  *  If the value is `false`, it means the operation is still in progress.
- *  If true, the operation is completed, and either `error` or `response` is
+ *  If `true`, the operation is completed, and either `error` or `response` is
  *  available.
  *
  *  Uses NSNumber of boolValue.
@@ -245,10 +238,10 @@ GTLR_EXTERN NSString * const kGTLRSpeech_RecognitionConfig_Encoding_Mulaw;
 /**
  *  *Output-only* The confidence estimate between 0.0 and 1.0. A higher number
  *  indicates an estimated greater likelihood that the recognized words are
- *  correct. This field is typically provided only for the top hypothesis, and
- *  only for `is_final=true` results. Clients should not rely on the
- *  `confidence` field as it is not guaranteed to be accurate, or even set, in
- *  any of the results.
+ *  correct. This field is set only for the top alternative of a non-streaming
+ *  result or, of a streaming result where `is_final=true`.
+ *  This field is not guaranteed to be accurate and users should not rely on it
+ *  to be always provided.
  *  The default of 0.0 is a sentinel value indicating `confidence` was not set.
  *
  *  Uses NSNumber of floatValue.
@@ -259,6 +252,11 @@ GTLR_EXTERN NSString * const kGTLRSpeech_RecognitionConfig_Encoding_Mulaw;
  *  *Output-only* Transcript text representing the words that the user spoke.
  */
 @property(nonatomic, copy, nullable) NSString *transcript;
+
+/**
+ *  *Output-only* A list of word-specific information for each recognized word.
+ */
+@property(nonatomic, strong, nullable) NSArray<GTLRSpeech_WordInfo *> *words;
 
 @end
 
@@ -301,38 +299,78 @@ GTLR_EXTERN NSString * const kGTLRSpeech_RecognitionConfig_Encoding_Mulaw;
 @interface GTLRSpeech_RecognitionConfig : GTLRObject
 
 /**
+ *  *Optional* If `true`, the top result includes a list of words and the
+ *  confidence for those words. If `false`, no word-level confidence
+ *  information is returned. The default is `false`.
+ *
+ *  Uses NSNumber of boolValue.
+ */
+@property(nonatomic, strong, nullable) NSNumber *enableWordConfidence;
+
+/**
+ *  *Optional* If `true`, the top result includes a list of words and
+ *  the start and end time offsets (timestamps) for those words. If
+ *  `false`, no word-level time offset information is returned. The default is
+ *  `false`.
+ *
+ *  Uses NSNumber of boolValue.
+ */
+@property(nonatomic, strong, nullable) NSNumber *enableWordTimeOffsets;
+
+/**
  *  *Required* Encoding of audio data sent in all `RecognitionAudio` messages.
  *
  *  Likely values:
  *    @arg @c kGTLRSpeech_RecognitionConfig_Encoding_Amr Adaptive Multi-Rate
- *        Narrowband codec. `sample_rate` must be 8000 Hz. (Value: "AMR")
+ *        Narrowband codec. `sample_rate_hertz` must be 8000. (Value: "AMR")
  *    @arg @c kGTLRSpeech_RecognitionConfig_Encoding_AmrWb Adaptive Multi-Rate
- *        Wideband codec. `sample_rate` must be 16000 Hz. (Value: "AMR_WB")
+ *        Wideband codec. `sample_rate_hertz` must be 16000. (Value: "AMR_WB")
  *    @arg @c kGTLRSpeech_RecognitionConfig_Encoding_EncodingUnspecified Not
- *        specified. Will return result google.rpc.Code.INVALID_ARGUMENT.
- *        (Value: "ENCODING_UNSPECIFIED")
- *    @arg @c kGTLRSpeech_RecognitionConfig_Encoding_Flac This is the
- *        recommended encoding for `SyncRecognize` and
- *        `StreamingRecognize` because it uses lossless compression; therefore
- *        recognition accuracy is not compromised by a lossy codec.
- *        The stream FLAC (Free Lossless Audio Codec) encoding is specified at:
- *        http://flac.sourceforge.net/documentation.html.
- *        16-bit and 24-bit samples are supported.
- *        Not all fields in STREAMINFO are supported. (Value: "FLAC")
+ *        specified. (Value: "ENCODING_UNSPECIFIED")
+ *    @arg @c kGTLRSpeech_RecognitionConfig_Encoding_Flac
+ *        [`FLAC`](https://xiph.org/flac/documentation.html) (Free Lossless
+ *        Audio
+ *        Codec) is the recommended encoding because it is
+ *        lossless--therefore recognition is not compromised--and
+ *        requires only about half the bandwidth of `LINEAR16`. `FLAC` stream
+ *        encoding supports 16-bit and 24-bit samples, however, not all fields
+ *        in
+ *        `STREAMINFO` are supported. (Value: "FLAC")
  *    @arg @c kGTLRSpeech_RecognitionConfig_Encoding_Linear16 Uncompressed
- *        16-bit signed little-endian samples (Linear PCM).
- *        This is the only encoding that may be used by `AsyncRecognize`.
- *        (Value: "LINEAR16")
+ *        16-bit signed little-endian samples (Linear PCM). (Value: "LINEAR16")
  *    @arg @c kGTLRSpeech_RecognitionConfig_Encoding_Mulaw 8-bit samples that
  *        compand 14-bit audio samples using G.711 PCMU/mu-law. (Value: "MULAW")
+ *    @arg @c kGTLRSpeech_RecognitionConfig_Encoding_OggOpus Opus encoded audio
+ *        frames in Ogg container
+ *        ([OggOpus](https://wiki.xiph.org/OggOpus)).
+ *        `sample_rate_hertz` must be one of 8000, 12000, 16000, 24000, or
+ *        48000. (Value: "OGG_OPUS")
+ *    @arg @c kGTLRSpeech_RecognitionConfig_Encoding_SpeexWithHeaderByte
+ *        Although the use of lossy encodings is not recommended, if a very low
+ *        bitrate encoding is required, `OGG_OPUS` is highly preferred over
+ *        Speex encoding. The [Speex](https://speex.org/) encoding supported by
+ *        Cloud Speech API has a header byte in each block, as in MIME type
+ *        `audio/x-speex-with-header-byte`.
+ *        It is a variant of the RTP Speex encoding defined in
+ *        [RFC 5574](https://tools.ietf.org/html/rfc5574).
+ *        The stream is a sequence of blocks, one block per RTP packet. Each
+ *        block
+ *        starts with a byte containing the length of the block, in bytes,
+ *        followed
+ *        by one or more frames of Speex data, padded to an integral number of
+ *        bytes (octets) as specified in RFC 5574. In other words, each RTP
+ *        header
+ *        is replaced with a single byte containing the block length. Only Speex
+ *        wideband is supported. `sample_rate_hertz` must be 16000. (Value:
+ *        "SPEEX_WITH_HEADER_BYTE")
  */
 @property(nonatomic, copy, nullable) NSString *encoding;
 
 /**
- *  *Optional* The language of the supplied audio as a BCP-47 language tag.
- *  Example: "en-GB" https://www.rfc-editor.org/rfc/bcp/bcp47.txt
- *  If omitted, defaults to "en-US". See
- *  [Language Support](https://cloud.google.com/speech/docs/languages)
+ *  *Required* The language of the supplied audio as a
+ *  [BCP-47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tag.
+ *  Example: "en-US".
+ *  See [Language Support](https://cloud.google.com/speech/docs/languages)
  *  for a list of the currently supported language codes.
  */
 @property(nonatomic, copy, nullable) NSString *languageCode;
@@ -368,10 +406,10 @@ GTLR_EXTERN NSString * const kGTLRSpeech_RecognitionConfig_Encoding_Mulaw;
  *
  *  Uses NSNumber of intValue.
  */
-@property(nonatomic, strong, nullable) NSNumber *sampleRate;
+@property(nonatomic, strong, nullable) NSNumber *sampleRateHertz;
 
 /** *Optional* A means to provide context to assist the speech recognition. */
-@property(nonatomic, strong, nullable) GTLRSpeech_Context *speechContext;
+@property(nonatomic, strong, nullable) NSArray<GTLRSpeech_Context *> *speechContexts;
 
 @end
 
@@ -384,8 +422,43 @@ GTLR_EXTERN NSString * const kGTLRSpeech_RecognitionConfig_Encoding_Mulaw;
 /**
  *  *Output-only* May contain one or more recognition hypotheses (up to the
  *  maximum specified in `max_alternatives`).
+ *  These alternatives are ordered in terms of accuracy, with the top (first)
+ *  alternative being the most probable, as ranked by the recognizer.
  */
 @property(nonatomic, strong, nullable) NSArray<GTLRSpeech_RecognitionAlternative *> *alternatives;
+
+@end
+
+
+/**
+ *  The top-level message sent by the client for the `Recognize` method.
+ */
+@interface GTLRSpeech_RecognizeRequest : GTLRObject
+
+/** *Required* The audio data to be recognized. */
+@property(nonatomic, strong, nullable) GTLRSpeech_RecognitionAudio *audio;
+
+/**
+ *  *Required* Provides information to the recognizer that specifies how to
+ *  process the request.
+ */
+@property(nonatomic, strong, nullable) GTLRSpeech_RecognitionConfig *config;
+
+@end
+
+
+/**
+ *  The only message returned to the client by the `Recognize` method. It
+ *  contains the result as zero or more sequential `SpeechRecognitionResult`
+ *  messages.
+ */
+@interface GTLRSpeech_RecognizeResponse : GTLRObject
+
+/**
+ *  *Output-only* Sequential list of transcription results corresponding to
+ *  sequential portions of audio.
+ */
+@property(nonatomic, strong, nullable) NSArray<GTLRSpeech_RecognitionResult *> *results;
 
 @end
 
@@ -407,7 +480,7 @@ GTLR_EXTERN NSString * const kGTLRSpeech_RecognitionConfig_Encoding_Mulaw;
  *  error message is needed, put the localized message in the error details or
  *  localize it in the client. The optional error details may contain arbitrary
  *  information about the error. There is a predefined set of error detail types
- *  in the package `google.rpc` which can be used for common error conditions.
+ *  in the package `google.rpc` that can be used for common error conditions.
  *  # Language mapping
  *  The `Status` message is the logical representation of the error model, but
  *  it
@@ -425,7 +498,7 @@ GTLR_EXTERN NSString * const kGTLRSpeech_RecognitionConfig_Encoding_Mulaw;
  *  it may embed the `Status` in the normal response to indicate the partial
  *  errors.
  *  - Workflow errors. A typical workflow has multiple steps. Each step may
- *  have a `Status` message for error reporting purpose.
+ *  have a `Status` message for error reporting.
  *  - Batch operations. If a client uses batch request and batch response, the
  *  `Status` message should be used directly inside batch response, one for
  *  each error sub-response.
@@ -445,8 +518,8 @@ GTLR_EXTERN NSString * const kGTLRSpeech_RecognitionConfig_Encoding_Mulaw;
 @property(nonatomic, strong, nullable) NSNumber *code;
 
 /**
- *  A list of messages that carry the error details. There will be a
- *  common set of message types for APIs to use.
+ *  A list of messages that carry the error details. There is a common set of
+ *  message types for APIs to use.
  */
 @property(nonatomic, strong, nullable) NSArray<GTLRSpeech_Status_Details_Item *> *details;
 
@@ -473,35 +546,35 @@ GTLR_EXTERN NSString * const kGTLRSpeech_RecognitionConfig_Encoding_Mulaw;
 
 
 /**
- *  The top-level message sent by the client for the `SyncRecognize` method.
+ *  Word-specific information for recognized words.
  */
-@interface GTLRSpeech_SyncRecognizeRequest : GTLRObject
-
-/** *Required* The audio data to be recognized. */
-@property(nonatomic, strong, nullable) GTLRSpeech_RecognitionAudio *audio;
+@interface GTLRSpeech_WordInfo : GTLRObject
 
 /**
- *  *Required* Provides information to the recognizer that specifies how to
- *  process the request.
+ *  *Output-only* Time offset relative to the beginning of the audio,
+ *  and corresponding to the end of the spoken word.
+ *  This field is only set if `enable_word_time_offsets=true` and only
+ *  in the top hypothesis.
+ *  This is an experimental feature and the accuracy of the time offset can
+ *  vary.
  */
-@property(nonatomic, strong, nullable) GTLRSpeech_RecognitionConfig *config;
-
-@end
-
+@property(nonatomic, strong, nullable) GTLRDuration *endTime;
 
 /**
- *  The only message returned to the client by `SyncRecognize`. method. It
- *  contains the result as zero or more sequential `SpeechRecognitionResult`
- *  messages.
+ *  *Output-only* Time offset relative to the beginning of the audio,
+ *  and corresponding to the start of the spoken word.
+ *  This field is only set if `enable_word_time_offsets=true` and only
+ *  in the top hypothesis.
+ *  This is an experimental feature and the accuracy of the time offset can
+ *  vary.
  */
-@interface GTLRSpeech_SyncRecognizeResponse : GTLRObject
+@property(nonatomic, strong, nullable) GTLRDuration *startTime;
 
-/**
- *  *Output-only* Sequential list of transcription results corresponding to
- *  sequential portions of audio.
- */
-@property(nonatomic, strong, nullable) NSArray<GTLRSpeech_RecognitionResult *> *results;
+/** *Output-only* The word corresponding to this set of information. */
+@property(nonatomic, copy, nullable) NSString *word;
 
 @end
 
 NS_ASSUME_NONNULL_END
+
+#pragma clang diagnostic pop

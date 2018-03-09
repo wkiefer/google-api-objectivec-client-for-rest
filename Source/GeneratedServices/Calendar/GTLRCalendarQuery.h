@@ -25,6 +25,11 @@
 @class GTLRCalendar_Event;
 @class GTLRCalendar_FreeBusyRequest;
 
+// Generated comments include content from the discovery document; avoid them
+// causing warnings since clang's checks are some what arbitrary.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdocumentation"
+
 NS_ASSUME_NONNULL_BEGIN
 
 // ----------------------------------------------------------------------------
@@ -189,6 +194,12 @@ GTLR_EXTERN NSString * const kGTLRCalendarOrderByUpdated;
 @property(nonatomic, copy, nullable) NSString *calendarId;
 
 /**
+ *  Whether to send notifications about the calendar sharing change. Optional.
+ *  The default is True.
+ */
+@property(nonatomic, assign) BOOL sendNotifications;
+
+/**
  *  Fetches a @c GTLRCalendar_AclRule.
  *
  *  Creates an access control rule.
@@ -297,6 +308,12 @@ GTLR_EXTERN NSString * const kGTLRCalendarOrderByUpdated;
 @property(nonatomic, copy, nullable) NSString *ruleId;
 
 /**
+ *  Whether to send notifications about the calendar sharing change. Note that
+ *  there are no notifications on access removal. Optional. The default is True.
+ */
+@property(nonatomic, assign) BOOL sendNotifications;
+
+/**
  *  Fetches a @c GTLRCalendar_AclRule.
  *
  *  Updates an access control rule. This method supports patch semantics.
@@ -336,6 +353,12 @@ GTLR_EXTERN NSString * const kGTLRCalendarOrderByUpdated;
 
 /** ACL rule identifier. */
 @property(nonatomic, copy, nullable) NSString *ruleId;
+
+/**
+ *  Whether to send notifications about the calendar sharing change. Note that
+ *  there are no notifications on access removal. Optional. The default is True.
+ */
+@property(nonatomic, assign) BOOL sendNotifications;
 
 /**
  *  Fetches a @c GTLRCalendar_AclRule.
@@ -1162,6 +1185,17 @@ GTLR_EXTERN NSString * const kGTLRCalendarOrderByUpdated;
 @property(nonatomic, copy, nullable) NSString *calendarId;
 
 /**
+ *  Version number of conference data supported by the API client. Version 0
+ *  assumes no conference data support and ignores conference data in the
+ *  event's body. Version 1 enables support for copying of ConferenceData as
+ *  well as for creating new conferences using the createRequest field of
+ *  conferenceData. The default is 0.
+ *
+ *  @note The documented range is 0..1.
+ */
+@property(nonatomic, assign) NSInteger conferenceDataVersion;
+
+/**
  *  Whether API client performing operation supports event attachments.
  *  Optional. The default is False.
  */
@@ -1203,6 +1237,17 @@ GTLR_EXTERN NSString * const kGTLRCalendarOrderByUpdated;
  *  in user, use the "primary" keyword.
  */
 @property(nonatomic, copy, nullable) NSString *calendarId;
+
+/**
+ *  Version number of conference data supported by the API client. Version 0
+ *  assumes no conference data support and ignores conference data in the
+ *  event's body. Version 1 enables support for copying of ConferenceData as
+ *  well as for creating new conferences using the createRequest field of
+ *  conferenceData. The default is 0.
+ *
+ *  @note The documented range is 0..1.
+ */
+@property(nonatomic, assign) NSInteger conferenceDataVersion;
 
 /**
  *  The maximum number of attendees to include in the response. If there are
@@ -1382,8 +1427,11 @@ GTLR_EXTERN NSString * const kGTLRCalendarOrderByUpdated;
 @property(nonatomic, assign) NSInteger maxAttendees;
 
 /**
- *  Maximum number of events returned on one result page. By default the value
- *  is 250 events. The page size can never be larger than 2500 events. Optional.
+ *  Maximum number of events returned on one result page. The number of events
+ *  in the resulting page may be less than this value, or none at all, even if
+ *  there are more events matching the query. Incomplete pages can be detected
+ *  by a non-empty nextPageToken field in the response. By default the value is
+ *  250 events. The page size can never be larger than 2500 events. Optional.
  *
  *  @note If not set, the documented server-side default will be 250.
  */
@@ -1476,7 +1524,8 @@ GTLR_EXTERN NSString * const kGTLRCalendarOrderByUpdated;
  *  Upper bound (exclusive) for an event's start time to filter by. Optional.
  *  The default is not to filter by start time. Must be an RFC3339 timestamp
  *  with mandatory time zone offset, e.g., 2011-06-03T10:00:00-07:00,
- *  2011-06-03T10:00:00Z. Milliseconds may be provided but will be ignored.
+ *  2011-06-03T10:00:00Z. Milliseconds may be provided but will be ignored. If
+ *  timeMin is set, timeMax must be greater than timeMin.
  */
 @property(nonatomic, strong, nullable) GTLRDateTime *timeMax;
 
@@ -1484,7 +1533,8 @@ GTLR_EXTERN NSString * const kGTLRCalendarOrderByUpdated;
  *  Lower bound (inclusive) for an event's end time to filter by. Optional. The
  *  default is not to filter by end time. Must be an RFC3339 timestamp with
  *  mandatory time zone offset, e.g., 2011-06-03T10:00:00-07:00,
- *  2011-06-03T10:00:00Z. Milliseconds may be provided but will be ignored.
+ *  2011-06-03T10:00:00Z. Milliseconds may be provided but will be ignored. If
+ *  timeMax is set, timeMin must be smaller than timeMax.
  */
 @property(nonatomic, strong, nullable) GTLRDateTime *timeMin;
 
@@ -1600,6 +1650,17 @@ GTLR_EXTERN NSString * const kGTLRCalendarOrderByUpdated;
  */
 @property(nonatomic, copy, nullable) NSString *calendarId;
 
+/**
+ *  Version number of conference data supported by the API client. Version 0
+ *  assumes no conference data support and ignores conference data in the
+ *  event's body. Version 1 enables support for copying of ConferenceData as
+ *  well as for creating new conferences using the createRequest field of
+ *  conferenceData. The default is 0.
+ *
+ *  @note The documented range is 0..1.
+ */
+@property(nonatomic, assign) NSInteger conferenceDataVersion;
+
 /** Event identifier. */
 @property(nonatomic, copy, nullable) NSString *eventId;
 
@@ -1714,6 +1775,17 @@ GTLR_EXTERN NSString * const kGTLRCalendarOrderByUpdated;
  */
 @property(nonatomic, copy, nullable) NSString *calendarId;
 
+/**
+ *  Version number of conference data supported by the API client. Version 0
+ *  assumes no conference data support and ignores conference data in the
+ *  event's body. Version 1 enables support for copying of ConferenceData as
+ *  well as for creating new conferences using the createRequest field of
+ *  conferenceData. The default is 0.
+ *
+ *  @note The documented range is 0..1.
+ */
+@property(nonatomic, assign) NSInteger conferenceDataVersion;
+
 /** Event identifier. */
 @property(nonatomic, copy, nullable) NSString *eventId;
 
@@ -1798,8 +1870,11 @@ GTLR_EXTERN NSString * const kGTLRCalendarOrderByUpdated;
 @property(nonatomic, assign) NSInteger maxAttendees;
 
 /**
- *  Maximum number of events returned on one result page. By default the value
- *  is 250 events. The page size can never be larger than 2500 events. Optional.
+ *  Maximum number of events returned on one result page. The number of events
+ *  in the resulting page may be less than this value, or none at all, even if
+ *  there are more events matching the query. Incomplete pages can be detected
+ *  by a non-empty nextPageToken field in the response. By default the value is
+ *  250 events. The page size can never be larger than 2500 events. Optional.
  *
  *  @note If not set, the documented server-side default will be 250.
  */
@@ -1892,7 +1967,8 @@ GTLR_EXTERN NSString * const kGTLRCalendarOrderByUpdated;
  *  Upper bound (exclusive) for an event's start time to filter by. Optional.
  *  The default is not to filter by start time. Must be an RFC3339 timestamp
  *  with mandatory time zone offset, e.g., 2011-06-03T10:00:00-07:00,
- *  2011-06-03T10:00:00Z. Milliseconds may be provided but will be ignored.
+ *  2011-06-03T10:00:00Z. Milliseconds may be provided but will be ignored. If
+ *  timeMin is set, timeMax must be greater than timeMin.
  */
 @property(nonatomic, strong, nullable) GTLRDateTime *timeMax;
 
@@ -1900,7 +1976,8 @@ GTLR_EXTERN NSString * const kGTLRCalendarOrderByUpdated;
  *  Lower bound (inclusive) for an event's end time to filter by. Optional. The
  *  default is not to filter by end time. Must be an RFC3339 timestamp with
  *  mandatory time zone offset, e.g., 2011-06-03T10:00:00-07:00,
- *  2011-06-03T10:00:00Z. Milliseconds may be provided but will be ignored.
+ *  2011-06-03T10:00:00Z. Milliseconds may be provided but will be ignored. If
+ *  timeMax is set, timeMin must be smaller than timeMax.
  */
 @property(nonatomic, strong, nullable) GTLRDateTime *timeMin;
 
@@ -2089,3 +2166,5 @@ GTLR_EXTERN NSString * const kGTLRCalendarOrderByUpdated;
 @end
 
 NS_ASSUME_NONNULL_END
+
+#pragma clang diagnostic pop

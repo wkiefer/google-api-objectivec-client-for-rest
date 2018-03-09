@@ -27,6 +27,8 @@
 @class GTLRBigquery_DatasetList_Datasets_Item;
 @class GTLRBigquery_DatasetList_Datasets_Item_Labels;
 @class GTLRBigquery_DatasetReference;
+@class GTLRBigquery_DestinationTableProperties;
+@class GTLRBigquery_EncryptionConfiguration;
 @class GTLRBigquery_ErrorProto;
 @class GTLRBigquery_ExplainQueryStage;
 @class GTLRBigquery_ExplainQueryStep;
@@ -55,6 +57,7 @@
 @class GTLRBigquery_QueryParameterType_StructTypes_Item;
 @class GTLRBigquery_QueryParameterValue;
 @class GTLRBigquery_QueryParameterValue_StructValues;
+@class GTLRBigquery_QueryTimelineSample;
 @class GTLRBigquery_Streamingbuffer;
 @class GTLRBigquery_Table_Labels;
 @class GTLRBigquery_TableCell;
@@ -70,6 +73,11 @@
 @class GTLRBigquery_TimePartitioning;
 @class GTLRBigquery_UserDefinedFunctionResource;
 @class GTLRBigquery_ViewDefinition;
+
+// Generated comments include content from the discovery document; avoid them
+// causing warnings since clang's checks are some what arbitrary.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdocumentation"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -521,6 +529,9 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property(nonatomic, strong, nullable) GTLRBigquery_DatasetList_Datasets_Item_Labels *labels;
 
+/** [Experimental] The geographic location where the data resides. */
+@property(nonatomic, copy, nullable) NSString *location;
+
 @end
 
 
@@ -556,6 +567,46 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 /**
+ *  GTLRBigquery_DestinationTableProperties
+ */
+@interface GTLRBigquery_DestinationTableProperties : GTLRObject
+
+/**
+ *  [Optional] The description for the destination table. This will only be used
+ *  if the destination table is newly created. If the table already exists and a
+ *  value different than the current description is provided, the job will fail.
+ *
+ *  Remapped to 'descriptionProperty' to avoid NSObject's 'description'.
+ */
+@property(nonatomic, copy, nullable) NSString *descriptionProperty;
+
+/**
+ *  [Optional] The friendly name for the destination table. This will only be
+ *  used if the destination table is newly created. If the table already exists
+ *  and a value different than the current friendly name is provided, the job
+ *  will fail.
+ */
+@property(nonatomic, copy, nullable) NSString *friendlyName;
+
+@end
+
+
+/**
+ *  GTLRBigquery_EncryptionConfiguration
+ */
+@interface GTLRBigquery_EncryptionConfiguration : GTLRObject
+
+/**
+ *  [Optional] Describes the Cloud KMS encryption key that will be used to
+ *  protect destination BigQuery table. The BigQuery Service Account associated
+ *  with your project requires access to this encryption key.
+ */
+@property(nonatomic, copy, nullable) NSString *kmsKeyName;
+
+@end
+
+
+/**
  *  GTLRBigquery_ErrorProto
  */
 @interface GTLRBigquery_ErrorProto : GTLRObject
@@ -584,6 +635,27 @@ NS_ASSUME_NONNULL_BEGIN
 @interface GTLRBigquery_ExplainQueryStage : GTLRObject
 
 /**
+ *  Number of parallel input segments completed.
+ *
+ *  Uses NSNumber of longLongValue.
+ */
+@property(nonatomic, strong, nullable) NSNumber *completedParallelInputs;
+
+/**
+ *  Milliseconds the average shard spent on CPU-bound tasks.
+ *
+ *  Uses NSNumber of longLongValue.
+ */
+@property(nonatomic, strong, nullable) NSNumber *computeMsAvg;
+
+/**
+ *  Milliseconds the slowest shard spent on CPU-bound tasks.
+ *
+ *  Uses NSNumber of longLongValue.
+ */
+@property(nonatomic, strong, nullable) NSNumber *computeMsMax;
+
+/**
  *  Relative amount of time the average shard spent on CPU-bound tasks.
  *
  *  Uses NSNumber of doubleValue.
@@ -598,6 +670,13 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, strong, nullable) NSNumber *computeRatioMax;
 
 /**
+ *  Stage end time in milliseconds.
+ *
+ *  Uses NSNumber of longLongValue.
+ */
+@property(nonatomic, strong, nullable) NSNumber *endMs;
+
+/**
  *  Unique ID for stage within plan.
  *
  *  identifier property maps to 'id' in JSON (to avoid Objective C's 'id').
@@ -606,8 +685,36 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property(nonatomic, strong, nullable) NSNumber *identifier;
 
+/**
+ *  IDs for stages that are inputs to this stage.
+ *
+ *  Uses NSNumber of longLongValue.
+ */
+@property(nonatomic, strong, nullable) NSArray<NSNumber *> *inputStages;
+
 /** Human-readable name for stage. */
 @property(nonatomic, copy, nullable) NSString *name;
+
+/**
+ *  Number of parallel input segments to be processed.
+ *
+ *  Uses NSNumber of longLongValue.
+ */
+@property(nonatomic, strong, nullable) NSNumber *parallelInputs;
+
+/**
+ *  Milliseconds the average shard spent reading input.
+ *
+ *  Uses NSNumber of longLongValue.
+ */
+@property(nonatomic, strong, nullable) NSNumber *readMsAvg;
+
+/**
+ *  Milliseconds the slowest shard spent reading input.
+ *
+ *  Uses NSNumber of longLongValue.
+ */
+@property(nonatomic, strong, nullable) NSNumber *readMsMax;
 
 /**
  *  Relative amount of time the average shard spent reading input.
@@ -637,6 +744,27 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property(nonatomic, strong, nullable) NSNumber *recordsWritten;
 
+/**
+ *  Total number of bytes written to shuffle.
+ *
+ *  Uses NSNumber of longLongValue.
+ */
+@property(nonatomic, strong, nullable) NSNumber *shuffleOutputBytes;
+
+/**
+ *  Total number of bytes written to shuffle and spilled to disk.
+ *
+ *  Uses NSNumber of longLongValue.
+ */
+@property(nonatomic, strong, nullable) NSNumber *shuffleOutputBytesSpilled;
+
+/**
+ *  Stage start time in milliseconds.
+ *
+ *  Uses NSNumber of longLongValue.
+ */
+@property(nonatomic, strong, nullable) NSNumber *startMs;
+
 /** Current status for the stage. */
 @property(nonatomic, copy, nullable) NSString *status;
 
@@ -645,6 +773,20 @@ NS_ASSUME_NONNULL_BEGIN
  *  chronological).
  */
 @property(nonatomic, strong, nullable) NSArray<GTLRBigquery_ExplainQueryStep *> *steps;
+
+/**
+ *  Milliseconds the average shard spent waiting to be scheduled.
+ *
+ *  Uses NSNumber of longLongValue.
+ */
+@property(nonatomic, strong, nullable) NSNumber *waitMsAvg;
+
+/**
+ *  Milliseconds the slowest shard spent waiting to be scheduled.
+ *
+ *  Uses NSNumber of longLongValue.
+ */
+@property(nonatomic, strong, nullable) NSNumber *waitMsMax;
 
 /**
  *  Relative amount of time the average shard spent waiting to be scheduled.
@@ -659,6 +801,20 @@ NS_ASSUME_NONNULL_BEGIN
  *  Uses NSNumber of doubleValue.
  */
 @property(nonatomic, strong, nullable) NSNumber *waitRatioMax;
+
+/**
+ *  Milliseconds the average shard spent on writing output.
+ *
+ *  Uses NSNumber of longLongValue.
+ */
+@property(nonatomic, strong, nullable) NSNumber *writeMsAvg;
+
+/**
+ *  Milliseconds the slowest shard spent on writing output.
+ *
+ *  Uses NSNumber of longLongValue.
+ */
+@property(nonatomic, strong, nullable) NSNumber *writeMsMax;
 
 /**
  *  Relative amount of time the average shard spent on writing output.
@@ -769,8 +925,8 @@ NS_ASSUME_NONNULL_BEGIN
  *  load jobs apply to external data sources. For Google Cloud Bigtable URIs:
  *  Exactly one URI can be specified and it has be a fully specified and valid
  *  HTTPS URL for a Google Cloud Bigtable table. For Google Cloud Datastore
- *  backups, exactly one URI can be specified, and it must end with
- *  '.backup_info'. Also, the '*' wildcard character is not allowed.
+ *  backups, exactly one URI can be specified. Also, the '*' wildcard character
+ *  is not allowed.
  */
 @property(nonatomic, strong, nullable) NSArray<NSString *> *sourceUris;
 
@@ -790,9 +946,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, strong, nullable) NSNumber *cacheHit;
 
 /**
- *  [Output-only] All errors and warnings encountered during the running of the
- *  job. Errors here do not necessarily mean that the job has completed or was
- *  unsuccessful.
+ *  [Output-only] The first errors or warnings encountered during the running of
+ *  the job. The final message includes the number of errors that caused the
+ *  process to stop. Errors here do not necessarily mean that the job has
+ *  completed or was unsuccessful.
  */
 @property(nonatomic, strong, nullable) NSArray<GTLRBigquery_ErrorProto *> *errors;
 
@@ -859,6 +1016,20 @@ NS_ASSUME_NONNULL_BEGIN
  *  Uses NSNumber of unsignedLongLongValue.
  */
 @property(nonatomic, strong, nullable) NSNumber *totalRows;
+
+@end
+
+
+/**
+ *  GTLRBigquery_GetServiceAccountResponse
+ */
+@interface GTLRBigquery_GetServiceAccountResponse : GTLRObject
+
+/** The service account email address. */
+@property(nonatomic, copy, nullable) NSString *email;
+
+/** The resource type of the response. */
+@property(nonatomic, copy, nullable) NSString *kind;
 
 @end
 
@@ -973,12 +1144,20 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, strong, nullable) GTLRBigquery_JobConfigurationExtract *extract;
 
 /**
- *  [Experimental] The labels associated with this job. You can use these to
- *  organize and group your jobs. Label keys and values can be no longer than 63
- *  characters, can only contain lowercase letters, numeric characters,
- *  underscores and dashes. International characters are allowed. Label values
- *  are optional. Label keys must start with a letter and each label in the list
- *  must have a different key.
+ *  [Optional] Job timeout in milliseconds. If this time limit is exceeded,
+ *  BigQuery may attempt to terminate the job.
+ *
+ *  Uses NSNumber of longLongValue.
+ */
+@property(nonatomic, strong, nullable) NSNumber *jobTimeoutMs;
+
+/**
+ *  The labels associated with this job. You can use these to organize and group
+ *  your jobs. Label keys and values can be no longer than 63 characters, can
+ *  only contain lowercase letters, numeric characters, underscores and dashes.
+ *  International characters are allowed. Label values are optional. Label keys
+ *  must start with a letter and each label in the list must have a different
+ *  key.
  */
 @property(nonatomic, strong, nullable) GTLRBigquery_JobConfiguration_Labels *labels;
 
@@ -992,12 +1171,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 /**
- *  [Experimental] The labels associated with this job. You can use these to
- *  organize and group your jobs. Label keys and values can be no longer than 63
- *  characters, can only contain lowercase letters, numeric characters,
- *  underscores and dashes. International characters are allowed. Label values
- *  are optional. Label keys must start with a letter and each label in the list
- *  must have a different key.
+ *  The labels associated with this job. You can use these to organize and group
+ *  your jobs. Label keys and values can be no longer than 63 characters, can
+ *  only contain lowercase letters, numeric characters, underscores and dashes.
+ *  International characters are allowed. Label values are optional. Label keys
+ *  must start with a letter and each label in the list must have a different
+ *  key.
  *
  *  @note This class is documented as having more properties of NSString. Use @c
  *        -additionalJSONKeys and @c -additionalPropertyForName: to get the list
@@ -1015,7 +1194,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  *  [Optional] The compression type to use for exported files. Possible values
- *  include GZIP and NONE. The default value is NONE.
+ *  include GZIP, DEFLATE, SNAPPY, and NONE. The default value is NONE. DEFLATE
+ *  and SNAPPY are only supported for Avro.
  */
 @property(nonatomic, copy, nullable) NSString *compression;
 
@@ -1101,8 +1281,17 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property(nonatomic, copy, nullable) NSString *createDisposition;
 
+/** Custom encryption configuration (e.g., Cloud KMS keys). */
+@property(nonatomic, strong, nullable) GTLRBigquery_EncryptionConfiguration *destinationEncryptionConfiguration;
+
 /** [Required] The destination table to load the data into. */
 @property(nonatomic, strong, nullable) GTLRBigquery_TableReference *destinationTable;
+
+/**
+ *  [Experimental] [Optional] Properties with which to create the destination
+ *  table if it is new.
+ */
+@property(nonatomic, strong, nullable) GTLRBigquery_DestinationTableProperties *destinationTableProperties;
 
 /**
  *  [Optional] The character encoding of the data. The supported values are
@@ -1195,15 +1384,16 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, copy, nullable) NSString *schemaInlineFormat;
 
 /**
- *  [Experimental] Allows the schema of the desitination table to be updated as
- *  a side effect of the load job. Schema update options are supported in two
- *  cases: when writeDisposition is WRITE_APPEND; when writeDisposition is
- *  WRITE_TRUNCATE and the destination table is a partition of a table,
- *  specified by partition decorators. For normal tables, WRITE_TRUNCATE will
- *  always overwrite the schema. One or more of the following values are
- *  specified: ALLOW_FIELD_ADDITION: allow adding a nullable field to the
- *  schema. ALLOW_FIELD_RELAXATION: allow relaxing a required field in the
- *  original schema to nullable.
+ *  Allows the schema of the destination table to be updated as a side effect of
+ *  the load job if a schema is autodetected or supplied in the job
+ *  configuration. Schema update options are supported in two cases: when
+ *  writeDisposition is WRITE_APPEND; when writeDisposition is WRITE_TRUNCATE
+ *  and the destination table is a partition of a table, specified by partition
+ *  decorators. For normal tables, WRITE_TRUNCATE will always overwrite the
+ *  schema. One or more of the following values are specified:
+ *  ALLOW_FIELD_ADDITION: allow adding a nullable field to the schema.
+ *  ALLOW_FIELD_RELAXATION: allow relaxing a required field in the original
+ *  schema to nullable.
  */
 @property(nonatomic, strong, nullable) NSArray<NSString *> *schemaUpdateOptions;
 
@@ -1219,17 +1409,27 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  *  [Optional] The format of the data files. For CSV files, specify "CSV". For
  *  datastore backups, specify "DATASTORE_BACKUP". For newline-delimited JSON,
- *  specify "NEWLINE_DELIMITED_JSON". For Avro, specify "AVRO". The default
- *  value is CSV.
+ *  specify "NEWLINE_DELIMITED_JSON". For Avro, specify "AVRO". For parquet,
+ *  specify "PARQUET". For orc, specify "ORC". The default value is CSV.
  */
 @property(nonatomic, copy, nullable) NSString *sourceFormat;
 
 /**
- *  [Required] The fully-qualified URIs that point to your data in Google Cloud
- *  Storage. Each URI can contain one '*' wildcard character and it must come
- *  after the 'bucket' name.
+ *  [Required] The fully-qualified URIs that point to your data in Google Cloud.
+ *  For Google Cloud Storage URIs: Each URI can contain one '*' wildcard
+ *  character and it must come after the 'bucket' name. Size limits related to
+ *  load jobs apply to external data sources. For Google Cloud Bigtable URIs:
+ *  Exactly one URI can be specified and it has be a fully specified and valid
+ *  HTTPS URL for a Google Cloud Bigtable table. For Google Cloud Datastore
+ *  backups: Exactly one URI can be specified. Also, the '*' wildcard character
+ *  is not allowed.
  */
 @property(nonatomic, strong, nullable) NSArray<NSString *> *sourceUris;
+
+/**
+ *  If specified, configures time-based partitioning for the destination table.
+ */
+@property(nonatomic, strong, nullable) GTLRBigquery_TimePartitioning *timePartitioning;
 
 /**
  *  [Optional] Specifies the action that occurs if the destination table already
@@ -1256,7 +1456,8 @@ NS_ASSUME_NONNULL_BEGIN
  *  [Optional] If true and query uses legacy SQL dialect, allows the query to
  *  produce arbitrarily large result tables at a slight cost in performance.
  *  Requires destinationTable to be set. For standard SQL queries, this flag is
- *  ignored and large results are always allowed.
+ *  ignored and large results are always allowed. However, you must still set
+ *  destinationTable when result size exceeds the allowed maximum response size.
  *
  *  Uses NSNumber of boolValue.
  */
@@ -1278,9 +1479,13 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property(nonatomic, strong, nullable) GTLRBigquery_DatasetReference *defaultDataset;
 
+/** Custom encryption configuration (e.g., Cloud KMS keys). */
+@property(nonatomic, strong, nullable) GTLRBigquery_EncryptionConfiguration *destinationEncryptionConfiguration;
+
 /**
  *  [Optional] Describes the table where the query results should be stored. If
- *  not present, a new table will be created to store the results.
+ *  not present, a new table will be created to store the results. This property
+ *  must be set for large results that exceed the maximum response size.
  */
 @property(nonatomic, strong, nullable) GTLRBigquery_TableReference *destinationTable;
 
@@ -1331,22 +1536,25 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property(nonatomic, copy, nullable) NSString *priority;
 
-/** [Required] BigQuery SQL query to execute. */
+/**
+ *  [Required] SQL query text to execute. The useLegacySql field can be used to
+ *  indicate whether the query uses legacy SQL or standard SQL.
+ */
 @property(nonatomic, copy, nullable) NSString *query;
 
 /** Query parameters for standard SQL queries. */
 @property(nonatomic, strong, nullable) NSArray<GTLRBigquery_QueryParameter *> *queryParameters;
 
 /**
- *  [Experimental] Allows the schema of the destination table to be updated as a
- *  side effect of the query job. Schema update options are supported in two
- *  cases: when writeDisposition is WRITE_APPEND; when writeDisposition is
- *  WRITE_TRUNCATE and the destination table is a partition of a table,
- *  specified by partition decorators. For normal tables, WRITE_TRUNCATE will
- *  always overwrite the schema. One or more of the following values are
- *  specified: ALLOW_FIELD_ADDITION: allow adding a nullable field to the
- *  schema. ALLOW_FIELD_RELAXATION: allow relaxing a required field in the
- *  original schema to nullable.
+ *  Allows the schema of the destination table to be updated as a side effect of
+ *  the query job. Schema update options are supported in two cases: when
+ *  writeDisposition is WRITE_APPEND; when writeDisposition is WRITE_TRUNCATE
+ *  and the destination table is a partition of a table, specified by partition
+ *  decorators. For normal tables, WRITE_TRUNCATE will always overwrite the
+ *  schema. One or more of the following values are specified:
+ *  ALLOW_FIELD_ADDITION: allow adding a nullable field to the schema.
+ *  ALLOW_FIELD_RELAXATION: allow relaxing a required field in the original
+ *  schema to nullable.
  */
 @property(nonatomic, strong, nullable) NSArray<NSString *> *schemaUpdateOptions;
 
@@ -1359,12 +1567,16 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, strong, nullable) GTLRBigquery_JobConfigurationQuery_TableDefinitions *tableDefinitions;
 
 /**
+ *  If specified, configures time-based partitioning for the destination table.
+ */
+@property(nonatomic, strong, nullable) GTLRBigquery_TimePartitioning *timePartitioning;
+
+/**
  *  Specifies whether to use BigQuery's legacy SQL dialect for this query. The
  *  default value is true. If set to false, the query will use BigQuery's
  *  standard SQL: https://cloud.google.com/bigquery/sql-reference/ When
- *  useLegacySql is set to false, the values of allowLargeResults and
- *  flattenResults are ignored; query will be run as if allowLargeResults is
- *  true and flattenResults is false.
+ *  useLegacySql is set to false, the value of flattenResults is ignored; query
+ *  will be run as if flattenResults is false.
  *
  *  Uses NSNumber of boolValue.
  */
@@ -1386,13 +1598,13 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  *  [Optional] Specifies the action that occurs if the destination table already
  *  exists. The following values are supported: WRITE_TRUNCATE: If the table
- *  already exists, BigQuery overwrites the table data. WRITE_APPEND: If the
- *  table already exists, BigQuery appends the data to the table. WRITE_EMPTY:
- *  If the table already exists and contains data, a 'duplicate' error is
- *  returned in the job result. The default value is WRITE_EMPTY. Each action is
- *  atomic and only occurs if BigQuery is able to complete the job successfully.
- *  Creation, truncation and append actions occur as one atomic update upon job
- *  completion.
+ *  already exists, BigQuery overwrites the table data and uses the schema from
+ *  the query result. WRITE_APPEND: If the table already exists, BigQuery
+ *  appends the data to the table. WRITE_EMPTY: If the table already exists and
+ *  contains data, a 'duplicate' error is returned in the job result. The
+ *  default value is WRITE_EMPTY. Each action is atomic and only occurs if
+ *  BigQuery is able to complete the job successfully. Creation, truncation and
+ *  append actions occur as one atomic update upon job completion.
  */
 @property(nonatomic, copy, nullable) NSString *writeDisposition;
 
@@ -1428,6 +1640,9 @@ NS_ASSUME_NONNULL_BEGIN
  *  occur as one atomic update upon job completion.
  */
 @property(nonatomic, copy, nullable) NSString *createDisposition;
+
+/** Custom encryption configuration (e.g., Cloud KMS keys). */
+@property(nonatomic, strong, nullable) GTLRBigquery_EncryptionConfiguration *destinationEncryptionConfiguration;
 
 /** [Required] The destination table */
 @property(nonatomic, strong, nullable) GTLRBigquery_TableReference *destinationTable;
@@ -1541,6 +1756,12 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property(nonatomic, copy, nullable) NSString *jobId;
 
+/**
+ *  [Experimental] The geographic location of the job. Required except for US
+ *  and EU.
+ */
+@property(nonatomic, copy, nullable) NSString *location;
+
 /** [Required] The ID of the project containing this job. */
 @property(nonatomic, copy, nullable) NSString *projectId;
 
@@ -1551,6 +1772,14 @@ NS_ASSUME_NONNULL_BEGIN
  *  GTLRBigquery_JobStatistics
  */
 @interface GTLRBigquery_JobStatistics : GTLRObject
+
+/**
+ *  [Experimental] [Output-only] Job progress (0.0 -> 1.0) for LOAD and EXTRACT
+ *  jobs.
+ *
+ *  Uses NSNumber of doubleValue.
+ */
+@property(nonatomic, strong, nullable) NSNumber *completionRatio;
 
 /**
  *  [Output-only] Creation time of this job, in milliseconds since the epoch.
@@ -1617,6 +1846,31 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, strong, nullable) NSNumber *cacheHit;
 
 /**
+ *  [Output-only, Experimental] The DDL operation performed, possibly dependent
+ *  on the pre-existence of the DDL target. Possible values (new values might be
+ *  added in the future): "CREATE": The query created the DDL target. "SKIP":
+ *  No-op. Example cases: the query is CREATE TABLE IF NOT EXISTS while the
+ *  table already exists, or the query is DROP TABLE IF EXISTS while the table
+ *  does not exist. "REPLACE": The query replaced the DDL target. Example case:
+ *  the query is CREATE OR REPLACE TABLE, and the table already exists. "DROP":
+ *  The query deleted the DDL target.
+ */
+@property(nonatomic, copy, nullable) NSString *ddlOperationPerformed;
+
+/**
+ *  [Output-only, Experimental] The DDL target table. Present only for
+ *  CREATE/DROP TABLE/VIEW queries.
+ */
+@property(nonatomic, strong, nullable) GTLRBigquery_TableReference *ddlTargetTable;
+
+/**
+ *  [Output-only] The original estimate of bytes processed for the job.
+ *
+ *  Uses NSNumber of longLongValue.
+ */
+@property(nonatomic, strong, nullable) NSNumber *estimatedBytesProcessed;
+
+/**
  *  [Output-only] The number of rows affected by a DML statement. Present only
  *  for DML statements INSERT, UPDATE or DELETE.
  *
@@ -1628,19 +1882,35 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, strong, nullable) NSArray<GTLRBigquery_ExplainQueryStage *> *queryPlan;
 
 /**
- *  [Output-only, Experimental] Referenced tables for the job. Queries that
- *  reference more than 50 tables will not have a complete list.
+ *  [Output-only] Referenced tables for the job. Queries that reference more
+ *  than 50 tables will not have a complete list.
  */
 @property(nonatomic, strong, nullable) NSArray<GTLRBigquery_TableReference *> *referencedTables;
 
 /**
- *  [Output-only, Experimental] The schema of the results. Present only for
- *  successful dry run of non-legacy SQL queries.
+ *  [Output-only] The schema of the results. Present only for successful dry run
+ *  of non-legacy SQL queries.
  */
 @property(nonatomic, strong, nullable) GTLRBigquery_TableSchema *schema;
 
-/** [Output-only, Experimental] The type of query statement, if valid. */
+/**
+ *  [Output-only, Experimental] The type of query statement, if valid. Possible
+ *  values (new values might be added in the future): "SELECT": SELECT query.
+ *  "INSERT": INSERT query; see
+ *  https://cloud.google.com/bigquery/docs/reference/standard-sql/data-manipulation-language
+ *  "UPDATE": UPDATE query; see
+ *  https://cloud.google.com/bigquery/docs/reference/standard-sql/data-manipulation-language
+ *  "DELETE": DELETE query; see
+ *  https://cloud.google.com/bigquery/docs/reference/standard-sql/data-manipulation-language
+ *  "CREATE_TABLE": CREATE [OR REPLACE] TABLE without AS SELECT.
+ *  "CREATE_TABLE_AS_SELECT": CREATE [OR REPLACE] TABLE ... AS SELECT ...
+ *  "DROP_TABLE": DROP TABLE query. "CREATE_VIEW": CREATE [OR REPLACE] VIEW ...
+ *  AS SELECT ... "DROP_VIEW": DROP VIEW query.
+ */
 @property(nonatomic, copy, nullable) NSString *statementType;
+
+/** [Output-only] [Experimental] Describes a timeline of job execution. */
+@property(nonatomic, strong, nullable) NSArray<GTLRBigquery_QueryTimelineSample *> *timeline;
 
 /**
  *  [Output-only] Total bytes billed for the job.
@@ -1657,6 +1927,13 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, strong, nullable) NSNumber *totalBytesProcessed;
 
 /**
+ *  [Output-only] Slot-milliseconds for the job.
+ *
+ *  Uses NSNumber of longLongValue.
+ */
+@property(nonatomic, strong, nullable) NSNumber *totalSlotMs;
+
+/**
  *  [Output-only, Experimental] Standard SQL only: list of undeclared query
  *  parameters detected during a dry run validation.
  */
@@ -1669,6 +1946,16 @@ NS_ASSUME_NONNULL_BEGIN
  *  GTLRBigquery_JobStatistics3
  */
 @interface GTLRBigquery_JobStatistics3 : GTLRObject
+
+/**
+ *  [Output-only] The number of bad records encountered. Note that if the job
+ *  has failed because of more bad records encountered than the maximum allowed
+ *  in the load job configuration, then this number can be less than the total
+ *  number of bad records present in the input data.
+ *
+ *  Uses NSNumber of longLongValue.
+ */
+@property(nonatomic, strong, nullable) NSNumber *badRecords;
 
 /**
  *  [Output-only] Number of bytes of source data in a load job.
@@ -1732,8 +2019,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, strong, nullable) GTLRBigquery_ErrorProto *errorResult;
 
 /**
- *  [Output-only] All errors encountered during the running of the job. Errors
- *  here do not necessarily mean that the job has completed or was unsuccessful.
+ *  [Output-only] The first errors encountered during the running of the job.
+ *  The final message includes the number of errors that caused the process to
+ *  stop. Errors here do not necessarily mean that the job has completed or was
+ *  unsuccessful.
  */
 @property(nonatomic, strong, nullable) NSArray<GTLRBigquery_ErrorProto *> *errors;
 
@@ -1957,6 +2246,12 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, copy, nullable) NSString *kind;
 
 /**
+ *  [Experimental] The geographic location where the job should run. Required
+ *  except for US and EU.
+ */
+@property(nonatomic, copy, nullable) NSString *location;
+
+/**
  *  [Optional] The maximum number of rows of data to return per page of results.
  *  Setting this flag to a small value such as 1000 and then paging through
  *  results might improve reliability when the query result set is large. In
@@ -2007,9 +2302,8 @@ NS_ASSUME_NONNULL_BEGIN
  *  Specifies whether to use BigQuery's legacy SQL dialect for this query. The
  *  default value is true. If set to false, the query will use BigQuery's
  *  standard SQL: https://cloud.google.com/bigquery/sql-reference/ When
- *  useLegacySql is set to false, the values of allowLargeResults and
- *  flattenResults are ignored; query will be run as if allowLargeResults is
- *  true and flattenResults is false.
+ *  useLegacySql is set to false, the value of flattenResults is ignored; query
+ *  will be run as if flattenResults is false.
  *
  *  Uses NSNumber of boolValue.
  */
@@ -2040,9 +2334,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, strong, nullable) NSNumber *cacheHit;
 
 /**
- *  [Output-only] All errors and warnings encountered during the running of the
- *  job. Errors here do not necessarily mean that the job has completed or was
- *  unsuccessful.
+ *  [Output-only] The first errors or warnings encountered during the running of
+ *  the job. The final message includes the number of errors that caused the
+ *  process to stop. Errors here do not necessarily mean that the job has
+ *  completed or was unsuccessful.
  */
 @property(nonatomic, strong, nullable) NSArray<GTLRBigquery_ErrorProto *> *errors;
 
@@ -2111,6 +2406,50 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 /**
+ *  GTLRBigquery_QueryTimelineSample
+ */
+@interface GTLRBigquery_QueryTimelineSample : GTLRObject
+
+/**
+ *  Total number of active workers. This does not correspond directly to slot
+ *  usage. This is the largest value observed since the last sample.
+ *
+ *  Uses NSNumber of longLongValue.
+ */
+@property(nonatomic, strong, nullable) NSNumber *activeInputs;
+
+/**
+ *  Total parallel units of work completed by this query.
+ *
+ *  Uses NSNumber of longLongValue.
+ */
+@property(nonatomic, strong, nullable) NSNumber *completedInputs;
+
+/**
+ *  Milliseconds elapsed since the start of query execution.
+ *
+ *  Uses NSNumber of longLongValue.
+ */
+@property(nonatomic, strong, nullable) NSNumber *elapsedMs;
+
+/**
+ *  Total parallel units of work remaining for the active stages.
+ *
+ *  Uses NSNumber of longLongValue.
+ */
+@property(nonatomic, strong, nullable) NSNumber *pendingInputs;
+
+/**
+ *  Cumulative slot-ms consumed by the query.
+ *
+ *  Uses NSNumber of longLongValue.
+ */
+@property(nonatomic, strong, nullable) NSNumber *totalSlotMs;
+
+@end
+
+
+/**
  *  GTLRBigquery_Streamingbuffer
  */
 @interface GTLRBigquery_Streamingbuffer : GTLRObject
@@ -2163,13 +2502,18 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property(nonatomic, copy, nullable) NSString *descriptionProperty;
 
+/** Custom encryption configuration (e.g., Cloud KMS keys). */
+@property(nonatomic, strong, nullable) GTLRBigquery_EncryptionConfiguration *encryptionConfiguration;
+
 /** [Output-only] A hash of this resource. */
 @property(nonatomic, copy, nullable) NSString *ETag;
 
 /**
  *  [Optional] The time when this table expires, in milliseconds since the
  *  epoch. If not present, the table will persist indefinitely. Expired tables
- *  will be deleted and their storage reclaimed.
+ *  will be deleted and their storage reclaimed. The defaultTableExpirationMs
+ *  property of the encapsulating dataset can be used to set a default
+ *  expirationTime on newly created tables.
  *
  *  Uses NSNumber of longLongValue.
  */
@@ -2196,9 +2540,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, copy, nullable) NSString *kind;
 
 /**
- *  [Experimental] The labels associated with this table. You can use these to
- *  organize and group your tables. Label keys and values can be no longer than
- *  63 characters, can only contain lowercase letters, numeric characters,
+ *  The labels associated with this table. You can use these to organize and
+ *  group your tables. Label keys and values can be no longer than 63
+ *  characters, can only contain lowercase letters, numeric characters,
  *  underscores and dashes. International characters are allowed. Label values
  *  are optional. Label keys must start with a letter and each label in the list
  *  must have a different key.
@@ -2259,10 +2603,7 @@ NS_ASSUME_NONNULL_BEGIN
 /** [Required] Reference describing the ID of this table. */
 @property(nonatomic, strong, nullable) GTLRBigquery_TableReference *tableReference;
 
-/**
- *  [Experimental] If specified, configures time-based partitioning for this
- *  table.
- */
+/** If specified, configures time-based partitioning for this table. */
 @property(nonatomic, strong, nullable) GTLRBigquery_TimePartitioning *timePartitioning;
 
 /**
@@ -2280,9 +2621,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 /**
- *  [Experimental] The labels associated with this table. You can use these to
- *  organize and group your tables. Label keys and values can be no longer than
- *  63 characters, can only contain lowercase letters, numeric characters,
+ *  The labels associated with this table. You can use these to organize and
+ *  group your tables. Label keys and values can be no longer than 63
+ *  characters, can only contain lowercase letters, numeric characters,
  *  underscores and dashes. International characters are allowed. Label values
  *  are optional. Label keys must start with a letter and each label in the list
  *  must have a different key.
@@ -2442,7 +2783,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface GTLRBigquery_TableFieldSchema : GTLRObject
 
 /**
- *  [Optional] The field description. The maximum length is 16K characters.
+ *  [Optional] The field description. The maximum length is 1,024 characters.
  *
  *  Remapped to 'descriptionProperty' to avoid NSObject's 'description'.
  */
@@ -2521,6 +2862,22 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @interface GTLRBigquery_TableList_Tables_Item : GTLRObject
 
+/**
+ *  The time when this table was created, in milliseconds since the epoch.
+ *
+ *  Uses NSNumber of longLongValue.
+ */
+@property(nonatomic, strong, nullable) NSNumber *creationTime;
+
+/**
+ *  [Optional] The time when this table expires, in milliseconds since the
+ *  epoch. If not present, the table will persist indefinitely. Expired tables
+ *  will be deleted and their storage reclaimed.
+ *
+ *  Uses NSNumber of longLongValue.
+ */
+@property(nonatomic, strong, nullable) NSNumber *expirationTime;
+
 /** The user-friendly name for this table. */
 @property(nonatomic, copy, nullable) NSString *friendlyName;
 
@@ -2535,13 +2892,16 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, copy, nullable) NSString *kind;
 
 /**
- *  [Experimental] The labels associated with this table. You can use these to
- *  organize and group your tables.
+ *  The labels associated with this table. You can use these to organize and
+ *  group your tables.
  */
 @property(nonatomic, strong, nullable) GTLRBigquery_TableList_Tables_Item_Labels *labels;
 
 /** A reference uniquely identifying the table. */
 @property(nonatomic, strong, nullable) GTLRBigquery_TableReference *tableReference;
+
+/** The time-based partitioning for this table. */
+@property(nonatomic, strong, nullable) GTLRBigquery_TimePartitioning *timePartitioning;
 
 /** The type of table. Possible values are: TABLE, VIEW. */
 @property(nonatomic, copy, nullable) NSString *type;
@@ -2553,8 +2913,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 /**
- *  [Experimental] The labels associated with this table. You can use these to
- *  organize and group your tables.
+ *  The labels associated with this table. You can use these to organize and
+ *  group your tables.
  *
  *  @note This class is documented as having more properties of NSString. Use @c
  *        -additionalJSONKeys and @c -additionalPropertyForName: to get the list
@@ -2638,8 +2998,24 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, strong, nullable) NSNumber *expirationMs;
 
 /**
+ *  [Experimental] [Optional] If not set, the table is partitioned by pseudo
+ *  column '_PARTITIONTIME'; if set, the table is partitioned by this field. The
+ *  field must be a top-level TIMESTAMP or DATE field. Its mode must be NULLABLE
+ *  or REQUIRED.
+ */
+@property(nonatomic, copy, nullable) NSString *field;
+
+/**
+ *  [Experimental] [Optional] If set to true, queries over this table require a
+ *  partition filter that can be used for partition elimination to be specified.
+ *
+ *  Uses NSNumber of boolValue.
+ */
+@property(nonatomic, strong, nullable) NSNumber *requirePartitionFilter;
+
+/**
  *  [Required] The only type supported is DAY, which will generate one partition
- *  per day based on data loading time.
+ *  per day.
  */
 @property(nonatomic, copy, nullable) NSString *type;
 
@@ -2691,3 +3067,5 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 NS_ASSUME_NONNULL_END
+
+#pragma clang diagnostic pop

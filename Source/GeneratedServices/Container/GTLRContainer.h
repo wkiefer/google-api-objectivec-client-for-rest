@@ -2,10 +2,11 @@
 
 // ----------------------------------------------------------------------------
 // API:
-//   Google Container Engine API (container/v1)
+//   Google Kubernetes Engine API (container/v1)
 // Description:
-//   The Google Container Engine API is used for building and managing container
-//   based applications, powered by the open source Kubernetes technology.
+//   The Google Kubernetes Engine API is used for building and managing
+//   container based applications, powered by the open source Kubernetes
+//   technology.
 // Documentation:
 //   https://cloud.google.com/container-engine/
 

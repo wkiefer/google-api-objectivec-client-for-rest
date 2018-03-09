@@ -50,11 +50,21 @@
 
 // ----------------------------------------------------------------------------
 //
+//   GTLRDeploymentManager_AuthorizationLoggingOptions
+//
+
+@implementation GTLRDeploymentManager_AuthorizationLoggingOptions
+@dynamic permissionType;
+@end
+
+
+// ----------------------------------------------------------------------------
+//
 //   GTLRDeploymentManager_Binding
 //
 
 @implementation GTLRDeploymentManager_Binding
-@dynamic members, role;
+@dynamic condition, members, role;
 
 + (NSDictionary<NSString *, Class> *)arrayPropertyToClassMap {
   NSDictionary<NSString *, Class> *map = @{
@@ -207,6 +217,21 @@
 
 // ----------------------------------------------------------------------------
 //
+//   GTLRDeploymentManager_Expr
+//
+
+@implementation GTLRDeploymentManager_Expr
+@dynamic descriptionProperty, expression, location, title;
+
++ (NSDictionary<NSString *, NSString *> *)propertyToJSONKeyMap {
+  return @{ @"descriptionProperty" : @"description" };
+}
+
+@end
+
+
+// ----------------------------------------------------------------------------
+//
 //   GTLRDeploymentManager_ImportFile
 //
 
@@ -221,7 +246,17 @@
 //
 
 @implementation GTLRDeploymentManager_LogConfig
-@dynamic counter;
+@dynamic cloudAudit, counter, dataAccess;
+@end
+
+
+// ----------------------------------------------------------------------------
+//
+//   GTLRDeploymentManager_LogConfigCloudAuditOptions
+//
+
+@implementation GTLRDeploymentManager_LogConfigCloudAuditOptions
+@dynamic authorizationLoggingOptions, logName;
 @end
 
 
@@ -232,6 +267,16 @@
 
 @implementation GTLRDeploymentManager_LogConfigCounterOptions
 @dynamic field, metric;
+@end
+
+
+// ----------------------------------------------------------------------------
+//
+//   GTLRDeploymentManager_LogConfigDataAccessOptions
+//
+
+@implementation GTLRDeploymentManager_LogConfigDataAccessOptions
+@dynamic logMode;
 @end
 
 

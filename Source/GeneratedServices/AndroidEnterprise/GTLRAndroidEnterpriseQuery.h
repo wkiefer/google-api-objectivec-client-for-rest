@@ -19,6 +19,8 @@
 #endif
 
 @class GTLRAndroidEnterprise_AdministratorWebTokenSpec;
+@class GTLRAndroidEnterprise_AndroidDevicePolicyConfig;
+@class GTLRAndroidEnterprise_Device;
 @class GTLRAndroidEnterprise_DeviceState;
 @class GTLRAndroidEnterprise_Enterprise;
 @class GTLRAndroidEnterprise_EnterpriseAccount;
@@ -32,6 +34,11 @@
 @class GTLRAndroidEnterprise_StoreLayout;
 @class GTLRAndroidEnterprise_StorePage;
 @class GTLRAndroidEnterprise_User;
+
+// Generated comments include content from the discovery document; avoid them
+// causing warnings since clang's checks are some what arbitrary.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdocumentation"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -186,6 +193,54 @@ GTLR_EXTERN NSString * const kGTLRAndroidEnterpriseRequestModeWaitForNotificatio
 @end
 
 /**
+ *  Updates the device policy. This method supports patch semantics.
+ *
+ *  Method: androidenterprise.devices.patch
+ *
+ *  Authorization scope(s):
+ *    @c kGTLRAuthScopeAndroidEnterprise
+ */
+@interface GTLRAndroidEnterpriseQuery_DevicesPatch : GTLRAndroidEnterpriseQuery
+// Previous library name was
+//   +[GTLQueryAndroidEnterprise queryForDevicesPatchWithObject:enterpriseId:userId:deviceId:]
+
+/** The ID of the device. */
+@property(nonatomic, copy, nullable) NSString *deviceId;
+
+/** The ID of the enterprise. */
+@property(nonatomic, copy, nullable) NSString *enterpriseId;
+
+/**
+ *  Mask that identifies which fields to update. If not set, all modifiable
+ *  fields will be modified.
+ *  When set in a query parameter, this field should be specified as
+ *  updateMask=<field1>,<field2>,...
+ */
+@property(nonatomic, copy, nullable) NSString *updateMask;
+
+/** The ID of the user. */
+@property(nonatomic, copy, nullable) NSString *userId;
+
+/**
+ *  Fetches a @c GTLRAndroidEnterprise_Device.
+ *
+ *  Updates the device policy. This method supports patch semantics.
+ *
+ *  @param object The @c GTLRAndroidEnterprise_Device to include in the query.
+ *  @param enterpriseId The ID of the enterprise.
+ *  @param userId The ID of the user.
+ *  @param deviceId The ID of the device.
+ *
+ *  @returns GTLRAndroidEnterpriseQuery_DevicesPatch
+ */
++ (instancetype)queryWithObject:(GTLRAndroidEnterprise_Device *)object
+                   enterpriseId:(NSString *)enterpriseId
+                         userId:(NSString *)userId
+                       deviceId:(NSString *)deviceId;
+
+@end
+
+/**
  *  Sets whether a device's access to Google services is enabled or disabled.
  *  The device state takes effect only if enforcing EMM policies on Android
  *  devices is enabled in the Google Admin Console. Otherwise, the device state
@@ -228,6 +283,54 @@ GTLR_EXTERN NSString * const kGTLRAndroidEnterpriseRequestModeWaitForNotificatio
  *  @returns GTLRAndroidEnterpriseQuery_DevicesSetState
  */
 + (instancetype)queryWithObject:(GTLRAndroidEnterprise_DeviceState *)object
+                   enterpriseId:(NSString *)enterpriseId
+                         userId:(NSString *)userId
+                       deviceId:(NSString *)deviceId;
+
+@end
+
+/**
+ *  Updates the device policy
+ *
+ *  Method: androidenterprise.devices.update
+ *
+ *  Authorization scope(s):
+ *    @c kGTLRAuthScopeAndroidEnterprise
+ */
+@interface GTLRAndroidEnterpriseQuery_DevicesUpdate : GTLRAndroidEnterpriseQuery
+// Previous library name was
+//   +[GTLQueryAndroidEnterprise queryForDevicesUpdateWithObject:enterpriseId:userId:deviceId:]
+
+/** The ID of the device. */
+@property(nonatomic, copy, nullable) NSString *deviceId;
+
+/** The ID of the enterprise. */
+@property(nonatomic, copy, nullable) NSString *enterpriseId;
+
+/**
+ *  Mask that identifies which fields to update. If not set, all modifiable
+ *  fields will be modified.
+ *  When set in a query parameter, this field should be specified as
+ *  updateMask=<field1>,<field2>,...
+ */
+@property(nonatomic, copy, nullable) NSString *updateMask;
+
+/** The ID of the user. */
+@property(nonatomic, copy, nullable) NSString *userId;
+
+/**
+ *  Fetches a @c GTLRAndroidEnterprise_Device.
+ *
+ *  Updates the device policy
+ *
+ *  @param object The @c GTLRAndroidEnterprise_Device to include in the query.
+ *  @param enterpriseId The ID of the enterprise.
+ *  @param userId The ID of the user.
+ *  @param deviceId The ID of the device.
+ *
+ *  @returns GTLRAndroidEnterpriseQuery_DevicesUpdate
+ */
++ (instancetype)queryWithObject:(GTLRAndroidEnterprise_Device *)object
                    enterpriseId:(NSString *)enterpriseId
                          userId:(NSString *)userId
                        deviceId:(NSString *)deviceId;
@@ -465,6 +568,34 @@ GTLR_EXTERN NSString * const kGTLRAndroidEnterpriseRequestModeWaitForNotificatio
 @end
 
 /**
+ *  Returns the Android Device Policy config resource.
+ *
+ *  Method: androidenterprise.enterprises.getAndroidDevicePolicyConfig
+ *
+ *  Authorization scope(s):
+ *    @c kGTLRAuthScopeAndroidEnterprise
+ */
+@interface GTLRAndroidEnterpriseQuery_EnterprisesGetAndroidDevicePolicyConfig : GTLRAndroidEnterpriseQuery
+// Previous library name was
+//   +[GTLQueryAndroidEnterprise queryForEnterprisesGetAndroidDevicePolicyConfigWithenterpriseId:]
+
+/** The ID of the enterprise. */
+@property(nonatomic, copy, nullable) NSString *enterpriseId;
+
+/**
+ *  Fetches a @c GTLRAndroidEnterprise_AndroidDevicePolicyConfig.
+ *
+ *  Returns the Android Device Policy config resource.
+ *
+ *  @param enterpriseId The ID of the enterprise.
+ *
+ *  @returns GTLRAndroidEnterpriseQuery_EnterprisesGetAndroidDevicePolicyConfig
+ */
++ (instancetype)queryWithEnterpriseId:(NSString *)enterpriseId;
+
+@end
+
+/**
  *  Returns a service account and credentials. The service account can be bound
  *  to the enterprise by calling setAccount. The service account is unique to
  *  this enterprise and EMM, and will be deleted if the enterprise is unbound.
@@ -692,8 +823,8 @@ GTLR_EXTERN NSString * const kGTLRAndroidEnterpriseRequestModeWaitForNotificatio
 @end
 
 /**
- *  Sends a test push notification to validate the EMM integration with the
- *  Google Cloud Pub/Sub service for this enterprise.
+ *  Sends a test notification to validate the EMM integration with the Google
+ *  Cloud Pub/Sub service for this enterprise.
  *
  *  Method: androidenterprise.enterprises.sendTestPushNotification
  *
@@ -711,8 +842,8 @@ GTLR_EXTERN NSString * const kGTLRAndroidEnterpriseRequestModeWaitForNotificatio
  *  Fetches a @c
  *  GTLRAndroidEnterprise_EnterprisesSendTestPushNotificationResponse.
  *
- *  Sends a test push notification to validate the EMM integration with the
- *  Google Cloud Pub/Sub service for this enterprise.
+ *  Sends a test notification to validate the EMM integration with the Google
+ *  Cloud Pub/Sub service for this enterprise.
  *
  *  @param enterpriseId The ID of the enterprise.
  *
@@ -751,6 +882,43 @@ GTLR_EXTERN NSString * const kGTLRAndroidEnterpriseRequestModeWaitForNotificatio
  *  @returns GTLRAndroidEnterpriseQuery_EnterprisesSetAccount
  */
 + (instancetype)queryWithObject:(GTLRAndroidEnterprise_EnterpriseAccount *)object
+                   enterpriseId:(NSString *)enterpriseId;
+
+@end
+
+/**
+ *  Sets the Android Device Policy config resource. EMM may use this method to
+ *  enable or disable Android Device Policy support for the specified
+ *  enterprise. To learn more about managing devices and apps with Android
+ *  Device Policy, see the Android Management API.
+ *
+ *  Method: androidenterprise.enterprises.setAndroidDevicePolicyConfig
+ *
+ *  Authorization scope(s):
+ *    @c kGTLRAuthScopeAndroidEnterprise
+ */
+@interface GTLRAndroidEnterpriseQuery_EnterprisesSetAndroidDevicePolicyConfig : GTLRAndroidEnterpriseQuery
+// Previous library name was
+//   +[GTLQueryAndroidEnterprise queryForEnterprisesSetAndroidDevicePolicyConfigWithObject:enterpriseId:]
+
+/** The ID of the enterprise. */
+@property(nonatomic, copy, nullable) NSString *enterpriseId;
+
+/**
+ *  Fetches a @c GTLRAndroidEnterprise_AndroidDevicePolicyConfig.
+ *
+ *  Sets the Android Device Policy config resource. EMM may use this method to
+ *  enable or disable Android Device Policy support for the specified
+ *  enterprise. To learn more about managing devices and apps with Android
+ *  Device Policy, see the Android Management API.
+ *
+ *  @param object The @c GTLRAndroidEnterprise_AndroidDevicePolicyConfig to
+ *    include in the query.
+ *  @param enterpriseId The ID of the enterprise.
+ *
+ *  @returns GTLRAndroidEnterpriseQuery_EnterprisesSetAndroidDevicePolicyConfig
+ */
++ (instancetype)queryWithObject:(GTLRAndroidEnterprise_AndroidDevicePolicyConfig *)object
                    enterpriseId:(NSString *)enterpriseId;
 
 @end
@@ -1757,8 +1925,12 @@ managedConfigurationForDeviceId:(NSString *)managedConfigurationForDeviceId;
 @end
 
 /**
- *  Adds or updates a per-user managed configuration for an app for the
- *  specified user. This method supports patch semantics.
+ *  Adds or updates the managed configuration settings for an app for the
+ *  specified user. If you support the Managed configurations iframe, you can
+ *  apply managed configurations to a user by specifying an mcmId and its
+ *  associated configuration variables (if any) in the request. Alternatively,
+ *  all EMMs can apply managed configurations by passing a list of managed
+ *  properties. This method supports patch semantics.
  *
  *  Method: androidenterprise.managedconfigurationsforuser.patch
  *
@@ -1784,8 +1956,12 @@ managedConfigurationForDeviceId:(NSString *)managedConfigurationForDeviceId;
 /**
  *  Fetches a @c GTLRAndroidEnterprise_ManagedConfiguration.
  *
- *  Adds or updates a per-user managed configuration for an app for the
- *  specified user. This method supports patch semantics.
+ *  Adds or updates the managed configuration settings for an app for the
+ *  specified user. If you support the Managed configurations iframe, you can
+ *  apply managed configurations to a user by specifying an mcmId and its
+ *  associated configuration variables (if any) in the request. Alternatively,
+ *  all EMMs can apply managed configurations by passing a list of managed
+ *  properties. This method supports patch semantics.
  *
  *  @param object The @c GTLRAndroidEnterprise_ManagedConfiguration to include
  *    in the query.
@@ -1804,8 +1980,12 @@ managedConfigurationForDeviceId:(NSString *)managedConfigurationForDeviceId;
 @end
 
 /**
- *  Adds or updates a per-user managed configuration for an app for the
- *  specified user.
+ *  Adds or updates the managed configuration settings for an app for the
+ *  specified user. If you support the Managed configurations iframe, you can
+ *  apply managed configurations to a user by specifying an mcmId and its
+ *  associated configuration variables (if any) in the request. Alternatively,
+ *  all EMMs can apply managed configurations by passing a list of managed
+ *  properties.
  *
  *  Method: androidenterprise.managedconfigurationsforuser.update
  *
@@ -1831,8 +2011,12 @@ managedConfigurationForDeviceId:(NSString *)managedConfigurationForDeviceId;
 /**
  *  Fetches a @c GTLRAndroidEnterprise_ManagedConfiguration.
  *
- *  Adds or updates a per-user managed configuration for an app for the
- *  specified user.
+ *  Adds or updates the managed configuration settings for an app for the
+ *  specified user. If you support the Managed configurations iframe, you can
+ *  apply managed configurations to a user by specifying an mcmId and its
+ *  associated configuration variables (if any) in the request. Alternatively,
+ *  all EMMs can apply managed configurations by passing a list of managed
+ *  properties.
  *
  *  @param object The @c GTLRAndroidEnterprise_ManagedConfiguration to include
  *    in the query.
@@ -1847,6 +2031,46 @@ managedConfigurationForDeviceId:(NSString *)managedConfigurationForDeviceId;
                    enterpriseId:(NSString *)enterpriseId
                          userId:(NSString *)userId
   managedConfigurationForUserId:(NSString *)managedConfigurationForUserId;
+
+@end
+
+/**
+ *  Lists all the managed configurations settings for the specified app. Only
+ *  the ID and the name is set.
+ *
+ *  Method: androidenterprise.managedconfigurationssettings.list
+ *
+ *  Authorization scope(s):
+ *    @c kGTLRAuthScopeAndroidEnterprise
+ */
+@interface GTLRAndroidEnterpriseQuery_ManagedconfigurationssettingsList : GTLRAndroidEnterpriseQuery
+// Previous library name was
+//   +[GTLQueryAndroidEnterprise queryForManagedconfigurationssettingsListWithenterpriseId:productId:]
+
+/** The ID of the enterprise. */
+@property(nonatomic, copy, nullable) NSString *enterpriseId;
+
+/**
+ *  The ID of the product for which the managed configurations settings applies
+ *  to.
+ */
+@property(nonatomic, copy, nullable) NSString *productId;
+
+/**
+ *  Fetches a @c
+ *  GTLRAndroidEnterprise_ManagedConfigurationsSettingsListResponse.
+ *
+ *  Lists all the managed configurations settings for the specified app. Only
+ *  the ID and the name is set.
+ *
+ *  @param enterpriseId The ID of the enterprise.
+ *  @param productId The ID of the product for which the managed configurations
+ *    settings applies to.
+ *
+ *  @returns GTLRAndroidEnterpriseQuery_ManagedconfigurationssettingsList
+ */
++ (instancetype)queryWithEnterpriseId:(NSString *)enterpriseId
+                            productId:(NSString *)productId;
 
 @end
 
@@ -3037,6 +3261,46 @@ managedConfigurationForDeviceId:(NSString *)managedConfigurationForDeviceId;
 @end
 
 /**
+ *  Revokes access to all devices currently provisioned to the user. The user
+ *  will no longer be able to use the managed Play store on any of their managed
+ *  devices.
+ *  This call only works with EMM-managed accounts.
+ *
+ *  Method: androidenterprise.users.revokeDeviceAccess
+ *
+ *  Authorization scope(s):
+ *    @c kGTLRAuthScopeAndroidEnterprise
+ */
+@interface GTLRAndroidEnterpriseQuery_UsersRevokeDeviceAccess : GTLRAndroidEnterpriseQuery
+// Previous library name was
+//   +[GTLQueryAndroidEnterprise queryForUsersRevokeDeviceAccessWithenterpriseId:userId:]
+
+/** The ID of the enterprise. */
+@property(nonatomic, copy, nullable) NSString *enterpriseId;
+
+/** The ID of the user. */
+@property(nonatomic, copy, nullable) NSString *userId;
+
+/**
+ *  Upon successful completion, the callback's object and error parameters will
+ *  be nil. This query does not fetch an object.
+ *
+ *  Revokes access to all devices currently provisioned to the user. The user
+ *  will no longer be able to use the managed Play store on any of their managed
+ *  devices.
+ *  This call only works with EMM-managed accounts.
+ *
+ *  @param enterpriseId The ID of the enterprise.
+ *  @param userId The ID of the user.
+ *
+ *  @returns GTLRAndroidEnterpriseQuery_UsersRevokeDeviceAccess
+ */
++ (instancetype)queryWithEnterpriseId:(NSString *)enterpriseId
+                               userId:(NSString *)userId;
+
+@end
+
+/**
  *  Revokes a previously generated token (activation code) for the user.
  *
  *  Method: androidenterprise.users.revokeToken
@@ -3156,3 +3420,5 @@ managedConfigurationForDeviceId:(NSString *)managedConfigurationForDeviceId;
 @end
 
 NS_ASSUME_NONNULL_END
+
+#pragma clang diagnostic pop

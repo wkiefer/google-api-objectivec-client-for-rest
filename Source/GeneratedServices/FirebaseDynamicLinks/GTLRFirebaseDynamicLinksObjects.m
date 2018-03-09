@@ -4,8 +4,7 @@
 // API:
 //   Firebase Dynamic Links API (firebasedynamiclinks/v1)
 // Description:
-//   Firebase Dynamic Links API enables third party developers to
-//   programmatically create and manage Dynamic Links.
+//   Programmatically creates and manages Firebase Dynamic Links.
 // Documentation:
 //   https://firebase.google.com/docs/dynamic-links/
 
@@ -13,6 +12,20 @@
 
 // ----------------------------------------------------------------------------
 // Constants
+
+// GTLRFirebaseDynamicLinks_DynamicLinkEventStat.event
+NSString * const kGTLRFirebaseDynamicLinks_DynamicLinkEventStat_Event_AppFirstOpen = @"APP_FIRST_OPEN";
+NSString * const kGTLRFirebaseDynamicLinks_DynamicLinkEventStat_Event_AppInstall = @"APP_INSTALL";
+NSString * const kGTLRFirebaseDynamicLinks_DynamicLinkEventStat_Event_AppReOpen = @"APP_RE_OPEN";
+NSString * const kGTLRFirebaseDynamicLinks_DynamicLinkEventStat_Event_Click = @"CLICK";
+NSString * const kGTLRFirebaseDynamicLinks_DynamicLinkEventStat_Event_DynamicLinkEventUnspecified = @"DYNAMIC_LINK_EVENT_UNSPECIFIED";
+NSString * const kGTLRFirebaseDynamicLinks_DynamicLinkEventStat_Event_Redirect = @"REDIRECT";
+
+// GTLRFirebaseDynamicLinks_DynamicLinkEventStat.platform
+NSString * const kGTLRFirebaseDynamicLinks_DynamicLinkEventStat_Platform_Android = @"ANDROID";
+NSString * const kGTLRFirebaseDynamicLinks_DynamicLinkEventStat_Platform_Desktop = @"DESKTOP";
+NSString * const kGTLRFirebaseDynamicLinks_DynamicLinkEventStat_Platform_DynamicLinkPlatformUnspecified = @"DYNAMIC_LINK_PLATFORM_UNSPECIFIED";
+NSString * const kGTLRFirebaseDynamicLinks_DynamicLinkEventStat_Platform_Ios = @"IOS";
 
 // GTLRFirebaseDynamicLinks_DynamicLinkWarning.warningCode
 NSString * const kGTLRFirebaseDynamicLinks_DynamicLinkWarning_WarningCode_BadAdParam = @"BAD_AD_PARAM";
@@ -44,6 +57,23 @@ NSString * const kGTLRFirebaseDynamicLinks_DynamicLinkWarning_WarningCode_Unnece
 NSString * const kGTLRFirebaseDynamicLinks_DynamicLinkWarning_WarningCode_UnnecessaryIosAppStoreId = @"UNNECESSARY_IOS_APP_STORE_ID";
 NSString * const kGTLRFirebaseDynamicLinks_DynamicLinkWarning_WarningCode_UnnecessaryIosUrlScheme = @"UNNECESSARY_IOS_URL_SCHEME";
 NSString * const kGTLRFirebaseDynamicLinks_DynamicLinkWarning_WarningCode_UnrecognizedParam = @"UNRECOGNIZED_PARAM";
+
+// GTLRFirebaseDynamicLinks_GetIosPostInstallAttributionRequest.retrievalMethod
+NSString * const kGTLRFirebaseDynamicLinks_GetIosPostInstallAttributionRequest_RetrievalMethod_ExplicitStrongAfterWeakMatch = @"EXPLICIT_STRONG_AFTER_WEAK_MATCH";
+NSString * const kGTLRFirebaseDynamicLinks_GetIosPostInstallAttributionRequest_RetrievalMethod_ExplicitWeakMatch = @"EXPLICIT_WEAK_MATCH";
+NSString * const kGTLRFirebaseDynamicLinks_GetIosPostInstallAttributionRequest_RetrievalMethod_ImplicitWeakMatch = @"IMPLICIT_WEAK_MATCH";
+NSString * const kGTLRFirebaseDynamicLinks_GetIosPostInstallAttributionRequest_RetrievalMethod_UnknownPayloadRetrievalMethod = @"UNKNOWN_PAYLOAD_RETRIEVAL_METHOD";
+
+// GTLRFirebaseDynamicLinks_GetIosPostInstallAttributionRequest.visualStyle
+NSString * const kGTLRFirebaseDynamicLinks_GetIosPostInstallAttributionRequest_VisualStyle_CustomStyle = @"CUSTOM_STYLE";
+NSString * const kGTLRFirebaseDynamicLinks_GetIosPostInstallAttributionRequest_VisualStyle_DefaultStyle = @"DEFAULT_STYLE";
+NSString * const kGTLRFirebaseDynamicLinks_GetIosPostInstallAttributionRequest_VisualStyle_UnknownVisualStyle = @"UNKNOWN_VISUAL_STYLE";
+
+// GTLRFirebaseDynamicLinks_GetIosPostInstallAttributionResponse.attributionConfidence
+NSString * const kGTLRFirebaseDynamicLinks_GetIosPostInstallAttributionResponse_AttributionConfidence_Default = @"DEFAULT";
+NSString * const kGTLRFirebaseDynamicLinks_GetIosPostInstallAttributionResponse_AttributionConfidence_Unique = @"UNIQUE";
+NSString * const kGTLRFirebaseDynamicLinks_GetIosPostInstallAttributionResponse_AttributionConfidence_UnknownAttributionConfidence = @"UNKNOWN_ATTRIBUTION_CONFIDENCE";
+NSString * const kGTLRFirebaseDynamicLinks_GetIosPostInstallAttributionResponse_AttributionConfidence_Weak = @"WEAK";
 
 // GTLRFirebaseDynamicLinks_Suffix.option
 NSString * const kGTLRFirebaseDynamicLinks_Suffix_Option_OptionUnspecified = @"OPTION_UNSPECIFIED";
@@ -101,12 +131,62 @@ NSString * const kGTLRFirebaseDynamicLinks_Suffix_Option_Unguessable = @"UNGUESS
 
 // ----------------------------------------------------------------------------
 //
+//   GTLRFirebaseDynamicLinks_DesktopInfo
+//
+
+@implementation GTLRFirebaseDynamicLinks_DesktopInfo
+@dynamic desktopFallbackLink;
+@end
+
+
+// ----------------------------------------------------------------------------
+//
+//   GTLRFirebaseDynamicLinks_DeviceInfo
+//
+
+@implementation GTLRFirebaseDynamicLinks_DeviceInfo
+@dynamic deviceModelName, languageCode, languageCodeFromWebview,
+         languageCodeRaw, screenResolutionHeight, screenResolutionWidth,
+         timezone;
+@end
+
+
+// ----------------------------------------------------------------------------
+//
+//   GTLRFirebaseDynamicLinks_DynamicLinkEventStat
+//
+
+@implementation GTLRFirebaseDynamicLinks_DynamicLinkEventStat
+@dynamic count, event, platform;
+@end
+
+
+// ----------------------------------------------------------------------------
+//
 //   GTLRFirebaseDynamicLinks_DynamicLinkInfo
 //
 
 @implementation GTLRFirebaseDynamicLinks_DynamicLinkInfo
-@dynamic analyticsInfo, androidInfo, dynamicLinkDomain, iosInfo, link,
-         navigationInfo, socialMetaTagInfo;
+@dynamic analyticsInfo, androidInfo, desktopInfo, dynamicLinkDomain, iosInfo,
+         link, navigationInfo, socialMetaTagInfo;
+@end
+
+
+// ----------------------------------------------------------------------------
+//
+//   GTLRFirebaseDynamicLinks_DynamicLinkStats
+//
+
+@implementation GTLRFirebaseDynamicLinks_DynamicLinkStats
+@dynamic linkEventStats;
+
++ (NSDictionary<NSString *, Class> *)arrayPropertyToClassMap {
+  NSDictionary<NSString *, Class> *map = @{
+    @"linkEventStats" : [GTLRFirebaseDynamicLinks_DynamicLinkEventStat class]
+  };
+  return map;
+}
+
 @end
 
 
@@ -116,7 +196,31 @@ NSString * const kGTLRFirebaseDynamicLinks_Suffix_Option_Unguessable = @"UNGUESS
 //
 
 @implementation GTLRFirebaseDynamicLinks_DynamicLinkWarning
-@dynamic warningCode, warningMessage;
+@dynamic warningCode, warningDocumentLink, warningMessage;
+@end
+
+
+// ----------------------------------------------------------------------------
+//
+//   GTLRFirebaseDynamicLinks_GetIosPostInstallAttributionRequest
+//
+
+@implementation GTLRFirebaseDynamicLinks_GetIosPostInstallAttributionRequest
+@dynamic appInstallationTime, bundleId, device, iosVersion, retrievalMethod,
+         sdkVersion, uniqueMatchLinkToCheck, visualStyle;
+@end
+
+
+// ----------------------------------------------------------------------------
+//
+//   GTLRFirebaseDynamicLinks_GetIosPostInstallAttributionResponse
+//
+
+@implementation GTLRFirebaseDynamicLinks_GetIosPostInstallAttributionResponse
+@dynamic appMinimumVersion, attributionConfidence, deepLink,
+         externalBrowserDestinationLink, fallbackLink, invitationId,
+         isStrongMatchExecutable, matchMessage, requestedLink, resolvedLink,
+         utmCampaign, utmMedium, utmSource;
 @end
 
 

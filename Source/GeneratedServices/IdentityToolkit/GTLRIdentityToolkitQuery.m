@@ -78,6 +78,26 @@
 
 @end
 
+@implementation GTLRIdentityToolkitQuery_RelyingpartyEmailLinkSignin
+
++ (instancetype)queryWithObject:(GTLRIdentityToolkit_RelyingpartyEmailLinkSigninRequest *)object {
+  if (object == nil) {
+    GTLR_DEBUG_ASSERT(object != nil, @"Got a nil object");
+    return nil;
+  }
+  NSString *pathURITemplate = @"emailLinkSignin";
+  GTLRIdentityToolkitQuery_RelyingpartyEmailLinkSignin *query =
+    [[self alloc] initWithPathURITemplate:pathURITemplate
+                               HTTPMethod:@"POST"
+                       pathParameterNames:nil];
+  query.bodyObject = object;
+  query.expectedObjectClass = [GTLRIdentityToolkit_EmailLinkSigninResponse class];
+  query.loggingName = @"identitytoolkit.relyingparty.emailLinkSignin";
+  return query;
+}
+
+@end
+
 @implementation GTLRIdentityToolkitQuery_RelyingpartyGetAccountInfo
 
 + (instancetype)queryWithObject:(GTLRIdentityToolkit_RelyingpartyGetAccountInfoRequest *)object {
@@ -180,6 +200,26 @@
   query.bodyObject = object;
   query.expectedObjectClass = [GTLRIdentityToolkit_ResetPasswordResponse class];
   query.loggingName = @"identitytoolkit.relyingparty.resetPassword";
+  return query;
+}
+
+@end
+
+@implementation GTLRIdentityToolkitQuery_RelyingpartySendVerificationCode
+
++ (instancetype)queryWithObject:(GTLRIdentityToolkit_RelyingpartySendVerificationCodeRequest *)object {
+  if (object == nil) {
+    GTLR_DEBUG_ASSERT(object != nil, @"Got a nil object");
+    return nil;
+  }
+  NSString *pathURITemplate = @"sendVerificationCode";
+  GTLRIdentityToolkitQuery_RelyingpartySendVerificationCode *query =
+    [[self alloc] initWithPathURITemplate:pathURITemplate
+                               HTTPMethod:@"POST"
+                       pathParameterNames:nil];
+  query.bodyObject = object;
+  query.expectedObjectClass = [GTLRIdentityToolkit_RelyingpartySendVerificationCodeResponse class];
+  query.loggingName = @"identitytoolkit.relyingparty.sendVerificationCode";
   return query;
 }
 
@@ -340,6 +380,26 @@
   query.bodyObject = object;
   query.expectedObjectClass = [GTLRIdentityToolkit_VerifyPasswordResponse class];
   query.loggingName = @"identitytoolkit.relyingparty.verifyPassword";
+  return query;
+}
+
+@end
+
+@implementation GTLRIdentityToolkitQuery_RelyingpartyVerifyPhoneNumber
+
++ (instancetype)queryWithObject:(GTLRIdentityToolkit_RelyingpartyVerifyPhoneNumberRequest *)object {
+  if (object == nil) {
+    GTLR_DEBUG_ASSERT(object != nil, @"Got a nil object");
+    return nil;
+  }
+  NSString *pathURITemplate = @"verifyPhoneNumber";
+  GTLRIdentityToolkitQuery_RelyingpartyVerifyPhoneNumber *query =
+    [[self alloc] initWithPathURITemplate:pathURITemplate
+                               HTTPMethod:@"POST"
+                       pathParameterNames:nil];
+  query.bodyObject = object;
+  query.expectedObjectClass = [GTLRIdentityToolkit_RelyingpartyVerifyPhoneNumberResponse class];
+  query.loggingName = @"identitytoolkit.relyingparty.verifyPhoneNumber";
   return query;
 }
 

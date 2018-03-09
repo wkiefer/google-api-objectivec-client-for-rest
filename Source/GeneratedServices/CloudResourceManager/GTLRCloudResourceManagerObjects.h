@@ -2,7 +2,7 @@
 
 // ----------------------------------------------------------------------------
 // API:
-//   Google Cloud Resource Manager API (cloudresourcemanager/v1)
+//   Cloud Resource Manager API (cloudresourcemanager/v1)
 // Description:
 //   The Google Cloud Resource Manager API provides methods for creating,
 //   reading, and updating project metadata.
@@ -41,6 +41,11 @@
 @class GTLRCloudResourceManager_RestoreDefault;
 @class GTLRCloudResourceManager_Status;
 @class GTLRCloudResourceManager_Status_Details_Item;
+
+// Generated comments include content from the discovery document; avoid them
+// causing warnings since clang's checks are some what arbitrary.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdocumentation"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -126,11 +131,17 @@ GTLR_EXTERN NSString * const kGTLRCloudResourceManager_FolderOperation_Operation
 // GTLRCloudResourceManager_FolderOperationError.errorMessageId
 
 /**
+ *  The attempted action would violate the max folder depth constraint.
+ *
+ *  Value: "ACTIVE_FOLDER_HEIGHT_VIOLATION"
+ */
+GTLR_EXTERN NSString * const kGTLRCloudResourceManager_FolderOperationError_ErrorMessageId_ActiveFolderHeightViolation;
+/**
  *  The attempted action would introduce cycle in resource path.
  *
- *  Value: "CYCLE_INTRODUCED_ERROR"
+ *  Value: "CYCLE_INTRODUCED_VIOLATION"
  */
-GTLR_EXTERN NSString * const kGTLRCloudResourceManager_FolderOperationError_ErrorMessageId_CycleIntroducedError;
+GTLR_EXTERN NSString * const kGTLRCloudResourceManager_FolderOperationError_ErrorMessageId_CycleIntroducedViolation;
 /**
  *  The attempted action would violate the max deleted folder depth
  *  constraint.
@@ -147,15 +158,9 @@ GTLR_EXTERN NSString * const kGTLRCloudResourceManager_FolderOperationError_Erro
 /**
  *  The attempted action would move a folder that is already being moved.
  *
- *  Value: "FOLDER_BEING_MOVED"
+ *  Value: "FOLDER_BEING_MOVED_VIOLATION"
  */
-GTLR_EXTERN NSString * const kGTLRCloudResourceManager_FolderOperationError_ErrorMessageId_FolderBeingMoved;
-/**
- *  The attempted action would violate the max folder depth constraint.
- *
- *  Value: "FOLDER_HEIGHT_VIOLATION"
- */
-GTLR_EXTERN NSString * const kGTLRCloudResourceManager_FolderOperationError_ErrorMessageId_FolderHeightViolation;
+GTLR_EXTERN NSString * const kGTLRCloudResourceManager_FolderOperationError_ErrorMessageId_FolderBeingMovedViolation;
 /**
  *  The attempted action would violate the locally-unique folder
  *  display_name constraint.
@@ -166,9 +171,9 @@ GTLR_EXTERN NSString * const kGTLRCloudResourceManager_FolderOperationError_Erro
 /**
  *  The folder the caller is trying to delete contains active resources.
  *
- *  Value: "FOLDER_TO_DELETE_NON_EMPTY"
+ *  Value: "FOLDER_TO_DELETE_NON_EMPTY_VIOLATION"
  */
-GTLR_EXTERN NSString * const kGTLRCloudResourceManager_FolderOperationError_ErrorMessageId_FolderToDeleteNonEmpty;
+GTLR_EXTERN NSString * const kGTLRCloudResourceManager_FolderOperationError_ErrorMessageId_FolderToDeleteNonEmptyViolation;
 /**
  *  The attempted action would violate the max child folders constraint.
  *
@@ -178,15 +183,15 @@ GTLR_EXTERN NSString * const kGTLRCloudResourceManager_FolderOperationError_Erro
 /**
  *  The resource a folder was being added to has been deleted.
  *
- *  Value: "PARENT_DELETED"
+ *  Value: "PARENT_DELETED_VIOLATION"
  */
-GTLR_EXTERN NSString * const kGTLRCloudResourceManager_FolderOperationError_ErrorMessageId_ParentDeleted;
+GTLR_EXTERN NSString * const kGTLRCloudResourceManager_FolderOperationError_ErrorMessageId_ParentDeletedViolation;
 /**
  *  The resource being moved has been deleted.
  *
- *  Value: "RESOURCE_DELETED"
+ *  Value: "RESOURCE_DELETED_VIOLATION"
  */
-GTLR_EXTERN NSString * const kGTLRCloudResourceManager_FolderOperationError_ErrorMessageId_ResourceDeleted;
+GTLR_EXTERN NSString * const kGTLRCloudResourceManager_FolderOperationError_ErrorMessageId_ResourceDeletedViolation;
 
 // ----------------------------------------------------------------------------
 // GTLRCloudResourceManager_ListPolicy.allValues
@@ -284,7 +289,7 @@ GTLR_EXTERN NSString * const kGTLRCloudResourceManager_Project_LifecycleState_Li
  *  If there are AuditConfigs for both `allServices` and a specific service,
  *  the union of the two AuditConfigs is used for that service: the log_types
  *  specified in each AuditConfig are enabled, and the exempted_members in each
- *  AuditConfig are exempted.
+ *  AuditLogConfig are exempted.
  *  Example Policy with multiple AuditConfigs:
  *  {
  *  "audit_configs": [
@@ -636,35 +641,36 @@ GTLR_EXTERN NSString * const kGTLRCloudResourceManager_Project_LifecycleState_Li
  *  The type of operation error experienced.
  *
  *  Likely values:
- *    @arg @c kGTLRCloudResourceManager_FolderOperationError_ErrorMessageId_CycleIntroducedError
+ *    @arg @c kGTLRCloudResourceManager_FolderOperationError_ErrorMessageId_ActiveFolderHeightViolation
+ *        The attempted action would violate the max folder depth constraint.
+ *        (Value: "ACTIVE_FOLDER_HEIGHT_VIOLATION")
+ *    @arg @c kGTLRCloudResourceManager_FolderOperationError_ErrorMessageId_CycleIntroducedViolation
  *        The attempted action would introduce cycle in resource path. (Value:
- *        "CYCLE_INTRODUCED_ERROR")
+ *        "CYCLE_INTRODUCED_VIOLATION")
  *    @arg @c kGTLRCloudResourceManager_FolderOperationError_ErrorMessageId_DeletedFolderHeightViolation
  *        The attempted action would violate the max deleted folder depth
  *        constraint. (Value: "DELETED_FOLDER_HEIGHT_VIOLATION")
  *    @arg @c kGTLRCloudResourceManager_FolderOperationError_ErrorMessageId_ErrorTypeUnspecified
  *        The error type was unrecognized or unspecified. (Value:
  *        "ERROR_TYPE_UNSPECIFIED")
- *    @arg @c kGTLRCloudResourceManager_FolderOperationError_ErrorMessageId_FolderBeingMoved
+ *    @arg @c kGTLRCloudResourceManager_FolderOperationError_ErrorMessageId_FolderBeingMovedViolation
  *        The attempted action would move a folder that is already being moved.
- *        (Value: "FOLDER_BEING_MOVED")
- *    @arg @c kGTLRCloudResourceManager_FolderOperationError_ErrorMessageId_FolderHeightViolation
- *        The attempted action would violate the max folder depth constraint.
- *        (Value: "FOLDER_HEIGHT_VIOLATION")
+ *        (Value: "FOLDER_BEING_MOVED_VIOLATION")
  *    @arg @c kGTLRCloudResourceManager_FolderOperationError_ErrorMessageId_FolderNameUniquenessViolation
  *        The attempted action would violate the locally-unique folder
  *        display_name constraint. (Value: "FOLDER_NAME_UNIQUENESS_VIOLATION")
- *    @arg @c kGTLRCloudResourceManager_FolderOperationError_ErrorMessageId_FolderToDeleteNonEmpty
+ *    @arg @c kGTLRCloudResourceManager_FolderOperationError_ErrorMessageId_FolderToDeleteNonEmptyViolation
  *        The folder the caller is trying to delete contains active resources.
- *        (Value: "FOLDER_TO_DELETE_NON_EMPTY")
+ *        (Value: "FOLDER_TO_DELETE_NON_EMPTY_VIOLATION")
  *    @arg @c kGTLRCloudResourceManager_FolderOperationError_ErrorMessageId_MaxChildFoldersViolation
  *        The attempted action would violate the max child folders constraint.
  *        (Value: "MAX_CHILD_FOLDERS_VIOLATION")
- *    @arg @c kGTLRCloudResourceManager_FolderOperationError_ErrorMessageId_ParentDeleted
+ *    @arg @c kGTLRCloudResourceManager_FolderOperationError_ErrorMessageId_ParentDeletedViolation
  *        The resource a folder was being added to has been deleted. (Value:
- *        "PARENT_DELETED")
- *    @arg @c kGTLRCloudResourceManager_FolderOperationError_ErrorMessageId_ResourceDeleted
- *        The resource being moved has been deleted. (Value: "RESOURCE_DELETED")
+ *        "PARENT_DELETED_VIOLATION")
+ *    @arg @c kGTLRCloudResourceManager_FolderOperationError_ErrorMessageId_ResourceDeletedViolation
+ *        The resource being moved has been deleted. (Value:
+ *        "RESOURCE_DELETED_VIOLATION")
  */
 @property(nonatomic, copy, nullable) NSString *errorMessageId;
 
@@ -932,8 +938,8 @@ GTLR_EXTERN NSString * const kGTLRCloudResourceManager_Project_LifecycleState_Li
 @interface GTLRCloudResourceManager_ListPolicy : GTLRObject
 
 /**
- *  List of values allowed at this resource. an only be set if no values are
- *  set for `denied_values` and `all_values` is set to
+ *  List of values allowed at this resource. Can only be set if no values
+ *  are set for `denied_values` and `all_values` is set to
  *  `ALL_VALUES_UNSPECIFIED`.
  */
 @property(nonatomic, strong, nullable) NSArray<NSString *> *allowedValues;
@@ -1094,7 +1100,7 @@ GTLR_EXTERN NSString * const kGTLRCloudResourceManager_Project_LifecycleState_Li
 
 /**
  *  If the value is `false`, it means the operation is still in progress.
- *  If true, the operation is completed, and either `error` or `response` is
+ *  If `true`, the operation is completed, and either `error` or `response` is
  *  available.
  *
  *  Uses NSNumber of boolValue.
@@ -1181,9 +1187,10 @@ GTLR_EXTERN NSString * const kGTLRCloudResourceManager_Project_LifecycleState_Li
 @property(nonatomic, strong, nullable) GTLRDateTime *creationTime;
 
 /**
- *  A friendly string to be used to refer to the Organization in the UI.
- *  Assigned by the server, set to the primary domain of the G Suite
- *  customer that owns the organization.
+ *  A human-readable string that refers to the Organization in the
+ *  GCP Console UI. This string is set by the server and cannot be
+ *  changed. The string will be set to the primary domain (for example,
+ *  "google.com") of the G Suite customer that owns the organization.
  *  \@OutputOnly
  */
 @property(nonatomic, copy, nullable) NSString *displayName;
@@ -1326,7 +1333,7 @@ GTLR_EXTERN NSString * const kGTLRCloudResourceManager_Project_LifecycleState_Li
  *  ]
  *  }
  *  For a description of IAM and its features, see the
- *  [IAM developer's guide](https://cloud.google.com/iam).
+ *  [IAM developer's guide](https://cloud.google.com/iam/docs).
  */
 @interface GTLRCloudResourceManager_Policy : GTLRObject
 
@@ -1335,7 +1342,6 @@ GTLR_EXTERN NSString * const kGTLRCloudResourceManager_Project_LifecycleState_Li
 
 /**
  *  Associates a list of `members` to a `role`.
- *  Multiple `bindings` must not be specified for the same `role`.
  *  `bindings` with no members will result in an error.
  */
 @property(nonatomic, strong, nullable) NSArray<GTLRCloudResourceManager_Binding *> *bindings;
@@ -1357,7 +1363,7 @@ GTLR_EXTERN NSString * const kGTLRCloudResourceManager_Project_LifecycleState_Li
 @property(nonatomic, copy, nullable) NSString *ETag;
 
 /**
- *  Version of the `Policy`. The default version is 0.
+ *  Deprecated.
  *
  *  Uses NSNumber of intValue.
  */
@@ -1428,8 +1434,8 @@ GTLR_EXTERN NSString * const kGTLRCloudResourceManager_Project_LifecycleState_Li
 
 /**
  *  An optional reference to a parent Resource.
- *  The only supported parent type is "organization". Once set, the parent
- *  cannot be modified. The `parent` can be set on creation or using the
+ *  Supported parent types include "organization" and "folder". Once set, the
+ *  parent cannot be cleared. The `parent` can be set on creation or using the
  *  `UpdateProject` method; the end user must have the
  *  `resourcemanager.projects.create` permission on the parent.
  *  Read-write.
@@ -1674,7 +1680,7 @@ GTLR_EXTERN NSString * const kGTLRCloudResourceManager_Project_LifecycleState_Li
  *  error message is needed, put the localized message in the error details or
  *  localize it in the client. The optional error details may contain arbitrary
  *  information about the error. There is a predefined set of error detail types
- *  in the package `google.rpc` which can be used for common error conditions.
+ *  in the package `google.rpc` that can be used for common error conditions.
  *  # Language mapping
  *  The `Status` message is the logical representation of the error model, but
  *  it
@@ -1692,7 +1698,7 @@ GTLR_EXTERN NSString * const kGTLRCloudResourceManager_Project_LifecycleState_Li
  *  it may embed the `Status` in the normal response to indicate the partial
  *  errors.
  *  - Workflow errors. A typical workflow has multiple steps. Each step may
- *  have a `Status` message for error reporting purpose.
+ *  have a `Status` message for error reporting.
  *  - Batch operations. If a client uses batch request and batch response, the
  *  `Status` message should be used directly inside batch response, one for
  *  each error sub-response.
@@ -1712,8 +1718,8 @@ GTLR_EXTERN NSString * const kGTLRCloudResourceManager_Project_LifecycleState_Li
 @property(nonatomic, strong, nullable) NSNumber *code;
 
 /**
- *  A list of messages that carry the error details. There will be a
- *  common set of message types for APIs to use.
+ *  A list of messages that carry the error details. There is a common set of
+ *  message types for APIs to use.
  */
 @property(nonatomic, strong, nullable) NSArray<GTLRCloudResourceManager_Status_Details_Item *> *details;
 
@@ -1777,3 +1783,5 @@ GTLR_EXTERN NSString * const kGTLRCloudResourceManager_Project_LifecycleState_Li
 @end
 
 NS_ASSUME_NONNULL_END
+
+#pragma clang diagnostic pop

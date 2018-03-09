@@ -19,6 +19,7 @@
 
 // aggregationCrossSeriesReducer
 NSString * const kGTLRMonitoringAggregationCrossSeriesReducerReduceCount = @"REDUCE_COUNT";
+NSString * const kGTLRMonitoringAggregationCrossSeriesReducerReduceCountFalse = @"REDUCE_COUNT_FALSE";
 NSString * const kGTLRMonitoringAggregationCrossSeriesReducerReduceCountTrue = @"REDUCE_COUNT_TRUE";
 NSString * const kGTLRMonitoringAggregationCrossSeriesReducerReduceFractionTrue = @"REDUCE_FRACTION_TRUE";
 NSString * const kGTLRMonitoringAggregationCrossSeriesReducerReduceMax = @"REDUCE_MAX";
@@ -34,6 +35,7 @@ NSString * const kGTLRMonitoringAggregationCrossSeriesReducerReduceSum = @"REDUC
 
 // aggregationPerSeriesAligner
 NSString * const kGTLRMonitoringAggregationPerSeriesAlignerAlignCount = @"ALIGN_COUNT";
+NSString * const kGTLRMonitoringAggregationPerSeriesAlignerAlignCountFalse = @"ALIGN_COUNT_FALSE";
 NSString * const kGTLRMonitoringAggregationPerSeriesAlignerAlignCountTrue = @"ALIGN_COUNT_TRUE";
 NSString * const kGTLRMonitoringAggregationPerSeriesAlignerAlignDelta = @"ALIGN_DELTA";
 NSString * const kGTLRMonitoringAggregationPerSeriesAlignerAlignFractionTrue = @"ALIGN_FRACTION_TRUE";
@@ -43,6 +45,7 @@ NSString * const kGTLRMonitoringAggregationPerSeriesAlignerAlignMean = @"ALIGN_M
 NSString * const kGTLRMonitoringAggregationPerSeriesAlignerAlignMin = @"ALIGN_MIN";
 NSString * const kGTLRMonitoringAggregationPerSeriesAlignerAlignNextOlder = @"ALIGN_NEXT_OLDER";
 NSString * const kGTLRMonitoringAggregationPerSeriesAlignerAlignNone = @"ALIGN_NONE";
+NSString * const kGTLRMonitoringAggregationPerSeriesAlignerAlignPercentChange = @"ALIGN_PERCENT_CHANGE";
 NSString * const kGTLRMonitoringAggregationPerSeriesAlignerAlignPercentile05 = @"ALIGN_PERCENTILE_05";
 NSString * const kGTLRMonitoringAggregationPerSeriesAlignerAlignPercentile50 = @"ALIGN_PERCENTILE_50";
 NSString * const kGTLRMonitoringAggregationPerSeriesAlignerAlignPercentile95 = @"ALIGN_PERCENTILE_95";
@@ -50,40 +53,6 @@ NSString * const kGTLRMonitoringAggregationPerSeriesAlignerAlignPercentile99 = @
 NSString * const kGTLRMonitoringAggregationPerSeriesAlignerAlignRate = @"ALIGN_RATE";
 NSString * const kGTLRMonitoringAggregationPerSeriesAlignerAlignStddev = @"ALIGN_STDDEV";
 NSString * const kGTLRMonitoringAggregationPerSeriesAlignerAlignSum = @"ALIGN_SUM";
-
-// secondaryAggregationCrossSeriesReducer
-NSString * const kGTLRMonitoringSecondaryAggregationCrossSeriesReducerReduceCount = @"REDUCE_COUNT";
-NSString * const kGTLRMonitoringSecondaryAggregationCrossSeriesReducerReduceCountTrue = @"REDUCE_COUNT_TRUE";
-NSString * const kGTLRMonitoringSecondaryAggregationCrossSeriesReducerReduceFractionTrue = @"REDUCE_FRACTION_TRUE";
-NSString * const kGTLRMonitoringSecondaryAggregationCrossSeriesReducerReduceMax = @"REDUCE_MAX";
-NSString * const kGTLRMonitoringSecondaryAggregationCrossSeriesReducerReduceMean = @"REDUCE_MEAN";
-NSString * const kGTLRMonitoringSecondaryAggregationCrossSeriesReducerReduceMin = @"REDUCE_MIN";
-NSString * const kGTLRMonitoringSecondaryAggregationCrossSeriesReducerReduceNone = @"REDUCE_NONE";
-NSString * const kGTLRMonitoringSecondaryAggregationCrossSeriesReducerReducePercentile05 = @"REDUCE_PERCENTILE_05";
-NSString * const kGTLRMonitoringSecondaryAggregationCrossSeriesReducerReducePercentile50 = @"REDUCE_PERCENTILE_50";
-NSString * const kGTLRMonitoringSecondaryAggregationCrossSeriesReducerReducePercentile95 = @"REDUCE_PERCENTILE_95";
-NSString * const kGTLRMonitoringSecondaryAggregationCrossSeriesReducerReducePercentile99 = @"REDUCE_PERCENTILE_99";
-NSString * const kGTLRMonitoringSecondaryAggregationCrossSeriesReducerReduceStddev = @"REDUCE_STDDEV";
-NSString * const kGTLRMonitoringSecondaryAggregationCrossSeriesReducerReduceSum = @"REDUCE_SUM";
-
-// secondaryAggregationPerSeriesAligner
-NSString * const kGTLRMonitoringSecondaryAggregationPerSeriesAlignerAlignCount = @"ALIGN_COUNT";
-NSString * const kGTLRMonitoringSecondaryAggregationPerSeriesAlignerAlignCountTrue = @"ALIGN_COUNT_TRUE";
-NSString * const kGTLRMonitoringSecondaryAggregationPerSeriesAlignerAlignDelta = @"ALIGN_DELTA";
-NSString * const kGTLRMonitoringSecondaryAggregationPerSeriesAlignerAlignFractionTrue = @"ALIGN_FRACTION_TRUE";
-NSString * const kGTLRMonitoringSecondaryAggregationPerSeriesAlignerAlignInterpolate = @"ALIGN_INTERPOLATE";
-NSString * const kGTLRMonitoringSecondaryAggregationPerSeriesAlignerAlignMax = @"ALIGN_MAX";
-NSString * const kGTLRMonitoringSecondaryAggregationPerSeriesAlignerAlignMean = @"ALIGN_MEAN";
-NSString * const kGTLRMonitoringSecondaryAggregationPerSeriesAlignerAlignMin = @"ALIGN_MIN";
-NSString * const kGTLRMonitoringSecondaryAggregationPerSeriesAlignerAlignNextOlder = @"ALIGN_NEXT_OLDER";
-NSString * const kGTLRMonitoringSecondaryAggregationPerSeriesAlignerAlignNone = @"ALIGN_NONE";
-NSString * const kGTLRMonitoringSecondaryAggregationPerSeriesAlignerAlignPercentile05 = @"ALIGN_PERCENTILE_05";
-NSString * const kGTLRMonitoringSecondaryAggregationPerSeriesAlignerAlignPercentile50 = @"ALIGN_PERCENTILE_50";
-NSString * const kGTLRMonitoringSecondaryAggregationPerSeriesAlignerAlignPercentile95 = @"ALIGN_PERCENTILE_95";
-NSString * const kGTLRMonitoringSecondaryAggregationPerSeriesAlignerAlignPercentile99 = @"ALIGN_PERCENTILE_99";
-NSString * const kGTLRMonitoringSecondaryAggregationPerSeriesAlignerAlignRate = @"ALIGN_RATE";
-NSString * const kGTLRMonitoringSecondaryAggregationPerSeriesAlignerAlignStddev = @"ALIGN_STDDEV";
-NSString * const kGTLRMonitoringSecondaryAggregationPerSeriesAlignerAlignSum = @"ALIGN_SUM";
 
 // view
 NSString * const kGTLRMonitoringViewFull    = @"FULL";
@@ -117,7 +86,7 @@ NSString * const kGTLRMonitoringViewHeaders = @"HEADERS";
                        pathParameterNames:pathParams];
   query.bodyObject = object;
   query.name = name;
-  query.expectedObjectClass = [GTLRMonitoring_Empty class];
+  query.expectedObjectClass = [GTLRMonitoring_CreateCollectdTimeSeriesResponse class];
   query.loggingName = @"monitoring.projects.collectdTimeSeries.create";
   return query;
 }
@@ -409,10 +378,7 @@ NSString * const kGTLRMonitoringViewHeaders = @"HEADERS";
 @dynamic aggregationAlignmentPeriod, aggregationCrossSeriesReducer,
          aggregationGroupByFields, aggregationPerSeriesAligner, filter,
          intervalEndTime, intervalStartTime, name, orderBy, pageSize, pageToken,
-         secondaryAggregationAlignmentPeriod,
-         secondaryAggregationCrossSeriesReducer,
-         secondaryAggregationGroupByFields,
-         secondaryAggregationPerSeriesAligner, view;
+         view;
 
 + (NSDictionary<NSString *, NSString *> *)parameterNameMap {
   NSDictionary<NSString *, NSString *> *map = @{
@@ -421,19 +387,14 @@ NSString * const kGTLRMonitoringViewHeaders = @"HEADERS";
     @"aggregationGroupByFields" : @"aggregation.groupByFields",
     @"aggregationPerSeriesAligner" : @"aggregation.perSeriesAligner",
     @"intervalEndTime" : @"interval.endTime",
-    @"intervalStartTime" : @"interval.startTime",
-    @"secondaryAggregationAlignmentPeriod" : @"secondaryAggregation.alignmentPeriod",
-    @"secondaryAggregationCrossSeriesReducer" : @"secondaryAggregation.crossSeriesReducer",
-    @"secondaryAggregationGroupByFields" : @"secondaryAggregation.groupByFields",
-    @"secondaryAggregationPerSeriesAligner" : @"secondaryAggregation.perSeriesAligner"
+    @"intervalStartTime" : @"interval.startTime"
   };
   return map;
 }
 
 + (NSDictionary<NSString *, Class> *)arrayPropertyToClassMap {
   NSDictionary<NSString *, Class> *map = @{
-    @"aggregation.groupByFields" : [NSString class],
-    @"secondaryAggregation.groupByFields" : [NSString class]
+    @"aggregation.groupByFields" : [NSString class]
   };
   return map;
 }
@@ -448,6 +409,130 @@ NSString * const kGTLRMonitoringViewHeaders = @"HEADERS";
   query.name = name;
   query.expectedObjectClass = [GTLRMonitoring_ListTimeSeriesResponse class];
   query.loggingName = @"monitoring.projects.timeSeries.list";
+  return query;
+}
+
+@end
+
+@implementation GTLRMonitoringQuery_ProjectsUptimeCheckConfigsCreate
+
+@dynamic parent;
+
++ (instancetype)queryWithObject:(GTLRMonitoring_UptimeCheckConfig *)object
+                         parent:(NSString *)parent {
+  if (object == nil) {
+    GTLR_DEBUG_ASSERT(object != nil, @"Got a nil object");
+    return nil;
+  }
+  NSArray *pathParams = @[ @"parent" ];
+  NSString *pathURITemplate = @"v3/{+parent}/uptimeCheckConfigs";
+  GTLRMonitoringQuery_ProjectsUptimeCheckConfigsCreate *query =
+    [[self alloc] initWithPathURITemplate:pathURITemplate
+                               HTTPMethod:@"POST"
+                       pathParameterNames:pathParams];
+  query.bodyObject = object;
+  query.parent = parent;
+  query.expectedObjectClass = [GTLRMonitoring_UptimeCheckConfig class];
+  query.loggingName = @"monitoring.projects.uptimeCheckConfigs.create";
+  return query;
+}
+
+@end
+
+@implementation GTLRMonitoringQuery_ProjectsUptimeCheckConfigsDelete
+
+@dynamic name;
+
++ (instancetype)queryWithName:(NSString *)name {
+  NSArray *pathParams = @[ @"name" ];
+  NSString *pathURITemplate = @"v3/{+name}";
+  GTLRMonitoringQuery_ProjectsUptimeCheckConfigsDelete *query =
+    [[self alloc] initWithPathURITemplate:pathURITemplate
+                               HTTPMethod:@"DELETE"
+                       pathParameterNames:pathParams];
+  query.name = name;
+  query.expectedObjectClass = [GTLRMonitoring_Empty class];
+  query.loggingName = @"monitoring.projects.uptimeCheckConfigs.delete";
+  return query;
+}
+
+@end
+
+@implementation GTLRMonitoringQuery_ProjectsUptimeCheckConfigsGet
+
+@dynamic name;
+
++ (instancetype)queryWithName:(NSString *)name {
+  NSArray *pathParams = @[ @"name" ];
+  NSString *pathURITemplate = @"v3/{+name}";
+  GTLRMonitoringQuery_ProjectsUptimeCheckConfigsGet *query =
+    [[self alloc] initWithPathURITemplate:pathURITemplate
+                               HTTPMethod:nil
+                       pathParameterNames:pathParams];
+  query.name = name;
+  query.expectedObjectClass = [GTLRMonitoring_UptimeCheckConfig class];
+  query.loggingName = @"monitoring.projects.uptimeCheckConfigs.get";
+  return query;
+}
+
+@end
+
+@implementation GTLRMonitoringQuery_ProjectsUptimeCheckConfigsList
+
+@dynamic pageSize, pageToken, parent;
+
++ (instancetype)queryWithParent:(NSString *)parent {
+  NSArray *pathParams = @[ @"parent" ];
+  NSString *pathURITemplate = @"v3/{+parent}/uptimeCheckConfigs";
+  GTLRMonitoringQuery_ProjectsUptimeCheckConfigsList *query =
+    [[self alloc] initWithPathURITemplate:pathURITemplate
+                               HTTPMethod:nil
+                       pathParameterNames:pathParams];
+  query.parent = parent;
+  query.expectedObjectClass = [GTLRMonitoring_ListUptimeCheckConfigsResponse class];
+  query.loggingName = @"monitoring.projects.uptimeCheckConfigs.list";
+  return query;
+}
+
+@end
+
+@implementation GTLRMonitoringQuery_ProjectsUptimeCheckConfigsPatch
+
+@dynamic name, updateMask;
+
++ (instancetype)queryWithObject:(GTLRMonitoring_UptimeCheckConfig *)object
+                           name:(NSString *)name {
+  if (object == nil) {
+    GTLR_DEBUG_ASSERT(object != nil, @"Got a nil object");
+    return nil;
+  }
+  NSArray *pathParams = @[ @"name" ];
+  NSString *pathURITemplate = @"v3/{+name}";
+  GTLRMonitoringQuery_ProjectsUptimeCheckConfigsPatch *query =
+    [[self alloc] initWithPathURITemplate:pathURITemplate
+                               HTTPMethod:@"PATCH"
+                       pathParameterNames:pathParams];
+  query.bodyObject = object;
+  query.name = name;
+  query.expectedObjectClass = [GTLRMonitoring_UptimeCheckConfig class];
+  query.loggingName = @"monitoring.projects.uptimeCheckConfigs.patch";
+  return query;
+}
+
+@end
+
+@implementation GTLRMonitoringQuery_UptimeCheckIpsList
+
+@dynamic pageSize, pageToken;
+
++ (instancetype)query {
+  NSString *pathURITemplate = @"v3/uptimeCheckIps";
+  GTLRMonitoringQuery_UptimeCheckIpsList *query =
+    [[self alloc] initWithPathURITemplate:pathURITemplate
+                               HTTPMethod:nil
+                       pathParameterNames:nil];
+  query.expectedObjectClass = [GTLRMonitoring_ListUptimeCheckIpsResponse class];
+  query.loggingName = @"monitoring.uptimeCheckIps.list";
   return query;
 }
 

@@ -28,7 +28,7 @@ NSString * const kGTLRAuthScopeShoppingContent = @"https://www.googleapis.com/au
     // From discovery.
     self.rootURLString = @"https://www.googleapis.com/";
     self.servicePath = @"content/v2/";
-    self.batchPath = @"batch";
+    self.batchPath = @"batch/content/v2";
     self.prettyPrintQueryParameterNames = @[ @"prettyPrint" ];
   }
   return self;
@@ -38,6 +38,7 @@ NSString * const kGTLRAuthScopeShoppingContent = @"https://www.googleapis.com/au
   return @{
     @"content#account" : [GTLRShoppingContent_Account class],
     @"content#accountsAuthInfoResponse" : [GTLRShoppingContent_AccountsAuthInfoResponse class],
+    @"content#accountsClaimWebsiteResponse" : [GTLRShoppingContent_AccountsClaimWebsiteResponse class],
     @"content#accountsCustomBatchResponse" : [GTLRShoppingContent_AccountsCustomBatchResponse class],
     @"content#accountsCustomBatchResponseEntry" : [GTLRShoppingContent_AccountsCustomBatchResponseEntry class],
     @"content#accountsListResponse" : [GTLRShoppingContent_AccountsListResponse class],
@@ -68,12 +69,25 @@ NSString * const kGTLRAuthScopeShoppingContent = @"https://www.googleapis.com/au
     @"content#ordersCustomBatchResponseEntry" : [GTLRShoppingContent_OrdersCustomBatchResponseEntry class],
     @"content#ordersGetByMerchantOrderIdResponse" : [GTLRShoppingContent_OrdersGetByMerchantOrderIdResponse class],
     @"content#ordersGetTestOrderTemplateResponse" : [GTLRShoppingContent_OrdersGetTestOrderTemplateResponse class],
+    @"content#ordersInStoreRefundLineItemResponse" : [GTLRShoppingContent_OrdersInStoreRefundLineItemResponse class],
     @"content#ordersListResponse" : [GTLRShoppingContent_OrdersListResponse class],
     @"content#ordersRefundResponse" : [GTLRShoppingContent_OrdersRefundResponse class],
+    @"content#ordersRejectReturnLineItemResponse" : [GTLRShoppingContent_OrdersRejectReturnLineItemResponse class],
     @"content#ordersReturnLineItemResponse" : [GTLRShoppingContent_OrdersReturnLineItemResponse class],
+    @"content#ordersReturnRefundLineItemResponse" : [GTLRShoppingContent_OrdersReturnRefundLineItemResponse class],
+    @"content#ordersSetLineItemMetadataResponse" : [GTLRShoppingContent_OrdersSetLineItemMetadataResponse class],
     @"content#ordersShipLineItemsResponse" : [GTLRShoppingContent_OrdersShipLineItemsResponse class],
+    @"content#ordersUpdateLineItemShippingDetailsResponse" : [GTLRShoppingContent_OrdersUpdateLineItemShippingDetailsResponse class],
     @"content#ordersUpdateMerchantOrderIdResponse" : [GTLRShoppingContent_OrdersUpdateMerchantOrderIdResponse class],
     @"content#ordersUpdateShipmentResponse" : [GTLRShoppingContent_OrdersUpdateShipmentResponse class],
+    @"content#posCustomBatchResponse" : [GTLRShoppingContent_PosCustomBatchResponse class],
+    @"content#posCustomBatchResponseEntry" : [GTLRShoppingContent_PosCustomBatchResponseEntry class],
+    @"content#posInventory" : [GTLRShoppingContent_PosInventory class],
+    @"content#posInventoryResponse" : [GTLRShoppingContent_PosInventoryResponse class],
+    @"content#posListResponse" : [GTLRShoppingContent_PosListResponse class],
+    @"content#posSale" : [GTLRShoppingContent_PosSale class],
+    @"content#posSaleResponse" : [GTLRShoppingContent_PosSaleResponse class],
+    @"content#posStore" : [GTLRShoppingContent_PosStore class],
     @"content#product" : [GTLRShoppingContent_Product class],
     @"content#productsCustomBatchResponse" : [GTLRShoppingContent_ProductsCustomBatchResponse class],
     @"content#productsCustomBatchResponseEntry" : [GTLRShoppingContent_ProductsCustomBatchResponseEntry class],
@@ -85,6 +99,7 @@ NSString * const kGTLRAuthScopeShoppingContent = @"https://www.googleapis.com/au
     @"content#shippingsettingsCustomBatchResponse" : [GTLRShoppingContent_ShippingsettingsCustomBatchResponse class],
     @"content#shippingsettingsCustomBatchResponseEntry" : [GTLRShoppingContent_ShippingsettingsCustomBatchResponseEntry class],
     @"content#shippingsettingsGetSupportedCarriersResponse" : [GTLRShoppingContent_ShippingsettingsGetSupportedCarriersResponse class],
+    @"content#shippingsettingsGetSupportedHolidaysResponse" : [GTLRShoppingContent_ShippingsettingsGetSupportedHolidaysResponse class],
     @"content#shippingsettingsListResponse" : [GTLRShoppingContent_ShippingsettingsListResponse class],
     @"content#testOrder" : [GTLRShoppingContent_TestOrder class],
   };

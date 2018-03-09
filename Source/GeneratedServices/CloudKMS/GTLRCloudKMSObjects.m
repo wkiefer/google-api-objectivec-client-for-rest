@@ -4,7 +4,7 @@
 // API:
 //   Google Cloud Key Management Service (KMS) API (cloudkms/v1)
 // Description:
-//   Manages encryption for your cloud services the same way you do on-premise.
+//   Manages encryption for your cloud services the same way you do on-premises.
 //   You can generate, use, rotate, and destroy AES256 encryption keys.
 // Documentation:
 //   https://cloud.google.com/kms/
@@ -20,28 +20,6 @@ NSString * const kGTLRCloudKMS_AuditLogConfig_LogType_DataRead = @"DATA_READ";
 NSString * const kGTLRCloudKMS_AuditLogConfig_LogType_DataWrite = @"DATA_WRITE";
 NSString * const kGTLRCloudKMS_AuditLogConfig_LogType_LogTypeUnspecified = @"LOG_TYPE_UNSPECIFIED";
 
-// GTLRCloudKMS_Condition.iam
-NSString * const kGTLRCloudKMS_Condition_Iam_Approver          = @"APPROVER";
-NSString * const kGTLRCloudKMS_Condition_Iam_Attribution       = @"ATTRIBUTION";
-NSString * const kGTLRCloudKMS_Condition_Iam_Authority         = @"AUTHORITY";
-NSString * const kGTLRCloudKMS_Condition_Iam_JustificationType = @"JUSTIFICATION_TYPE";
-NSString * const kGTLRCloudKMS_Condition_Iam_NoAttr            = @"NO_ATTR";
-
-// GTLRCloudKMS_Condition.op
-NSString * const kGTLRCloudKMS_Condition_Op_Discharged = @"DISCHARGED";
-NSString * const kGTLRCloudKMS_Condition_Op_Equals     = @"EQUALS";
-NSString * const kGTLRCloudKMS_Condition_Op_In         = @"IN";
-NSString * const kGTLRCloudKMS_Condition_Op_NoOp       = @"NO_OP";
-NSString * const kGTLRCloudKMS_Condition_Op_NotEquals  = @"NOT_EQUALS";
-NSString * const kGTLRCloudKMS_Condition_Op_NotIn      = @"NOT_IN";
-
-// GTLRCloudKMS_Condition.sys
-NSString * const kGTLRCloudKMS_Condition_Sys_Ip      = @"IP";
-NSString * const kGTLRCloudKMS_Condition_Sys_Name    = @"NAME";
-NSString * const kGTLRCloudKMS_Condition_Sys_NoAttr  = @"NO_ATTR";
-NSString * const kGTLRCloudKMS_Condition_Sys_Region  = @"REGION";
-NSString * const kGTLRCloudKMS_Condition_Sys_Service = @"SERVICE";
-
 // GTLRCloudKMS_CryptoKey.purpose
 NSString * const kGTLRCloudKMS_CryptoKey_Purpose_CryptoKeyPurposeUnspecified = @"CRYPTO_KEY_PURPOSE_UNSPECIFIED";
 NSString * const kGTLRCloudKMS_CryptoKey_Purpose_EncryptDecrypt = @"ENCRYPT_DECRYPT";
@@ -53,26 +31,17 @@ NSString * const kGTLRCloudKMS_CryptoKeyVersion_State_DestroyScheduled = @"DESTR
 NSString * const kGTLRCloudKMS_CryptoKeyVersion_State_Disabled = @"DISABLED";
 NSString * const kGTLRCloudKMS_CryptoKeyVersion_State_Enabled  = @"ENABLED";
 
-// GTLRCloudKMS_Rule.action
-NSString * const kGTLRCloudKMS_Rule_Action_Allow        = @"ALLOW";
-NSString * const kGTLRCloudKMS_Rule_Action_AllowWithLog = @"ALLOW_WITH_LOG";
-NSString * const kGTLRCloudKMS_Rule_Action_Deny         = @"DENY";
-NSString * const kGTLRCloudKMS_Rule_Action_DenyWithLog  = @"DENY_WITH_LOG";
-NSString * const kGTLRCloudKMS_Rule_Action_Log          = @"LOG";
-NSString * const kGTLRCloudKMS_Rule_Action_NoAction     = @"NO_ACTION";
-
 // ----------------------------------------------------------------------------
 //
 //   GTLRCloudKMS_AuditConfig
 //
 
 @implementation GTLRCloudKMS_AuditConfig
-@dynamic auditLogConfigs, exemptedMembers, service;
+@dynamic auditLogConfigs, service;
 
 + (NSDictionary<NSString *, Class> *)arrayPropertyToClassMap {
   NSDictionary<NSString *, Class> *map = @{
-    @"auditLogConfigs" : [GTLRCloudKMS_AuditLogConfig class],
-    @"exemptedMembers" : [NSString class]
+    @"auditLogConfigs" : [GTLRCloudKMS_AuditLogConfig class]
   };
   return map;
 }
@@ -118,48 +87,26 @@ NSString * const kGTLRCloudKMS_Rule_Action_NoAction     = @"NO_ACTION";
 
 // ----------------------------------------------------------------------------
 //
-//   GTLRCloudKMS_CloudAuditOptions
-//
-
-@implementation GTLRCloudKMS_CloudAuditOptions
-@end
-
-
-// ----------------------------------------------------------------------------
-//
-//   GTLRCloudKMS_Condition
-//
-
-@implementation GTLRCloudKMS_Condition
-@dynamic iam, op, svc, sys, value, values;
-
-+ (NSDictionary<NSString *, Class> *)arrayPropertyToClassMap {
-  NSDictionary<NSString *, Class> *map = @{
-    @"values" : [NSString class]
-  };
-  return map;
-}
-
-@end
-
-
-// ----------------------------------------------------------------------------
-//
-//   GTLRCloudKMS_CounterOptions
-//
-
-@implementation GTLRCloudKMS_CounterOptions
-@dynamic field, metric;
-@end
-
-
-// ----------------------------------------------------------------------------
-//
 //   GTLRCloudKMS_CryptoKey
 //
 
 @implementation GTLRCloudKMS_CryptoKey
-@dynamic createTime, name, nextRotationTime, primary, purpose, rotationPeriod;
+@dynamic createTime, labels, name, nextRotationTime, primary, purpose,
+         rotationPeriod;
+@end
+
+
+// ----------------------------------------------------------------------------
+//
+//   GTLRCloudKMS_CryptoKey_Labels
+//
+
+@implementation GTLRCloudKMS_CryptoKey_Labels
+
++ (Class)classForAdditionalProperties {
+  return [NSString class];
+}
+
 @end
 
 
@@ -170,15 +117,6 @@ NSString * const kGTLRCloudKMS_Rule_Action_NoAction     = @"NO_ACTION";
 
 @implementation GTLRCloudKMS_CryptoKeyVersion
 @dynamic createTime, destroyEventTime, destroyTime, name, state;
-@end
-
-
-// ----------------------------------------------------------------------------
-//
-//   GTLRCloudKMS_DataAccessOptions
-//
-
-@implementation GTLRCloudKMS_DataAccessOptions
 @end
 
 
@@ -369,21 +307,11 @@ NSString * const kGTLRCloudKMS_Rule_Action_NoAction     = @"NO_ACTION";
 
 // ----------------------------------------------------------------------------
 //
-//   GTLRCloudKMS_LogConfig
-//
-
-@implementation GTLRCloudKMS_LogConfig
-@dynamic cloudAudit, counter, dataAccess;
-@end
-
-
-// ----------------------------------------------------------------------------
-//
 //   GTLRCloudKMS_Policy
 //
 
 @implementation GTLRCloudKMS_Policy
-@dynamic auditConfigs, bindings, ETag, iamOwned, rules, version;
+@dynamic auditConfigs, bindings, ETag, version;
 
 + (NSDictionary<NSString *, NSString *> *)propertyToJSONKeyMap {
   return @{ @"ETag" : @"etag" };
@@ -392,8 +320,7 @@ NSString * const kGTLRCloudKMS_Rule_Action_NoAction     = @"NO_ACTION";
 + (NSDictionary<NSString *, Class> *)arrayPropertyToClassMap {
   NSDictionary<NSString *, Class> *map = @{
     @"auditConfigs" : [GTLRCloudKMS_AuditConfig class],
-    @"bindings" : [GTLRCloudKMS_Binding class],
-    @"rules" : [GTLRCloudKMS_Rule class]
+    @"bindings" : [GTLRCloudKMS_Binding class]
   };
   return map;
 }
@@ -407,37 +334,6 @@ NSString * const kGTLRCloudKMS_Rule_Action_NoAction     = @"NO_ACTION";
 //
 
 @implementation GTLRCloudKMS_RestoreCryptoKeyVersionRequest
-@end
-
-
-// ----------------------------------------------------------------------------
-//
-//   GTLRCloudKMS_Rule
-//
-
-@implementation GTLRCloudKMS_Rule
-@dynamic action, conditions, descriptionProperty, inProperty, logConfig, notIn,
-         permissions;
-
-+ (NSDictionary<NSString *, NSString *> *)propertyToJSONKeyMap {
-  NSDictionary<NSString *, NSString *> *map = @{
-    @"descriptionProperty" : @"description",
-    @"inProperty" : @"in"
-  };
-  return map;
-}
-
-+ (NSDictionary<NSString *, Class> *)arrayPropertyToClassMap {
-  NSDictionary<NSString *, Class> *map = @{
-    @"conditions" : [GTLRCloudKMS_Condition class],
-    @"in" : [NSString class],
-    @"logConfig" : [GTLRCloudKMS_LogConfig class],
-    @"notIn" : [NSString class],
-    @"permissions" : [NSString class]
-  };
-  return map;
-}
-
 @end
 
 

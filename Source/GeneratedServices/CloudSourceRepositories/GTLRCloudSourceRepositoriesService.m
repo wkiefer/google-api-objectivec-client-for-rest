@@ -6,14 +6,17 @@
 // Description:
 //   Access source code repositories hosted by Google.
 // Documentation:
-//   https://cloud.google.com/eap/cloud-repositories/cloud-sourcerepo-api
+//   https://cloud.google.com/source-repositories/docs/apis
 
 #import "GTLRCloudSourceRepositories.h"
 
 // ----------------------------------------------------------------------------
-// Authorization scope
+// Authorization scopes
 
 NSString * const kGTLRAuthScopeCloudSourceRepositoriesCloudPlatform = @"https://www.googleapis.com/auth/cloud-platform";
+NSString * const kGTLRAuthScopeCloudSourceRepositoriesSourceFullControl = @"https://www.googleapis.com/auth/source.full_control";
+NSString * const kGTLRAuthScopeCloudSourceRepositoriesSourceReadOnly = @"https://www.googleapis.com/auth/source.read_only";
+NSString * const kGTLRAuthScopeCloudSourceRepositoriesSourceReadWrite = @"https://www.googleapis.com/auth/source.read_write";
 
 // ----------------------------------------------------------------------------
 //   GTLRCloudSourceRepositoriesService

@@ -10,6 +10,15 @@
 
 #import "GTLRDoubleClickBidManager.h"
 
+// ----------------------------------------------------------------------------
+// Authorization scope
+
+NSString * const kGTLRAuthScopeDoubleClickBidManager = @"https://www.googleapis.com/auth/doubleclickbidmanager";
+
+// ----------------------------------------------------------------------------
+//   GTLRDoubleClickBidManagerService
+//
+
 @implementation GTLRDoubleClickBidManagerService
 
 - (instancetype)init {
@@ -18,7 +27,7 @@
     // From discovery.
     self.rootURLString = @"https://www.googleapis.com/";
     self.servicePath = @"doubleclickbidmanager/v1/";
-    self.batchPath = @"batch";
+    self.batchPath = @"batch/doubleclickbidmanager/v1";
     self.prettyPrintQueryParameterNames = @[ @"prettyPrint" ];
   }
   return self;

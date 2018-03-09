@@ -27,7 +27,8 @@
 //
 
 @implementation GTLRSQLAdmin_BackupConfiguration
-@dynamic binaryLogEnabled, enabled, kind, startTime;
+@dynamic binaryLogEnabled, enabled, kind, replicationLogArchivingEnabled,
+         startTime;
 @end
 
 
@@ -85,7 +86,7 @@
 //
 
 @implementation GTLRSQLAdmin_CloneContext
-@dynamic binLogCoordinates, destinationInstanceName, kind;
+@dynamic binLogCoordinates, destinationInstanceName, kind, pitrTimestampMs;
 @end
 
 
@@ -121,7 +122,7 @@
 
 @implementation GTLRSQLAdmin_DatabaseInstance
 @dynamic backendType, connectionName, currentDiskSize, databaseVersion, ETag,
-         failoverReplica, instanceType, ipAddresses, ipv6Address, kind,
+         failoverReplica, gceZone, instanceType, ipAddresses, ipv6Address, kind,
          masterInstanceName, maxDiskSize, name, onPremisesConfiguration,
          project, region, replicaConfiguration, replicaNames, selfLink,
          serverCaCert, serviceAccountEmailAddress, settings, state,
@@ -168,6 +169,36 @@
   return map;
 }
 
+@end
+
+
+// ----------------------------------------------------------------------------
+//
+//   GTLRSQLAdmin_DemoteMasterConfiguration
+//
+
+@implementation GTLRSQLAdmin_DemoteMasterConfiguration
+@dynamic kind, mysqlReplicaConfiguration;
+@end
+
+
+// ----------------------------------------------------------------------------
+//
+//   GTLRSQLAdmin_DemoteMasterContext
+//
+
+@implementation GTLRSQLAdmin_DemoteMasterContext
+@dynamic kind, masterInstanceName, replicaConfiguration, verifyGtidConsistency;
+@end
+
+
+// ----------------------------------------------------------------------------
+//
+//   GTLRSQLAdmin_DemoteMasterMySqlReplicaConfiguration
+//
+
+@implementation GTLRSQLAdmin_DemoteMasterMySqlReplicaConfiguration
+@dynamic caCertificate, clientCertificate, clientKey, kind, password, username;
 @end
 
 
@@ -271,7 +302,7 @@
 //
 
 @implementation GTLRSQLAdmin_ImportContext
-@dynamic csvImportOptions, database, fileType, kind, uri;
+@dynamic csvImportOptions, database, fileType, importUser, kind, uri;
 @end
 
 
@@ -300,6 +331,16 @@
 
 @implementation GTLRSQLAdmin_InstancesCloneRequest
 @dynamic cloneContext;
+@end
+
+
+// ----------------------------------------------------------------------------
+//
+//   GTLRSQLAdmin_InstancesDemoteMasterRequest
+//
+
+@implementation GTLRSQLAdmin_InstancesDemoteMasterRequest
+@dynamic demoteMasterContext;
 @end
 
 
@@ -396,16 +437,6 @@
 
 @implementation GTLRSQLAdmin_IpMapping
 @dynamic ipAddress, timeToRetire, type;
-@end
-
-
-// ----------------------------------------------------------------------------
-//
-//   GTLRSQLAdmin_Labels
-//
-
-@implementation GTLRSQLAdmin_Labels
-@dynamic key, value;
 @end
 
 
@@ -543,17 +574,30 @@
 @dynamic activationPolicy, authorizedGaeApplications, availabilityType,
          backupConfiguration, crashSafeReplicationEnabled, databaseFlags,
          databaseReplicationEnabled, dataDiskSizeGb, dataDiskType,
-         ipConfiguration, kind, labels, locationPreference, maintenanceWindow,
+         ipConfiguration, kind, locationPreference, maintenanceWindow,
          pricingPlan, replicationType, settingsVersion, storageAutoResize,
-         storageAutoResizeLimit, tier;
+         storageAutoResizeLimit, tier, userLabels;
 
 + (NSDictionary<NSString *, Class> *)arrayPropertyToClassMap {
   NSDictionary<NSString *, Class> *map = @{
     @"authorizedGaeApplications" : [NSString class],
-    @"databaseFlags" : [GTLRSQLAdmin_DatabaseFlags class],
-    @"labels" : [GTLRSQLAdmin_Labels class]
+    @"databaseFlags" : [GTLRSQLAdmin_DatabaseFlags class]
   };
   return map;
+}
+
+@end
+
+
+// ----------------------------------------------------------------------------
+//
+//   GTLRSQLAdmin_Settings_UserLabels
+//
+
+@implementation GTLRSQLAdmin_Settings_UserLabels
+
++ (Class)classForAdditionalProperties {
+  return [NSString class];
 }
 
 @end

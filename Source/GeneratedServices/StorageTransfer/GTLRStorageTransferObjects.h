@@ -2,7 +2,7 @@
 
 // ----------------------------------------------------------------------------
 // API:
-//   Google Storage Transfer API (storagetransfer/v1)
+//   Storage Transfer API (storagetransfer/v1)
 // Description:
 //   Transfers data from external data sources to a Google Cloud Storage bucket
 //   or between Google Cloud Storage buckets.
@@ -38,6 +38,11 @@
 @class GTLRStorageTransfer_TransferJob;
 @class GTLRStorageTransfer_TransferOptions;
 @class GTLRStorageTransfer_TransferSpec;
+
+// Generated comments include content from the discovery document; avoid them
+// causing warnings since clang's checks are some what arbitrary.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdocumentation"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -235,7 +240,8 @@ GTLR_EXTERN NSString * const kGTLRStorageTransfer_ErrorSummary_ErrorCode_Unknown
 /**
  *  This is a soft delete state. After a transfer job is set to this
  *  state, the job and all the transfer executions are subject to
- *  garbage collection.
+ *  garbage collection. Transfer jobs become eligible for garbage collection
+ *  30 days after their status is set to `DELETED`.
  *
  *  Value: "DELETED"
  */
@@ -598,7 +604,7 @@ GTLR_EXTERN NSString * const kGTLRStorageTransfer_TransferOperation_Status_Succe
  *  * MD5 - The base64-encoded MD5 hash of the object.
  *  For an example of a valid TSV file, see
  *  [Transferring data from
- *  URLs](https://cloud.google.com/storage/transfer/#urls)
+ *  URLs](https://cloud.google.com/storage/transfer/create-url-list).
  *  When transferring data based on a URL list, keep the following in mind:
  *  * When an object located at `http(s)://hostname:port/<URL-path>` is
  *  transferred
@@ -752,7 +758,7 @@ GTLR_EXTERN NSString * const kGTLRStorageTransfer_TransferOperation_Status_Succe
 
 /**
  *  If the value is `false`, it means the operation is still in progress.
- *  If true, the operation is completed, and either `error` or `response` is
+ *  If `true`, the operation is completed, and either `error` or `response` is
  *  available.
  *
  *  Uses NSNumber of boolValue.
@@ -883,7 +889,7 @@ GTLR_EXTERN NSString * const kGTLRStorageTransfer_TransferOperation_Status_Succe
  *  error message is needed, put the localized message in the error details or
  *  localize it in the client. The optional error details may contain arbitrary
  *  information about the error. There is a predefined set of error detail types
- *  in the package `google.rpc` which can be used for common error conditions.
+ *  in the package `google.rpc` that can be used for common error conditions.
  *  # Language mapping
  *  The `Status` message is the logical representation of the error model, but
  *  it
@@ -901,7 +907,7 @@ GTLR_EXTERN NSString * const kGTLRStorageTransfer_TransferOperation_Status_Succe
  *  it may embed the `Status` in the normal response to indicate the partial
  *  errors.
  *  - Workflow errors. A typical workflow has multiple steps. Each step may
- *  have a `Status` message for error reporting purpose.
+ *  have a `Status` message for error reporting.
  *  - Batch operations. If a client uses batch request and batch response, the
  *  `Status` message should be used directly inside batch response, one for
  *  each error sub-response.
@@ -921,8 +927,8 @@ GTLR_EXTERN NSString * const kGTLRStorageTransfer_TransferOperation_Status_Succe
 @property(nonatomic, strong, nullable) NSNumber *code;
 
 /**
- *  A list of messages that carry the error details. There will be a
- *  common set of message types for APIs to use.
+ *  A list of messages that carry the error details. There is a common set of
+ *  message types for APIs to use.
  */
 @property(nonatomic, strong, nullable) NSArray<GTLRStorageTransfer_Status_Details_Item *> *details;
 
@@ -1023,8 +1029,8 @@ GTLR_EXTERN NSString * const kGTLRStorageTransfer_TransferOperation_Status_Succe
 
 /**
  *  Bytes found in the data source that are scheduled to be transferred,
- *  which will be copied, excluded based on conditions, or skipped due to
- *  failures.
+ *  excluding any that are filtered based on object conditions or skipped due
+ *  to sync.
  *
  *  Uses NSNumber of longLongValue.
  */
@@ -1038,7 +1044,8 @@ GTLR_EXTERN NSString * const kGTLRStorageTransfer_TransferOperation_Status_Succe
 @property(nonatomic, strong, nullable) NSNumber *bytesFoundOnlyFromSink;
 
 /**
- *  Bytes in the data source that failed during the transfer.
+ *  Bytes in the data source that failed to be transferred or that failed to
+ *  be deleted after being transferred.
  *
  *  Uses NSNumber of longLongValue.
  */
@@ -1082,8 +1089,8 @@ GTLR_EXTERN NSString * const kGTLRStorageTransfer_TransferOperation_Status_Succe
 
 /**
  *  Objects found in the data source that are scheduled to be transferred,
- *  which will be copied, excluded based on conditions, or skipped due to
- *  failures.
+ *  excluding any that are filtered based on object conditions or skipped due
+ *  to sync.
  *
  *  Uses NSNumber of longLongValue.
  */
@@ -1097,7 +1104,8 @@ GTLR_EXTERN NSString * const kGTLRStorageTransfer_TransferOperation_Status_Succe
 @property(nonatomic, strong, nullable) NSNumber *objectsFoundOnlyFromSink;
 
 /**
- *  Objects in the data source that failed during the transfer.
+ *  Objects in the data source that failed to be transferred or that failed
+ *  to be deleted after being transferred.
  *
  *  Uses NSNumber of longLongValue.
  */
@@ -1145,16 +1153,10 @@ GTLR_EXTERN NSString * const kGTLRStorageTransfer_TransferOperation_Status_Succe
  */
 @property(nonatomic, copy, nullable) NSString *name;
 
-/**
- *  The ID of the Google Cloud Platform Console project that owns the job.
- *  Required.
- */
+/** The ID of the Google Cloud Platform Console project that owns the job. */
 @property(nonatomic, copy, nullable) NSString *projectId;
 
-/**
- *  Schedule specification.
- *  Required.
- */
+/** Schedule specification. */
 @property(nonatomic, strong, nullable) GTLRStorageTransfer_Schedule *schedule;
 
 /**
@@ -1169,7 +1171,9 @@ GTLR_EXTERN NSString * const kGTLRStorageTransfer_TransferOperation_Status_Succe
  *    @arg @c kGTLRStorageTransfer_TransferJob_Status_Deleted This is a soft
  *        delete state. After a transfer job is set to this
  *        state, the job and all the transfer executions are subject to
- *        garbage collection. (Value: "DELETED")
+ *        garbage collection. Transfer jobs become eligible for garbage
+ *        collection
+ *        30 days after their status is set to `DELETED`. (Value: "DELETED")
  *    @arg @c kGTLRStorageTransfer_TransferJob_Status_Disabled New transfers
  *        will not be scheduled. (Value: "DISABLED")
  *    @arg @c kGTLRStorageTransfer_TransferJob_Status_Enabled New transfers will
@@ -1179,10 +1183,7 @@ GTLR_EXTERN NSString * const kGTLRStorageTransfer_TransferOperation_Status_Succe
  */
 @property(nonatomic, copy, nullable) NSString *status;
 
-/**
- *  Transfer specification.
- *  Required.
- */
+/** Transfer specification. */
 @property(nonatomic, strong, nullable) GTLRStorageTransfer_TransferSpec *transferSpec;
 
 @end
@@ -1253,14 +1254,17 @@ GTLR_EXTERN NSString * const kGTLRStorageTransfer_TransferOperation_Status_Succe
 
 /**
  *  Whether objects should be deleted from the source after they are
- *  transferred to the sink.
+ *  transferred to the sink. Note that this option and
+ *  `deleteObjectsUniqueInSink` are mutually exclusive.
  *
  *  Uses NSNumber of boolValue.
  */
 @property(nonatomic, strong, nullable) NSNumber *deleteObjectsFromSourceAfterTransfer;
 
 /**
- *  Whether objects that exist only in the sink should be deleted.
+ *  Whether objects that exist only in the sink should be deleted. Note that
+ *  this option and `deleteObjectsFromSourceAfterTransfer` are mutually
+ *  exclusive.
  *
  *  Uses NSNumber of boolValue.
  */
@@ -1322,7 +1326,10 @@ GTLR_EXTERN NSString * const kGTLRStorageTransfer_TransferOperation_Status_Succe
 @property(nonatomic, copy, nullable) NSString *projectId;
 
 /**
- *  The job to update.
+ *  The job to update. `transferJob` is expected to specify only three fields:
+ *  `description`, `transferSpec`, and `status`. An UpdateTransferJobRequest
+ *  that specifies other fields will be rejected with an error
+ *  `INVALID_ARGUMENT`.
  *  Required.
  */
 @property(nonatomic, strong, nullable) GTLRStorageTransfer_TransferJob *transferJob;
@@ -1342,3 +1349,5 @@ GTLR_EXTERN NSString * const kGTLRStorageTransfer_TransferOperation_Status_Succe
 @end
 
 NS_ASSUME_NONNULL_END
+
+#pragma clang diagnostic pop

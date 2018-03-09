@@ -2,10 +2,12 @@
 
 // ----------------------------------------------------------------------------
 // API:
-//   Google Cloud RuntimeConfig API (runtimeconfig/v1)
+//   Google Cloud Runtime Configuration API (runtimeconfig/v1)
 // Description:
-//   Provides capabilities for dynamic configuration and coordination for
-//   applications running on Google Cloud Platform.
+//   The Runtime Configurator allows you to dynamically configure and expose
+//   variables through Google Cloud Platform. In addition, you can also set
+//   Watchers and Waiters that will watch for changes to your data and return
+//   based on certain conditions.
 // Documentation:
 //   https://cloud.google.com/deployment-manager/runtime-configurator/
 
@@ -24,6 +26,11 @@
 @class GTLRCloudRuntimeConfig_Operation_Response;
 @class GTLRCloudRuntimeConfig_Status;
 @class GTLRCloudRuntimeConfig_Status_Details_Item;
+
+// Generated comments include content from the discovery document; avoid them
+// causing warnings since clang's checks are some what arbitrary.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdocumentation"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -79,7 +86,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  *  If the value is `false`, it means the operation is still in progress.
- *  If true, the operation is completed, and either `error` or `response` is
+ *  If `true`, the operation is completed, and either `error` or `response` is
  *  available.
  *
  *  Uses NSNumber of boolValue.
@@ -170,7 +177,7 @@ NS_ASSUME_NONNULL_BEGIN
  *  error message is needed, put the localized message in the error details or
  *  localize it in the client. The optional error details may contain arbitrary
  *  information about the error. There is a predefined set of error detail types
- *  in the package `google.rpc` which can be used for common error conditions.
+ *  in the package `google.rpc` that can be used for common error conditions.
  *  # Language mapping
  *  The `Status` message is the logical representation of the error model, but
  *  it
@@ -188,7 +195,7 @@ NS_ASSUME_NONNULL_BEGIN
  *  it may embed the `Status` in the normal response to indicate the partial
  *  errors.
  *  - Workflow errors. A typical workflow has multiple steps. Each step may
- *  have a `Status` message for error reporting purpose.
+ *  have a `Status` message for error reporting.
  *  - Batch operations. If a client uses batch request and batch response, the
  *  `Status` message should be used directly inside batch response, one for
  *  each error sub-response.
@@ -208,8 +215,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, strong, nullable) NSNumber *code;
 
 /**
- *  A list of messages that carry the error details. There will be a
- *  common set of message types for APIs to use.
+ *  A list of messages that carry the error details. There is a common set of
+ *  message types for APIs to use.
  */
 @property(nonatomic, strong, nullable) NSArray<GTLRCloudRuntimeConfig_Status_Details_Item *> *details;
 
@@ -235,3 +242,5 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 NS_ASSUME_NONNULL_END
+
+#pragma clang diagnostic pop

@@ -153,7 +153,7 @@
 //
 
 @implementation GTLRBigquery_DatasetList_Datasets_Item
-@dynamic datasetReference, friendlyName, identifier, kind, labels;
+@dynamic datasetReference, friendlyName, identifier, kind, labels, location;
 
 + (NSDictionary<NSString *, NSString *> *)propertyToJSONKeyMap {
   return @{ @"identifier" : @"id" };
@@ -188,6 +188,31 @@
 
 // ----------------------------------------------------------------------------
 //
+//   GTLRBigquery_DestinationTableProperties
+//
+
+@implementation GTLRBigquery_DestinationTableProperties
+@dynamic descriptionProperty, friendlyName;
+
++ (NSDictionary<NSString *, NSString *> *)propertyToJSONKeyMap {
+  return @{ @"descriptionProperty" : @"description" };
+}
+
+@end
+
+
+// ----------------------------------------------------------------------------
+//
+//   GTLRBigquery_EncryptionConfiguration
+//
+
+@implementation GTLRBigquery_EncryptionConfiguration
+@dynamic kmsKeyName;
+@end
+
+
+// ----------------------------------------------------------------------------
+//
 //   GTLRBigquery_ErrorProto
 //
 
@@ -202,9 +227,12 @@
 //
 
 @implementation GTLRBigquery_ExplainQueryStage
-@dynamic computeRatioAvg, computeRatioMax, identifier, name, readRatioAvg,
-         readRatioMax, recordsRead, recordsWritten, status, steps, waitRatioAvg,
-         waitRatioMax, writeRatioAvg, writeRatioMax;
+@dynamic completedParallelInputs, computeMsAvg, computeMsMax, computeRatioAvg,
+         computeRatioMax, endMs, identifier, inputStages, name, parallelInputs,
+         readMsAvg, readMsMax, readRatioAvg, readRatioMax, recordsRead,
+         recordsWritten, shuffleOutputBytes, shuffleOutputBytesSpilled, startMs,
+         status, steps, waitMsAvg, waitMsMax, waitRatioAvg, waitRatioMax,
+         writeMsAvg, writeMsMax, writeRatioAvg, writeRatioMax;
 
 + (NSDictionary<NSString *, NSString *> *)propertyToJSONKeyMap {
   return @{ @"identifier" : @"id" };
@@ -212,6 +240,7 @@
 
 + (NSDictionary<NSString *, Class> *)arrayPropertyToClassMap {
   NSDictionary<NSString *, Class> *map = @{
+    @"inputStages" : [NSNumber class],
     @"steps" : [GTLRBigquery_ExplainQueryStep class]
   };
   return map;
@@ -291,6 +320,16 @@
 
 // ----------------------------------------------------------------------------
 //
+//   GTLRBigquery_GetServiceAccountResponse
+//
+
+@implementation GTLRBigquery_GetServiceAccountResponse
+@dynamic email, kind;
+@end
+
+
+// ----------------------------------------------------------------------------
+//
 //   GTLRBigquery_GoogleSheetsOptions
 //
 
@@ -336,7 +375,7 @@
 //
 
 @implementation GTLRBigquery_JobConfiguration
-@dynamic copyProperty, dryRun, extract, labels, load, query;
+@dynamic copyProperty, dryRun, extract, jobTimeoutMs, labels, load, query;
 
 + (NSDictionary<NSString *, NSString *> *)propertyToJSONKeyMap {
   return @{ @"copyProperty" : @"copy" };
@@ -385,10 +424,12 @@
 
 @implementation GTLRBigquery_JobConfigurationLoad
 @dynamic allowJaggedRows, allowQuotedNewlines, autodetect, createDisposition,
-         destinationTable, encoding, fieldDelimiter, ignoreUnknownValues,
-         maxBadRecords, nullMarker, projectionFields, quote, schema,
-         schemaInline, schemaInlineFormat, schemaUpdateOptions, skipLeadingRows,
-         sourceFormat, sourceUris, writeDisposition;
+         destinationEncryptionConfiguration, destinationTable,
+         destinationTableProperties, encoding, fieldDelimiter,
+         ignoreUnknownValues, maxBadRecords, nullMarker, projectionFields,
+         quote, schema, schemaInline, schemaInlineFormat, schemaUpdateOptions,
+         skipLeadingRows, sourceFormat, sourceUris, timePartitioning,
+         writeDisposition;
 
 + (NSDictionary<NSString *, Class> *)arrayPropertyToClassMap {
   NSDictionary<NSString *, Class> *map = @{
@@ -408,10 +449,11 @@
 //
 
 @implementation GTLRBigquery_JobConfigurationQuery
-@dynamic allowLargeResults, createDisposition, defaultDataset, destinationTable,
-         flattenResults, maximumBillingTier, maximumBytesBilled, parameterMode,
-         preserveNulls, priority, query, queryParameters, schemaUpdateOptions,
-         tableDefinitions, useLegacySql, useQueryCache,
+@dynamic allowLargeResults, createDisposition, defaultDataset,
+         destinationEncryptionConfiguration, destinationTable, flattenResults,
+         maximumBillingTier, maximumBytesBilled, parameterMode, preserveNulls,
+         priority, query, queryParameters, schemaUpdateOptions,
+         tableDefinitions, timePartitioning, useLegacySql, useQueryCache,
          userDefinedFunctionResources, writeDisposition;
 
 + (NSDictionary<NSString *, Class> *)arrayPropertyToClassMap {
@@ -446,8 +488,8 @@
 //
 
 @implementation GTLRBigquery_JobConfigurationTableCopy
-@dynamic createDisposition, destinationTable, sourceTable, sourceTables,
-         writeDisposition;
+@dynamic createDisposition, destinationEncryptionConfiguration,
+         destinationTable, sourceTable, sourceTables, writeDisposition;
 
 + (NSDictionary<NSString *, Class> *)arrayPropertyToClassMap {
   NSDictionary<NSString *, Class> *map = @{
@@ -511,7 +553,7 @@
 //
 
 @implementation GTLRBigquery_JobReference
-@dynamic jobId, projectId;
+@dynamic jobId, location, projectId;
 @end
 
 
@@ -521,8 +563,8 @@
 //
 
 @implementation GTLRBigquery_JobStatistics
-@dynamic creationTime, endTime, extract, load, query, startTime,
-         totalBytesProcessed;
+@dynamic completionRatio, creationTime, endTime, extract, load, query,
+         startTime, totalBytesProcessed;
 @end
 
 
@@ -532,14 +574,16 @@
 //
 
 @implementation GTLRBigquery_JobStatistics2
-@dynamic billingTier, cacheHit, numDmlAffectedRows, queryPlan, referencedTables,
-         schema, statementType, totalBytesBilled, totalBytesProcessed,
-         undeclaredQueryParameters;
+@dynamic billingTier, cacheHit, ddlOperationPerformed, ddlTargetTable,
+         estimatedBytesProcessed, numDmlAffectedRows, queryPlan,
+         referencedTables, schema, statementType, timeline, totalBytesBilled,
+         totalBytesProcessed, totalSlotMs, undeclaredQueryParameters;
 
 + (NSDictionary<NSString *, Class> *)arrayPropertyToClassMap {
   NSDictionary<NSString *, Class> *map = @{
     @"queryPlan" : [GTLRBigquery_ExplainQueryStage class],
     @"referencedTables" : [GTLRBigquery_TableReference class],
+    @"timeline" : [GTLRBigquery_QueryTimelineSample class],
     @"undeclaredQueryParameters" : [GTLRBigquery_QueryParameter class]
   };
   return map;
@@ -554,7 +598,7 @@
 //
 
 @implementation GTLRBigquery_JobStatistics3
-@dynamic inputFileBytes, inputFiles, outputBytes, outputRows;
+@dynamic badRecords, inputFileBytes, inputFiles, outputBytes, outputRows;
 @end
 
 
@@ -740,8 +784,9 @@
 //
 
 @implementation GTLRBigquery_QueryRequest
-@dynamic defaultDataset, dryRun, kind, maxResults, parameterMode, preserveNulls,
-         query, queryParameters, timeoutMs, useLegacySql, useQueryCache;
+@dynamic defaultDataset, dryRun, kind, location, maxResults, parameterMode,
+         preserveNulls, query, queryParameters, timeoutMs, useLegacySql,
+         useQueryCache;
 
 + (NSDictionary<NSString *, Class> *)arrayPropertyToClassMap {
   NSDictionary<NSString *, Class> *map = @{
@@ -775,6 +820,16 @@
 
 // ----------------------------------------------------------------------------
 //
+//   GTLRBigquery_QueryTimelineSample
+//
+
+@implementation GTLRBigquery_QueryTimelineSample
+@dynamic activeInputs, completedInputs, elapsedMs, pendingInputs, totalSlotMs;
+@end
+
+
+// ----------------------------------------------------------------------------
+//
 //   GTLRBigquery_Streamingbuffer
 //
 
@@ -789,11 +844,11 @@
 //
 
 @implementation GTLRBigquery_Table
-@dynamic creationTime, descriptionProperty, ETag, expirationTime,
-         externalDataConfiguration, friendlyName, identifier, kind, labels,
-         lastModifiedTime, location, numBytes, numLongTermBytes, numRows,
-         schema, selfLink, streamingBuffer, tableReference, timePartitioning,
-         type, view;
+@dynamic creationTime, descriptionProperty, encryptionConfiguration, ETag,
+         expirationTime, externalDataConfiguration, friendlyName, identifier,
+         kind, labels, lastModifiedTime, location, numBytes, numLongTermBytes,
+         numRows, schema, selfLink, streamingBuffer, tableReference,
+         timePartitioning, type, view;
 
 + (NSDictionary<NSString *, NSString *> *)propertyToJSONKeyMap {
   NSDictionary<NSString *, NSString *> *map = @{
@@ -971,7 +1026,8 @@
 //
 
 @implementation GTLRBigquery_TableList_Tables_Item
-@dynamic friendlyName, identifier, kind, labels, tableReference, type, view;
+@dynamic creationTime, expirationTime, friendlyName, identifier, kind, labels,
+         tableReference, timePartitioning, type, view;
 
 + (NSDictionary<NSString *, NSString *> *)propertyToJSONKeyMap {
   return @{ @"identifier" : @"id" };
@@ -1056,7 +1112,7 @@
 //
 
 @implementation GTLRBigquery_TimePartitioning
-@dynamic expirationMs, type;
+@dynamic expirationMs, field, requirePartitionFilter, type;
 @end
 
 

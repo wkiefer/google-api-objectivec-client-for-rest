@@ -19,13 +19,16 @@
 #endif
 
 @class GTLRCloudMachineLearningEngine_GoogleApiHttpBody;
-@class GTLRCloudMachineLearningEngine_GoogleCloudMlV1beta1ManualScaling;
-@class GTLRCloudMachineLearningEngine_GoogleCloudMlV1beta1Version;
+@class GTLRCloudMachineLearningEngine_GoogleApiHttpBody_Extensions_Item;
+@class GTLRCloudMachineLearningEngine_GoogleCloudMlV1AutoScaling;
+@class GTLRCloudMachineLearningEngine_GoogleCloudMlV1Capability;
+@class GTLRCloudMachineLearningEngine_GoogleCloudMlV1Config;
 @class GTLRCloudMachineLearningEngine_GoogleCloudMlV1HyperparameterOutput;
 @class GTLRCloudMachineLearningEngine_GoogleCloudMlV1HyperparameterOutput_Hyperparameters;
 @class GTLRCloudMachineLearningEngine_GoogleCloudMlV1HyperparameterOutputHyperparameterMetric;
 @class GTLRCloudMachineLearningEngine_GoogleCloudMlV1HyperparameterSpec;
 @class GTLRCloudMachineLearningEngine_GoogleCloudMlV1Job;
+@class GTLRCloudMachineLearningEngine_GoogleCloudMlV1Location;
 @class GTLRCloudMachineLearningEngine_GoogleCloudMlV1ManualScaling;
 @class GTLRCloudMachineLearningEngine_GoogleCloudMlV1Model;
 @class GTLRCloudMachineLearningEngine_GoogleCloudMlV1ParameterSpec;
@@ -34,11 +37,20 @@
 @class GTLRCloudMachineLearningEngine_GoogleCloudMlV1TrainingInput;
 @class GTLRCloudMachineLearningEngine_GoogleCloudMlV1TrainingOutput;
 @class GTLRCloudMachineLearningEngine_GoogleCloudMlV1Version;
+@class GTLRCloudMachineLearningEngine_GoogleIamV1AuditConfig;
+@class GTLRCloudMachineLearningEngine_GoogleIamV1AuditLogConfig;
+@class GTLRCloudMachineLearningEngine_GoogleIamV1Binding;
+@class GTLRCloudMachineLearningEngine_GoogleIamV1Policy;
 @class GTLRCloudMachineLearningEngine_GoogleLongrunningOperation;
 @class GTLRCloudMachineLearningEngine_GoogleLongrunningOperation_Metadata;
 @class GTLRCloudMachineLearningEngine_GoogleLongrunningOperation_Response;
 @class GTLRCloudMachineLearningEngine_GoogleRpcStatus;
 @class GTLRCloudMachineLearningEngine_GoogleRpcStatus_Details_Item;
+
+// Generated comments include content from the discovery document; avoid them
+// causing warnings since clang's checks are some what arbitrary.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdocumentation"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -46,32 +58,26 @@ NS_ASSUME_NONNULL_BEGIN
 // Constants - For some of the classes' properties below.
 
 // ----------------------------------------------------------------------------
-// GTLRCloudMachineLearningEngine_GoogleCloudMlV1beta1OperationMetadata.operationType
+// GTLRCloudMachineLearningEngine_GoogleCloudMlV1Capability.availableAccelerators
 
-/**
- *  An operation to create a new version.
- *
- *  Value: "CREATE_VERSION"
- */
-GTLR_EXTERN NSString * const kGTLRCloudMachineLearningEngine_GoogleCloudMlV1beta1OperationMetadata_OperationType_CreateVersion;
-/**
- *  An operation to delete an existing model.
- *
- *  Value: "DELETE_MODEL"
- */
-GTLR_EXTERN NSString * const kGTLRCloudMachineLearningEngine_GoogleCloudMlV1beta1OperationMetadata_OperationType_DeleteModel;
-/**
- *  An operation to delete an existing version.
- *
- *  Value: "DELETE_VERSION"
- */
-GTLR_EXTERN NSString * const kGTLRCloudMachineLearningEngine_GoogleCloudMlV1beta1OperationMetadata_OperationType_DeleteVersion;
-/**
- *  Unspecified operation type.
- *
- *  Value: "OPERATION_TYPE_UNSPECIFIED"
- */
-GTLR_EXTERN NSString * const kGTLRCloudMachineLearningEngine_GoogleCloudMlV1beta1OperationMetadata_OperationType_OperationTypeUnspecified;
+/** Value: "ACCELERATOR_TYPE_UNSPECIFIED" */
+GTLR_EXTERN NSString * const kGTLRCloudMachineLearningEngine_GoogleCloudMlV1Capability_AvailableAccelerators_AcceleratorTypeUnspecified;
+/** Value: "NVIDIA_TESLA_K80" */
+GTLR_EXTERN NSString * const kGTLRCloudMachineLearningEngine_GoogleCloudMlV1Capability_AvailableAccelerators_NvidiaTeslaK80;
+/** Value: "NVIDIA_TESLA_P100" */
+GTLR_EXTERN NSString * const kGTLRCloudMachineLearningEngine_GoogleCloudMlV1Capability_AvailableAccelerators_NvidiaTeslaP100;
+
+// ----------------------------------------------------------------------------
+// GTLRCloudMachineLearningEngine_GoogleCloudMlV1Capability.type
+
+/** Value: "BATCH_PREDICTION" */
+GTLR_EXTERN NSString * const kGTLRCloudMachineLearningEngine_GoogleCloudMlV1Capability_Type_BatchPrediction;
+/** Value: "ONLINE_PREDICTION" */
+GTLR_EXTERN NSString * const kGTLRCloudMachineLearningEngine_GoogleCloudMlV1Capability_Type_OnlinePrediction;
+/** Value: "TRAINING" */
+GTLR_EXTERN NSString * const kGTLRCloudMachineLearningEngine_GoogleCloudMlV1Capability_Type_Training;
+/** Value: "TYPE_UNSPECIFIED" */
+GTLR_EXTERN NSString * const kGTLRCloudMachineLearningEngine_GoogleCloudMlV1Capability_Type_TypeUnspecified;
 
 // ----------------------------------------------------------------------------
 // GTLRCloudMachineLearningEngine_GoogleCloudMlV1HyperparameterSpec.goal
@@ -177,6 +183,24 @@ GTLR_EXTERN NSString * const kGTLRCloudMachineLearningEngine_GoogleCloudMlV1Oper
  *  Value: "OPERATION_TYPE_UNSPECIFIED"
  */
 GTLR_EXTERN NSString * const kGTLRCloudMachineLearningEngine_GoogleCloudMlV1OperationMetadata_OperationType_OperationTypeUnspecified;
+/**
+ *  An operation to update project configuration.
+ *
+ *  Value: "UPDATE_CONFIG"
+ */
+GTLR_EXTERN NSString * const kGTLRCloudMachineLearningEngine_GoogleCloudMlV1OperationMetadata_OperationType_UpdateConfig;
+/**
+ *  An operation to update an existing model.
+ *
+ *  Value: "UPDATE_MODEL"
+ */
+GTLR_EXTERN NSString * const kGTLRCloudMachineLearningEngine_GoogleCloudMlV1OperationMetadata_OperationType_UpdateModel;
+/**
+ *  An operation to update an existing version.
+ *
+ *  Value: "UPDATE_VERSION"
+ */
+GTLR_EXTERN NSString * const kGTLRCloudMachineLearningEngine_GoogleCloudMlV1OperationMetadata_OperationType_UpdateVersion;
 
 // ----------------------------------------------------------------------------
 // GTLRCloudMachineLearningEngine_GoogleCloudMlV1ParameterSpec.scaleType
@@ -258,20 +282,25 @@ GTLR_EXTERN NSString * const kGTLRCloudMachineLearningEngine_GoogleCloudMlV1Para
  */
 GTLR_EXTERN NSString * const kGTLRCloudMachineLearningEngine_GoogleCloudMlV1PredictionInput_DataFormat_DataFormatUnspecified;
 /**
- *  The source file is a text file with instances separated by the
- *  new-line character.
+ *  Each line of the file is a JSON dictionary representing one record.
+ *
+ *  Value: "JSON"
+ */
+GTLR_EXTERN NSString * const kGTLRCloudMachineLearningEngine_GoogleCloudMlV1PredictionInput_DataFormat_Json;
+/**
+ *  Deprecated. Use JSON instead.
  *
  *  Value: "TEXT"
  */
 GTLR_EXTERN NSString * const kGTLRCloudMachineLearningEngine_GoogleCloudMlV1PredictionInput_DataFormat_Text;
 /**
- *  The source file is a TFRecord file.
+ *  INPUT ONLY. The source file is a TFRecord file.
  *
  *  Value: "TF_RECORD"
  */
 GTLR_EXTERN NSString * const kGTLRCloudMachineLearningEngine_GoogleCloudMlV1PredictionInput_DataFormat_TfRecord;
 /**
- *  The source file is a GZIP-compressed TFRecord file.
+ *  INPUT ONLY. The source file is a GZIP-compressed TFRecord file.
  *
  *  Value: "TF_RECORD_GZIP"
  */
@@ -288,11 +317,18 @@ GTLR_EXTERN NSString * const kGTLRCloudMachineLearningEngine_GoogleCloudMlV1Pred
  */
 GTLR_EXTERN NSString * const kGTLRCloudMachineLearningEngine_GoogleCloudMlV1TrainingInput_ScaleTier_Basic;
 /**
- *  A single worker instance [with a GPU](/ml-engine/docs/how-tos/using-gpus).
+ *  A single worker instance [with a
+ *  GPU](/ml-engine/docs/how-tos/using-gpus).
  *
  *  Value: "BASIC_GPU"
  */
 GTLR_EXTERN NSString * const kGTLRCloudMachineLearningEngine_GoogleCloudMlV1TrainingInput_ScaleTier_BasicGpu;
+/**
+ *  A single worker instance with a [Cloud TPU](/tpu)
+ *
+ *  Value: "BASIC_TPU"
+ */
+GTLR_EXTERN NSString * const kGTLRCloudMachineLearningEngine_GoogleCloudMlV1TrainingInput_ScaleTier_BasicTpu;
 /**
  *  The CUSTOM tier is not a set tier, but rather enables you to use your
  *  own cluster specification. When you use this tier, set values to
@@ -329,6 +365,78 @@ GTLR_EXTERN NSString * const kGTLRCloudMachineLearningEngine_GoogleCloudMlV1Trai
  *  Value: "STANDARD_1"
  */
 GTLR_EXTERN NSString * const kGTLRCloudMachineLearningEngine_GoogleCloudMlV1TrainingInput_ScaleTier_Standard1;
+
+// ----------------------------------------------------------------------------
+// GTLRCloudMachineLearningEngine_GoogleCloudMlV1Version.state
+
+/**
+ *  The version is being created. New UpdateVersion and DeleteVersion
+ *  requests will fail if a version is in the CREATING state.
+ *
+ *  Value: "CREATING"
+ */
+GTLR_EXTERN NSString * const kGTLRCloudMachineLearningEngine_GoogleCloudMlV1Version_State_Creating;
+/**
+ *  The version is being deleted. New UpdateVersion and DeleteVersion
+ *  requests will fail if a version is in the DELETING state.
+ *
+ *  Value: "DELETING"
+ */
+GTLR_EXTERN NSString * const kGTLRCloudMachineLearningEngine_GoogleCloudMlV1Version_State_Deleting;
+/**
+ *  The version failed to be created, possibly cancelled.
+ *  `error_message` should contain the details of the failure.
+ *
+ *  Value: "FAILED"
+ */
+GTLR_EXTERN NSString * const kGTLRCloudMachineLearningEngine_GoogleCloudMlV1Version_State_Failed;
+/**
+ *  The version is ready for prediction.
+ *
+ *  Value: "READY"
+ */
+GTLR_EXTERN NSString * const kGTLRCloudMachineLearningEngine_GoogleCloudMlV1Version_State_Ready;
+/**
+ *  The version state is unspecified.
+ *
+ *  Value: "UNKNOWN"
+ */
+GTLR_EXTERN NSString * const kGTLRCloudMachineLearningEngine_GoogleCloudMlV1Version_State_Unknown;
+/**
+ *  The version is being updated. New UpdateVersion and DeleteVersion
+ *  requests will fail if a version is in the UPDATING state.
+ *
+ *  Value: "UPDATING"
+ */
+GTLR_EXTERN NSString * const kGTLRCloudMachineLearningEngine_GoogleCloudMlV1Version_State_Updating;
+
+// ----------------------------------------------------------------------------
+// GTLRCloudMachineLearningEngine_GoogleIamV1AuditLogConfig.logType
+
+/**
+ *  Admin reads. Example: CloudIAM getIamPolicy
+ *
+ *  Value: "ADMIN_READ"
+ */
+GTLR_EXTERN NSString * const kGTLRCloudMachineLearningEngine_GoogleIamV1AuditLogConfig_LogType_AdminRead;
+/**
+ *  Data reads. Example: CloudSQL Users list
+ *
+ *  Value: "DATA_READ"
+ */
+GTLR_EXTERN NSString * const kGTLRCloudMachineLearningEngine_GoogleIamV1AuditLogConfig_LogType_DataRead;
+/**
+ *  Data writes. Example: CloudSQL Users create
+ *
+ *  Value: "DATA_WRITE"
+ */
+GTLR_EXTERN NSString * const kGTLRCloudMachineLearningEngine_GoogleIamV1AuditLogConfig_LogType_DataWrite;
+/**
+ *  Default case. Should never be this.
+ *
+ *  Value: "LOG_TYPE_UNSPECIFIED"
+ */
+GTLR_EXTERN NSString * const kGTLRCloudMachineLearningEngine_GoogleIamV1AuditLogConfig_LogType_LogTypeUnspecified;
 
 /**
  *  Message that represents an arbitrary HTTP body. It should only be used for
@@ -373,140 +481,53 @@ GTLR_EXTERN NSString * const kGTLRCloudMachineLearningEngine_GoogleCloudMlV1Trai
  */
 @property(nonatomic, copy, nullable) NSString *data;
 
+/**
+ *  Application specific response metadata. Must be set in the first response
+ *  for streaming APIs.
+ */
+@property(nonatomic, strong, nullable) NSArray<GTLRCloudMachineLearningEngine_GoogleApiHttpBody_Extensions_Item *> *extensions;
+
 @end
 
 
 /**
- *  Options for manually scaling a model.
+ *  GTLRCloudMachineLearningEngine_GoogleApiHttpBody_Extensions_Item
+ *
+ *  @note This class is documented as having more properties of any valid JSON
+ *        type. Use @c -additionalJSONKeys and @c -additionalPropertyForName: to
+ *        get the list of properties and then fetch them; or @c
+ *        -additionalProperties to fetch them all at once.
  */
-@interface GTLRCloudMachineLearningEngine_GoogleCloudMlV1beta1ManualScaling : GTLRObject
+@interface GTLRCloudMachineLearningEngine_GoogleApiHttpBody_Extensions_Item : GTLRObject
+@end
+
 
 /**
- *  The number of nodes to allocate for this model. These nodes are always up,
- *  starting from the time the model is deployed, so the cost of operating
- *  this model will be proportional to nodes * number of hours since
- *  deployment.
+ *  Options for automatically scaling a model.
+ */
+@interface GTLRCloudMachineLearningEngine_GoogleCloudMlV1AutoScaling : GTLRObject
+
+/**
+ *  Optional. The minimum number of nodes to allocate for this model. These
+ *  nodes are always up, starting from the time the model is deployed, so the
+ *  cost of operating this model will be at least
+ *  `rate` * `min_nodes` * number of hours since last billing cycle,
+ *  where `rate` is the cost per node-hour as documented in
+ *  [pricing](https://cloud.google.com/ml-engine/pricing#prediction_pricing),
+ *  even if no predictions are performed. There is additional cost for each
+ *  prediction performed.
+ *  Unlike manual scaling, if the load gets too heavy for the nodes
+ *  that are up, the service will automatically add nodes to handle the
+ *  increased load as well as scale back as traffic drops, always maintaining
+ *  at least `min_nodes`. You will be charged for the time in which additional
+ *  nodes are used.
+ *  If not specified, `min_nodes` defaults to 0, in which case, when traffic
+ *  to a model stops (and after a cool-down period), nodes will be shut down
+ *  and no charges will be incurred until traffic to the model resumes.
  *
  *  Uses NSNumber of intValue.
  */
-@property(nonatomic, strong, nullable) NSNumber *nodes;
-
-@end
-
-
-/**
- *  Represents the metadata of the long-running operation.
- */
-@interface GTLRCloudMachineLearningEngine_GoogleCloudMlV1beta1OperationMetadata : GTLRObject
-
-/** The time the operation was submitted. */
-@property(nonatomic, strong, nullable) GTLRDateTime *createTime;
-
-/** The time operation processing completed. */
-@property(nonatomic, strong, nullable) GTLRDateTime *endTime;
-
-/**
- *  Indicates whether a request to cancel this operation has been made.
- *
- *  Uses NSNumber of boolValue.
- */
-@property(nonatomic, strong, nullable) NSNumber *isCancellationRequested;
-
-/** Contains the name of the model associated with the operation. */
-@property(nonatomic, copy, nullable) NSString *modelName;
-
-/**
- *  The operation type.
- *
- *  Likely values:
- *    @arg @c kGTLRCloudMachineLearningEngine_GoogleCloudMlV1beta1OperationMetadata_OperationType_CreateVersion
- *        An operation to create a new version. (Value: "CREATE_VERSION")
- *    @arg @c kGTLRCloudMachineLearningEngine_GoogleCloudMlV1beta1OperationMetadata_OperationType_DeleteModel
- *        An operation to delete an existing model. (Value: "DELETE_MODEL")
- *    @arg @c kGTLRCloudMachineLearningEngine_GoogleCloudMlV1beta1OperationMetadata_OperationType_DeleteVersion
- *        An operation to delete an existing version. (Value: "DELETE_VERSION")
- *    @arg @c kGTLRCloudMachineLearningEngine_GoogleCloudMlV1beta1OperationMetadata_OperationType_OperationTypeUnspecified
- *        Unspecified operation type. (Value: "OPERATION_TYPE_UNSPECIFIED")
- */
-@property(nonatomic, copy, nullable) NSString *operationType;
-
-/** The time operation processing started. */
-@property(nonatomic, strong, nullable) GTLRDateTime *startTime;
-
-/** Contains the version associated with the operation. */
-@property(nonatomic, strong, nullable) GTLRCloudMachineLearningEngine_GoogleCloudMlV1beta1Version *version;
-
-@end
-
-
-/**
- *  Represents a version of the model.
- *  Each version is a trained model deployed in the cloud, ready to handle
- *  prediction requests. A model can have multiple versions. You can get
- *  information about all of the versions of a given model by calling
- *  [projects.models.versions.list](/ml-engine/reference/rest/v1beta1/projects.models.versions/list).
- */
-@interface GTLRCloudMachineLearningEngine_GoogleCloudMlV1beta1Version : GTLRObject
-
-/** Output only. The time the version was created. */
-@property(nonatomic, strong, nullable) GTLRDateTime *createTime;
-
-/**
- *  Required. The Google Cloud Storage location of the trained model used to
- *  create the version. See the
- *  [overview of model
- *  deployment](/ml-engine/docs/concepts/deployment-overview) for more
- *  informaiton.
- *  When passing Version to
- *  [projects.models.versions.create](/ml-engine/reference/rest/v1beta1/projects.models.versions/create)
- *  the model service uses the specified location as the source of the model.
- *  Once deployed, the model version is hosted by the prediction service, so
- *  this location is useful only as a historical record.
- *  The total number of model files can't exceed 1000.
- */
-@property(nonatomic, copy, nullable) NSString *deploymentUri;
-
-/**
- *  Optional. The description specified for the version when it was created.
- *
- *  Remapped to 'descriptionProperty' to avoid NSObject's 'description'.
- */
-@property(nonatomic, copy, nullable) NSString *descriptionProperty;
-
-/**
- *  Output only. If true, this version will be used to handle prediction
- *  requests that do not specify a version.
- *  You can change the default version by calling
- *  [projects.methods.versions.setDefault](/ml-engine/reference/rest/v1beta1/projects.models.versions/setDefault).
- *
- *  Uses NSNumber of boolValue.
- */
-@property(nonatomic, strong, nullable) NSNumber *isDefault;
-
-/** Output only. The time the version was last used for prediction. */
-@property(nonatomic, strong, nullable) GTLRDateTime *lastUseTime;
-
-/**
- *  Optional. Manually select the number of nodes to use for serving the
- *  model. If unset (i.e., by default), the number of nodes used to serve
- *  the model automatically scales with traffic. However, care should be
- *  taken to ramp up traffic according to the model's ability to scale. If
- *  your model needs to handle bursts of traffic beyond it's ability to
- *  scale, it is recommended you set this field appropriately.
- */
-@property(nonatomic, strong, nullable) GTLRCloudMachineLearningEngine_GoogleCloudMlV1beta1ManualScaling *manualScaling;
-
-/**
- *  Required.The name specified for the version when it was created.
- *  The version name must be unique within the model it is created in.
- */
-@property(nonatomic, copy, nullable) NSString *name;
-
-/**
- *  Optional. The Google Cloud ML runtime version to use for this deployment.
- *  If not set, Google Cloud ML will choose a version.
- */
-@property(nonatomic, copy, nullable) NSString *runtimeVersion;
+@property(nonatomic, strong, nullable) NSNumber *minNodes;
 
 @end
 
@@ -519,9 +540,48 @@ GTLR_EXTERN NSString * const kGTLRCloudMachineLearningEngine_GoogleCloudMlV1Trai
 
 
 /**
+ *  GTLRCloudMachineLearningEngine_GoogleCloudMlV1Capability
+ */
+@interface GTLRCloudMachineLearningEngine_GoogleCloudMlV1Capability : GTLRObject
+
+/** Available accelerators for the capability. */
+@property(nonatomic, strong, nullable) NSArray<NSString *> *availableAccelerators;
+
+/**
+ *  type
+ *
+ *  Likely values:
+ *    @arg @c kGTLRCloudMachineLearningEngine_GoogleCloudMlV1Capability_Type_BatchPrediction
+ *        Value "BATCH_PREDICTION"
+ *    @arg @c kGTLRCloudMachineLearningEngine_GoogleCloudMlV1Capability_Type_OnlinePrediction
+ *        Value "ONLINE_PREDICTION"
+ *    @arg @c kGTLRCloudMachineLearningEngine_GoogleCloudMlV1Capability_Type_Training
+ *        Value "TRAINING"
+ *    @arg @c kGTLRCloudMachineLearningEngine_GoogleCloudMlV1Capability_Type_TypeUnspecified
+ *        Value "TYPE_UNSPECIFIED"
+ */
+@property(nonatomic, copy, nullable) NSString *type;
+
+@end
+
+
+/**
+ *  GTLRCloudMachineLearningEngine_GoogleCloudMlV1Config
+ */
+@interface GTLRCloudMachineLearningEngine_GoogleCloudMlV1Config : GTLRObject
+
+/** The service account Cloud ML uses to run on TPU node. */
+@property(nonatomic, copy, nullable) NSString *tpuServiceAccount;
+
+@end
+
+
+/**
  *  Returns service account information associated with a project.
  */
 @interface GTLRCloudMachineLearningEngine_GoogleCloudMlV1GetConfigResponse : GTLRObject
+
+@property(nonatomic, strong, nullable) GTLRCloudMachineLearningEngine_GoogleCloudMlV1Config *config;
 
 /** The service account Cloud ML uses to access resources in the project. */
 @property(nonatomic, copy, nullable) NSString *serviceAccount;
@@ -544,7 +604,10 @@ GTLR_EXTERN NSString * const kGTLRCloudMachineLearningEngine_GoogleCloudMlV1Trai
  */
 @interface GTLRCloudMachineLearningEngine_GoogleCloudMlV1HyperparameterOutput : GTLRObject
 
-/** All recorded object metrics for this trial. */
+/**
+ *  All recorded object metrics for this trial. This field is not currently
+ *  populated.
+ */
 @property(nonatomic, strong, nullable) NSArray<GTLRCloudMachineLearningEngine_GoogleCloudMlV1HyperparameterOutputHyperparameterMetric *> *allMetrics;
 
 /** The final objective metric seen for this trial. */
@@ -552,6 +615,13 @@ GTLR_EXTERN NSString * const kGTLRCloudMachineLearningEngine_GoogleCloudMlV1Trai
 
 /** The hyperparameters given to this trial. */
 @property(nonatomic, strong, nullable) GTLRCloudMachineLearningEngine_GoogleCloudMlV1HyperparameterOutput_Hyperparameters *hyperparameters;
+
+/**
+ *  True if the trial is stopped early.
+ *
+ *  Uses NSNumber of boolValue.
+ */
+@property(nonatomic, strong, nullable) NSNumber *isTrialStoppedEarly;
 
 /** The trial id for these results. */
 @property(nonatomic, copy, nullable) NSString *trialId;
@@ -597,6 +667,14 @@ GTLR_EXTERN NSString * const kGTLRCloudMachineLearningEngine_GoogleCloudMlV1Trai
  *  Represents a set of hyperparameters to optimize.
  */
 @interface GTLRCloudMachineLearningEngine_GoogleCloudMlV1HyperparameterSpec : GTLRObject
+
+/**
+ *  Optional. Indicates if the hyperparameter tuning job enables auto trial
+ *  early stopping.
+ *
+ *  Uses NSNumber of boolValue.
+ */
+@property(nonatomic, strong, nullable) NSNumber *enableTrialEarlyStopping;
 
 /**
  *  Required. The type of goal to use for tuning. Available types are
@@ -647,6 +725,13 @@ GTLR_EXTERN NSString * const kGTLRCloudMachineLearningEngine_GoogleCloudMlV1Trai
 
 /** Required. The set of parameters to tune. */
 @property(nonatomic, strong, nullable) NSArray<GTLRCloudMachineLearningEngine_GoogleCloudMlV1ParameterSpec *> *params;
+
+/**
+ *  Optional. The prior hyperparameter tuning job id that users hope to
+ *  continue with. The job id will be used to find the corresponding vizier
+ *  study guid and resume the study.
+ */
+@property(nonatomic, copy, nullable) NSString *resumePreviousJobId;
 
 @end
 
@@ -744,6 +829,33 @@ GTLR_EXTERN NSString * const kGTLRCloudMachineLearningEngine_GoogleCloudMlV1Trai
 
 
 /**
+ *  GTLRCloudMachineLearningEngine_GoogleCloudMlV1ListLocationsResponse
+ *
+ *  @note This class supports NSFastEnumeration and indexed subscripting over
+ *        its "locations" property. If returned as the result of a query, it
+ *        should support automatic pagination (when @c shouldFetchNextPages is
+ *        enabled).
+ */
+@interface GTLRCloudMachineLearningEngine_GoogleCloudMlV1ListLocationsResponse : GTLRCollectionObject
+
+/**
+ *  Locations where at least one type of CMLE capability is available.
+ *
+ *  @note This property is used to support NSFastEnumeration and indexed
+ *        subscripting on this class.
+ */
+@property(nonatomic, strong, nullable) NSArray<GTLRCloudMachineLearningEngine_GoogleCloudMlV1Location *> *locations;
+
+/**
+ *  Optional. Pass this token as the `page_token` field of the request for a
+ *  subsequent call.
+ */
+@property(nonatomic, copy, nullable) NSString *nextPageToken;
+
+@end
+
+
+/**
  *  Response message for the ListModels method.
  *
  *  @note This class supports NSFastEnumeration and indexed subscripting over
@@ -798,6 +910,19 @@ GTLR_EXTERN NSString * const kGTLRCloudMachineLearningEngine_GoogleCloudMlV1Trai
 
 
 /**
+ *  GTLRCloudMachineLearningEngine_GoogleCloudMlV1Location
+ */
+@interface GTLRCloudMachineLearningEngine_GoogleCloudMlV1Location : GTLRObject
+
+/** Capabilities available in the location. */
+@property(nonatomic, strong, nullable) NSArray<GTLRCloudMachineLearningEngine_GoogleCloudMlV1Capability *> *capabilities;
+
+@property(nonatomic, copy, nullable) NSString *name;
+
+@end
+
+
+/**
  *  Options for manually scaling a model.
  */
 @interface GTLRCloudMachineLearningEngine_GoogleCloudMlV1ManualScaling : GTLRObject
@@ -805,8 +930,8 @@ GTLR_EXTERN NSString * const kGTLRCloudMachineLearningEngine_GoogleCloudMlV1Trai
 /**
  *  The number of nodes to allocate for this model. These nodes are always up,
  *  starting from the time the model is deployed, so the cost of operating
- *  this model will be proportional to nodes * number of hours since
- *  deployment.
+ *  this model will be proportional to `nodes` * number of hours since
+ *  last billing cycle plus the cost for each prediction performed.
  *
  *  Uses NSNumber of intValue.
  */
@@ -856,6 +981,8 @@ GTLR_EXTERN NSString * const kGTLRCloudMachineLearningEngine_GoogleCloudMlV1Trai
  *  Optional. The list of regions where the model is going to be deployed.
  *  Currently only one region per model is supported.
  *  Defaults to 'us-central1' if nothing is set.
+ *  See the <a href="/ml-engine/docs/regions">available regions</a> for
+ *  ML Engine services.
  *  Note:
  *  * No matter where a model is deployed, it can always be accessed by
  *  users from anywhere, both for online and batch prediction.
@@ -901,8 +1028,21 @@ GTLR_EXTERN NSString * const kGTLRCloudMachineLearningEngine_GoogleCloudMlV1Trai
  *        An operation to delete an existing version. (Value: "DELETE_VERSION")
  *    @arg @c kGTLRCloudMachineLearningEngine_GoogleCloudMlV1OperationMetadata_OperationType_OperationTypeUnspecified
  *        Unspecified operation type. (Value: "OPERATION_TYPE_UNSPECIFIED")
+ *    @arg @c kGTLRCloudMachineLearningEngine_GoogleCloudMlV1OperationMetadata_OperationType_UpdateConfig
+ *        An operation to update project configuration. (Value: "UPDATE_CONFIG")
+ *    @arg @c kGTLRCloudMachineLearningEngine_GoogleCloudMlV1OperationMetadata_OperationType_UpdateModel
+ *        An operation to update an existing model. (Value: "UPDATE_MODEL")
+ *    @arg @c kGTLRCloudMachineLearningEngine_GoogleCloudMlV1OperationMetadata_OperationType_UpdateVersion
+ *        An operation to update an existing version. (Value: "UPDATE_VERSION")
  */
 @property(nonatomic, copy, nullable) NSString *operationType;
+
+/**
+ *  Contains the project number associated with the operation.
+ *
+ *  Uses NSNumber of longLongValue.
+ */
+@property(nonatomic, strong, nullable) NSNumber *projectNumber;
 
 /** The time operation processing started. */
 @property(nonatomic, strong, nullable) GTLRDateTime *startTime;
@@ -1014,19 +1154,31 @@ GTLR_EXTERN NSString * const kGTLRCloudMachineLearningEngine_GoogleCloudMlV1Trai
 @interface GTLRCloudMachineLearningEngine_GoogleCloudMlV1PredictionInput : GTLRObject
 
 /**
+ *  Optional. Number of records per batch, defaults to 64.
+ *  The service will buffer batch_size number of records in memory before
+ *  invoking one Tensorflow prediction call internally. So take the record
+ *  size and memory available into consideration when setting this parameter.
+ *
+ *  Uses NSNumber of longLongValue.
+ */
+@property(nonatomic, strong, nullable) NSNumber *batchSize;
+
+/**
  *  Required. The format of the input data files.
  *
  *  Likely values:
  *    @arg @c kGTLRCloudMachineLearningEngine_GoogleCloudMlV1PredictionInput_DataFormat_DataFormatUnspecified
  *        Unspecified format. (Value: "DATA_FORMAT_UNSPECIFIED")
+ *    @arg @c kGTLRCloudMachineLearningEngine_GoogleCloudMlV1PredictionInput_DataFormat_Json
+ *        Each line of the file is a JSON dictionary representing one record.
+ *        (Value: "JSON")
  *    @arg @c kGTLRCloudMachineLearningEngine_GoogleCloudMlV1PredictionInput_DataFormat_Text
- *        The source file is a text file with instances separated by the
- *        new-line character. (Value: "TEXT")
+ *        Deprecated. Use JSON instead. (Value: "TEXT")
  *    @arg @c kGTLRCloudMachineLearningEngine_GoogleCloudMlV1PredictionInput_DataFormat_TfRecord
- *        The source file is a TFRecord file. (Value: "TF_RECORD")
+ *        INPUT ONLY. The source file is a TFRecord file. (Value: "TF_RECORD")
  *    @arg @c kGTLRCloudMachineLearningEngine_GoogleCloudMlV1PredictionInput_DataFormat_TfRecordGzip
- *        The source file is a GZIP-compressed TFRecord file. (Value:
- *        "TF_RECORD_GZIP")
+ *        INPUT ONLY. The source file is a GZIP-compressed TFRecord file.
+ *        (Value: "TF_RECORD_GZIP")
  */
 @property(nonatomic, copy, nullable) NSString *dataFormat;
 
@@ -1056,6 +1208,8 @@ GTLR_EXTERN NSString * const kGTLRCloudMachineLearningEngine_GoogleCloudMlV1Trai
 
 /**
  *  Required. The Google Compute Engine region to run the prediction job in.
+ *  See the <a href="/ml-engine/docs/regions">available regions</a> for
+ *  ML Engine services.
  */
 @property(nonatomic, copy, nullable) NSString *region;
 
@@ -1067,6 +1221,17 @@ GTLR_EXTERN NSString * const kGTLRCloudMachineLearningEngine_GoogleCloudMlV1Trai
  *  such as when the model is specified by uri.
  */
 @property(nonatomic, copy, nullable) NSString *runtimeVersion;
+
+/**
+ *  Optional. The name of the signature defined in the SavedModel to use for
+ *  this job. Please refer to
+ *  [SavedModel](https://tensorflow.github.io/serving/serving_basic.html)
+ *  for information about how to use signatures.
+ *  Defaults to
+ *  [DEFAULT_SERVING_SIGNATURE_DEF_KEY](https://www.tensorflow.org/api_docs/python/tf/saved_model/signature_constants)
+ *  , which is "serving_default".
+ */
+@property(nonatomic, copy, nullable) NSString *signatureName;
 
 /**
  *  Use this field if you want to specify a Google Cloud Storage path for
@@ -1121,185 +1286,6 @@ GTLR_EXTERN NSString * const kGTLRCloudMachineLearningEngine_GoogleCloudMlV1Trai
 
 /**
  *  Request for predictions to be issued against a trained model.
- *  The body of the request is a single JSON object with a single top-level
- *  field:
- *  <dl>
- *  <dt>instances</dt>
- *  <dd>A JSON array containing values representing the instances to use for
- *  prediction.</dd>
- *  </dl>
- *  The structure of each element of the instances list is determined by your
- *  model's input definition. Instances can include named inputs or can contain
- *  only unlabeled values.
- *  Not all data includes named inputs. Some instances will be simple
- *  JSON values (boolean, number, or string). However, instances are often lists
- *  of simple values, or complex nested lists. Here are some examples of request
- *  bodies:
- *  CSV data with each row encoded as a string value:
- *  <pre>
- *  {"instances": ["1.0,true,\\\\"x\\\\"", "-2.0,false,\\\\"y\\\\""]}
- *  </pre>
- *  Plain text:
- *  <pre>
- *  {"instances": ["the quick brown fox", "la bruja le dio"]}
- *  </pre>
- *  Sentences encoded as lists of words (vectors of strings):
- *  <pre>
- *  {
- *  "instances": [
- *  ["the","quick","brown"],
- *  ["la","bruja","le"],
- *  ...
- *  ]
- *  }
- *  </pre>
- *  Floating point scalar values:
- *  <pre>
- *  {"instances": [0.0, 1.1, 2.2]}
- *  </pre>
- *  Vectors of integers:
- *  <pre>
- *  {
- *  "instances": [
- *  [0, 1, 2],
- *  [3, 4, 5],
- *  ...
- *  ]
- *  }
- *  </pre>
- *  Tensors (in this case, two-dimensional tensors):
- *  <pre>
- *  {
- *  "instances": [
- *  [
- *  [0, 1, 2],
- *  [3, 4, 5]
- *  ],
- *  ...
- *  ]
- *  }
- *  </pre>
- *  Images can be represented different ways. In this encoding scheme the first
- *  two dimensions represent the rows and columns of the image, and the third
- *  contains lists (vectors) of the R, G, and B values for each pixel.
- *  <pre>
- *  {
- *  "instances": [
- *  [
- *  [
- *  [138, 30, 66],
- *  [130, 20, 56],
- *  ...
- *  ],
- *  [
- *  [126, 38, 61],
- *  [122, 24, 57],
- *  ...
- *  ],
- *  ...
- *  ],
- *  ...
- *  ]
- *  }
- *  </pre>
- *  JSON strings must be encoded as UTF-8. To send binary data, you must
- *  base64-encode the data and mark it as binary. To mark a JSON string
- *  as binary, replace it with a JSON object with a single attribute named
- *  `b64`:
- *  <pre>{"b64": "..."} </pre>
- *  For example:
- *  Two Serialized tf.Examples (fake data, for illustrative purposes only):
- *  <pre>
- *  {"instances": [{"b64": "X5ad6u"}, {"b64": "IA9j4nx"}]}
- *  </pre>
- *  Two JPEG image byte strings (fake data, for illustrative purposes only):
- *  <pre>
- *  {"instances": [{"b64": "ASa8asdf"}, {"b64": "JLK7ljk3"}]}
- *  </pre>
- *  If your data includes named references, format each instance as a JSON
- *  object
- *  with the named references as the keys:
- *  JSON input data to be preprocessed:
- *  <pre>
- *  {
- *  "instances": [
- *  {
- *  "a": 1.0,
- *  "b": true,
- *  "c": "x"
- *  },
- *  {
- *  "a": -2.0,
- *  "b": false,
- *  "c": "y"
- *  }
- *  ]
- *  }
- *  </pre>
- *  Some models have an underlying TensorFlow graph that accepts multiple input
- *  tensors. In this case, you should use the names of JSON name/value pairs to
- *  identify the input tensors, as shown in the following exmaples:
- *  For a graph with input tensor aliases "tag" (string) and "image"
- *  (base64-encoded string):
- *  <pre>
- *  {
- *  "instances": [
- *  {
- *  "tag": "beach",
- *  "image": {"b64": "ASa8asdf"}
- *  },
- *  {
- *  "tag": "car",
- *  "image": {"b64": "JLK7ljk3"}
- *  }
- *  ]
- *  }
- *  </pre>
- *  For a graph with input tensor aliases "tag" (string) and "image"
- *  (3-dimensional array of 8-bit ints):
- *  <pre>
- *  {
- *  "instances": [
- *  {
- *  "tag": "beach",
- *  "image": [
- *  [
- *  [138, 30, 66],
- *  [130, 20, 56],
- *  ...
- *  ],
- *  [
- *  [126, 38, 61],
- *  [122, 24, 57],
- *  ...
- *  ],
- *  ...
- *  ]
- *  },
- *  {
- *  "tag": "car",
- *  "image": [
- *  [
- *  [255, 0, 102],
- *  [255, 0, 97],
- *  ...
- *  ],
- *  [
- *  [254, 1, 101],
- *  [254, 2, 93],
- *  ...
- *  ],
- *  ...
- *  ]
- *  },
- *  ...
- *  ]
- *  }
- *  </pre>
- *  If the call is successful, the response body will contain one prediction
- *  entry per instance in the request body. If prediction fails for any
- *  instance, the response body will contain no predictions and will contian
- *  a single error entry instead.
  */
 @interface GTLRCloudMachineLearningEngine_GoogleCloudMlV1PredictRequest : GTLRObject
 
@@ -1317,7 +1303,13 @@ GTLR_EXTERN NSString * const kGTLRCloudMachineLearningEngine_GoogleCloudMlV1Trai
 
 
 /**
- *  Represents input parameters for a training job.
+ *  Represents input parameters for a training job. When using the
+ *  gcloud command to submit your training job, you can specify
+ *  the input parameters as command-line arguments and/or in a YAML
+ *  configuration
+ *  file referenced from the --config command-line argument. For
+ *  details, see the guide to
+ *  <a href="/ml-engine/docs/training-jobs">submitting a training job</a>.
  */
 @interface GTLRCloudMachineLearningEngine_GoogleCloudMlV1TrainingInput : GTLRObject
 
@@ -1370,15 +1362,34 @@ GTLR_EXTERN NSString * const kGTLRCloudMachineLearningEngine_GoogleCloudMlV1Trai
  *  <dt>standard_gpu</dt>
  *  <dd>
  *  A machine equivalent to <code suppresswarning="true">standard</code> that
- *  also includes a
+ *  also includes a single NVIDIA Tesla K80 GPU. See more about
  *  <a href="/ml-engine/docs/how-tos/using-gpus">
- *  GPU that you can use in your trainer</a>.
+ *  using GPUs for training your model</a>.
  *  </dd>
  *  <dt>complex_model_m_gpu</dt>
  *  <dd>
  *  A machine equivalent to
- *  <code suppresswarning="true">coplex_model_m</code> that also includes
- *  four GPUs.
+ *  <code suppresswarning="true">complex_model_m</code> that also includes
+ *  four NVIDIA Tesla K80 GPUs.
+ *  </dd>
+ *  <dt>complex_model_l_gpu</dt>
+ *  <dd>
+ *  A machine equivalent to
+ *  <code suppresswarning="true">complex_model_l</code> that also includes
+ *  eight NVIDIA Tesla K80 GPUs.
+ *  </dd>
+ *  <dt>standard_p100</dt>
+ *  <dd>
+ *  A machine equivalent to <code suppresswarning="true">standard</code> that
+ *  also includes a single NVIDIA Tesla P100 GPU. The availability of these
+ *  GPUs is in the Beta launch stage.
+ *  </dd>
+ *  <dt>complex_model_m_p100</dt>
+ *  <dd>
+ *  A machine equivalent to
+ *  <code suppresswarning="true">complex_model_m</code> that also includes
+ *  four NVIDIA Tesla P100 GPUs. The availability of these GPUs is in
+ *  the Beta launch stage.
  *  </dd>
  *  </dl>
  *  You must set this value when `scaleTier` is set to `CUSTOM`.
@@ -1416,7 +1427,18 @@ GTLR_EXTERN NSString * const kGTLRCloudMachineLearningEngine_GoogleCloudMlV1Trai
 /** Required. The Python module name to run after installing the packages. */
 @property(nonatomic, copy, nullable) NSString *pythonModule;
 
-/** Required. The Google Compute Engine region to run the training job in. */
+/**
+ *  Optional. The version of Python used in training. If not set, the default
+ *  version is '2.7'. Python '3.5' is available when `runtime_version` is set
+ *  to '1.4' and above. Python '2.7' works with all supported runtime versions.
+ */
+@property(nonatomic, copy, nullable) NSString *pythonVersion;
+
+/**
+ *  Required. The Google Compute Engine region to run the training job in.
+ *  See the <a href="/ml-engine/docs/regions">available regions</a> for
+ *  ML Engine services.
+ */
 @property(nonatomic, copy, nullable) NSString *region;
 
 /**
@@ -1438,6 +1460,8 @@ GTLR_EXTERN NSString * const kGTLRCloudMachineLearningEngine_GoogleCloudMlV1Trai
  *    @arg @c kGTLRCloudMachineLearningEngine_GoogleCloudMlV1TrainingInput_ScaleTier_BasicGpu
  *        A single worker instance [with a
  *        GPU](/ml-engine/docs/how-tos/using-gpus). (Value: "BASIC_GPU")
+ *    @arg @c kGTLRCloudMachineLearningEngine_GoogleCloudMlV1TrainingInput_ScaleTier_BasicTpu
+ *        A single worker instance with a [Cloud TPU](/tpu) (Value: "BASIC_TPU")
  *    @arg @c kGTLRCloudMachineLearningEngine_GoogleCloudMlV1TrainingInput_ScaleTier_Custom
  *        The CUSTOM tier is not a set tier, but rather enables you to use your
  *        own cluster specification. When you use this tier, set values to
@@ -1533,8 +1557,17 @@ GTLR_EXTERN NSString * const kGTLRCloudMachineLearningEngine_GoogleCloudMlV1Trai
  *  prediction requests. A model can have multiple versions. You can get
  *  information about all of the versions of a given model by calling
  *  [projects.models.versions.list](/ml-engine/reference/rest/v1/projects.models.versions/list).
+ *  LINT.IfChange
  */
 @interface GTLRCloudMachineLearningEngine_GoogleCloudMlV1Version : GTLRObject
+
+/**
+ *  Automatically scale the number of nodes used to serve the model in
+ *  response to increases and decreases in traffic. Care should be
+ *  taken to ramp up traffic according to the model's ability to scale
+ *  or you will start seeing increases in latency and 429 response codes.
+ */
+@property(nonatomic, strong, nullable) GTLRCloudMachineLearningEngine_GoogleCloudMlV1AutoScaling *autoScaling;
 
 /** Output only. The time the version was created. */
 @property(nonatomic, strong, nullable) GTLRDateTime *createTime;
@@ -1544,7 +1577,7 @@ GTLR_EXTERN NSString * const kGTLRCloudMachineLearningEngine_GoogleCloudMlV1Trai
  *  create the version. See the
  *  [overview of model
  *  deployment](/ml-engine/docs/concepts/deployment-overview) for more
- *  informaiton.
+ *  information.
  *  When passing Version to
  *  [projects.models.versions.create](/ml-engine/reference/rest/v1/projects.models.versions/create)
  *  the model service uses the specified location as the source of the model.
@@ -1561,6 +1594,9 @@ GTLR_EXTERN NSString * const kGTLRCloudMachineLearningEngine_GoogleCloudMlV1Trai
  */
 @property(nonatomic, copy, nullable) NSString *descriptionProperty;
 
+/** Output only. The details of a failure or a cancellation. */
+@property(nonatomic, copy, nullable) NSString *errorMessage;
+
 /**
  *  Output only. If true, this version will be used to handle prediction
  *  requests that do not specify a version.
@@ -1575,12 +1611,12 @@ GTLR_EXTERN NSString * const kGTLRCloudMachineLearningEngine_GoogleCloudMlV1Trai
 @property(nonatomic, strong, nullable) GTLRDateTime *lastUseTime;
 
 /**
- *  Optional. Manually select the number of nodes to use for serving the
- *  model. If unset (i.e., by default), the number of nodes used to serve
- *  the model automatically scales with traffic. However, care should be
- *  taken to ramp up traffic according to the model's ability to scale. If
- *  your model needs to handle bursts of traffic beyond it's ability to
- *  scale, it is recommended you set this field appropriately.
+ *  Manually select the number of nodes to use for serving the
+ *  model. You should generally use `auto_scaling` with an appropriate
+ *  `min_nodes` instead, but this option is available if you want more
+ *  predictable billing. Beware that latency and error rates will increase
+ *  if the traffic exceeds that capability of the system to serve it based
+ *  on the selected number of nodes.
  */
 @property(nonatomic, strong, nullable) GTLRCloudMachineLearningEngine_GoogleCloudMlV1ManualScaling *manualScaling;
 
@@ -1595,6 +1631,303 @@ GTLR_EXTERN NSString * const kGTLRCloudMachineLearningEngine_GoogleCloudMlV1Trai
  *  If not set, Google Cloud ML will choose a version.
  */
 @property(nonatomic, copy, nullable) NSString *runtimeVersion;
+
+/**
+ *  Output only. The state of a version.
+ *
+ *  Likely values:
+ *    @arg @c kGTLRCloudMachineLearningEngine_GoogleCloudMlV1Version_State_Creating
+ *        The version is being created. New UpdateVersion and DeleteVersion
+ *        requests will fail if a version is in the CREATING state. (Value:
+ *        "CREATING")
+ *    @arg @c kGTLRCloudMachineLearningEngine_GoogleCloudMlV1Version_State_Deleting
+ *        The version is being deleted. New UpdateVersion and DeleteVersion
+ *        requests will fail if a version is in the DELETING state. (Value:
+ *        "DELETING")
+ *    @arg @c kGTLRCloudMachineLearningEngine_GoogleCloudMlV1Version_State_Failed
+ *        The version failed to be created, possibly cancelled.
+ *        `error_message` should contain the details of the failure. (Value:
+ *        "FAILED")
+ *    @arg @c kGTLRCloudMachineLearningEngine_GoogleCloudMlV1Version_State_Ready
+ *        The version is ready for prediction. (Value: "READY")
+ *    @arg @c kGTLRCloudMachineLearningEngine_GoogleCloudMlV1Version_State_Unknown
+ *        The version state is unspecified. (Value: "UNKNOWN")
+ *    @arg @c kGTLRCloudMachineLearningEngine_GoogleCloudMlV1Version_State_Updating
+ *        The version is being updated. New UpdateVersion and DeleteVersion
+ *        requests will fail if a version is in the UPDATING state. (Value:
+ *        "UPDATING")
+ */
+@property(nonatomic, copy, nullable) NSString *state;
+
+@end
+
+
+/**
+ *  Specifies the audit configuration for a service.
+ *  The configuration determines which permission types are logged, and what
+ *  identities, if any, are exempted from logging.
+ *  An AuditConfig must have one or more AuditLogConfigs.
+ *  If there are AuditConfigs for both `allServices` and a specific service,
+ *  the union of the two AuditConfigs is used for that service: the log_types
+ *  specified in each AuditConfig are enabled, and the exempted_members in each
+ *  AuditLogConfig are exempted.
+ *  Example Policy with multiple AuditConfigs:
+ *  {
+ *  "audit_configs": [
+ *  {
+ *  "service": "allServices"
+ *  "audit_log_configs": [
+ *  {
+ *  "log_type": "DATA_READ",
+ *  "exempted_members": [
+ *  "user:foo\@gmail.com"
+ *  ]
+ *  },
+ *  {
+ *  "log_type": "DATA_WRITE",
+ *  },
+ *  {
+ *  "log_type": "ADMIN_READ",
+ *  }
+ *  ]
+ *  },
+ *  {
+ *  "service": "fooservice.googleapis.com"
+ *  "audit_log_configs": [
+ *  {
+ *  "log_type": "DATA_READ",
+ *  },
+ *  {
+ *  "log_type": "DATA_WRITE",
+ *  "exempted_members": [
+ *  "user:bar\@gmail.com"
+ *  ]
+ *  }
+ *  ]
+ *  }
+ *  ]
+ *  }
+ *  For fooservice, this policy enables DATA_READ, DATA_WRITE and ADMIN_READ
+ *  logging. It also exempts foo\@gmail.com from DATA_READ logging, and
+ *  bar\@gmail.com from DATA_WRITE logging.
+ */
+@interface GTLRCloudMachineLearningEngine_GoogleIamV1AuditConfig : GTLRObject
+
+/**
+ *  The configuration for logging of each type of permission.
+ *  Next ID: 4
+ */
+@property(nonatomic, strong, nullable) NSArray<GTLRCloudMachineLearningEngine_GoogleIamV1AuditLogConfig *> *auditLogConfigs;
+
+/**
+ *  Specifies a service that will be enabled for audit logging.
+ *  For example, `storage.googleapis.com`, `cloudsql.googleapis.com`.
+ *  `allServices` is a special value that covers all services.
+ */
+@property(nonatomic, copy, nullable) NSString *service;
+
+@end
+
+
+/**
+ *  Provides the configuration for logging a type of permissions.
+ *  Example:
+ *  {
+ *  "audit_log_configs": [
+ *  {
+ *  "log_type": "DATA_READ",
+ *  "exempted_members": [
+ *  "user:foo\@gmail.com"
+ *  ]
+ *  },
+ *  {
+ *  "log_type": "DATA_WRITE",
+ *  }
+ *  ]
+ *  }
+ *  This enables 'DATA_READ' and 'DATA_WRITE' logging, while exempting
+ *  foo\@gmail.com from DATA_READ logging.
+ */
+@interface GTLRCloudMachineLearningEngine_GoogleIamV1AuditLogConfig : GTLRObject
+
+/**
+ *  Specifies the identities that do not cause logging for this type of
+ *  permission.
+ *  Follows the same format of Binding.members.
+ */
+@property(nonatomic, strong, nullable) NSArray<NSString *> *exemptedMembers;
+
+/**
+ *  The log type that this config enables.
+ *
+ *  Likely values:
+ *    @arg @c kGTLRCloudMachineLearningEngine_GoogleIamV1AuditLogConfig_LogType_AdminRead
+ *        Admin reads. Example: CloudIAM getIamPolicy (Value: "ADMIN_READ")
+ *    @arg @c kGTLRCloudMachineLearningEngine_GoogleIamV1AuditLogConfig_LogType_DataRead
+ *        Data reads. Example: CloudSQL Users list (Value: "DATA_READ")
+ *    @arg @c kGTLRCloudMachineLearningEngine_GoogleIamV1AuditLogConfig_LogType_DataWrite
+ *        Data writes. Example: CloudSQL Users create (Value: "DATA_WRITE")
+ *    @arg @c kGTLRCloudMachineLearningEngine_GoogleIamV1AuditLogConfig_LogType_LogTypeUnspecified
+ *        Default case. Should never be this. (Value: "LOG_TYPE_UNSPECIFIED")
+ */
+@property(nonatomic, copy, nullable) NSString *logType;
+
+@end
+
+
+/**
+ *  Associates `members` with a `role`.
+ */
+@interface GTLRCloudMachineLearningEngine_GoogleIamV1Binding : GTLRObject
+
+/**
+ *  Specifies the identities requesting access for a Cloud Platform resource.
+ *  `members` can have the following values:
+ *  * `allUsers`: A special identifier that represents anyone who is
+ *  on the internet; with or without a Google account.
+ *  * `allAuthenticatedUsers`: A special identifier that represents anyone
+ *  who is authenticated with a Google account or a service account.
+ *  * `user:{emailid}`: An email address that represents a specific Google
+ *  account. For example, `alice\@gmail.com` or `joe\@example.com`.
+ *  * `serviceAccount:{emailid}`: An email address that represents a service
+ *  account. For example, `my-other-app\@appspot.gserviceaccount.com`.
+ *  * `group:{emailid}`: An email address that represents a Google group.
+ *  For example, `admins\@example.com`.
+ *  * `domain:{domain}`: A Google Apps domain name that represents all the
+ *  users of that domain. For example, `google.com` or `example.com`.
+ */
+@property(nonatomic, strong, nullable) NSArray<NSString *> *members;
+
+/**
+ *  Role that is assigned to `members`.
+ *  For example, `roles/viewer`, `roles/editor`, or `roles/owner`.
+ *  Required
+ */
+@property(nonatomic, copy, nullable) NSString *role;
+
+@end
+
+
+/**
+ *  Defines an Identity and Access Management (IAM) policy. It is used to
+ *  specify access control policies for Cloud Platform resources.
+ *  A `Policy` consists of a list of `bindings`. A `Binding` binds a list of
+ *  `members` to a `role`, where the members can be user accounts, Google
+ *  groups,
+ *  Google domains, and service accounts. A `role` is a named list of
+ *  permissions
+ *  defined by IAM.
+ *  **Example**
+ *  {
+ *  "bindings": [
+ *  {
+ *  "role": "roles/owner",
+ *  "members": [
+ *  "user:mike\@example.com",
+ *  "group:admins\@example.com",
+ *  "domain:google.com",
+ *  "serviceAccount:my-other-app\@appspot.gserviceaccount.com",
+ *  ]
+ *  },
+ *  {
+ *  "role": "roles/viewer",
+ *  "members": ["user:sean\@example.com"]
+ *  }
+ *  ]
+ *  }
+ *  For a description of IAM and its features, see the
+ *  [IAM developer's guide](https://cloud.google.com/iam/docs).
+ */
+@interface GTLRCloudMachineLearningEngine_GoogleIamV1Policy : GTLRObject
+
+/** Specifies cloud audit logging configuration for this policy. */
+@property(nonatomic, strong, nullable) NSArray<GTLRCloudMachineLearningEngine_GoogleIamV1AuditConfig *> *auditConfigs;
+
+/**
+ *  Associates a list of `members` to a `role`.
+ *  `bindings` with no members will result in an error.
+ */
+@property(nonatomic, strong, nullable) NSArray<GTLRCloudMachineLearningEngine_GoogleIamV1Binding *> *bindings;
+
+/**
+ *  `etag` is used for optimistic concurrency control as a way to help
+ *  prevent simultaneous updates of a policy from overwriting each other.
+ *  It is strongly suggested that systems make use of the `etag` in the
+ *  read-modify-write cycle to perform policy updates in order to avoid race
+ *  conditions: An `etag` is returned in the response to `getIamPolicy`, and
+ *  systems are expected to put that etag in the request to `setIamPolicy` to
+ *  ensure that their change will be applied to the same version of the policy.
+ *  If no `etag` is provided in the call to `setIamPolicy`, then the existing
+ *  policy is overwritten blindly.
+ *
+ *  Contains encoded binary data; GTLRBase64 can encode/decode (probably
+ *  web-safe format).
+ */
+@property(nonatomic, copy, nullable) NSString *ETag;
+
+/**
+ *  Deprecated.
+ *
+ *  Uses NSNumber of intValue.
+ */
+@property(nonatomic, strong, nullable) NSNumber *version;
+
+@end
+
+
+/**
+ *  Request message for `SetIamPolicy` method.
+ */
+@interface GTLRCloudMachineLearningEngine_GoogleIamV1SetIamPolicyRequest : GTLRObject
+
+/**
+ *  REQUIRED: The complete policy to be applied to the `resource`. The size of
+ *  the policy is limited to a few 10s of KB. An empty policy is a
+ *  valid policy but certain Cloud Platform services (such as Projects)
+ *  might reject them.
+ */
+@property(nonatomic, strong, nullable) GTLRCloudMachineLearningEngine_GoogleIamV1Policy *policy;
+
+/**
+ *  OPTIONAL: A FieldMask specifying which fields of the policy to modify. Only
+ *  the fields in the mask will be modified. If no mask is provided, the
+ *  following default mask is used:
+ *  paths: "bindings, etag"
+ *  This field is only used by Cloud IAM.
+ *
+ *  String format is a comma-separated list of fields.
+ */
+@property(nonatomic, copy, nullable) NSString *updateMask;
+
+@end
+
+
+/**
+ *  Request message for `TestIamPermissions` method.
+ */
+@interface GTLRCloudMachineLearningEngine_GoogleIamV1TestIamPermissionsRequest : GTLRObject
+
+/**
+ *  The set of permissions to check for the `resource`. Permissions with
+ *  wildcards (such as '*' or 'storage.*') are not allowed. For more
+ *  information see
+ *  [IAM Overview](https://cloud.google.com/iam/docs/overview#permissions).
+ */
+@property(nonatomic, strong, nullable) NSArray<NSString *> *permissions;
+
+@end
+
+
+/**
+ *  Response message for `TestIamPermissions` method.
+ */
+@interface GTLRCloudMachineLearningEngine_GoogleIamV1TestIamPermissionsResponse : GTLRObject
+
+/**
+ *  A subset of `TestPermissionsRequest.permissions` that the caller is
+ *  allowed.
+ */
+@property(nonatomic, strong, nullable) NSArray<NSString *> *permissions;
 
 @end
 
@@ -1631,7 +1964,7 @@ GTLR_EXTERN NSString * const kGTLRCloudMachineLearningEngine_GoogleCloudMlV1Trai
 
 /**
  *  If the value is `false`, it means the operation is still in progress.
- *  If true, the operation is completed, and either `error` or `response` is
+ *  If `true`, the operation is completed, and either `error` or `response` is
  *  available.
  *
  *  Uses NSNumber of boolValue.
@@ -1735,7 +2068,7 @@ GTLR_EXTERN NSString * const kGTLRCloudMachineLearningEngine_GoogleCloudMlV1Trai
  *  error message is needed, put the localized message in the error details or
  *  localize it in the client. The optional error details may contain arbitrary
  *  information about the error. There is a predefined set of error detail types
- *  in the package `google.rpc` which can be used for common error conditions.
+ *  in the package `google.rpc` that can be used for common error conditions.
  *  # Language mapping
  *  The `Status` message is the logical representation of the error model, but
  *  it
@@ -1753,7 +2086,7 @@ GTLR_EXTERN NSString * const kGTLRCloudMachineLearningEngine_GoogleCloudMlV1Trai
  *  it may embed the `Status` in the normal response to indicate the partial
  *  errors.
  *  - Workflow errors. A typical workflow has multiple steps. Each step may
- *  have a `Status` message for error reporting purpose.
+ *  have a `Status` message for error reporting.
  *  - Batch operations. If a client uses batch request and batch response, the
  *  `Status` message should be used directly inside batch response, one for
  *  each error sub-response.
@@ -1773,8 +2106,8 @@ GTLR_EXTERN NSString * const kGTLRCloudMachineLearningEngine_GoogleCloudMlV1Trai
 @property(nonatomic, strong, nullable) NSNumber *code;
 
 /**
- *  A list of messages that carry the error details. There will be a
- *  common set of message types for APIs to use.
+ *  A list of messages that carry the error details. There is a common set of
+ *  message types for APIs to use.
  */
 @property(nonatomic, strong, nullable) NSArray<GTLRCloudMachineLearningEngine_GoogleRpcStatus_Details_Item *> *details;
 
@@ -1800,3 +2133,5 @@ GTLR_EXTERN NSString * const kGTLRCloudMachineLearningEngine_GoogleCloudMlV1Trai
 @end
 
 NS_ASSUME_NONNULL_END
+
+#pragma clang diagnostic pop

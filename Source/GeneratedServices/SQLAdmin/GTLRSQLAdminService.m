@@ -29,7 +29,7 @@ NSString * const kGTLRAuthScopeSQLAdminSqlserviceAdmin = @"https://www.googleapi
     // From discovery.
     self.rootURLString = @"https://www.googleapis.com/";
     self.servicePath = @"sql/v1beta4/";
-    self.batchPath = @"batch";
+    self.batchPath = @"batch/sqladmin/v1beta4";
     self.prettyPrintQueryParameterNames = @[ @"prettyPrint" ];
   }
   return self;
@@ -45,6 +45,9 @@ NSString * const kGTLRAuthScopeSQLAdminSqlserviceAdmin = @"https://www.googleapi
     @"sql#cloneContext" : [GTLRSQLAdmin_CloneContext class],
     @"sql#database" : [GTLRSQLAdmin_Database class],
     @"sql#databasesList" : [GTLRSQLAdmin_DatabasesListResponse class],
+    @"sql#demoteMasterConfiguration" : [GTLRSQLAdmin_DemoteMasterConfiguration class],
+    @"sql#demoteMasterContext" : [GTLRSQLAdmin_DemoteMasterContext class],
+    @"sql#demoteMasterMysqlReplicaConfiguration" : [GTLRSQLAdmin_DemoteMasterMySqlReplicaConfiguration class],
     @"sql#exportContext" : [GTLRSQLAdmin_ExportContext class],
     @"sql#failoverContext" : [GTLRSQLAdmin_FailoverContext class],
     @"sql#flag" : [GTLRSQLAdmin_Flag class],

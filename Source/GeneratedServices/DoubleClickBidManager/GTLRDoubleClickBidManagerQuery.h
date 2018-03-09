@@ -24,6 +24,11 @@
 @class GTLRDoubleClickBidManager_RunQueryRequest;
 @class GTLRDoubleClickBidManager_UploadLineItemsRequest;
 
+// Generated comments include content from the discovery document; avoid them
+// causing warnings since clang's checks are some what arbitrary.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdocumentation"
+
 NS_ASSUME_NONNULL_BEGIN
 
 /**
@@ -37,9 +42,12 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 /**
- *  Retrieves line items in CSV format.
+ *  Retrieves line items in CSV format. TrueView line items are not supported.
  *
  *  Method: doubleclickbidmanager.lineitems.downloadlineitems
+ *
+ *  Authorization scope(s):
+ *    @c kGTLRAuthScopeDoubleClickBidManager
  */
 @interface GTLRDoubleClickBidManagerQuery_LineitemsDownloadlineitems : GTLRDoubleClickBidManagerQuery
 // Previous library name was
@@ -48,7 +56,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  *  Fetches a @c GTLRDoubleClickBidManager_DownloadLineItemsResponse.
  *
- *  Retrieves line items in CSV format.
+ *  Retrieves line items in CSV format. TrueView line items are not supported.
  *
  *  @param object The @c GTLRDoubleClickBidManager_DownloadLineItemsRequest to
  *    include in the query.
@@ -60,9 +68,12 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 /**
- *  Uploads line items in CSV format.
+ *  Uploads line items in CSV format. TrueView line items are not supported.
  *
  *  Method: doubleclickbidmanager.lineitems.uploadlineitems
+ *
+ *  Authorization scope(s):
+ *    @c kGTLRAuthScopeDoubleClickBidManager
  */
 @interface GTLRDoubleClickBidManagerQuery_LineitemsUploadlineitems : GTLRDoubleClickBidManagerQuery
 // Previous library name was
@@ -71,7 +82,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  *  Fetches a @c GTLRDoubleClickBidManager_UploadLineItemsResponse.
  *
- *  Uploads line items in CSV format.
+ *  Uploads line items in CSV format. TrueView line items are not supported.
  *
  *  @param object The @c GTLRDoubleClickBidManager_UploadLineItemsRequest to
  *    include in the query.
@@ -86,6 +97,9 @@ NS_ASSUME_NONNULL_BEGIN
  *  Creates a query.
  *
  *  Method: doubleclickbidmanager.queries.createquery
+ *
+ *  Authorization scope(s):
+ *    @c kGTLRAuthScopeDoubleClickBidManager
  */
 @interface GTLRDoubleClickBidManagerQuery_QueriesCreatequery : GTLRDoubleClickBidManagerQuery
 // Previous library name was
@@ -109,6 +123,9 @@ NS_ASSUME_NONNULL_BEGIN
  *  Deletes a stored query as well as the associated stored reports.
  *
  *  Method: doubleclickbidmanager.queries.deletequery
+ *
+ *  Authorization scope(s):
+ *    @c kGTLRAuthScopeDoubleClickBidManager
  */
 @interface GTLRDoubleClickBidManagerQuery_QueriesDeletequery : GTLRDoubleClickBidManagerQuery
 // Previous library name was
@@ -135,6 +152,9 @@ NS_ASSUME_NONNULL_BEGIN
  *  Retrieves a stored query.
  *
  *  Method: doubleclickbidmanager.queries.getquery
+ *
+ *  Authorization scope(s):
+ *    @c kGTLRAuthScopeDoubleClickBidManager
  */
 @interface GTLRDoubleClickBidManagerQuery_QueriesGetquery : GTLRDoubleClickBidManagerQuery
 // Previous library name was
@@ -160,6 +180,9 @@ NS_ASSUME_NONNULL_BEGIN
  *  Retrieves stored queries.
  *
  *  Method: doubleclickbidmanager.queries.listqueries
+ *
+ *  Authorization scope(s):
+ *    @c kGTLRAuthScopeDoubleClickBidManager
  */
 @interface GTLRDoubleClickBidManagerQuery_QueriesListqueries : GTLRDoubleClickBidManagerQuery
 // Previous library name was
@@ -180,6 +203,9 @@ NS_ASSUME_NONNULL_BEGIN
  *  Runs a stored query to generate a report.
  *
  *  Method: doubleclickbidmanager.queries.runquery
+ *
+ *  Authorization scope(s):
+ *    @c kGTLRAuthScopeDoubleClickBidManager
  */
 @interface GTLRDoubleClickBidManagerQuery_QueriesRunquery : GTLRDoubleClickBidManagerQuery
 // Previous library name was
@@ -209,6 +235,9 @@ NS_ASSUME_NONNULL_BEGIN
  *  Retrieves stored reports.
  *
  *  Method: doubleclickbidmanager.reports.listreports
+ *
+ *  Authorization scope(s):
+ *    @c kGTLRAuthScopeDoubleClickBidManager
  */
 @interface GTLRDoubleClickBidManagerQuery_ReportsListreports : GTLRDoubleClickBidManagerQuery
 // Previous library name was
@@ -234,6 +263,9 @@ NS_ASSUME_NONNULL_BEGIN
  *  Retrieves entities in SDF format.
  *
  *  Method: doubleclickbidmanager.sdf.download
+ *
+ *  Authorization scope(s):
+ *    @c kGTLRAuthScopeDoubleClickBidManager
  */
 @interface GTLRDoubleClickBidManagerQuery_SdfDownload : GTLRDoubleClickBidManagerQuery
 // Previous library name was
@@ -254,3 +286,5 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 NS_ASSUME_NONNULL_END
+
+#pragma clang diagnostic pop

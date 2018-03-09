@@ -384,6 +384,11 @@ NSString * const kGTLRSlides_Recolor_Name_Negative  = @"NEGATIVE";
 NSString * const kGTLRSlides_Recolor_Name_None      = @"NONE";
 NSString * const kGTLRSlides_Recolor_Name_Sepia     = @"SEPIA";
 
+// GTLRSlides_ReplaceAllShapesWithImageRequest.imageReplaceMethod
+NSString * const kGTLRSlides_ReplaceAllShapesWithImageRequest_ImageReplaceMethod_CenterCrop = @"CENTER_CROP";
+NSString * const kGTLRSlides_ReplaceAllShapesWithImageRequest_ImageReplaceMethod_CenterInside = @"CENTER_INSIDE";
+NSString * const kGTLRSlides_ReplaceAllShapesWithImageRequest_ImageReplaceMethod_ImageReplaceMethodUnspecified = @"IMAGE_REPLACE_METHOD_UNSPECIFIED";
+
 // GTLRSlides_ReplaceAllShapesWithImageRequest.replaceMethod
 NSString * const kGTLRSlides_ReplaceAllShapesWithImageRequest_ReplaceMethod_CenterCrop = @"CENTER_CROP";
 NSString * const kGTLRSlides_ReplaceAllShapesWithImageRequest_ReplaceMethod_CenterInside = @"CENTER_INSIDE";
@@ -391,6 +396,11 @@ NSString * const kGTLRSlides_ReplaceAllShapesWithImageRequest_ReplaceMethod_Cent
 // GTLRSlides_ReplaceAllShapesWithSheetsChartRequest.linkingMode
 NSString * const kGTLRSlides_ReplaceAllShapesWithSheetsChartRequest_LinkingMode_Linked = @"LINKED";
 NSString * const kGTLRSlides_ReplaceAllShapesWithSheetsChartRequest_LinkingMode_NotLinkedImage = @"NOT_LINKED_IMAGE";
+
+// GTLRSlides_ReplaceImageRequest.imageReplaceMethod
+NSString * const kGTLRSlides_ReplaceImageRequest_ImageReplaceMethod_CenterCrop = @"CENTER_CROP";
+NSString * const kGTLRSlides_ReplaceImageRequest_ImageReplaceMethod_CenterInside = @"CENTER_INSIDE";
+NSString * const kGTLRSlides_ReplaceImageRequest_ImageReplaceMethod_ImageReplaceMethodUnspecified = @"IMAGE_REPLACE_METHOD_UNSPECIFIED";
 
 // GTLRSlides_Shadow.alignment
 NSString * const kGTLRSlides_Shadow_Alignment_BottomCenter     = @"BOTTOM_CENTER";
@@ -563,10 +573,33 @@ NSString * const kGTLRSlides_ShapeBackgroundFill_PropertyState_Inherit = @"INHER
 NSString * const kGTLRSlides_ShapeBackgroundFill_PropertyState_NotRendered = @"NOT_RENDERED";
 NSString * const kGTLRSlides_ShapeBackgroundFill_PropertyState_Rendered = @"RENDERED";
 
+// GTLRSlides_ShapeProperties.contentAlignment
+NSString * const kGTLRSlides_ShapeProperties_ContentAlignment_Bottom = @"BOTTOM";
+NSString * const kGTLRSlides_ShapeProperties_ContentAlignment_ContentAlignmentUnspecified = @"CONTENT_ALIGNMENT_UNSPECIFIED";
+NSString * const kGTLRSlides_ShapeProperties_ContentAlignment_ContentAlignmentUnsupported = @"CONTENT_ALIGNMENT_UNSUPPORTED";
+NSString * const kGTLRSlides_ShapeProperties_ContentAlignment_Middle = @"MIDDLE";
+NSString * const kGTLRSlides_ShapeProperties_ContentAlignment_Top = @"TOP";
+
+// GTLRSlides_TableBorderProperties.dashStyle
+NSString * const kGTLRSlides_TableBorderProperties_DashStyle_Dash = @"DASH";
+NSString * const kGTLRSlides_TableBorderProperties_DashStyle_DashDot = @"DASH_DOT";
+NSString * const kGTLRSlides_TableBorderProperties_DashStyle_DashStyleUnspecified = @"DASH_STYLE_UNSPECIFIED";
+NSString * const kGTLRSlides_TableBorderProperties_DashStyle_Dot = @"DOT";
+NSString * const kGTLRSlides_TableBorderProperties_DashStyle_LongDash = @"LONG_DASH";
+NSString * const kGTLRSlides_TableBorderProperties_DashStyle_LongDashDot = @"LONG_DASH_DOT";
+NSString * const kGTLRSlides_TableBorderProperties_DashStyle_Solid = @"SOLID";
+
 // GTLRSlides_TableCellBackgroundFill.propertyState
 NSString * const kGTLRSlides_TableCellBackgroundFill_PropertyState_Inherit = @"INHERIT";
 NSString * const kGTLRSlides_TableCellBackgroundFill_PropertyState_NotRendered = @"NOT_RENDERED";
 NSString * const kGTLRSlides_TableCellBackgroundFill_PropertyState_Rendered = @"RENDERED";
+
+// GTLRSlides_TableCellProperties.contentAlignment
+NSString * const kGTLRSlides_TableCellProperties_ContentAlignment_Bottom = @"BOTTOM";
+NSString * const kGTLRSlides_TableCellProperties_ContentAlignment_ContentAlignmentUnspecified = @"CONTENT_ALIGNMENT_UNSPECIFIED";
+NSString * const kGTLRSlides_TableCellProperties_ContentAlignment_ContentAlignmentUnsupported = @"CONTENT_ALIGNMENT_UNSUPPORTED";
+NSString * const kGTLRSlides_TableCellProperties_ContentAlignment_Middle = @"MIDDLE";
+NSString * const kGTLRSlides_TableCellProperties_ContentAlignment_Top = @"TOP";
 
 // GTLRSlides_TextStyle.baselineOffset
 NSString * const kGTLRSlides_TextStyle_BaselineOffset_BaselineOffsetUnspecified = @"BASELINE_OFFSET_UNSPECIFIED";
@@ -597,6 +630,17 @@ NSString * const kGTLRSlides_ThemeColorPair_Type_ThemeColorTypeUnspecified = @"T
 NSString * const kGTLRSlides_UpdatePageElementTransformRequest_ApplyMode_Absolute = @"ABSOLUTE";
 NSString * const kGTLRSlides_UpdatePageElementTransformRequest_ApplyMode_ApplyModeUnspecified = @"APPLY_MODE_UNSPECIFIED";
 NSString * const kGTLRSlides_UpdatePageElementTransformRequest_ApplyMode_Relative = @"RELATIVE";
+
+// GTLRSlides_UpdateTableBorderPropertiesRequest.borderPosition
+NSString * const kGTLRSlides_UpdateTableBorderPropertiesRequest_BorderPosition_All = @"ALL";
+NSString * const kGTLRSlides_UpdateTableBorderPropertiesRequest_BorderPosition_Bottom = @"BOTTOM";
+NSString * const kGTLRSlides_UpdateTableBorderPropertiesRequest_BorderPosition_Inner = @"INNER";
+NSString * const kGTLRSlides_UpdateTableBorderPropertiesRequest_BorderPosition_InnerHorizontal = @"INNER_HORIZONTAL";
+NSString * const kGTLRSlides_UpdateTableBorderPropertiesRequest_BorderPosition_InnerVertical = @"INNER_VERTICAL";
+NSString * const kGTLRSlides_UpdateTableBorderPropertiesRequest_BorderPosition_Left = @"LEFT";
+NSString * const kGTLRSlides_UpdateTableBorderPropertiesRequest_BorderPosition_Outer = @"OUTER";
+NSString * const kGTLRSlides_UpdateTableBorderPropertiesRequest_BorderPosition_Right = @"RIGHT";
+NSString * const kGTLRSlides_UpdateTableBorderPropertiesRequest_BorderPosition_Top = @"TOP";
 
 // GTLRSlides_Video.source
 NSString * const kGTLRSlides_Video_Source_SourceUnspecified = @"SOURCE_UNSPECIFIED";
@@ -646,7 +690,7 @@ NSString * const kGTLRSlides_Video_Source_Youtube           = @"YOUTUBE";
 //
 
 @implementation GTLRSlides_BatchUpdatePresentationResponse
-@dynamic presentationId, replies;
+@dynamic presentationId, replies, writeControl;
 
 + (NSDictionary<NSString *, Class> *)arrayPropertyToClassMap {
   NSDictionary<NSString *, Class> *map = @{
@@ -983,11 +1027,39 @@ NSString * const kGTLRSlides_Video_Source_Youtube           = @"YOUTUBE";
 
 // ----------------------------------------------------------------------------
 //
+//   GTLRSlides_GroupObjectsRequest
+//
+
+@implementation GTLRSlides_GroupObjectsRequest
+@dynamic childrenObjectIds, groupObjectId;
+
++ (NSDictionary<NSString *, Class> *)arrayPropertyToClassMap {
+  NSDictionary<NSString *, Class> *map = @{
+    @"childrenObjectIds" : [NSString class]
+  };
+  return map;
+}
+
+@end
+
+
+// ----------------------------------------------------------------------------
+//
+//   GTLRSlides_GroupObjectsResponse
+//
+
+@implementation GTLRSlides_GroupObjectsResponse
+@dynamic objectId;
+@end
+
+
+// ----------------------------------------------------------------------------
+//
 //   GTLRSlides_Image
 //
 
 @implementation GTLRSlides_Image
-@dynamic contentUrl, imageProperties;
+@dynamic contentUrl, imageProperties, sourceUrl;
 @end
 
 
@@ -1128,6 +1200,26 @@ NSString * const kGTLRSlides_Video_Source_Youtube           = @"YOUTUBE";
 
 // ----------------------------------------------------------------------------
 //
+//   GTLRSlides_MasterProperties
+//
+
+@implementation GTLRSlides_MasterProperties
+@dynamic displayName;
+@end
+
+
+// ----------------------------------------------------------------------------
+//
+//   GTLRSlides_MergeTableCellsRequest
+//
+
+@implementation GTLRSlides_MergeTableCellsRequest
+@dynamic objectId, tableRange;
+@end
+
+
+// ----------------------------------------------------------------------------
+//
 //   GTLRSlides_NestingLevel
 //
 
@@ -1192,8 +1284,8 @@ NSString * const kGTLRSlides_Video_Source_Youtube           = @"YOUTUBE";
 //
 
 @implementation GTLRSlides_Page
-@dynamic layoutProperties, notesProperties, objectId, pageElements,
-         pageProperties, pageType, revisionId, slideProperties;
+@dynamic layoutProperties, masterProperties, notesProperties, objectId,
+         pageElements, pageProperties, pageType, revisionId, slideProperties;
 
 + (NSDictionary<NSString *, Class> *)arrayPropertyToClassMap {
   NSDictionary<NSString *, Class> *map = @{
@@ -1347,7 +1439,16 @@ NSString * const kGTLRSlides_Video_Source_Youtube           = @"YOUTUBE";
 //
 
 @implementation GTLRSlides_ReplaceAllShapesWithImageRequest
-@dynamic containsText, imageUrl, replaceMethod;
+@dynamic containsText, imageReplaceMethod, imageUrl, pageObjectIds,
+         replaceMethod;
+
++ (NSDictionary<NSString *, Class> *)arrayPropertyToClassMap {
+  NSDictionary<NSString *, Class> *map = @{
+    @"pageObjectIds" : [NSString class]
+  };
+  return map;
+}
+
 @end
 
 
@@ -1367,7 +1468,15 @@ NSString * const kGTLRSlides_Video_Source_Youtube           = @"YOUTUBE";
 //
 
 @implementation GTLRSlides_ReplaceAllShapesWithSheetsChartRequest
-@dynamic chartId, containsText, linkingMode, spreadsheetId;
+@dynamic chartId, containsText, linkingMode, pageObjectIds, spreadsheetId;
+
++ (NSDictionary<NSString *, Class> *)arrayPropertyToClassMap {
+  NSDictionary<NSString *, Class> *map = @{
+    @"pageObjectIds" : [NSString class]
+  };
+  return map;
+}
+
 @end
 
 
@@ -1387,7 +1496,15 @@ NSString * const kGTLRSlides_Video_Source_Youtube           = @"YOUTUBE";
 //
 
 @implementation GTLRSlides_ReplaceAllTextRequest
-@dynamic containsText, replaceText;
+@dynamic containsText, pageObjectIds, replaceText;
+
++ (NSDictionary<NSString *, Class> *)arrayPropertyToClassMap {
+  NSDictionary<NSString *, Class> *map = @{
+    @"pageObjectIds" : [NSString class]
+  };
+  return map;
+}
+
 @end
 
 
@@ -1403,6 +1520,16 @@ NSString * const kGTLRSlides_Video_Source_Youtube           = @"YOUTUBE";
 
 // ----------------------------------------------------------------------------
 //
+//   GTLRSlides_ReplaceImageRequest
+//
+
+@implementation GTLRSlides_ReplaceImageRequest
+@dynamic imageObjectId, imageReplaceMethod, url;
+@end
+
+
+// ----------------------------------------------------------------------------
+//
 //   GTLRSlides_Request
 //
 
@@ -1410,12 +1537,16 @@ NSString * const kGTLRSlides_Video_Source_Youtube           = @"YOUTUBE";
 @dynamic createImage, createLine, createParagraphBullets, createShape,
          createSheetsChart, createSlide, createTable, createVideo, deleteObject,
          deleteParagraphBullets, deleteTableColumn, deleteTableRow, deleteText,
-         duplicateObject, insertTableColumns, insertTableRows, insertText,
-         refreshSheetsChart, replaceAllShapesWithImage,
-         replaceAllShapesWithSheetsChart, replaceAllText, updateImageProperties,
-         updateLineProperties, updatePageElementTransform, updatePageProperties,
-         updateParagraphStyle, updateShapeProperties, updateSlidesPosition,
-         updateTableCellProperties, updateTextStyle, updateVideoProperties;
+         duplicateObject, groupObjects, insertTableColumns, insertTableRows,
+         insertText, mergeTableCells, refreshSheetsChart,
+         replaceAllShapesWithImage, replaceAllShapesWithSheetsChart,
+         replaceAllText, replaceImage, ungroupObjects, unmergeTableCells,
+         updateImageProperties, updateLineProperties, updatePageElementAltText,
+         updatePageElementTransform, updatePageProperties, updateParagraphStyle,
+         updateShapeProperties, updateSlidesPosition,
+         updateTableBorderProperties, updateTableCellProperties,
+         updateTableColumnProperties, updateTableRowProperties, updateTextStyle,
+         updateVideoProperties;
 @end
 
 
@@ -1426,8 +1557,9 @@ NSString * const kGTLRSlides_Video_Source_Youtube           = @"YOUTUBE";
 
 @implementation GTLRSlides_Response
 @dynamic createImage, createLine, createShape, createSheetsChart, createSlide,
-         createTable, createVideo, duplicateObject, replaceAllShapesWithImage,
-         replaceAllShapesWithSheetsChart, replaceAllText;
+         createTable, createVideo, duplicateObject, groupObjects,
+         replaceAllShapesWithImage, replaceAllShapesWithSheetsChart,
+         replaceAllText;
 @end
 
 
@@ -1478,7 +1610,7 @@ NSString * const kGTLRSlides_Video_Source_Youtube           = @"YOUTUBE";
 //
 
 @implementation GTLRSlides_ShapeProperties
-@dynamic link, outline, shadow, shapeBackgroundFill;
+@dynamic contentAlignment, link, outline, shadow, shapeBackgroundFill;
 @end
 
 
@@ -1558,12 +1690,63 @@ NSString * const kGTLRSlides_Video_Source_Youtube           = @"YOUTUBE";
 //
 
 @implementation GTLRSlides_Table
-@dynamic columns, rows, tableColumns, tableRows;
+@dynamic columns, horizontalBorderRows, rows, tableColumns, tableRows,
+         verticalBorderRows;
 
 + (NSDictionary<NSString *, Class> *)arrayPropertyToClassMap {
   NSDictionary<NSString *, Class> *map = @{
+    @"horizontalBorderRows" : [GTLRSlides_TableBorderRow class],
     @"tableColumns" : [GTLRSlides_TableColumnProperties class],
-    @"tableRows" : [GTLRSlides_TableRow class]
+    @"tableRows" : [GTLRSlides_TableRow class],
+    @"verticalBorderRows" : [GTLRSlides_TableBorderRow class]
+  };
+  return map;
+}
+
+@end
+
+
+// ----------------------------------------------------------------------------
+//
+//   GTLRSlides_TableBorderCell
+//
+
+@implementation GTLRSlides_TableBorderCell
+@dynamic location, tableBorderProperties;
+@end
+
+
+// ----------------------------------------------------------------------------
+//
+//   GTLRSlides_TableBorderFill
+//
+
+@implementation GTLRSlides_TableBorderFill
+@dynamic solidFill;
+@end
+
+
+// ----------------------------------------------------------------------------
+//
+//   GTLRSlides_TableBorderProperties
+//
+
+@implementation GTLRSlides_TableBorderProperties
+@dynamic dashStyle, tableBorderFill, weight;
+@end
+
+
+// ----------------------------------------------------------------------------
+//
+//   GTLRSlides_TableBorderRow
+//
+
+@implementation GTLRSlides_TableBorderRow
+@dynamic tableBorderCells;
+
++ (NSDictionary<NSString *, Class> *)arrayPropertyToClassMap {
+  NSDictionary<NSString *, Class> *map = @{
+    @"tableBorderCells" : [GTLRSlides_TableBorderCell class]
   };
   return map;
 }
@@ -1607,7 +1790,7 @@ NSString * const kGTLRSlides_Video_Source_Youtube           = @"YOUTUBE";
 //
 
 @implementation GTLRSlides_TableCellProperties
-@dynamic tableCellBackgroundFill;
+@dynamic contentAlignment, tableCellBackgroundFill;
 @end
 
 
@@ -1637,7 +1820,7 @@ NSString * const kGTLRSlides_Video_Source_Youtube           = @"YOUTUBE";
 //
 
 @implementation GTLRSlides_TableRow
-@dynamic rowHeight, tableCells;
+@dynamic rowHeight, tableCells, tableRowProperties;
 
 + (NSDictionary<NSString *, Class> *)arrayPropertyToClassMap {
   NSDictionary<NSString *, Class> *map = @{
@@ -1646,6 +1829,16 @@ NSString * const kGTLRSlides_Video_Source_Youtube           = @"YOUTUBE";
   return map;
 }
 
+@end
+
+
+// ----------------------------------------------------------------------------
+//
+//   GTLRSlides_TableRowProperties
+//
+
+@implementation GTLRSlides_TableRowProperties
+@dynamic minRowHeight;
 @end
 
 
@@ -1735,6 +1928,34 @@ NSString * const kGTLRSlides_Video_Source_Youtube           = @"YOUTUBE";
 
 // ----------------------------------------------------------------------------
 //
+//   GTLRSlides_UngroupObjectsRequest
+//
+
+@implementation GTLRSlides_UngroupObjectsRequest
+@dynamic objectIds;
+
++ (NSDictionary<NSString *, Class> *)arrayPropertyToClassMap {
+  NSDictionary<NSString *, Class> *map = @{
+    @"objectIds" : [NSString class]
+  };
+  return map;
+}
+
+@end
+
+
+// ----------------------------------------------------------------------------
+//
+//   GTLRSlides_UnmergeTableCellsRequest
+//
+
+@implementation GTLRSlides_UnmergeTableCellsRequest
+@dynamic objectId, tableRange;
+@end
+
+
+// ----------------------------------------------------------------------------
+//
 //   GTLRSlides_UpdateImagePropertiesRequest
 //
 
@@ -1750,6 +1971,21 @@ NSString * const kGTLRSlides_Video_Source_Youtube           = @"YOUTUBE";
 
 @implementation GTLRSlides_UpdateLinePropertiesRequest
 @dynamic fields, lineProperties, objectId;
+@end
+
+
+// ----------------------------------------------------------------------------
+//
+//   GTLRSlides_UpdatePageElementAltTextRequest
+//
+
+@implementation GTLRSlides_UpdatePageElementAltTextRequest
+@dynamic descriptionProperty, objectId, title;
+
++ (NSDictionary<NSString *, NSString *> *)propertyToJSONKeyMap {
+  return @{ @"descriptionProperty" : @"description" };
+}
+
 @end
 
 
@@ -1813,11 +2049,57 @@ NSString * const kGTLRSlides_Video_Source_Youtube           = @"YOUTUBE";
 
 // ----------------------------------------------------------------------------
 //
+//   GTLRSlides_UpdateTableBorderPropertiesRequest
+//
+
+@implementation GTLRSlides_UpdateTableBorderPropertiesRequest
+@dynamic borderPosition, fields, objectId, tableBorderProperties, tableRange;
+@end
+
+
+// ----------------------------------------------------------------------------
+//
 //   GTLRSlides_UpdateTableCellPropertiesRequest
 //
 
 @implementation GTLRSlides_UpdateTableCellPropertiesRequest
 @dynamic fields, objectId, tableCellProperties, tableRange;
+@end
+
+
+// ----------------------------------------------------------------------------
+//
+//   GTLRSlides_UpdateTableColumnPropertiesRequest
+//
+
+@implementation GTLRSlides_UpdateTableColumnPropertiesRequest
+@dynamic columnIndices, fields, objectId, tableColumnProperties;
+
++ (NSDictionary<NSString *, Class> *)arrayPropertyToClassMap {
+  NSDictionary<NSString *, Class> *map = @{
+    @"columnIndices" : [NSNumber class]
+  };
+  return map;
+}
+
+@end
+
+
+// ----------------------------------------------------------------------------
+//
+//   GTLRSlides_UpdateTableRowPropertiesRequest
+//
+
+@implementation GTLRSlides_UpdateTableRowPropertiesRequest
+@dynamic fields, objectId, rowIndices, tableRowProperties;
+
++ (NSDictionary<NSString *, Class> *)arrayPropertyToClassMap {
+  NSDictionary<NSString *, Class> *map = @{
+    @"rowIndices" : [NSNumber class]
+  };
+  return map;
+}
+
 @end
 
 
@@ -1862,7 +2144,7 @@ NSString * const kGTLRSlides_Video_Source_Youtube           = @"YOUTUBE";
 //
 
 @implementation GTLRSlides_VideoProperties
-@dynamic outline;
+@dynamic autoPlay, end, mute, outline, start;
 @end
 
 

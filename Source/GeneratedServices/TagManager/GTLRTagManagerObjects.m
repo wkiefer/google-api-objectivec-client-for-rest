@@ -57,6 +57,10 @@ NSString * const kGTLRTagManager_BuiltInVariable_Type_ContainerId = @"containerI
 NSString * const kGTLRTagManager_BuiltInVariable_Type_ContainerVersion = @"containerVersion";
 NSString * const kGTLRTagManager_BuiltInVariable_Type_DebugMode = @"debugMode";
 NSString * const kGTLRTagManager_BuiltInVariable_Type_DeviceName = @"deviceName";
+NSString * const kGTLRTagManager_BuiltInVariable_Type_ElementVisibilityFirstTime = @"elementVisibilityFirstTime";
+NSString * const kGTLRTagManager_BuiltInVariable_Type_ElementVisibilityRatio = @"elementVisibilityRatio";
+NSString * const kGTLRTagManager_BuiltInVariable_Type_ElementVisibilityRecentTime = @"elementVisibilityRecentTime";
+NSString * const kGTLRTagManager_BuiltInVariable_Type_ElementVisibilityTime = @"elementVisibilityTime";
 NSString * const kGTLRTagManager_BuiltInVariable_Type_EnvironmentName = @"environmentName";
 NSString * const kGTLRTagManager_BuiltInVariable_Type_ErrorLine = @"errorLine";
 NSString * const kGTLRTagManager_BuiltInVariable_Type_ErrorMessage = @"errorMessage";
@@ -107,7 +111,18 @@ NSString * const kGTLRTagManager_BuiltInVariable_Type_Platform = @"platform";
 NSString * const kGTLRTagManager_BuiltInVariable_Type_RandomNumber = @"randomNumber";
 NSString * const kGTLRTagManager_BuiltInVariable_Type_Referrer = @"referrer";
 NSString * const kGTLRTagManager_BuiltInVariable_Type_Resolution = @"resolution";
+NSString * const kGTLRTagManager_BuiltInVariable_Type_ScrollDepthDirection = @"scrollDepthDirection";
+NSString * const kGTLRTagManager_BuiltInVariable_Type_ScrollDepthThreshold = @"scrollDepthThreshold";
+NSString * const kGTLRTagManager_BuiltInVariable_Type_ScrollDepthUnits = @"scrollDepthUnits";
 NSString * const kGTLRTagManager_BuiltInVariable_Type_SdkVersion = @"sdkVersion";
+NSString * const kGTLRTagManager_BuiltInVariable_Type_VideoCurrentTime = @"videoCurrentTime";
+NSString * const kGTLRTagManager_BuiltInVariable_Type_VideoDuration = @"videoDuration";
+NSString * const kGTLRTagManager_BuiltInVariable_Type_VideoPercent = @"videoPercent";
+NSString * const kGTLRTagManager_BuiltInVariable_Type_VideoProvider = @"videoProvider";
+NSString * const kGTLRTagManager_BuiltInVariable_Type_VideoStatus = @"videoStatus";
+NSString * const kGTLRTagManager_BuiltInVariable_Type_VideoTitle = @"videoTitle";
+NSString * const kGTLRTagManager_BuiltInVariable_Type_VideoUrl = @"videoUrl";
+NSString * const kGTLRTagManager_BuiltInVariable_Type_VideoVisible = @"videoVisible";
 
 // GTLRTagManager_Condition.type
 NSString * const kGTLRTagManager_Condition_Type_ConditionTypeUnspecified = @"conditionTypeUnspecified";
@@ -176,6 +191,7 @@ NSString * const kGTLRTagManager_Trigger_Type_AmpVisibility    = @"ampVisibility
 NSString * const kGTLRTagManager_Trigger_Type_Click            = @"click";
 NSString * const kGTLRTagManager_Trigger_Type_CustomEvent      = @"customEvent";
 NSString * const kGTLRTagManager_Trigger_Type_DomReady         = @"domReady";
+NSString * const kGTLRTagManager_Trigger_Type_ElementVisibility = @"elementVisibility";
 NSString * const kGTLRTagManager_Trigger_Type_EventTypeUnspecified = @"eventTypeUnspecified";
 NSString * const kGTLRTagManager_Trigger_Type_FirebaseAppException = @"firebaseAppException";
 NSString * const kGTLRTagManager_Trigger_Type_FirebaseAppUpdate = @"firebaseAppUpdate";
@@ -194,8 +210,10 @@ NSString * const kGTLRTagManager_Trigger_Type_HistoryChange    = @"historyChange
 NSString * const kGTLRTagManager_Trigger_Type_JsError          = @"jsError";
 NSString * const kGTLRTagManager_Trigger_Type_LinkClick        = @"linkClick";
 NSString * const kGTLRTagManager_Trigger_Type_Pageview         = @"pageview";
+NSString * const kGTLRTagManager_Trigger_Type_ScrollDepth      = @"scrollDepth";
 NSString * const kGTLRTagManager_Trigger_Type_Timer            = @"timer";
 NSString * const kGTLRTagManager_Trigger_Type_WindowLoaded     = @"windowLoaded";
+NSString * const kGTLRTagManager_Trigger_Type_YouTubeVideo     = @"youTubeVideo";
 
 // GTLRTagManager_UpdateWorkspaceProposalRequest.status
 NSString * const kGTLRTagManager_UpdateWorkspaceProposalRequest_Status_Approved = @"approved";
@@ -324,10 +342,14 @@ NSString * const kGTLRTagManager_WorkspaceProposalUser_Type_System = @"system";
 @implementation GTLRTagManager_ContainerVersion
 @dynamic accountId, builtInVariable, container, containerId, containerVersionId,
          deleted, descriptionProperty, fingerprint, folder, name, path, tag,
-         tagManagerUrl, trigger, variable;
+         tagManagerUrl, trigger, variable, zoneProperty;
 
 + (NSDictionary<NSString *, NSString *> *)propertyToJSONKeyMap {
-  return @{ @"descriptionProperty" : @"description" };
+  NSDictionary<NSString *, NSString *> *map = @{
+    @"descriptionProperty" : @"description",
+    @"zoneProperty" : @"zone"
+  };
+  return map;
 }
 
 + (NSDictionary<NSString *, Class> *)arrayPropertyToClassMap {
@@ -336,7 +358,8 @@ NSString * const kGTLRTagManager_WorkspaceProposalUser_Type_System = @"system";
     @"folder" : [GTLRTagManager_Folder class],
     @"tag" : [GTLRTagManager_Tag class],
     @"trigger" : [GTLRTagManager_Trigger class],
-    @"variable" : [GTLRTagManager_Variable class]
+    @"variable" : [GTLRTagManager_Variable class],
+    @"zone" : [GTLRTagManager_Zone class]
   };
   return map;
 }
@@ -351,7 +374,7 @@ NSString * const kGTLRTagManager_WorkspaceProposalUser_Type_System = @"system";
 
 @implementation GTLRTagManager_ContainerVersionHeader
 @dynamic accountId, containerId, containerVersionId, deleted, name, numMacros,
-         numRules, numTags, numTriggers, numVariables, path;
+         numRules, numTags, numTriggers, numVariables, numZones, path;
 @end
 
 
@@ -875,7 +898,7 @@ NSString * const kGTLRTagManager_WorkspaceProposalUser_Type_System = @"system";
 @implementation GTLRTagManager_Tag
 @dynamic accountId, blockingRuleId, blockingTriggerId, containerId, fingerprint,
          firingRuleId, firingTriggerId, liveOnly, name, notes, parameter,
-         parentFolderId, path, priority, scheduleEndMs, scheduleStartMs,
+         parentFolderId, path, paused, priority, scheduleEndMs, scheduleStartMs,
          setupTag, tagFiringOption, tagId, tagManagerUrl, teardownTag, type,
          workspaceId;
 
@@ -924,17 +947,18 @@ NSString * const kGTLRTagManager_WorkspaceProposalUser_Type_System = @"system";
 @dynamic accountId, autoEventFilter, checkValidation, containerId,
          continuousTimeMinMilliseconds, customEventFilter, eventName, filter,
          fingerprint, horizontalScrollPercentageList, interval, intervalSeconds,
-         limit, maxTimerLengthSeconds, name, notes, parentFolderId, path,
-         selector, tagManagerUrl, totalTimeMinMilliseconds, triggerId, type,
-         uniqueTriggerId, verticalScrollPercentageList, visibilitySelector,
-         visiblePercentageMax, visiblePercentageMin, waitForTags,
-         waitForTagsTimeout, workspaceId;
+         limit, maxTimerLengthSeconds, name, notes, parameter, parentFolderId,
+         path, selector, tagManagerUrl, totalTimeMinMilliseconds, triggerId,
+         type, uniqueTriggerId, verticalScrollPercentageList,
+         visibilitySelector, visiblePercentageMax, visiblePercentageMin,
+         waitForTags, waitForTagsTimeout, workspaceId;
 
 + (NSDictionary<NSString *, Class> *)arrayPropertyToClassMap {
   NSDictionary<NSString *, Class> *map = @{
     @"autoEventFilter" : [GTLRTagManager_Condition class],
     @"customEventFilter" : [GTLRTagManager_Condition class],
-    @"filter" : [GTLRTagManager_Condition class]
+    @"filter" : [GTLRTagManager_Condition class],
+    @"parameter" : [GTLRTagManager_Parameter class]
   };
   return map;
 }
@@ -1074,4 +1098,70 @@ NSString * const kGTLRTagManager_WorkspaceProposalUser_Type_System = @"system";
 
 @implementation GTLRTagManager_WorkspaceProposalUser
 @dynamic gaiaId, type;
+@end
+
+
+// ----------------------------------------------------------------------------
+//
+//   GTLRTagManager_Zone
+//
+
+@implementation GTLRTagManager_Zone
+@dynamic accountId, boundary, childContainer, containerId, fingerprint, name,
+         notes, path, tagManagerUrl, typeRestriction, workspaceId, zoneId;
+
++ (NSDictionary<NSString *, Class> *)arrayPropertyToClassMap {
+  NSDictionary<NSString *, Class> *map = @{
+    @"childContainer" : [GTLRTagManager_ZoneChildContainer class]
+  };
+  return map;
+}
+
+@end
+
+
+// ----------------------------------------------------------------------------
+//
+//   GTLRTagManager_ZoneBoundary
+//
+
+@implementation GTLRTagManager_ZoneBoundary
+@dynamic condition, customEvaluationTriggerId;
+
++ (NSDictionary<NSString *, Class> *)arrayPropertyToClassMap {
+  NSDictionary<NSString *, Class> *map = @{
+    @"condition" : [GTLRTagManager_Condition class],
+    @"customEvaluationTriggerId" : [NSString class]
+  };
+  return map;
+}
+
+@end
+
+
+// ----------------------------------------------------------------------------
+//
+//   GTLRTagManager_ZoneChildContainer
+//
+
+@implementation GTLRTagManager_ZoneChildContainer
+@dynamic nickname, publicId;
+@end
+
+
+// ----------------------------------------------------------------------------
+//
+//   GTLRTagManager_ZoneTypeRestriction
+//
+
+@implementation GTLRTagManager_ZoneTypeRestriction
+@dynamic enable, whitelistedTypeId;
+
++ (NSDictionary<NSString *, Class> *)arrayPropertyToClassMap {
+  NSDictionary<NSString *, Class> *map = @{
+    @"whitelistedTypeId" : [NSString class]
+  };
+  return map;
+}
+
 @end

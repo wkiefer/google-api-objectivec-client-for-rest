@@ -24,6 +24,11 @@
 @class GTLRFitness_DataSource;
 @class GTLRFitness_Session;
 
+// Generated comments include content from the discovery document; avoid them
+// causing warnings since clang's checks are some what arbitrary.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdocumentation"
+
 NS_ASSUME_NONNULL_BEGIN
 
 /**
@@ -144,6 +149,74 @@ NS_ASSUME_NONNULL_BEGIN
  */
 + (instancetype)queryWithObject:(GTLRFitness_DataSource *)object
                          userId:(NSString *)userId;
+
+@end
+
+/**
+ *  Queries for user's data point changes for a particular data source.
+ *
+ *  Method: fitness.users.dataSources.dataPointChanges.list
+ *
+ *  Authorization scope(s):
+ *    @c kGTLRAuthScopeFitnessActivityRead
+ *    @c kGTLRAuthScopeFitnessActivityWrite
+ *    @c kGTLRAuthScopeFitnessBloodGlucoseRead
+ *    @c kGTLRAuthScopeFitnessBloodGlucoseWrite
+ *    @c kGTLRAuthScopeFitnessBloodPressureRead
+ *    @c kGTLRAuthScopeFitnessBloodPressureWrite
+ *    @c kGTLRAuthScopeFitnessBodyRead
+ *    @c kGTLRAuthScopeFitnessBodyTemperatureRead
+ *    @c kGTLRAuthScopeFitnessBodyTemperatureWrite
+ *    @c kGTLRAuthScopeFitnessBodyWrite
+ *    @c kGTLRAuthScopeFitnessLocationRead
+ *    @c kGTLRAuthScopeFitnessLocationWrite
+ *    @c kGTLRAuthScopeFitnessNutritionRead
+ *    @c kGTLRAuthScopeFitnessNutritionWrite
+ *    @c kGTLRAuthScopeFitnessOxygenSaturationRead
+ *    @c kGTLRAuthScopeFitnessOxygenSaturationWrite
+ *    @c kGTLRAuthScopeFitnessReproductiveHealthRead
+ *    @c kGTLRAuthScopeFitnessReproductiveHealthWrite
+ */
+@interface GTLRFitnessQuery_UsersDataSourcesDataPointChangesList : GTLRFitnessQuery
+// Previous library name was
+//   +[GTLQueryFitness queryForUsersDataSourcesDataPointChangesListWithuserId:dataSourceId:]
+
+/** The data stream ID of the data source that created the dataset. */
+@property(nonatomic, copy, nullable) NSString *dataSourceId;
+
+/**
+ *  If specified, no more than this many data point changes will be included in
+ *  the response.
+ */
+@property(nonatomic, assign) NSInteger limit;
+
+/**
+ *  The continuation token, which is used to page through large result sets. To
+ *  get the next page of results, set this parameter to the value of
+ *  nextPageToken from the previous response.
+ */
+@property(nonatomic, copy, nullable) NSString *pageToken;
+
+/**
+ *  List data points for the person identified. Use me to indicate the
+ *  authenticated user. Only me is supported at this time.
+ */
+@property(nonatomic, copy, nullable) NSString *userId;
+
+/**
+ *  Fetches a @c GTLRFitness_ListDataPointChangesResponse.
+ *
+ *  Queries for user's data point changes for a particular data source.
+ *
+ *  @param userId List data points for the person identified. Use me to indicate
+ *    the authenticated user. Only me is supported at this time.
+ *  @param dataSourceId The data stream ID of the data source that created the
+ *    dataset.
+ *
+ *  @returns GTLRFitnessQuery_UsersDataSourcesDataPointChangesList
+ */
++ (instancetype)queryWithUserId:(NSString *)userId
+                   dataSourceId:(NSString *)dataSourceId;
 
 @end
 
@@ -822,3 +895,5 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 NS_ASSUME_NONNULL_END
+
+#pragma clang diagnostic pop

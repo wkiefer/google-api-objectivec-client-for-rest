@@ -34,12 +34,6 @@
 @class GTLRAndroidPublisher_InAppProduct_Listings;
 @class GTLRAndroidPublisher_InAppProduct_Prices;
 @class GTLRAndroidPublisher_InAppProductListing;
-@class GTLRAndroidPublisher_InappproductsBatchRequestEntry;
-@class GTLRAndroidPublisher_InappproductsBatchResponseEntry;
-@class GTLRAndroidPublisher_InappproductsInsertRequest;
-@class GTLRAndroidPublisher_InappproductsInsertResponse;
-@class GTLRAndroidPublisher_InappproductsUpdateRequest;
-@class GTLRAndroidPublisher_InappproductsUpdateResponse;
 @class GTLRAndroidPublisher_Listing;
 @class GTLRAndroidPublisher_MonthDay;
 @class GTLRAndroidPublisher_PageInfo;
@@ -54,6 +48,11 @@
 @class GTLRAndroidPublisher_Track;
 @class GTLRAndroidPublisher_UserComment;
 @class GTLRAndroidPublisher_VoidedPurchase;
+
+// Generated comments include content from the discovery document; avoid them
+// causing warnings since clang's checks are some what arbitrary.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdocumentation"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -85,6 +84,12 @@ NS_ASSUME_NONNULL_BEGIN
  *  output of the sha1sum command.
  */
 @property(nonatomic, copy, nullable) NSString *sha1;
+
+/**
+ *  A sha256 hash of the APK payload, encoded as a hex string and matching the
+ *  output of the sha256sum command.
+ */
+@property(nonatomic, copy, nullable) NSString *sha256;
 
 @end
 
@@ -637,89 +642,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 /**
- *  GTLRAndroidPublisher_InappproductsBatchRequest
- */
-@interface GTLRAndroidPublisher_InappproductsBatchRequest : GTLRObject
-
-@property(nonatomic, strong, nullable) NSArray<GTLRAndroidPublisher_InappproductsBatchRequestEntry *> *entrys;
-
-@end
-
-
-/**
- *  GTLRAndroidPublisher_InappproductsBatchRequestEntry
- */
-@interface GTLRAndroidPublisher_InappproductsBatchRequestEntry : GTLRObject
-
-/**
- *  batchId
- *
- *  Uses NSNumber of unsignedIntValue.
- */
-@property(nonatomic, strong, nullable) NSNumber *batchId;
-
-@property(nonatomic, strong, nullable) GTLRAndroidPublisher_InappproductsInsertRequest *inappproductsinsertrequest;
-@property(nonatomic, strong, nullable) GTLRAndroidPublisher_InappproductsUpdateRequest *inappproductsupdaterequest;
-@property(nonatomic, copy, nullable) NSString *methodName;
-
-@end
-
-
-/**
- *  GTLRAndroidPublisher_InappproductsBatchResponse
- */
-@interface GTLRAndroidPublisher_InappproductsBatchResponse : GTLRObject
-
-@property(nonatomic, strong, nullable) NSArray<GTLRAndroidPublisher_InappproductsBatchResponseEntry *> *entrys;
-
-/**
- *  Identifies what kind of resource this is. Value: the fixed string
- *  "androidpublisher#inappproductsBatchResponse".
- */
-@property(nonatomic, copy, nullable) NSString *kind;
-
-@end
-
-
-/**
- *  GTLRAndroidPublisher_InappproductsBatchResponseEntry
- */
-@interface GTLRAndroidPublisher_InappproductsBatchResponseEntry : GTLRObject
-
-/**
- *  batchId
- *
- *  Uses NSNumber of unsignedIntValue.
- */
-@property(nonatomic, strong, nullable) NSNumber *batchId;
-
-@property(nonatomic, strong, nullable) GTLRAndroidPublisher_InappproductsInsertResponse *inappproductsinsertresponse;
-@property(nonatomic, strong, nullable) GTLRAndroidPublisher_InappproductsUpdateResponse *inappproductsupdateresponse;
-
-@end
-
-
-/**
- *  GTLRAndroidPublisher_InappproductsInsertRequest
- */
-@interface GTLRAndroidPublisher_InappproductsInsertRequest : GTLRObject
-
-@property(nonatomic, strong, nullable) GTLRAndroidPublisher_InAppProduct *inappproduct;
-
-@end
-
-
-/**
- *  GTLRAndroidPublisher_InappproductsInsertResponse
- */
-@interface GTLRAndroidPublisher_InappproductsInsertResponse : GTLRObject
-
-@property(nonatomic, strong, nullable) GTLRAndroidPublisher_InAppProduct *inappproduct;
-
-@end
-
-
-/**
  *  GTLRAndroidPublisher_InappproductsListResponse
  */
 @interface GTLRAndroidPublisher_InappproductsListResponse : GTLRObject
@@ -734,26 +656,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property(nonatomic, strong, nullable) GTLRAndroidPublisher_PageInfo *pageInfo;
 @property(nonatomic, strong, nullable) GTLRAndroidPublisher_TokenPagination *tokenPagination;
-
-@end
-
-
-/**
- *  GTLRAndroidPublisher_InappproductsUpdateRequest
- */
-@interface GTLRAndroidPublisher_InappproductsUpdateRequest : GTLRObject
-
-@property(nonatomic, strong, nullable) GTLRAndroidPublisher_InAppProduct *inappproduct;
-
-@end
-
-
-/**
- *  GTLRAndroidPublisher_InappproductsUpdateResponse
- */
-@interface GTLRAndroidPublisher_InappproductsUpdateResponse : GTLRObject
-
-@property(nonatomic, strong, nullable) GTLRAndroidPublisher_InAppProduct *inappproduct;
 
 @end
 
@@ -897,10 +799,13 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property(nonatomic, copy, nullable) NSString *kind;
 
+/** The order id associated with the purchase of the inapp product. */
+@property(nonatomic, copy, nullable) NSString *orderId;
+
 /**
  *  The purchase state of the order. Possible values are:
  *  - Purchased
- *  - Cancelled
+ *  - Canceled
  *
  *  Uses NSNumber of intValue.
  */
@@ -913,6 +818,17 @@ NS_ASSUME_NONNULL_BEGIN
  *  Uses NSNumber of longLongValue.
  */
 @property(nonatomic, strong, nullable) NSNumber *purchaseTimeMillis;
+
+/**
+ *  The type of purchase of the inapp product. This field is only set if this
+ *  purchase was not made using the standard in-app billing flow. Possible
+ *  values are:
+ *  - Test (i.e. purchased from a license testing account)
+ *  - Promo (i.e. purchased using a promo code)
+ *
+ *  Uses NSNumber of intValue.
+ */
+@property(nonatomic, strong, nullable) NSNumber *purchaseType;
 
 @end
 
@@ -1067,11 +983,13 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, strong, nullable) NSNumber *autoRenewing;
 
 /**
- *  The reason why a subscription was cancelled or is not auto-renewing.
- *  Possible values are:
- *  - User cancelled the subscription
- *  - Subscription was cancelled by the system, for example because of a billing
+ *  The reason why a subscription was canceled or is not auto-renewing. Possible
+ *  values are:
+ *  - User canceled the subscription
+ *  - Subscription was canceled by the system, for example because of a billing
  *  problem
+ *  - Subscription was replaced with a new subscription
+ *  - Subscription was canceled by the developer
  *
  *  Uses NSNumber of intValue.
  */
@@ -1103,9 +1021,31 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, copy, nullable) NSString *kind;
 
 /**
+ *  The purchase token of the originating purchase if this subscription is one
+ *  of the following:
+ *  - Re-signup of a canceled but non-lapsed subscription
+ *  - Upgrade/downgrade from a previous subscription For example, suppose a user
+ *  originally signs up and you receive purchase token X, then the user cancels
+ *  and goes through the resignup flow (before their subscription lapses) and
+ *  you receive purchase token Y, and finally the user upgrades their
+ *  subscription and you receive purchase token Z. If you call this API with
+ *  purchase token Z, this field will be set to Y. If you call this API with
+ *  purchase token Y, this field will be set to X. If you call this API with
+ *  purchase token X, this field will not be set.
+ */
+@property(nonatomic, copy, nullable) NSString *linkedPurchaseToken;
+
+/**
+ *  The order id of the latest recurring order associated with the purchase of
+ *  the subscription.
+ */
+@property(nonatomic, copy, nullable) NSString *orderId;
+
+/**
  *  The payment state of the subscription. Possible values are:
  *  - Payment pending
  *  - Payment received
+ *  - Free trial
  *
  *  Uses NSNumber of intValue.
  */
@@ -1126,6 +1066,16 @@ NS_ASSUME_NONNULL_BEGIN
  *  is specified in British pounds sterling, price_currency_code is "GBP".
  */
 @property(nonatomic, copy, nullable) NSString *priceCurrencyCode;
+
+/**
+ *  The type of purchase of the subscription. This field is only set if this
+ *  purchase was not made using the standard in-app billing flow. Possible
+ *  values are:
+ *  - Test (i.e. purchased from a license testing account)
+ *
+ *  Uses NSNumber of intValue.
+ */
+@property(nonatomic, strong, nullable) NSNumber *purchaseType;
 
 /**
  *  Time at which the subscription was granted, in milliseconds since the Epoch.
@@ -1220,6 +1170,10 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @interface GTLRAndroidPublisher_Track : GTLRObject
 
+/**
+ *  Identifier for this track. One of "alpha", "beta", "production" or
+ *  "rollout".
+ */
 @property(nonatomic, copy, nullable) NSString *track;
 
 /**
@@ -1337,7 +1291,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  *  A VoidedPurchase resource indicates a purchase that was either
- *  cancelled/refunded/charged-back.
+ *  canceled/refunded/charged-back.
  */
 @interface GTLRAndroidPublisher_VoidedPurchase : GTLRObject
 
@@ -1362,7 +1316,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, copy, nullable) NSString *purchaseToken;
 
 /**
- *  The time at which the purchase was cancelled/refunded/charged-back, in
+ *  The time at which the purchase was canceled/refunded/charged-back, in
  *  milliseconds since the epoch (Jan 1, 1970).
  *
  *  Uses NSNumber of longLongValue.
@@ -1384,3 +1338,5 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 NS_ASSUME_NONNULL_END
+
+#pragma clang diagnostic pop

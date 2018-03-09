@@ -4,11 +4,8 @@
 // API:
 //   Google Safe Browsing API (safebrowsing/v4)
 // Description:
-//   The Safe Browsing API is an experimental API that allows client
-//   applications to check URLs against Google's constantly-updated blacklists
-//   of suspected phishing and malware pages. Your client application can use
-//   the API to download an encrypted table for local, client-side lookups of
-//   URLs.
+//   Enables client applications to check web resources (most commonly URLs)
+//   against Google-generated lists of unsafe web resources.
 // Documentation:
 //   https://developers.google.com/safe-browsing/
 
@@ -25,6 +22,12 @@
 @class GTLRSafeBrowsing_FetchThreatListUpdatesRequest;
 @class GTLRSafeBrowsing_FindFullHashesRequest;
 @class GTLRSafeBrowsing_FindThreatMatchesRequest;
+@class GTLRSafeBrowsing_ThreatHit;
+
+// Generated comments include content from the discovery document; avoid them
+// causing warnings since clang's checks are some what arbitrary.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdocumentation"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -136,6 +139,30 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 /**
+ *  Reports a Safe Browsing threat list hit to Google. Only projects with
+ *  TRUSTED_REPORTER visibility can use this method.
+ *
+ *  Method: safebrowsing.threatHits.create
+ */
+@interface GTLRSafeBrowsingQuery_ThreatHitsCreate : GTLRSafeBrowsingQuery
+// Previous library name was
+//   +[GTLQuerySafeBrowsing queryForThreatHitsCreateWithObject:]
+
+/**
+ *  Fetches a @c GTLRSafeBrowsing_Empty.
+ *
+ *  Reports a Safe Browsing threat list hit to Google. Only projects with
+ *  TRUSTED_REPORTER visibility can use this method.
+ *
+ *  @param object The @c GTLRSafeBrowsing_ThreatHit to include in the query.
+ *
+ *  @returns GTLRSafeBrowsingQuery_ThreatHitsCreate
+ */
++ (instancetype)queryWithObject:(GTLRSafeBrowsing_ThreatHit *)object;
+
+@end
+
+/**
  *  Lists the Safe Browsing threat lists available for download.
  *
  *  Method: safebrowsing.threatLists.list
@@ -204,3 +231,5 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 NS_ASSUME_NONNULL_END
+
+#pragma clang diagnostic pop

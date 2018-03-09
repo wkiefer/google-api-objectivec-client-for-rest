@@ -33,12 +33,6 @@ NSString * const kGTLRAndroidPublisherImageTypeTvBanner        = @"tvBanner";
 NSString * const kGTLRAndroidPublisherImageTypeTvScreenshots   = @"tvScreenshots";
 NSString * const kGTLRAndroidPublisherImageTypeWearScreenshots = @"wearScreenshots";
 
-// track
-NSString * const kGTLRAndroidPublisherTrackAlpha      = @"alpha";
-NSString * const kGTLRAndroidPublisherTrackBeta       = @"beta";
-NSString * const kGTLRAndroidPublisherTrackProduction = @"production";
-NSString * const kGTLRAndroidPublisherTrackRollout    = @"rollout";
-
 // ----------------------------------------------------------------------------
 // Query Classes
 //
@@ -1120,26 +1114,6 @@ NSString * const kGTLRAndroidPublisherTrackRollout    = @"rollout";
   query.packageName = packageName;
   query.expectedObjectClass = [GTLRAndroidPublisher_EntitlementsListResponse class];
   query.loggingName = @"androidpublisher.entitlements.list";
-  return query;
-}
-
-@end
-
-@implementation GTLRAndroidPublisherQuery_InappproductsBatch
-
-+ (instancetype)queryWithObject:(GTLRAndroidPublisher_InappproductsBatchRequest *)object {
-  if (object == nil) {
-    GTLR_DEBUG_ASSERT(object != nil, @"Got a nil object");
-    return nil;
-  }
-  NSString *pathURITemplate = @"inappproducts/batch";
-  GTLRAndroidPublisherQuery_InappproductsBatch *query =
-    [[self alloc] initWithPathURITemplate:pathURITemplate
-                               HTTPMethod:@"POST"
-                       pathParameterNames:nil];
-  query.bodyObject = object;
-  query.expectedObjectClass = [GTLRAndroidPublisher_InappproductsBatchResponse class];
-  query.loggingName = @"androidpublisher.inappproducts.batch";
   return query;
 }
 

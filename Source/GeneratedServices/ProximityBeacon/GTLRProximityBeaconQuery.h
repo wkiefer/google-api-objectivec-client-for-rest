@@ -23,6 +23,11 @@
 @class GTLRProximityBeacon_GetInfoForObservedBeaconsRequest;
 @class GTLRProximityBeacon_Namespace;
 
+// Generated comments include content from the discovery document; avoid them
+// causing warnings since clang's checks are some what arbitrary.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdocumentation"
+
 NS_ASSUME_NONNULL_BEGIN
 
 // ----------------------------------------------------------------------------
@@ -33,6 +38,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 /** Value: "ALERT_UNSPECIFIED" */
 GTLR_EXTERN NSString * const kGTLRProximityBeaconAlertFilterAlertUnspecified;
+/** Value: "LOW_ACTIVITY" */
+GTLR_EXTERN NSString * const kGTLRProximityBeaconAlertFilterLowActivity;
 /** Value: "LOW_BATTERY" */
 GTLR_EXTERN NSString * const kGTLRProximityBeaconAlertFilterLowBattery;
 /** Value: "WRONG_LOCATION" */
@@ -670,6 +677,7 @@ GTLR_EXTERN NSString * const kGTLRProximityBeaconAlertFilterWrongLocation;
  *    @arg @c kGTLRProximityBeaconAlertFilterWrongLocation Value
  *        "WRONG_LOCATION"
  *    @arg @c kGTLRProximityBeaconAlertFilterLowBattery Value "LOW_BATTERY"
+ *    @arg @c kGTLRProximityBeaconAlertFilterLowActivity Value "LOW_ACTIVITY"
  */
 @property(nonatomic, copy, nullable) NSString *alertFilter;
 
@@ -1144,3 +1152,5 @@ GTLR_EXTERN NSString * const kGTLRProximityBeaconAlertFilterWrongLocation;
 @end
 
 NS_ASSUME_NONNULL_END
+
+#pragma clang diagnostic pop

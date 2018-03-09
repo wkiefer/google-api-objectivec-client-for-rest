@@ -26,6 +26,11 @@
 @class GTLRIdentityToolkit_UserInfo;
 @class GTLRIdentityToolkit_UserInfo_ProviderUserInfo_Item;
 
+// Generated comments include content from the discovery document; avoid them
+// causing warnings since clang's checks are some what arbitrary.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdocumentation"
+
 NS_ASSUME_NONNULL_BEGIN
 
 /**
@@ -71,6 +76,9 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property(nonatomic, copy, nullable) NSString *sessionId;
 
+/** All sign-in methods this user has used. */
+@property(nonatomic, strong, nullable) NSArray<NSString *> *signinMethods;
+
 @end
 
 
@@ -111,6 +119,43 @@ NS_ASSUME_NONNULL_BEGIN
  *        subscripting on this class.
  */
 @property(nonatomic, strong, nullable) NSArray<GTLRIdentityToolkit_UserInfo *> *users;
+
+@end
+
+
+/**
+ *  Response of email signIn.
+ */
+@interface GTLRIdentityToolkit_EmailLinkSigninResponse : GTLRObject
+
+/** The user's email. */
+@property(nonatomic, copy, nullable) NSString *email;
+
+/**
+ *  Expiration time of STS id token in seconds.
+ *
+ *  Uses NSNumber of longLongValue.
+ */
+@property(nonatomic, strong, nullable) NSNumber *expiresIn;
+
+/** The STS id token to login the newly signed in user. */
+@property(nonatomic, copy, nullable) NSString *idToken;
+
+/**
+ *  Whether the user is new.
+ *
+ *  Uses NSNumber of boolValue.
+ */
+@property(nonatomic, strong, nullable) NSNumber *isNewUser;
+
+/** The fixed string "identitytoolkit#EmailLinkSigninResponse". */
+@property(nonatomic, copy, nullable) NSString *kind;
+
+/** The RP local ID of the user. */
+@property(nonatomic, copy, nullable) NSString *localId;
+
+/** The refresh token for the signed in user. */
+@property(nonatomic, copy, nullable) NSString *refreshToken;
 
 @end
 
@@ -451,6 +496,23 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 /**
+ *  Request to sign in with email.
+ */
+@interface GTLRIdentityToolkit_RelyingpartyEmailLinkSigninRequest : GTLRObject
+
+/** The email address of the user. */
+@property(nonatomic, copy, nullable) NSString *email;
+
+/** Token for linking flow. */
+@property(nonatomic, copy, nullable) NSString *idToken;
+
+/** The confirmation code. */
+@property(nonatomic, copy, nullable) NSString *oobCode;
+
+@end
+
+
+/**
  *  Request to get the account information.
  */
 @interface GTLRIdentityToolkit_RelyingpartyGetAccountInfoRequest : GTLRObject
@@ -471,6 +533,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 /** The list of local ID's of the users to inquiry. */
 @property(nonatomic, strong, nullable) NSArray<NSString *> *localId;
+
+/** Privileged caller can query users by specified phone number. */
+@property(nonatomic, strong, nullable) NSArray<NSString *> *phoneNumber;
 
 @end
 
@@ -563,6 +628,37 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 /**
+ *  Request for Identitytoolkit-SendVerificationCode
+ */
+@interface GTLRIdentityToolkit_RelyingpartySendVerificationCodeRequest : GTLRObject
+
+/** Receipt of successful app token validation with APNS. */
+@property(nonatomic, copy, nullable) NSString *iosReceipt;
+
+/** Secret delivered to iOS app via APNS. */
+@property(nonatomic, copy, nullable) NSString *iosSecret;
+
+/** The phone number to send the verification code to in E.164 format. */
+@property(nonatomic, copy, nullable) NSString *phoneNumber;
+
+/** Recaptcha solution. */
+@property(nonatomic, copy, nullable) NSString *recaptchaToken;
+
+@end
+
+
+/**
+ *  Response for Identitytoolkit-SendVerificationCode
+ */
+@interface GTLRIdentityToolkit_RelyingpartySendVerificationCodeResponse : GTLRObject
+
+/** Encrypted session information */
+@property(nonatomic, copy, nullable) NSString *sessionInfo;
+
+@end
+
+
+/**
  *  Request to set the account information.
  */
 @interface GTLRIdentityToolkit_RelyingpartySetAccountInfoRequest : GTLRObject
@@ -579,6 +675,9 @@ NS_ASSUME_NONNULL_BEGIN
  *  Uses NSNumber of longLongValue.
  */
 @property(nonatomic, strong, nullable) NSNumber *createdAt;
+
+/** The custom attributes to be set in the user's id token. */
+@property(nonatomic, copy, nullable) NSString *customAttributes;
 
 /**
  *  GCP project number of the requesting delegated app. Currently only intended
@@ -635,6 +734,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 /** The new password of the user. */
 @property(nonatomic, copy, nullable) NSString *password;
+
+/** Privileged caller can update user with specified phone number. */
+@property(nonatomic, copy, nullable) NSString *phoneNumber;
 
 /** The photo url of the user. */
 @property(nonatomic, copy, nullable) NSString *photoUrl;
@@ -803,6 +905,9 @@ NS_ASSUME_NONNULL_BEGIN
 /** The new password of the user. */
 @property(nonatomic, copy, nullable) NSString *password;
 
+/** Privileged caller can create user with specified phone number. */
+@property(nonatomic, copy, nullable) NSString *phoneNumber;
+
 /** The photo url of the user. */
 @property(nonatomic, copy, nullable) NSString *photoUrl;
 
@@ -822,12 +927,33 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, strong, nullable) NSNumber *allowOverwrite;
 
 /**
+ *  blockSize
+ *
+ *  Uses NSNumber of intValue.
+ */
+@property(nonatomic, strong, nullable) NSNumber *blockSize;
+
+/**
+ *  The following 4 fields are for standard scrypt algorithm.
+ *
+ *  Uses NSNumber of intValue.
+ */
+@property(nonatomic, strong, nullable) NSNumber *cpuMemCost;
+
+/**
  *  GCP project number of the requesting delegated app. Currently only intended
  *  for Firebase V1 migration.
  *
  *  Uses NSNumber of longLongValue.
  */
 @property(nonatomic, strong, nullable) NSNumber *delegatedProjectNumber;
+
+/**
+ *  dkLen
+ *
+ *  Uses NSNumber of intValue.
+ */
+@property(nonatomic, strong, nullable) NSNumber *dkLen;
 
 /** The password hash algorithm. */
 @property(nonatomic, copy, nullable) NSString *hashAlgorithm;
@@ -838,6 +964,13 @@ NS_ASSUME_NONNULL_BEGIN
  *  Uses NSNumber of intValue.
  */
 @property(nonatomic, strong, nullable) NSNumber *memoryCost;
+
+/**
+ *  parallelization
+ *
+ *  Uses NSNumber of intValue.
+ */
+@property(nonatomic, strong, nullable) NSNumber *parallelization;
 
 /**
  *  Rounds for hash calculation. Used by scrypt and similar algorithms.
@@ -1032,6 +1165,73 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 /**
+ *  Request for Identitytoolkit-VerifyPhoneNumber
+ */
+@interface GTLRIdentityToolkit_RelyingpartyVerifyPhoneNumberRequest : GTLRObject
+
+@property(nonatomic, copy, nullable) NSString *code;
+@property(nonatomic, copy, nullable) NSString *idToken;
+@property(nonatomic, copy, nullable) NSString *operation;
+@property(nonatomic, copy, nullable) NSString *phoneNumber;
+
+/**
+ *  The session info previously returned by
+ *  IdentityToolkit-SendVerificationCode.
+ */
+@property(nonatomic, copy, nullable) NSString *sessionInfo;
+
+@property(nonatomic, copy, nullable) NSString *temporaryProof;
+@property(nonatomic, copy, nullable) NSString *verificationProof;
+
+@end
+
+
+/**
+ *  Response for Identitytoolkit-VerifyPhoneNumber
+ */
+@interface GTLRIdentityToolkit_RelyingpartyVerifyPhoneNumberResponse : GTLRObject
+
+/**
+ *  expiresIn
+ *
+ *  Uses NSNumber of longLongValue.
+ */
+@property(nonatomic, strong, nullable) NSNumber *expiresIn;
+
+@property(nonatomic, copy, nullable) NSString *idToken;
+
+/**
+ *  isNewUser
+ *
+ *  Uses NSNumber of boolValue.
+ */
+@property(nonatomic, strong, nullable) NSNumber *isNewUser;
+
+@property(nonatomic, copy, nullable) NSString *localId;
+@property(nonatomic, copy, nullable) NSString *phoneNumber;
+@property(nonatomic, copy, nullable) NSString *refreshToken;
+@property(nonatomic, copy, nullable) NSString *temporaryProof;
+
+/**
+ *  temporaryProofExpiresIn
+ *
+ *  Uses NSNumber of longLongValue.
+ */
+@property(nonatomic, strong, nullable) NSNumber *temporaryProofExpiresIn;
+
+@property(nonatomic, copy, nullable) NSString *verificationProof;
+
+/**
+ *  verificationProofExpiresIn
+ *
+ *  Uses NSNumber of longLongValue.
+ */
+@property(nonatomic, strong, nullable) NSNumber *verificationProofExpiresIn;
+
+@end
+
+
+/**
  *  Response of resetting the password.
  */
 @interface GTLRIdentityToolkit_ResetPasswordResponse : GTLRObject
@@ -1214,6 +1414,9 @@ NS_ASSUME_NONNULL_BEGIN
  *  Uses NSNumber of longLongValue.
  */
 @property(nonatomic, strong, nullable) NSNumber *createdAt;
+
+/** The custom attributes to be set in the user's id token. */
+@property(nonatomic, copy, nullable) NSString *customAttributes;
 
 /**
  *  Whether the user is authenticated by the developer.
@@ -1539,6 +1742,13 @@ NS_ASSUME_NONNULL_BEGIN
 /** The GITKit token for authenticated user. */
 @property(nonatomic, copy, nullable) NSString *idToken;
 
+/**
+ *  True if it's a new user sign-in, false if it's a returning user.
+ *
+ *  Uses NSNumber of boolValue.
+ */
+@property(nonatomic, strong, nullable) NSNumber *isNewUser;
+
 /** The fixed string "identitytoolkit#VerifyCustomTokenResponse". */
 @property(nonatomic, copy, nullable) NSString *kind;
 
@@ -1611,3 +1821,5 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 NS_ASSUME_NONNULL_END
+
+#pragma clang diagnostic pop

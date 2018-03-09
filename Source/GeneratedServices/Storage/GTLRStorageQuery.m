@@ -56,7 +56,7 @@ NSString * const kGTLRStorageProjectionNoAcl = @"noAcl";
 
 @implementation GTLRStorageQuery_BucketAccessControlsDelete
 
-@dynamic bucket, entity;
+@dynamic bucket, entity, userProject;
 
 + (instancetype)queryWithBucket:(NSString *)bucket
                          entity:(NSString *)entity {
@@ -78,7 +78,7 @@ NSString * const kGTLRStorageProjectionNoAcl = @"noAcl";
 
 @implementation GTLRStorageQuery_BucketAccessControlsGet
 
-@dynamic bucket, entity;
+@dynamic bucket, entity, userProject;
 
 + (instancetype)queryWithBucket:(NSString *)bucket
                          entity:(NSString *)entity {
@@ -101,7 +101,7 @@ NSString * const kGTLRStorageProjectionNoAcl = @"noAcl";
 
 @implementation GTLRStorageQuery_BucketAccessControlsInsert
 
-@dynamic bucket;
+@dynamic bucket, userProject;
 
 + (instancetype)queryWithObject:(GTLRStorage_BucketAccessControl *)object
                          bucket:(NSString *)bucket {
@@ -126,7 +126,7 @@ NSString * const kGTLRStorageProjectionNoAcl = @"noAcl";
 
 @implementation GTLRStorageQuery_BucketAccessControlsList
 
-@dynamic bucket;
+@dynamic bucket, userProject;
 
 + (instancetype)queryWithBucket:(NSString *)bucket {
   NSArray *pathParams = @[ @"bucket" ];
@@ -145,7 +145,7 @@ NSString * const kGTLRStorageProjectionNoAcl = @"noAcl";
 
 @implementation GTLRStorageQuery_BucketAccessControlsPatch
 
-@dynamic bucket, entity;
+@dynamic bucket, entity, userProject;
 
 + (instancetype)queryWithObject:(GTLRStorage_BucketAccessControl *)object
                          bucket:(NSString *)bucket
@@ -174,7 +174,7 @@ NSString * const kGTLRStorageProjectionNoAcl = @"noAcl";
 
 @implementation GTLRStorageQuery_BucketAccessControlsUpdate
 
-@dynamic bucket, entity;
+@dynamic bucket, entity, userProject;
 
 + (instancetype)queryWithObject:(GTLRStorage_BucketAccessControl *)object
                          bucket:(NSString *)bucket
@@ -203,7 +203,7 @@ NSString * const kGTLRStorageProjectionNoAcl = @"noAcl";
 
 @implementation GTLRStorageQuery_BucketsDelete
 
-@dynamic bucket, ifMetagenerationMatch, ifMetagenerationNotMatch;
+@dynamic bucket, ifMetagenerationMatch, ifMetagenerationNotMatch, userProject;
 
 + (instancetype)queryWithBucket:(NSString *)bucket {
   NSArray *pathParams = @[ @"bucket" ];
@@ -221,7 +221,8 @@ NSString * const kGTLRStorageProjectionNoAcl = @"noAcl";
 
 @implementation GTLRStorageQuery_BucketsGet
 
-@dynamic bucket, ifMetagenerationMatch, ifMetagenerationNotMatch, projection;
+@dynamic bucket, ifMetagenerationMatch, ifMetagenerationNotMatch, projection,
+         userProject;
 
 + (instancetype)queryWithBucket:(NSString *)bucket {
   NSArray *pathParams = @[ @"bucket" ];
@@ -240,7 +241,7 @@ NSString * const kGTLRStorageProjectionNoAcl = @"noAcl";
 
 @implementation GTLRStorageQuery_BucketsGetIamPolicy
 
-@dynamic bucket;
+@dynamic bucket, userProject;
 
 + (instancetype)queryWithBucket:(NSString *)bucket {
   NSArray *pathParams = @[ @"bucket" ];
@@ -259,7 +260,8 @@ NSString * const kGTLRStorageProjectionNoAcl = @"noAcl";
 
 @implementation GTLRStorageQuery_BucketsInsert
 
-@dynamic predefinedAcl, predefinedDefaultObjectAcl, project, projection;
+@dynamic predefinedAcl, predefinedDefaultObjectAcl, project, projection,
+         userProject;
 
 + (instancetype)queryWithObject:(GTLRStorage_Bucket *)object
                         project:(NSString *)project {
@@ -283,7 +285,7 @@ NSString * const kGTLRStorageProjectionNoAcl = @"noAcl";
 
 @implementation GTLRStorageQuery_BucketsList
 
-@dynamic maxResults, pageToken, prefix, project, projection;
+@dynamic maxResults, pageToken, prefix, project, projection, userProject;
 
 + (instancetype)queryWithProject:(NSString *)project {
   NSString *pathURITemplate = @"b";
@@ -299,10 +301,31 @@ NSString * const kGTLRStorageProjectionNoAcl = @"noAcl";
 
 @end
 
+@implementation GTLRStorageQuery_BucketsLockRetentionPolicy
+
+@dynamic bucket, ifMetagenerationMatch, userProject;
+
++ (instancetype)queryWithBucket:(NSString *)bucket
+          ifMetagenerationMatch:(long long)ifMetagenerationMatch {
+  NSArray *pathParams = @[ @"bucket" ];
+  NSString *pathURITemplate = @"b/{bucket}/lockRetentionPolicy";
+  GTLRStorageQuery_BucketsLockRetentionPolicy *query =
+    [[self alloc] initWithPathURITemplate:pathURITemplate
+                               HTTPMethod:@"POST"
+                       pathParameterNames:pathParams];
+  query.bucket = bucket;
+  query.ifMetagenerationMatch = ifMetagenerationMatch;
+  query.expectedObjectClass = [GTLRStorage_Bucket class];
+  query.loggingName = @"storage.buckets.lockRetentionPolicy";
+  return query;
+}
+
+@end
+
 @implementation GTLRStorageQuery_BucketsPatch
 
 @dynamic bucket, ifMetagenerationMatch, ifMetagenerationNotMatch, predefinedAcl,
-         predefinedDefaultObjectAcl, projection;
+         predefinedDefaultObjectAcl, projection, userProject;
 
 + (instancetype)queryWithObject:(GTLRStorage_Bucket *)object
                          bucket:(NSString *)bucket {
@@ -327,7 +350,7 @@ NSString * const kGTLRStorageProjectionNoAcl = @"noAcl";
 
 @implementation GTLRStorageQuery_BucketsSetIamPolicy
 
-@dynamic bucket;
+@dynamic bucket, userProject;
 
 + (instancetype)queryWithObject:(GTLRStorage_Policy *)object
                          bucket:(NSString *)bucket {
@@ -352,7 +375,7 @@ NSString * const kGTLRStorageProjectionNoAcl = @"noAcl";
 
 @implementation GTLRStorageQuery_BucketsTestIamPermissions
 
-@dynamic bucket, permissions;
+@dynamic bucket, permissions, userProject;
 
 + (NSDictionary<NSString *, Class> *)arrayPropertyToClassMap {
   NSDictionary<NSString *, Class> *map = @{
@@ -381,7 +404,7 @@ NSString * const kGTLRStorageProjectionNoAcl = @"noAcl";
 @implementation GTLRStorageQuery_BucketsUpdate
 
 @dynamic bucket, ifMetagenerationMatch, ifMetagenerationNotMatch, predefinedAcl,
-         predefinedDefaultObjectAcl, projection;
+         predefinedDefaultObjectAcl, projection, userProject;
 
 + (instancetype)queryWithObject:(GTLRStorage_Bucket *)object
                          bucket:(NSString *)bucket {
@@ -425,7 +448,7 @@ NSString * const kGTLRStorageProjectionNoAcl = @"noAcl";
 
 @implementation GTLRStorageQuery_DefaultObjectAccessControlsDelete
 
-@dynamic bucket, entity;
+@dynamic bucket, entity, userProject;
 
 + (instancetype)queryWithBucket:(NSString *)bucket
                          entity:(NSString *)entity {
@@ -447,7 +470,7 @@ NSString * const kGTLRStorageProjectionNoAcl = @"noAcl";
 
 @implementation GTLRStorageQuery_DefaultObjectAccessControlsGet
 
-@dynamic bucket, entity;
+@dynamic bucket, entity, userProject;
 
 + (instancetype)queryWithBucket:(NSString *)bucket
                          entity:(NSString *)entity {
@@ -470,7 +493,7 @@ NSString * const kGTLRStorageProjectionNoAcl = @"noAcl";
 
 @implementation GTLRStorageQuery_DefaultObjectAccessControlsInsert
 
-@dynamic bucket;
+@dynamic bucket, userProject;
 
 + (instancetype)queryWithObject:(GTLRStorage_ObjectAccessControl *)object
                          bucket:(NSString *)bucket {
@@ -495,7 +518,7 @@ NSString * const kGTLRStorageProjectionNoAcl = @"noAcl";
 
 @implementation GTLRStorageQuery_DefaultObjectAccessControlsList
 
-@dynamic bucket, ifMetagenerationMatch, ifMetagenerationNotMatch;
+@dynamic bucket, ifMetagenerationMatch, ifMetagenerationNotMatch, userProject;
 
 + (instancetype)queryWithBucket:(NSString *)bucket {
   NSArray *pathParams = @[ @"bucket" ];
@@ -514,7 +537,7 @@ NSString * const kGTLRStorageProjectionNoAcl = @"noAcl";
 
 @implementation GTLRStorageQuery_DefaultObjectAccessControlsPatch
 
-@dynamic bucket, entity;
+@dynamic bucket, entity, userProject;
 
 + (instancetype)queryWithObject:(GTLRStorage_ObjectAccessControl *)object
                          bucket:(NSString *)bucket
@@ -543,7 +566,7 @@ NSString * const kGTLRStorageProjectionNoAcl = @"noAcl";
 
 @implementation GTLRStorageQuery_DefaultObjectAccessControlsUpdate
 
-@dynamic bucket, entity;
+@dynamic bucket, entity, userProject;
 
 + (instancetype)queryWithObject:(GTLRStorage_ObjectAccessControl *)object
                          bucket:(NSString *)bucket
@@ -572,7 +595,7 @@ NSString * const kGTLRStorageProjectionNoAcl = @"noAcl";
 
 @implementation GTLRStorageQuery_NotificationsDelete
 
-@dynamic bucket, notification;
+@dynamic bucket, notification, userProject;
 
 + (instancetype)queryWithBucket:(NSString *)bucket
                    notification:(NSString *)notification {
@@ -594,7 +617,7 @@ NSString * const kGTLRStorageProjectionNoAcl = @"noAcl";
 
 @implementation GTLRStorageQuery_NotificationsGet
 
-@dynamic bucket, notification;
+@dynamic bucket, notification, userProject;
 
 + (instancetype)queryWithBucket:(NSString *)bucket
                    notification:(NSString *)notification {
@@ -617,7 +640,7 @@ NSString * const kGTLRStorageProjectionNoAcl = @"noAcl";
 
 @implementation GTLRStorageQuery_NotificationsInsert
 
-@dynamic bucket;
+@dynamic bucket, userProject;
 
 + (instancetype)queryWithObject:(GTLRStorage_Notification *)object
                          bucket:(NSString *)bucket {
@@ -642,7 +665,7 @@ NSString * const kGTLRStorageProjectionNoAcl = @"noAcl";
 
 @implementation GTLRStorageQuery_NotificationsList
 
-@dynamic bucket;
+@dynamic bucket, userProject;
 
 + (instancetype)queryWithBucket:(NSString *)bucket {
   NSArray *pathParams = @[ @"bucket" ];
@@ -661,7 +684,7 @@ NSString * const kGTLRStorageProjectionNoAcl = @"noAcl";
 
 @implementation GTLRStorageQuery_ObjectAccessControlsDelete
 
-@dynamic bucket, entity, generation, object;
+@dynamic bucket, entity, generation, object, userProject;
 
 + (instancetype)queryWithBucket:(NSString *)bucket
                          object:(NSString *)object_param
@@ -685,7 +708,7 @@ NSString * const kGTLRStorageProjectionNoAcl = @"noAcl";
 
 @implementation GTLRStorageQuery_ObjectAccessControlsGet
 
-@dynamic bucket, entity, generation, object;
+@dynamic bucket, entity, generation, object, userProject;
 
 + (instancetype)queryWithBucket:(NSString *)bucket
                          object:(NSString *)object_param
@@ -710,7 +733,7 @@ NSString * const kGTLRStorageProjectionNoAcl = @"noAcl";
 
 @implementation GTLRStorageQuery_ObjectAccessControlsInsert
 
-@dynamic bucket, generation, object;
+@dynamic bucket, generation, object, userProject;
 
 + (instancetype)queryWithObject:(GTLRStorage_ObjectAccessControl *)object
                          bucket:(NSString *)bucket
@@ -739,7 +762,7 @@ NSString * const kGTLRStorageProjectionNoAcl = @"noAcl";
 
 @implementation GTLRStorageQuery_ObjectAccessControlsList
 
-@dynamic bucket, generation, object;
+@dynamic bucket, generation, object, userProject;
 
 + (instancetype)queryWithBucket:(NSString *)bucket
                          object:(NSString *)object_param {
@@ -762,7 +785,7 @@ NSString * const kGTLRStorageProjectionNoAcl = @"noAcl";
 
 @implementation GTLRStorageQuery_ObjectAccessControlsPatch
 
-@dynamic bucket, entity, generation, object;
+@dynamic bucket, entity, generation, object, userProject;
 
 + (instancetype)queryWithObject:(GTLRStorage_ObjectAccessControl *)object
                          bucket:(NSString *)bucket
@@ -793,7 +816,7 @@ NSString * const kGTLRStorageProjectionNoAcl = @"noAcl";
 
 @implementation GTLRStorageQuery_ObjectAccessControlsUpdate
 
-@dynamic bucket, entity, generation, object;
+@dynamic bucket, entity, generation, object, userProject;
 
 + (instancetype)queryWithObject:(GTLRStorage_ObjectAccessControl *)object
                          bucket:(NSString *)bucket
@@ -825,7 +848,7 @@ NSString * const kGTLRStorageProjectionNoAcl = @"noAcl";
 @implementation GTLRStorageQuery_ObjectsCompose
 
 @dynamic destinationBucket, destinationObject, destinationPredefinedAcl,
-         ifGenerationMatch, ifMetagenerationMatch;
+         ifGenerationMatch, ifMetagenerationMatch, kmsKeyName, userProject;
 
 + (instancetype)queryWithObject:(GTLRStorage_ComposeRequest *)object
               destinationBucket:(NSString *)destinationBucket
@@ -850,19 +873,6 @@ NSString * const kGTLRStorageProjectionNoAcl = @"noAcl";
   return query;
 }
 
-+ (instancetype)queryForMediaWithObject:(GTLRStorage_ComposeRequest *)object
-                      destinationBucket:(NSString *)destinationBucket
-                      destinationObject:(NSString *)destinationObject {
-  GTLRStorageQuery_ObjectsCompose *query =
-    [self queryWithObject:object
-        destinationBucket:destinationBucket
-        destinationObject:destinationObject];
-  query.downloadAsDataObjectType = @"media";
-  query.useMediaDownloadService = YES;
-  query.loggingName = @"Download storage.objects.compose";
-  return query;
-}
-
 @end
 
 @implementation GTLRStorageQuery_ObjectsCopy
@@ -872,7 +882,7 @@ NSString * const kGTLRStorageProjectionNoAcl = @"noAcl";
          ifMetagenerationNotMatch, ifSourceGenerationMatch,
          ifSourceGenerationNotMatch, ifSourceMetagenerationMatch,
          ifSourceMetagenerationNotMatch, projection, sourceBucket,
-         sourceGeneration, sourceObject;
+         sourceGeneration, sourceObject, userProject;
 
 + (instancetype)queryWithObject:(GTLRStorage_Object *)object
                    sourceBucket:(NSString *)sourceBucket
@@ -902,29 +912,12 @@ NSString * const kGTLRStorageProjectionNoAcl = @"noAcl";
   return query;
 }
 
-+ (instancetype)queryForMediaWithObject:(GTLRStorage_Object *)object
-                           sourceBucket:(NSString *)sourceBucket
-                           sourceObject:(NSString *)sourceObject
-                      destinationBucket:(NSString *)destinationBucket
-                      destinationObject:(NSString *)destinationObject {
-  GTLRStorageQuery_ObjectsCopy *query =
-    [self queryWithObject:object
-             sourceBucket:sourceBucket
-             sourceObject:sourceObject
-        destinationBucket:destinationBucket
-        destinationObject:destinationObject];
-  query.downloadAsDataObjectType = @"media";
-  query.useMediaDownloadService = YES;
-  query.loggingName = @"Download storage.objects.copy";
-  return query;
-}
-
 @end
 
 @implementation GTLRStorageQuery_ObjectsDelete
 
 @dynamic bucket, generation, ifGenerationMatch, ifGenerationNotMatch,
-         ifMetagenerationMatch, ifMetagenerationNotMatch, object;
+         ifMetagenerationMatch, ifMetagenerationNotMatch, object, userProject;
 
 + (instancetype)queryWithBucket:(NSString *)bucket
                          object:(NSString *)object_param {
@@ -947,7 +940,8 @@ NSString * const kGTLRStorageProjectionNoAcl = @"noAcl";
 @implementation GTLRStorageQuery_ObjectsGet
 
 @dynamic bucket, generation, ifGenerationMatch, ifGenerationNotMatch,
-         ifMetagenerationMatch, ifMetagenerationNotMatch, object, projection;
+         ifMetagenerationMatch, ifMetagenerationNotMatch, object, projection,
+         userProject;
 
 + (instancetype)queryWithBucket:(NSString *)bucket
                          object:(NSString *)object_param {
@@ -981,7 +975,7 @@ NSString * const kGTLRStorageProjectionNoAcl = @"noAcl";
 
 @implementation GTLRStorageQuery_ObjectsGetIamPolicy
 
-@dynamic bucket, generation, object;
+@dynamic bucket, generation, object, userProject;
 
 + (instancetype)queryWithBucket:(NSString *)bucket
                          object:(NSString *)object_param {
@@ -1005,8 +999,8 @@ NSString * const kGTLRStorageProjectionNoAcl = @"noAcl";
 @implementation GTLRStorageQuery_ObjectsInsert
 
 @dynamic bucket, contentEncoding, ifGenerationMatch, ifGenerationNotMatch,
-         ifMetagenerationMatch, ifMetagenerationNotMatch, name, predefinedAcl,
-         projection;
+         ifMetagenerationMatch, ifMetagenerationNotMatch, kmsKeyName, name,
+         predefinedAcl, projection, userProject;
 
 + (instancetype)queryWithObject:(GTLRStorage_Object *)object
                          bucket:(NSString *)bucket
@@ -1029,24 +1023,12 @@ NSString * const kGTLRStorageProjectionNoAcl = @"noAcl";
   return query;
 }
 
-+ (instancetype)queryForMediaWithObject:(GTLRStorage_Object *)object
-                                 bucket:(NSString *)bucket
-                       uploadParameters:(GTLRUploadParameters *)uploadParameters {
-  GTLRStorageQuery_ObjectsInsert *query =
-    [self queryWithObject:object
-                   bucket:bucket
-         uploadParameters:uploadParameters];
-  query.downloadAsDataObjectType = @"media";
-  query.useMediaDownloadService = YES;
-  query.loggingName = @"Download storage.objects.insert";
-  return query;
-}
-
 @end
 
 @implementation GTLRStorageQuery_ObjectsList
 
-@dynamic bucket, delimiter, maxResults, pageToken, prefix, projection, versions;
+@dynamic bucket, delimiter, maxResults, pageToken, prefix, projection,
+         userProject, versions;
 
 + (instancetype)queryWithBucket:(NSString *)bucket {
   NSArray *pathParams = @[ @"bucket" ];
@@ -1067,7 +1049,7 @@ NSString * const kGTLRStorageProjectionNoAcl = @"noAcl";
 
 @dynamic bucket, generation, ifGenerationMatch, ifGenerationNotMatch,
          ifMetagenerationMatch, ifMetagenerationNotMatch, object, predefinedAcl,
-         projection;
+         projection, userProject;
 
 + (instancetype)queryWithObject:(GTLRStorage_Object *)object
                          bucket:(NSString *)bucket
@@ -1096,12 +1078,13 @@ NSString * const kGTLRStorageProjectionNoAcl = @"noAcl";
 
 @implementation GTLRStorageQuery_ObjectsRewrite
 
-@dynamic destinationBucket, destinationObject, destinationPredefinedAcl,
-         ifGenerationMatch, ifGenerationNotMatch, ifMetagenerationMatch,
-         ifMetagenerationNotMatch, ifSourceGenerationMatch,
-         ifSourceGenerationNotMatch, ifSourceMetagenerationMatch,
-         ifSourceMetagenerationNotMatch, maxBytesRewrittenPerCall, projection,
-         rewriteToken, sourceBucket, sourceGeneration, sourceObject;
+@dynamic destinationBucket, destinationKmsKeyName, destinationObject,
+         destinationPredefinedAcl, ifGenerationMatch, ifGenerationNotMatch,
+         ifMetagenerationMatch, ifMetagenerationNotMatch,
+         ifSourceGenerationMatch, ifSourceGenerationNotMatch,
+         ifSourceMetagenerationMatch, ifSourceMetagenerationNotMatch,
+         maxBytesRewrittenPerCall, projection, rewriteToken, sourceBucket,
+         sourceGeneration, sourceObject, userProject;
 
 + (instancetype)queryWithObject:(GTLRStorage_Object *)object
                    sourceBucket:(NSString *)sourceBucket
@@ -1135,7 +1118,7 @@ NSString * const kGTLRStorageProjectionNoAcl = @"noAcl";
 
 @implementation GTLRStorageQuery_ObjectsSetIamPolicy
 
-@dynamic bucket, generation, object;
+@dynamic bucket, generation, object, userProject;
 
 + (instancetype)queryWithObject:(GTLRStorage_Policy *)object
                          bucket:(NSString *)bucket
@@ -1164,7 +1147,7 @@ NSString * const kGTLRStorageProjectionNoAcl = @"noAcl";
 
 @implementation GTLRStorageQuery_ObjectsTestIamPermissions
 
-@dynamic bucket, generation, object, permissions;
+@dynamic bucket, generation, object, permissions, userProject;
 
 + (NSDictionary<NSString *, Class> *)arrayPropertyToClassMap {
   NSDictionary<NSString *, Class> *map = @{
@@ -1198,7 +1181,7 @@ NSString * const kGTLRStorageProjectionNoAcl = @"noAcl";
 
 @dynamic bucket, generation, ifGenerationMatch, ifGenerationNotMatch,
          ifMetagenerationMatch, ifMetagenerationNotMatch, object, predefinedAcl,
-         projection;
+         projection, userProject;
 
 + (instancetype)queryWithObject:(GTLRStorage_Object *)object
                          bucket:(NSString *)bucket
@@ -1223,24 +1206,12 @@ NSString * const kGTLRStorageProjectionNoAcl = @"noAcl";
   return query;
 }
 
-+ (instancetype)queryForMediaWithObject:(GTLRStorage_Object *)object
-                                 bucket:(NSString *)bucket
-                                 object:(NSString *)object_param {
-  GTLRStorageQuery_ObjectsUpdate *query =
-    [self queryWithObject:object
-                   bucket:bucket
-                   object:object_param];
-  query.downloadAsDataObjectType = @"media";
-  query.useMediaDownloadService = YES;
-  query.loggingName = @"Download storage.objects.update";
-  return query;
-}
-
 @end
 
 @implementation GTLRStorageQuery_ObjectsWatchAll
 
-@dynamic bucket, delimiter, maxResults, pageToken, prefix, projection, versions;
+@dynamic bucket, delimiter, maxResults, pageToken, prefix, projection,
+         userProject, versions;
 
 + (instancetype)queryWithObject:(GTLRStorage_Channel *)object
                          bucket:(NSString *)bucket {
@@ -1265,7 +1236,7 @@ NSString * const kGTLRStorageProjectionNoAcl = @"noAcl";
 
 @implementation GTLRStorageQuery_ProjectsServiceAccountGet
 
-@dynamic projectId;
+@dynamic projectId, userProject;
 
 + (instancetype)queryWithProjectId:(NSString *)projectId {
   NSArray *pathParams = @[ @"projectId" ];

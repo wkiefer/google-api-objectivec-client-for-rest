@@ -18,7 +18,8 @@
 //
 
 @implementation GTLRAdExchangeBuyer_Account
-@dynamic bidderLocation, cookieMatchingNid, cookieMatchingUrl, identifier, kind,
+@dynamic applyPretargetingToNonGuaranteedDeals, bidderLocation,
+         cookieMatchingNid, cookieMatchingUrl, identifier, kind,
          maximumActiveCreatives, maximumTotalQps, numberActiveCreatives;
 
 + (NSDictionary<NSString *, NSString *> *)propertyToJSONKeyMap {
@@ -254,7 +255,7 @@
          filteringReasons, height, HTMLSnippet, impressionTrackingUrl, kind,
          languages, nativeAd, openAuctionStatus, productCategories,
          restrictedCategories, sensitiveCategories, servingRestrictions,
-         vendorType, version, videoURL, width;
+         vendorType, version, videoURL, videoVastXML, width;
 
 + (NSDictionary<NSString *, Class> *)arrayPropertyToClassMap {
   NSDictionary<NSString *, Class> *map = @{
@@ -845,10 +846,10 @@
 @dynamic buyerPrivateData, creationTimeMs, creativePreApprovalPolicy,
          creativeSafeFrameCompatibility, dealId, dealServingMetadata,
          deliveryControl, externalDealId, flightEndTimeMs, flightStartTimeMs,
-         inventoryDescription, isRfpTemplate, kind, lastUpdateTimeMs, name,
-         productId, productRevisionNumber, programmaticCreativeSource,
-         proposalId, sellerContacts, sharedTargetings, syndicationProduct,
-         terms, webPropertyCode;
+         inventoryDescription, isRfpTemplate, isSetupComplete, kind,
+         lastUpdateTimeMs, name, productId, productRevisionNumber,
+         programmaticCreativeSource, proposalId, sellerContacts,
+         sharedTargetings, syndicationProduct, terms, webPropertyCode;
 
 + (NSDictionary<NSString *, Class> *)arrayPropertyToClassMap {
   NSDictionary<NSString *, Class> *map = @{
@@ -1053,7 +1054,7 @@
 //
 
 @implementation GTLRAdExchangeBuyer_PricePerBuyer
-@dynamic auctionTier, buyer, price;
+@dynamic auctionTier, billedBuyer, buyer, price;
 @end
 
 
@@ -1073,12 +1074,13 @@
 //
 
 @implementation GTLRAdExchangeBuyer_Product
-@dynamic creationTimeMs, creatorContacts, deliveryControl, flightEndTimeMs,
-         flightStartTimeMs, hasCreatorSignedOff, inventorySource, kind, labels,
-         lastUpdateTimeMs, legacyOfferId, marketplacePublisherProfileId, name,
-         privateAuctionId, productId, publisherProfileId,
-         publisherProvidedForecast, revisionNumber, seller, sharedTargetings,
-         state, syndicationProduct, terms, webPropertyCode;
+@dynamic billedBuyer, buyer, creationTimeMs, creatorContacts, creatorRole,
+         deliveryControl, flightEndTimeMs, flightStartTimeMs,
+         hasCreatorSignedOff, inventorySource, kind, labels, lastUpdateTimeMs,
+         legacyOfferId, marketplacePublisherProfileId, name, privateAuctionId,
+         productId, publisherProfileId, publisherProvidedForecast,
+         revisionNumber, seller, sharedTargetings, state, syndicationProduct,
+         terms, webPropertyCode;
 
 + (NSDictionary<NSString *, Class> *)arrayPropertyToClassMap {
   NSDictionary<NSString *, Class> *map = @{
@@ -1194,7 +1196,8 @@
 //
 
 @implementation GTLRAdExchangeBuyer_TargetingValue
-@dynamic creativeSizeValue, dayPartTargetingValue, longValue, stringValue;
+@dynamic creativeSizeValue, dayPartTargetingValue, demogAgeCriteriaValue,
+         demogGenderCriteriaValue, longValue, stringValue;
 @end
 
 
@@ -1204,10 +1207,12 @@
 //
 
 @implementation GTLRAdExchangeBuyer_TargetingValueCreativeSize
-@dynamic companionSizes, creativeSizeType, size, skippableAdType;
+@dynamic allowedFormats, companionSizes, creativeSizeType, nativeTemplate, size,
+         skippableAdType;
 
 + (NSDictionary<NSString *, Class> *)arrayPropertyToClassMap {
   NSDictionary<NSString *, Class> *map = @{
+    @"allowedFormats" : [NSString class],
     @"companionSizes" : [GTLRAdExchangeBuyer_TargetingValueSize class]
   };
   return map;
@@ -1241,6 +1246,42 @@
 
 @implementation GTLRAdExchangeBuyer_TargetingValueDayPartTargetingDayPart
 @dynamic dayOfWeek, endHour, endMinute, startHour, startMinute;
+@end
+
+
+// ----------------------------------------------------------------------------
+//
+//   GTLRAdExchangeBuyer_TargetingValueDemogAgeCriteria
+//
+
+@implementation GTLRAdExchangeBuyer_TargetingValueDemogAgeCriteria
+@dynamic demogAgeCriteriaIds;
+
++ (NSDictionary<NSString *, Class> *)arrayPropertyToClassMap {
+  NSDictionary<NSString *, Class> *map = @{
+    @"demogAgeCriteriaIds" : [NSString class]
+  };
+  return map;
+}
+
+@end
+
+
+// ----------------------------------------------------------------------------
+//
+//   GTLRAdExchangeBuyer_TargetingValueDemogGenderCriteria
+//
+
+@implementation GTLRAdExchangeBuyer_TargetingValueDemogGenderCriteria
+@dynamic demogGenderCriteriaIds;
+
++ (NSDictionary<NSString *, Class> *)arrayPropertyToClassMap {
+  NSDictionary<NSString *, Class> *map = @{
+    @"demogGenderCriteriaIds" : [NSString class]
+  };
+  return map;
+}
+
 @end
 
 

@@ -37,6 +37,11 @@
 @class GTLRFitness_Value;
 @class GTLRFitness_ValueMapValEntry;
 
+// Generated comments include content from the discovery document; avoid them
+// causing warnings since clang's checks are some what arbitrary.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdocumentation"
+
 NS_ASSUME_NONNULL_BEGIN
 
 // ----------------------------------------------------------------------------
@@ -609,8 +614,8 @@ GTLR_EXTERN NSString * const kGTLRFitness_Device_Type_Watch;
  *  type:dataType.name:developer project
  *  number:device.manufacturer:device.model:device.uid:dataStreamName
  *  When any of the optional fields that comprise of the data stream ID are
- *  blank, they will be omitted from the data stream ID. The minnimum viable
- *  data stream ID would be: type:dataType.name:developer project number
+ *  blank, they will be omitted from the data stream ID. The minimum viable data
+ *  stream ID would be: type:dataType.name:developer project number
  *  Finally, the developer project number is obfuscated when read by any REST or
  *  Android client that did not create the data source. Only the data source
  *  creator will see the developer project number in clear and normal form.
@@ -756,6 +761,33 @@ GTLR_EXTERN NSString * const kGTLRFitness_Device_Type_Watch;
 
 /** Version string for the device hardware/software. */
 @property(nonatomic, copy, nullable) NSString *version;
+
+@end
+
+
+/**
+ *  GTLRFitness_ListDataPointChangesResponse
+ */
+@interface GTLRFitness_ListDataPointChangesResponse : GTLRObject
+
+/** The data stream ID of the data source with data point changes. */
+@property(nonatomic, copy, nullable) NSString *dataSourceId;
+
+/**
+ *  Deleted data points for the user. Note, for modifications this should be
+ *  parsed before handling insertions.
+ */
+@property(nonatomic, strong, nullable) NSArray<GTLRFitness_DataPoint *> *deletedDataPoint;
+
+/** Inserted data points for the user. */
+@property(nonatomic, strong, nullable) NSArray<GTLRFitness_DataPoint *> *insertedDataPoint;
+
+/**
+ *  The continuation token, which is used to page through large result sets.
+ *  Provide this value in a subsequent request to return the next page of
+ *  results.
+ */
+@property(nonatomic, copy, nullable) NSString *nextPageToken;
 
 @end
 
@@ -942,3 +974,5 @@ GTLR_EXTERN NSString * const kGTLRFitness_Device_Type_Watch;
 @end
 
 NS_ASSUME_NONNULL_END
+
+#pragma clang diagnostic pop

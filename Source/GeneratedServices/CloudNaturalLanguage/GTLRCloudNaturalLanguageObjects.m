@@ -2,11 +2,11 @@
 
 // ----------------------------------------------------------------------------
 // API:
-//   Google Cloud Natural Language API (language/v1)
+//   Cloud Natural Language API (language/v1)
 // Description:
-//   Google Cloud Natural Language API provides natural language understanding
-//   technologies to developers. Examples include sentiment analysis, entity
-//   recognition, and text annotations.
+//   Provides natural language understanding technologies to developers.
+//   Examples include sentiment analysis, entity recognition, entity sentiment
+//   analysis, and text annotations.
 // Documentation:
 //   https://cloud.google.com/natural-language/
 
@@ -20,6 +20,12 @@ NSString * const kGTLRCloudNaturalLanguage_AnalyzeEntitiesRequest_EncodingType_N
 NSString * const kGTLRCloudNaturalLanguage_AnalyzeEntitiesRequest_EncodingType_Utf16 = @"UTF16";
 NSString * const kGTLRCloudNaturalLanguage_AnalyzeEntitiesRequest_EncodingType_Utf32 = @"UTF32";
 NSString * const kGTLRCloudNaturalLanguage_AnalyzeEntitiesRequest_EncodingType_Utf8 = @"UTF8";
+
+// GTLRCloudNaturalLanguage_AnalyzeEntitySentimentRequest.encodingType
+NSString * const kGTLRCloudNaturalLanguage_AnalyzeEntitySentimentRequest_EncodingType_None = @"NONE";
+NSString * const kGTLRCloudNaturalLanguage_AnalyzeEntitySentimentRequest_EncodingType_Utf16 = @"UTF16";
+NSString * const kGTLRCloudNaturalLanguage_AnalyzeEntitySentimentRequest_EncodingType_Utf32 = @"UTF32";
+NSString * const kGTLRCloudNaturalLanguage_AnalyzeEntitySentimentRequest_EncodingType_Utf8 = @"UTF8";
 
 // GTLRCloudNaturalLanguage_AnalyzeSentimentRequest.encodingType
 NSString * const kGTLRCloudNaturalLanguage_AnalyzeSentimentRequest_EncodingType_None = @"NONE";
@@ -47,6 +53,7 @@ NSString * const kGTLRCloudNaturalLanguage_DependencyEdge_Label_Advmod = @"ADVMO
 NSString * const kGTLRCloudNaturalLanguage_DependencyEdge_Label_Advphmod = @"ADVPHMOD";
 NSString * const kGTLRCloudNaturalLanguage_DependencyEdge_Label_Amod = @"AMOD";
 NSString * const kGTLRCloudNaturalLanguage_DependencyEdge_Label_Appos = @"APPOS";
+NSString * const kGTLRCloudNaturalLanguage_DependencyEdge_Label_Asp = @"ASP";
 NSString * const kGTLRCloudNaturalLanguage_DependencyEdge_Label_Attr = @"ATTR";
 NSString * const kGTLRCloudNaturalLanguage_DependencyEdge_Label_Aux = @"AUX";
 NSString * const kGTLRCloudNaturalLanguage_DependencyEdge_Label_Auxcaus = @"AUXCAUS";
@@ -66,13 +73,18 @@ NSString * const kGTLRCloudNaturalLanguage_DependencyEdge_Label_Dobj = @"DOBJ";
 NSString * const kGTLRCloudNaturalLanguage_DependencyEdge_Label_Dtmod = @"DTMOD";
 NSString * const kGTLRCloudNaturalLanguage_DependencyEdge_Label_Expl = @"EXPL";
 NSString * const kGTLRCloudNaturalLanguage_DependencyEdge_Label_Foreign = @"FOREIGN";
+NSString * const kGTLRCloudNaturalLanguage_DependencyEdge_Label_Gmod = @"GMOD";
+NSString * const kGTLRCloudNaturalLanguage_DependencyEdge_Label_Gobj = @"GOBJ";
 NSString * const kGTLRCloudNaturalLanguage_DependencyEdge_Label_Goeswith = @"GOESWITH";
+NSString * const kGTLRCloudNaturalLanguage_DependencyEdge_Label_Infmod = @"INFMOD";
 NSString * const kGTLRCloudNaturalLanguage_DependencyEdge_Label_Iobj = @"IOBJ";
 NSString * const kGTLRCloudNaturalLanguage_DependencyEdge_Label_Kw = @"KW";
 NSString * const kGTLRCloudNaturalLanguage_DependencyEdge_Label_List = @"LIST";
 NSString * const kGTLRCloudNaturalLanguage_DependencyEdge_Label_Mark = @"MARK";
+NSString * const kGTLRCloudNaturalLanguage_DependencyEdge_Label_Mes = @"MES";
 NSString * const kGTLRCloudNaturalLanguage_DependencyEdge_Label_Mwe = @"MWE";
 NSString * const kGTLRCloudNaturalLanguage_DependencyEdge_Label_Mwv = @"MWV";
+NSString * const kGTLRCloudNaturalLanguage_DependencyEdge_Label_Ncomp = @"NCOMP";
 NSString * const kGTLRCloudNaturalLanguage_DependencyEdge_Label_Neg = @"NEG";
 NSString * const kGTLRCloudNaturalLanguage_DependencyEdge_Label_Nn = @"NN";
 NSString * const kGTLRCloudNaturalLanguage_DependencyEdge_Label_Nomc = @"NOMC";
@@ -274,6 +286,34 @@ NSString * const kGTLRCloudNaturalLanguage_PartOfSpeech_Voice_VoiceUnknown = @"V
 
 // ----------------------------------------------------------------------------
 //
+//   GTLRCloudNaturalLanguage_AnalyzeEntitySentimentRequest
+//
+
+@implementation GTLRCloudNaturalLanguage_AnalyzeEntitySentimentRequest
+@dynamic document, encodingType;
+@end
+
+
+// ----------------------------------------------------------------------------
+//
+//   GTLRCloudNaturalLanguage_AnalyzeEntitySentimentResponse
+//
+
+@implementation GTLRCloudNaturalLanguage_AnalyzeEntitySentimentResponse
+@dynamic entities, language;
+
++ (NSDictionary<NSString *, Class> *)arrayPropertyToClassMap {
+  NSDictionary<NSString *, Class> *map = @{
+    @"entities" : [GTLRCloudNaturalLanguage_Entity class]
+  };
+  return map;
+}
+
+@end
+
+
+// ----------------------------------------------------------------------------
+//
 //   GTLRCloudNaturalLanguage_AnalyzeSentimentRequest
 //
 
@@ -345,13 +385,52 @@ NSString * const kGTLRCloudNaturalLanguage_PartOfSpeech_Voice_VoiceUnknown = @"V
 //
 
 @implementation GTLRCloudNaturalLanguage_AnnotateTextResponse
-@dynamic documentSentiment, entities, language, sentences, tokens;
+@dynamic categories, documentSentiment, entities, language, sentences, tokens;
 
 + (NSDictionary<NSString *, Class> *)arrayPropertyToClassMap {
   NSDictionary<NSString *, Class> *map = @{
+    @"categories" : [GTLRCloudNaturalLanguage_ClassificationCategory class],
     @"entities" : [GTLRCloudNaturalLanguage_Entity class],
     @"sentences" : [GTLRCloudNaturalLanguage_Sentence class],
     @"tokens" : [GTLRCloudNaturalLanguage_Token class]
+  };
+  return map;
+}
+
+@end
+
+
+// ----------------------------------------------------------------------------
+//
+//   GTLRCloudNaturalLanguage_ClassificationCategory
+//
+
+@implementation GTLRCloudNaturalLanguage_ClassificationCategory
+@dynamic confidence, name;
+@end
+
+
+// ----------------------------------------------------------------------------
+//
+//   GTLRCloudNaturalLanguage_ClassifyTextRequest
+//
+
+@implementation GTLRCloudNaturalLanguage_ClassifyTextRequest
+@dynamic document;
+@end
+
+
+// ----------------------------------------------------------------------------
+//
+//   GTLRCloudNaturalLanguage_ClassifyTextResponse
+//
+
+@implementation GTLRCloudNaturalLanguage_ClassifyTextResponse
+@dynamic categories;
+
++ (NSDictionary<NSString *, Class> *)arrayPropertyToClassMap {
+  NSDictionary<NSString *, Class> *map = @{
+    @"categories" : [GTLRCloudNaturalLanguage_ClassificationCategory class]
   };
   return map;
 }
@@ -385,7 +464,7 @@ NSString * const kGTLRCloudNaturalLanguage_PartOfSpeech_Voice_VoiceUnknown = @"V
 //
 
 @implementation GTLRCloudNaturalLanguage_Entity
-@dynamic mentions, metadata, name, salience, type;
+@dynamic mentions, metadata, name, salience, sentiment, type;
 
 + (NSDictionary<NSString *, Class> *)arrayPropertyToClassMap {
   NSDictionary<NSString *, Class> *map = @{
@@ -417,7 +496,7 @@ NSString * const kGTLRCloudNaturalLanguage_PartOfSpeech_Voice_VoiceUnknown = @"V
 //
 
 @implementation GTLRCloudNaturalLanguage_EntityMention
-@dynamic text, type;
+@dynamic sentiment, text, type;
 @end
 
 
@@ -427,7 +506,8 @@ NSString * const kGTLRCloudNaturalLanguage_PartOfSpeech_Voice_VoiceUnknown = @"V
 //
 
 @implementation GTLRCloudNaturalLanguage_Features
-@dynamic extractDocumentSentiment, extractEntities, extractSyntax;
+@dynamic classifyText, extractDocumentSentiment, extractEntities,
+         extractEntitySentiment, extractSyntax;
 @end
 
 

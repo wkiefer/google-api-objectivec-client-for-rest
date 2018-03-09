@@ -2,7 +2,7 @@
 
 // ----------------------------------------------------------------------------
 // API:
-//   Google Dataflow API (dataflow/v1b3)
+//   Dataflow API (dataflow/v1b3)
 // Description:
 //   Manages Google Cloud Dataflow projects on Google Cloud Platform.
 // Documentation:
@@ -43,6 +43,25 @@ NSString * const kGTLRDataflowViewMetadataOnly       = @"METADATA_ONLY";
 @implementation GTLRDataflowQuery
 
 @dynamic fields;
+
+@end
+
+@implementation GTLRDataflowQuery_ProjectsJobsAggregated
+
+@dynamic filter, location, pageSize, pageToken, projectId, view;
+
++ (instancetype)queryWithProjectId:(NSString *)projectId {
+  NSArray *pathParams = @[ @"projectId" ];
+  NSString *pathURITemplate = @"v1b3/projects/{projectId}/jobs:aggregated";
+  GTLRDataflowQuery_ProjectsJobsAggregated *query =
+    [[self alloc] initWithPathURITemplate:pathURITemplate
+                               HTTPMethod:nil
+                       pathParameterNames:pathParams];
+  query.projectId = projectId;
+  query.expectedObjectClass = [GTLRDataflow_ListJobsResponse class];
+  query.loggingName = @"dataflow.projects.jobs.aggregated";
+  return query;
+}
 
 @end
 
@@ -642,7 +661,7 @@ NSString * const kGTLRDataflowViewMetadataOnly       = @"METADATA_ONLY";
 
 @implementation GTLRDataflowQuery_ProjectsLocationsTemplatesLaunch
 
-@dynamic dryRun, gcsPath, location, projectId;
+@dynamic gcsPath, location, projectId, validateOnly;
 
 + (instancetype)queryWithObject:(GTLRDataflow_LaunchTemplateParameters *)object
                       projectId:(NSString *)projectId
@@ -744,7 +763,7 @@ NSString * const kGTLRDataflowViewMetadataOnly       = @"METADATA_ONLY";
 
 @implementation GTLRDataflowQuery_ProjectsTemplatesLaunch
 
-@dynamic dryRun, gcsPath, location, projectId;
+@dynamic gcsPath, location, projectId, validateOnly;
 
 + (instancetype)queryWithObject:(GTLRDataflow_LaunchTemplateParameters *)object
                       projectId:(NSString *)projectId {

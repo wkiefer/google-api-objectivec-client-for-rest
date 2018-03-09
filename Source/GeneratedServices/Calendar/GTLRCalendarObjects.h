@@ -26,7 +26,16 @@
 @class GTLRCalendar_ColorDefinition;
 @class GTLRCalendar_Colors_Calendar;
 @class GTLRCalendar_Colors_Event;
-@class GTLRCalendar_DisplayInfo;
+@class GTLRCalendar_ConferenceData;
+@class GTLRCalendar_ConferenceParameters;
+@class GTLRCalendar_ConferenceParametersAddOnParameters;
+@class GTLRCalendar_ConferenceParametersAddOnParameters_Parameters;
+@class GTLRCalendar_ConferenceProperties;
+@class GTLRCalendar_ConferenceRequestStatus;
+@class GTLRCalendar_ConferenceSolution;
+@class GTLRCalendar_ConferenceSolutionKey;
+@class GTLRCalendar_CreateConferenceRequest;
+@class GTLRCalendar_EntryPoint;
 @class GTLRCalendar_Error;
 @class GTLRCalendar_Event;
 @class GTLRCalendar_Event_Creator;
@@ -47,12 +56,14 @@
 @class GTLRCalendar_FreeBusyRequestItem;
 @class GTLRCalendar_FreeBusyResponse_Calendars;
 @class GTLRCalendar_FreeBusyResponse_Groups;
-@class GTLRCalendar_HabitInstanceData;
-@class GTLRCalendar_LaunchInfo;
-@class GTLRCalendar_Link;
 @class GTLRCalendar_Notification;
 @class GTLRCalendar_Setting;
 @class GTLRCalendar_TimePeriod;
+
+// Generated comments include content from the discovery document; avoid them
+// causing warnings since clang's checks are some what arbitrary.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdocumentation"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -164,6 +175,12 @@ NS_ASSUME_NONNULL_BEGIN
 @interface GTLRCalendar_Calendar : GTLRObject
 
 /**
+ *  Conferencing properties for this calendar, for example what types of
+ *  conferences are allowed.
+ */
+@property(nonatomic, strong, nullable) GTLRCalendar_ConferenceProperties *conferenceProperties;
+
+/**
  *  Description of the calendar. Optional.
  *
  *  Remapped to 'descriptionProperty' to avoid NSObject's 'description'.
@@ -273,6 +290,12 @@ NS_ASSUME_NONNULL_BEGIN
  *  and can be ignored when using these properties. Optional.
  */
 @property(nonatomic, copy, nullable) NSString *colorId;
+
+/**
+ *  Conferencing properties for this calendar, for example what types of
+ *  conferences are allowed.
+ */
+@property(nonatomic, strong, nullable) GTLRCalendar_ConferenceProperties *conferenceProperties;
 
 /**
  *  The default reminders that the authenticated user has for this calendar.
@@ -525,26 +548,290 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 /**
- *  GTLRCalendar_DeepLinkData
+ *  GTLRCalendar_ConferenceData
  */
-@interface GTLRCalendar_DeepLinkData : GTLRObject
+@interface GTLRCalendar_ConferenceData : GTLRObject
 
-@property(nonatomic, strong, nullable) NSArray<GTLRCalendar_Link *> *links;
-@property(nonatomic, copy, nullable) NSString *url;
+/**
+ *  The ID of the conference.
+ *  Can be used by developers to keep track of conferences, should not be
+ *  displayed to users.
+ *  Values for solution types:
+ *  - "eventHangout": unset.
+ *  - "eventNamedHangout": the name of the Hangout.
+ *  - "hangoutsMeet": the 10-letter meeting code, for example "aaa-bbbb-ccc".
+ *  Optional.
+ */
+@property(nonatomic, copy, nullable) NSString *conferenceId;
+
+/**
+ *  The conference solution, such as Hangouts or Hangouts Meet.
+ *  Unset for a conference with a failed create request.
+ *  Either conferenceSolution and at least one entryPoint, or createRequest is
+ *  required.
+ */
+@property(nonatomic, strong, nullable) GTLRCalendar_ConferenceSolution *conferenceSolution;
+
+/**
+ *  A request to generate a new conference and attach it to the event. The data
+ *  is generated asynchronously. To see whether the data is present check the
+ *  status field.
+ *  Either conferenceSolution and at least one entryPoint, or createRequest is
+ *  required.
+ */
+@property(nonatomic, strong, nullable) GTLRCalendar_CreateConferenceRequest *createRequest;
+
+/**
+ *  Information about individual conference entry points, such as URLs or phone
+ *  numbers.
+ *  All of them must belong to the same conference.
+ *  Either conferenceSolution and at least one entryPoint, or createRequest is
+ *  required.
+ */
+@property(nonatomic, strong, nullable) NSArray<GTLRCalendar_EntryPoint *> *entryPoints;
+
+/**
+ *  Additional notes (such as instructions from the domain administrator, legal
+ *  notices) to display to the user. Can contain HTML. The maximum length is
+ *  2048 characters. Optional.
+ */
+@property(nonatomic, copy, nullable) NSString *notes;
+
+/**
+ *  Additional properties related to a conference. An example would be a
+ *  solution-specific setting for enabling video streaming.
+ */
+@property(nonatomic, strong, nullable) GTLRCalendar_ConferenceParameters *parameters;
+
+/**
+ *  The signature of the conference data.
+ *  Genereated on server side. Must be preserved while copying the conference
+ *  data between events, otherwise the conference data will not be copied.
+ *  Unset for a conference with a failed create request.
+ *  Optional for a conference with a pending create request.
+ */
+@property(nonatomic, copy, nullable) NSString *signature;
 
 @end
 
 
 /**
- *  GTLRCalendar_DisplayInfo
+ *  GTLRCalendar_ConferenceParameters
  */
-@interface GTLRCalendar_DisplayInfo : GTLRObject
+@interface GTLRCalendar_ConferenceParameters : GTLRObject
 
-@property(nonatomic, copy, nullable) NSString *appIconUrl;
-@property(nonatomic, copy, nullable) NSString *appShortTitle;
-@property(nonatomic, copy, nullable) NSString *appTitle;
-@property(nonatomic, copy, nullable) NSString *linkShortTitle;
-@property(nonatomic, copy, nullable) NSString *linkTitle;
+/** Additional add-on specific data. */
+@property(nonatomic, strong, nullable) GTLRCalendar_ConferenceParametersAddOnParameters *addOnParameters;
+
+@end
+
+
+/**
+ *  GTLRCalendar_ConferenceParametersAddOnParameters
+ */
+@interface GTLRCalendar_ConferenceParametersAddOnParameters : GTLRObject
+
+@property(nonatomic, strong, nullable) GTLRCalendar_ConferenceParametersAddOnParameters_Parameters *parameters;
+
+@end
+
+
+/**
+ *  GTLRCalendar_ConferenceParametersAddOnParameters_Parameters
+ *
+ *  @note This class is documented as having more properties of NSString. Use @c
+ *        -additionalJSONKeys and @c -additionalPropertyForName: to get the list
+ *        of properties and then fetch them; or @c -additionalProperties to
+ *        fetch them all at once.
+ */
+@interface GTLRCalendar_ConferenceParametersAddOnParameters_Parameters : GTLRObject
+@end
+
+
+/**
+ *  GTLRCalendar_ConferenceProperties
+ */
+@interface GTLRCalendar_ConferenceProperties : GTLRObject
+
+/**
+ *  The types of conference solutions that are supported for this calendar.
+ *  The possible values are:
+ *  - "eventHangout"
+ *  - "eventNamedHangout"
+ *  - "hangoutsMeet" Optional.
+ */
+@property(nonatomic, strong, nullable) NSArray<NSString *> *allowedConferenceSolutionTypes;
+
+@end
+
+
+/**
+ *  GTLRCalendar_ConferenceRequestStatus
+ */
+@interface GTLRCalendar_ConferenceRequestStatus : GTLRObject
+
+/**
+ *  The current status of the conference create request. Read-only.
+ *  The possible values are:
+ *  - "pending": the conference create request is still being processed.
+ *  - "success": the conference create request succeeded, the entry points are
+ *  populated.
+ *  - "failure": the conference create request failed, there are no entry
+ *  points.
+ */
+@property(nonatomic, copy, nullable) NSString *statusCode;
+
+@end
+
+
+/**
+ *  GTLRCalendar_ConferenceSolution
+ */
+@interface GTLRCalendar_ConferenceSolution : GTLRObject
+
+/** The user-visible icon for this solution. */
+@property(nonatomic, copy, nullable) NSString *iconUri;
+
+/**
+ *  The key which can uniquely identify the conference solution for this event.
+ */
+@property(nonatomic, strong, nullable) GTLRCalendar_ConferenceSolutionKey *key;
+
+/** The user-visible name of this solution. Not localized. */
+@property(nonatomic, copy, nullable) NSString *name;
+
+@end
+
+
+/**
+ *  GTLRCalendar_ConferenceSolutionKey
+ */
+@interface GTLRCalendar_ConferenceSolutionKey : GTLRObject
+
+/**
+ *  The conference solution type.
+ *  If a client encounters an unfamiliar or empty type, it should still be able
+ *  to display the entry points. However, it should disallow modifications.
+ *  The possible values are:
+ *  - "eventHangout" for Hangouts for consumers (http://hangouts.google.com)
+ *  - "eventNamedHangout" for classic Hangouts for G Suite users
+ *  (http://hangouts.google.com)
+ *  - "hangoutsMeet" for Hangouts Meet (http://meet.google.com)
+ */
+@property(nonatomic, copy, nullable) NSString *type;
+
+@end
+
+
+/**
+ *  GTLRCalendar_CreateConferenceRequest
+ */
+@interface GTLRCalendar_CreateConferenceRequest : GTLRObject
+
+/** The conference solution, such as Hangouts or Hangouts Meet. */
+@property(nonatomic, strong, nullable) GTLRCalendar_ConferenceSolutionKey *conferenceSolutionKey;
+
+/**
+ *  The client-generated unique ID for this request.
+ *  Clients should regenerate this ID for every new request. If an ID provided
+ *  is the same as for the previous request, the request is ignored.
+ */
+@property(nonatomic, copy, nullable) NSString *requestId;
+
+/** The status of the conference create request. */
+@property(nonatomic, strong, nullable) GTLRCalendar_ConferenceRequestStatus *status;
+
+@end
+
+
+/**
+ *  GTLRCalendar_EntryPoint
+ */
+@interface GTLRCalendar_EntryPoint : GTLRObject
+
+/**
+ *  The access code to access the conference. The maximum length is 128
+ *  characters.
+ *  When creating new conference data, populate only the subset of {meetingCode,
+ *  accessCode, passcode, password, pin} fields that match the terminology that
+ *  the conference provider uses. Only the populated fields should be displayed.
+ *  Optional.
+ */
+@property(nonatomic, copy, nullable) NSString *accessCode;
+
+/**
+ *  The type of the conference entry point.
+ *  Possible values are:
+ *  - "video" - joining a conference over HTTP. A conference can have zero or
+ *  one video entry point.
+ *  - "phone" - joining a conference by dialing a phone number. A conference can
+ *  have zero or more phone entry points.
+ *  - "sip" - joining a conference over SIP. A conference can have zero or one
+ *  sip entry point.
+ *  - "more" - further conference joining instructions, for example additional
+ *  phone numbers. A conference can have zero or one more entry point. A
+ *  conference with only a more entry point is not a valid conference.
+ */
+@property(nonatomic, copy, nullable) NSString *entryPointType;
+
+/**
+ *  The label for the URI. Visible to end users. Not localized. The maximum
+ *  length is 512 characters.
+ *  Examples:
+ *  - for video: meet.google.com/aaa-bbbb-ccc
+ *  - for phone: +1 123 268 2601
+ *  - for sip: 12345678\@altostrat.com
+ *  - for more: should not be filled
+ *  Optional.
+ */
+@property(nonatomic, copy, nullable) NSString *label;
+
+/**
+ *  The meeting code to access the conference. The maximum length is 128
+ *  characters.
+ *  When creating new conference data, populate only the subset of {meetingCode,
+ *  accessCode, passcode, password, pin} fields that match the terminology that
+ *  the conference provider uses. Only the populated fields should be displayed.
+ *  Optional.
+ */
+@property(nonatomic, copy, nullable) NSString *meetingCode;
+
+/**
+ *  The passcode to access the conference. The maximum length is 128 characters.
+ *  When creating new conference data, populate only the subset of {meetingCode,
+ *  accessCode, passcode, password, pin} fields that match the terminology that
+ *  the conference provider uses. Only the populated fields should be displayed.
+ */
+@property(nonatomic, copy, nullable) NSString *passcode;
+
+/**
+ *  The password to access the conference. The maximum length is 128 characters.
+ *  When creating new conference data, populate only the subset of {meetingCode,
+ *  accessCode, passcode, password, pin} fields that match the terminology that
+ *  the conference provider uses. Only the populated fields should be displayed.
+ *  Optional.
+ */
+@property(nonatomic, copy, nullable) NSString *password;
+
+/**
+ *  The PIN to access the conference. The maximum length is 128 characters.
+ *  When creating new conference data, populate only the subset of {meetingCode,
+ *  accessCode, passcode, password, pin} fields that match the terminology that
+ *  the conference provider uses. Only the populated fields should be displayed.
+ *  Optional.
+ */
+@property(nonatomic, copy, nullable) NSString *pin;
+
+/**
+ *  The URI of the entry point. The maximum length is 1300 characters.
+ *  Format:
+ *  - for video, http: or https: schema is required.
+ *  - for phone, tel: schema is required. The URI should include the entire dial
+ *  sequence (e.g., tel:+12345678900,,,123456789;1234).
+ *  - for sip, sip: schema is required, e.g., sip:12345678\@myprovider.com.
+ *  - for more, http: or https: schema is required.
+ */
+@property(nonatomic, copy, nullable) NSString *uri;
 
 @end
 
@@ -616,6 +903,14 @@ NS_ASSUME_NONNULL_BEGIN
  *  section of the colors definition (see the colors endpoint). Optional.
  */
 @property(nonatomic, copy, nullable) NSString *colorId;
+
+/**
+ *  The conference-related information, such as details of a Hangouts Meet
+ *  conference. To create new conference details use the createRequest field. To
+ *  persist your changes, remember to set the conferenceDataVersion request
+ *  parameter to 1 for all event modification requests.
+ */
+@property(nonatomic, strong, nullable) GTLRCalendar_ConferenceData *conferenceData;
 
 /** Creation time of the event (as a RFC3339 timestamp). Read-only. */
 @property(nonatomic, strong, nullable) GTLRDateTime *created;
@@ -811,9 +1106,10 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  *  Whether the event blocks time on the calendar. Optional. Possible values
  *  are:
- *  - "opaque" - The event blocks time on the calendar. This is the default
- *  value.
- *  - "transparent" - The event does not block time on the calendar.
+ *  - "opaque" - Default value. The event does block time on the calendar. This
+ *  is equivalent to setting Show me as to Busy in the Calendar UI.
+ *  - "transparent" - The event does not block time on the calendar. This is
+ *  equivalent to setting Show me as to Available in the Calendar UI.
  */
 @property(nonatomic, copy, nullable) NSString *transparency;
 
@@ -1197,20 +1493,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 /**
- *  GTLRCalendar_EventHabitInstance
- */
-@interface GTLRCalendar_EventHabitInstance : GTLRObject
-
-/** Metadata specific to this instance. */
-@property(nonatomic, strong, nullable) GTLRCalendar_HabitInstanceData *data;
-
-/** Id of the habit this instance belongs to. */
-@property(nonatomic, copy, nullable) NSString *parentId;
-
-@end
-
-
-/**
  *  GTLRCalendar_EventReminder
  */
 @interface GTLRCalendar_EventReminder : GTLRObject
@@ -1454,52 +1736,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 /**
- *  GTLRCalendar_HabitInstanceData
- */
-@interface GTLRCalendar_HabitInstanceData : GTLRObject
-
-@property(nonatomic, copy, nullable) NSString *status;
-
-/**
- *  statusInferred
- *
- *  Uses NSNumber of boolValue.
- */
-@property(nonatomic, strong, nullable) NSNumber *statusInferred;
-
-@property(nonatomic, copy, nullable) NSString *type;
-
-@end
-
-
-/**
- *  GTLRCalendar_LaunchInfo
- */
-@interface GTLRCalendar_LaunchInfo : GTLRObject
-
-@property(nonatomic, copy, nullable) NSString *appId;
-@property(nonatomic, copy, nullable) NSString *installUrl;
-@property(nonatomic, copy, nullable) NSString *intentAction;
-@property(nonatomic, copy, nullable) NSString *uri;
-
-@end
-
-
-/**
- *  GTLRCalendar_Link
- */
-@interface GTLRCalendar_Link : GTLRObject
-
-@property(nonatomic, copy, nullable) NSString *applinkingSource;
-@property(nonatomic, strong, nullable) GTLRCalendar_DisplayInfo *displayInfo;
-@property(nonatomic, strong, nullable) GTLRCalendar_LaunchInfo *launchInfo;
-@property(nonatomic, copy, nullable) NSString *platform;
-@property(nonatomic, copy, nullable) NSString *url;
-
-@end
-
-
-/**
  *  GTLRCalendar_Notification
  */
 @interface GTLRCalendar_Notification : GTLRObject
@@ -1608,3 +1844,5 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 NS_ASSUME_NONNULL_END
+
+#pragma clang diagnostic pop

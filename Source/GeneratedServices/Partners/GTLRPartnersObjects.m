@@ -199,19 +199,6 @@ NSString * const kGTLRPartners_ExamStatus_ExamType_CetMobileSites = @"CET_MOBILE
 NSString * const kGTLRPartners_ExamStatus_ExamType_CetShopping = @"CET_SHOPPING";
 NSString * const kGTLRPartners_ExamStatus_ExamType_CetVideoAds = @"CET_VIDEO_ADS";
 
-// GTLRPartners_ExamToken.examType
-NSString * const kGTLRPartners_ExamToken_ExamType_CertificationExamTypeUnspecified = @"CERTIFICATION_EXAM_TYPE_UNSPECIFIED";
-NSString * const kGTLRPartners_ExamToken_ExamType_CetAdwordsAdvancedDisplay = @"CET_ADWORDS_ADVANCED_DISPLAY";
-NSString * const kGTLRPartners_ExamToken_ExamType_CetAdwordsAdvancedSearch = @"CET_ADWORDS_ADVANCED_SEARCH";
-NSString * const kGTLRPartners_ExamToken_ExamType_CetAdwordsFundamentals = @"CET_ADWORDS_FUNDAMENTALS";
-NSString * const kGTLRPartners_ExamToken_ExamType_CetAnalytics = @"CET_ANALYTICS";
-NSString * const kGTLRPartners_ExamToken_ExamType_CetDigitalSales = @"CET_DIGITAL_SALES";
-NSString * const kGTLRPartners_ExamToken_ExamType_CetDoubleclick = @"CET_DOUBLECLICK";
-NSString * const kGTLRPartners_ExamToken_ExamType_CetMobile    = @"CET_MOBILE";
-NSString * const kGTLRPartners_ExamToken_ExamType_CetMobileSites = @"CET_MOBILE_SITES";
-NSString * const kGTLRPartners_ExamToken_ExamType_CetShopping  = @"CET_SHOPPING";
-NSString * const kGTLRPartners_ExamToken_ExamType_CetVideoAds  = @"CET_VIDEO_ADS";
-
 // GTLRPartners_HistoricalOffer.offerType
 NSString * const kGTLRPartners_HistoricalOffer_OfferType_OfferTypeSpendMatch = @"OFFER_TYPE_SPEND_MATCH";
 NSString * const kGTLRPartners_HistoricalOffer_OfferType_OfferTypeSpendXGetY = @"OFFER_TYPE_SPEND_X_GET_Y";
@@ -345,6 +332,7 @@ NSString * const kGTLRPartners_LogUserEventRequest_EventAction_AgencySelectedDis
 NSString * const kGTLRPartners_LogUserEventRequest_EventAction_AgencySelectedMediaBuyerAsJobFunction = @"AGENCY_SELECTED_MEDIA_BUYER_AS_JOB_FUNCTION";
 NSString * const kGTLRPartners_LogUserEventRequest_EventAction_AgencySelectedMediaPlannerAsJobFunction = @"AGENCY_SELECTED_MEDIA_PLANNER_AS_JOB_FUNCTION";
 NSString * const kGTLRPartners_LogUserEventRequest_EventAction_AgencySelectedMobileFromAddChannel = @"AGENCY_SELECTED_MOBILE_FROM_ADD_CHANNEL";
+NSString * const kGTLRPartners_LogUserEventRequest_EventAction_AgencySelectedOptInAfaMigration = @"AGENCY_SELECTED_OPT_IN_AFA_MIGRATION";
 NSString * const kGTLRPartners_LogUserEventRequest_EventAction_AgencySelectedOptInBetaTestsAndMktResearch = @"AGENCY_SELECTED_OPT_IN_BETA_TESTS_AND_MKT_RESEARCH";
 NSString * const kGTLRPartners_LogUserEventRequest_EventAction_AgencySelectedOptInBetaTestsInMyProfilePortal = @"AGENCY_SELECTED_OPT_IN_BETA_TESTS_IN_MY_PROFILE_PORTAL";
 NSString * const kGTLRPartners_LogUserEventRequest_EventAction_AgencySelectedOptInNewsInMyProfilePortal = @"AGENCY_SELECTED_OPT_IN_NEWS_IN_MY_PROFILE_PORTAL";
@@ -352,6 +340,7 @@ NSString * const kGTLRPartners_LogUserEventRequest_EventAction_AgencySelectedOpt
 NSString * const kGTLRPartners_LogUserEventRequest_EventAction_AgencySelectedOptInPerformanceSuggestions = @"AGENCY_SELECTED_OPT_IN_PERFORMANCE_SUGGESTIONS";
 NSString * const kGTLRPartners_LogUserEventRequest_EventAction_AgencySelectedOptInPerformanceSugInMyProfilePortal = @"AGENCY_SELECTED_OPT_IN_PERFORMANCE_SUG_IN_MY_PROFILE_PORTAL";
 NSString * const kGTLRPartners_LogUserEventRequest_EventAction_AgencySelectedOptInSelectAllEmailNotifications = @"AGENCY_SELECTED_OPT_IN_SELECT_ALL_EMAIL_NOTIFICATIONS";
+NSString * const kGTLRPartners_LogUserEventRequest_EventAction_AgencySelectedOptOutAfaMigration = @"AGENCY_SELECTED_OPT_OUT_AFA_MIGRATION";
 NSString * const kGTLRPartners_LogUserEventRequest_EventAction_AgencySelectedOptOutUnselectAllEmailNotifications = @"AGENCY_SELECTED_OPT_OUT_UNSELECT_ALL_EMAIL_NOTIFICATIONS";
 NSString * const kGTLRPartners_LogUserEventRequest_EventAction_AgencySelectedOtherAsJobFunction = @"AGENCY_SELECTED_OTHER_AS_JOB_FUNCTION";
 NSString * const kGTLRPartners_LogUserEventRequest_EventAction_AgencySelectedProductionAsJobFunction = @"AGENCY_SELECTED_PRODUCTION_AS_JOB_FUNCTION";
@@ -408,6 +397,7 @@ NSString * const kGTLRPartners_LogUserEventRequest_EventAction_SmbViewedAdwordsS
 NSString * const kGTLRPartners_LogUserEventRequest_EventAction_SmbViewedAnalyticsCertificate = @"SMB_VIEWED_ANALYTICS_CERTIFICATE";
 NSString * const kGTLRPartners_LogUserEventRequest_EventAction_SmbViewedAPartnerOnGps = @"SMB_VIEWED_A_PARTNER_ON_GPS";
 NSString * const kGTLRPartners_LogUserEventRequest_EventAction_SmbViewedAPartnerProfile = @"SMB_VIEWED_A_PARTNER_PROFILE";
+NSString * const kGTLRPartners_LogUserEventRequest_EventAction_SmbViewedDigitalSalesCertificate = @"SMB_VIEWED_DIGITAL_SALES_CERTIFICATE";
 NSString * const kGTLRPartners_LogUserEventRequest_EventAction_SmbViewedDoubleclickCertificate = @"SMB_VIEWED_DOUBLECLICK_CERTIFICATE";
 NSString * const kGTLRPartners_LogUserEventRequest_EventAction_SmbViewedMobileCertificate = @"SMB_VIEWED_MOBILE_CERTIFICATE";
 NSString * const kGTLRPartners_LogUserEventRequest_EventAction_SmbViewedMobileSitesCertificate = @"SMB_VIEWED_MOBILE_SITES_CERTIFICATE";
@@ -627,9 +617,10 @@ NSString * const kGTLRPartners_SpecializationStatus_BadgeSpecializationState_Bad
 //
 
 @implementation GTLRPartners_CompanyRelation
-@dynamic address, badgeTier, companyAdmin, companyId, creationTime, isPending,
-         logoUrl, managerAccount, name, phoneNumber, resolvedTimestamp, segment,
-         specializationStatus, state, website;
+@dynamic address, badgeTier, companyAdmin, companyId, creationTime,
+         internalCompanyId, isPending, logoUrl, managerAccount, name,
+         phoneNumber, primaryAddress, primaryCountryCode, primaryLanguageCode,
+         resolvedTimestamp, segment, specializationStatus, state, website;
 
 + (NSDictionary<NSString *, Class> *)arrayPropertyToClassMap {
   NSDictionary<NSString *, Class> *map = @{
@@ -726,16 +717,6 @@ NSString * const kGTLRPartners_SpecializationStatus_BadgeSpecializationState_Bad
 
 @implementation GTLRPartners_ExamStatus
 @dynamic examType, expiration, lastPassed, passed, taken, warning;
-@end
-
-
-// ----------------------------------------------------------------------------
-//
-//   GTLRPartners_ExamToken
-//
-
-@implementation GTLRPartners_ExamToken
-@dynamic examId, examType, token;
 @end
 
 
@@ -1157,8 +1138,8 @@ NSString * const kGTLRPartners_SpecializationStatus_BadgeSpecializationState_Bad
 
 @implementation GTLRPartners_User
 @dynamic availableAdwordsManagerAccounts, certificationStatus, company,
-         companyVerificationEmail, examStatus, identifier, lastAccessTime,
-         primaryEmails, profile, publicProfile;
+         companyVerificationEmail, examStatus, identifier, internalId,
+         lastAccessTime, primaryEmails, profile, publicProfile;
 
 + (NSDictionary<NSString *, NSString *> *)propertyToJSONKeyMap {
   return @{ @"identifier" : @"id" };
@@ -1195,7 +1176,7 @@ NSString * const kGTLRPartners_SpecializationStatus_BadgeSpecializationState_Bad
 @implementation GTLRPartners_UserProfile
 @dynamic address, adwordsManagerAccount, channels, emailAddress, emailOptIns,
          familyName, givenName, industries, jobFunctions, languages, markets,
-         phoneNumber, primaryCountryCode, profilePublic;
+         migrateToAfa, phoneNumber, primaryCountryCode, profilePublic;
 
 + (NSDictionary<NSString *, Class> *)arrayPropertyToClassMap {
   NSDictionary<NSString *, Class> *map = @{

@@ -44,6 +44,15 @@
 @class GTLRTagManager_WorkspaceProposalHistoryComment;
 @class GTLRTagManager_WorkspaceProposalHistoryStatusChange;
 @class GTLRTagManager_WorkspaceProposalUser;
+@class GTLRTagManager_Zone;
+@class GTLRTagManager_ZoneBoundary;
+@class GTLRTagManager_ZoneChildContainer;
+@class GTLRTagManager_ZoneTypeRestriction;
+
+// Generated comments include content from the discovery document; avoid them
+// causing warnings since clang's checks are some what arbitrary.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdocumentation"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -139,6 +148,14 @@ GTLR_EXTERN NSString * const kGTLRTagManager_BuiltInVariable_Type_ContainerVersi
 GTLR_EXTERN NSString * const kGTLRTagManager_BuiltInVariable_Type_DebugMode;
 /** Value: "deviceName" */
 GTLR_EXTERN NSString * const kGTLRTagManager_BuiltInVariable_Type_DeviceName;
+/** Value: "elementVisibilityFirstTime" */
+GTLR_EXTERN NSString * const kGTLRTagManager_BuiltInVariable_Type_ElementVisibilityFirstTime;
+/** Value: "elementVisibilityRatio" */
+GTLR_EXTERN NSString * const kGTLRTagManager_BuiltInVariable_Type_ElementVisibilityRatio;
+/** Value: "elementVisibilityRecentTime" */
+GTLR_EXTERN NSString * const kGTLRTagManager_BuiltInVariable_Type_ElementVisibilityRecentTime;
+/** Value: "elementVisibilityTime" */
+GTLR_EXTERN NSString * const kGTLRTagManager_BuiltInVariable_Type_ElementVisibilityTime;
 /** Value: "environmentName" */
 GTLR_EXTERN NSString * const kGTLRTagManager_BuiltInVariable_Type_EnvironmentName;
 /** Value: "errorLine" */
@@ -239,8 +256,30 @@ GTLR_EXTERN NSString * const kGTLRTagManager_BuiltInVariable_Type_RandomNumber;
 GTLR_EXTERN NSString * const kGTLRTagManager_BuiltInVariable_Type_Referrer;
 /** Value: "resolution" */
 GTLR_EXTERN NSString * const kGTLRTagManager_BuiltInVariable_Type_Resolution;
+/** Value: "scrollDepthDirection" */
+GTLR_EXTERN NSString * const kGTLRTagManager_BuiltInVariable_Type_ScrollDepthDirection;
+/** Value: "scrollDepthThreshold" */
+GTLR_EXTERN NSString * const kGTLRTagManager_BuiltInVariable_Type_ScrollDepthThreshold;
+/** Value: "scrollDepthUnits" */
+GTLR_EXTERN NSString * const kGTLRTagManager_BuiltInVariable_Type_ScrollDepthUnits;
 /** Value: "sdkVersion" */
 GTLR_EXTERN NSString * const kGTLRTagManager_BuiltInVariable_Type_SdkVersion;
+/** Value: "videoCurrentTime" */
+GTLR_EXTERN NSString * const kGTLRTagManager_BuiltInVariable_Type_VideoCurrentTime;
+/** Value: "videoDuration" */
+GTLR_EXTERN NSString * const kGTLRTagManager_BuiltInVariable_Type_VideoDuration;
+/** Value: "videoPercent" */
+GTLR_EXTERN NSString * const kGTLRTagManager_BuiltInVariable_Type_VideoPercent;
+/** Value: "videoProvider" */
+GTLR_EXTERN NSString * const kGTLRTagManager_BuiltInVariable_Type_VideoProvider;
+/** Value: "videoStatus" */
+GTLR_EXTERN NSString * const kGTLRTagManager_BuiltInVariable_Type_VideoStatus;
+/** Value: "videoTitle" */
+GTLR_EXTERN NSString * const kGTLRTagManager_BuiltInVariable_Type_VideoTitle;
+/** Value: "videoUrl" */
+GTLR_EXTERN NSString * const kGTLRTagManager_BuiltInVariable_Type_VideoUrl;
+/** Value: "videoVisible" */
+GTLR_EXTERN NSString * const kGTLRTagManager_BuiltInVariable_Type_VideoVisible;
 
 // ----------------------------------------------------------------------------
 // GTLRTagManager_Condition.type
@@ -377,6 +416,8 @@ GTLR_EXTERN NSString * const kGTLRTagManager_Trigger_Type_Click;
 GTLR_EXTERN NSString * const kGTLRTagManager_Trigger_Type_CustomEvent;
 /** Value: "domReady" */
 GTLR_EXTERN NSString * const kGTLRTagManager_Trigger_Type_DomReady;
+/** Value: "elementVisibility" */
+GTLR_EXTERN NSString * const kGTLRTagManager_Trigger_Type_ElementVisibility;
 /** Value: "eventTypeUnspecified" */
 GTLR_EXTERN NSString * const kGTLRTagManager_Trigger_Type_EventTypeUnspecified;
 /** Value: "firebaseAppException" */
@@ -413,10 +454,14 @@ GTLR_EXTERN NSString * const kGTLRTagManager_Trigger_Type_JsError;
 GTLR_EXTERN NSString * const kGTLRTagManager_Trigger_Type_LinkClick;
 /** Value: "pageview" */
 GTLR_EXTERN NSString * const kGTLRTagManager_Trigger_Type_Pageview;
+/** Value: "scrollDepth" */
+GTLR_EXTERN NSString * const kGTLRTagManager_Trigger_Type_ScrollDepth;
 /** Value: "timer" */
 GTLR_EXTERN NSString * const kGTLRTagManager_Trigger_Type_Timer;
 /** Value: "windowLoaded" */
 GTLR_EXTERN NSString * const kGTLRTagManager_Trigger_Type_WindowLoaded;
+/** Value: "youTubeVideo" */
+GTLR_EXTERN NSString * const kGTLRTagManager_Trigger_Type_YouTubeVideo;
 
 // ----------------------------------------------------------------------------
 // GTLRTagManager_UpdateWorkspaceProposalRequest.status
@@ -649,6 +694,14 @@ GTLR_EXTERN NSString * const kGTLRTagManager_WorkspaceProposalUser_Type_System;
  *        "containerVersion"
  *    @arg @c kGTLRTagManager_BuiltInVariable_Type_DebugMode Value "debugMode"
  *    @arg @c kGTLRTagManager_BuiltInVariable_Type_DeviceName Value "deviceName"
+ *    @arg @c kGTLRTagManager_BuiltInVariable_Type_ElementVisibilityFirstTime
+ *        Value "elementVisibilityFirstTime"
+ *    @arg @c kGTLRTagManager_BuiltInVariable_Type_ElementVisibilityRatio Value
+ *        "elementVisibilityRatio"
+ *    @arg @c kGTLRTagManager_BuiltInVariable_Type_ElementVisibilityRecentTime
+ *        Value "elementVisibilityRecentTime"
+ *    @arg @c kGTLRTagManager_BuiltInVariable_Type_ElementVisibilityTime Value
+ *        "elementVisibilityTime"
  *    @arg @c kGTLRTagManager_BuiltInVariable_Type_EnvironmentName Value
  *        "environmentName"
  *    @arg @c kGTLRTagManager_BuiltInVariable_Type_ErrorLine Value "errorLine"
@@ -733,7 +786,27 @@ GTLR_EXTERN NSString * const kGTLRTagManager_WorkspaceProposalUser_Type_System;
  *        "randomNumber"
  *    @arg @c kGTLRTagManager_BuiltInVariable_Type_Referrer Value "referrer"
  *    @arg @c kGTLRTagManager_BuiltInVariable_Type_Resolution Value "resolution"
+ *    @arg @c kGTLRTagManager_BuiltInVariable_Type_ScrollDepthDirection Value
+ *        "scrollDepthDirection"
+ *    @arg @c kGTLRTagManager_BuiltInVariable_Type_ScrollDepthThreshold Value
+ *        "scrollDepthThreshold"
+ *    @arg @c kGTLRTagManager_BuiltInVariable_Type_ScrollDepthUnits Value
+ *        "scrollDepthUnits"
  *    @arg @c kGTLRTagManager_BuiltInVariable_Type_SdkVersion Value "sdkVersion"
+ *    @arg @c kGTLRTagManager_BuiltInVariable_Type_VideoCurrentTime Value
+ *        "videoCurrentTime"
+ *    @arg @c kGTLRTagManager_BuiltInVariable_Type_VideoDuration Value
+ *        "videoDuration"
+ *    @arg @c kGTLRTagManager_BuiltInVariable_Type_VideoPercent Value
+ *        "videoPercent"
+ *    @arg @c kGTLRTagManager_BuiltInVariable_Type_VideoProvider Value
+ *        "videoProvider"
+ *    @arg @c kGTLRTagManager_BuiltInVariable_Type_VideoStatus Value
+ *        "videoStatus"
+ *    @arg @c kGTLRTagManager_BuiltInVariable_Type_VideoTitle Value "videoTitle"
+ *    @arg @c kGTLRTagManager_BuiltInVariable_Type_VideoUrl Value "videoUrl"
+ *    @arg @c kGTLRTagManager_BuiltInVariable_Type_VideoVisible Value
+ *        "videoVisible"
  */
 @property(nonatomic, copy, nullable) NSString *type;
 
@@ -920,6 +993,13 @@ GTLR_EXTERN NSString * const kGTLRTagManager_WorkspaceProposalUser_Type_System;
 /** The variables in the container that this version was taken from. */
 @property(nonatomic, strong, nullable) NSArray<GTLRTagManager_Variable *> *variable;
 
+/**
+ *  The zones in the container that this version was taken from.
+ *
+ *  Remapped to 'zoneProperty' to avoid NSObject's 'zone'.
+ */
+@property(nonatomic, strong, nullable) NSArray<GTLRTagManager_Zone *> *zoneProperty;
+
 @end
 
 
@@ -961,6 +1041,9 @@ GTLR_EXTERN NSString * const kGTLRTagManager_WorkspaceProposalUser_Type_System;
 
 /** Number of variables in the container version. */
 @property(nonatomic, copy, nullable) NSString *numVariables;
+
+/** Number of zones in the container version. */
+@property(nonatomic, copy, nullable) NSString *numZones;
 
 /** GTM Container Versions's API relative path. */
 @property(nonatomic, copy, nullable) NSString *path;
@@ -1802,6 +1885,13 @@ GTLR_EXTERN NSString * const kGTLRTagManager_WorkspaceProposalUser_Type_System;
 @property(nonatomic, copy, nullable) NSString *path;
 
 /**
+ *  Indicates whether the tag is paused, which prevents the tag from firing.
+ *
+ *  Uses NSNumber of boolValue.
+ */
+@property(nonatomic, strong, nullable) NSNumber *paused;
+
+/**
  *  User defined numeric priority of the tag. Tags are fired asynchronously in
  *  order of priority. Tags with higher numeric value fire first. A tag's
  *  priority can be a positive or negative value. The default value is 0.
@@ -2037,6 +2127,9 @@ GTLR_EXTERN NSString * const kGTLRTagManager_WorkspaceProposalUser_Type_System;
 /** User notes on how to apply this trigger in the container. */
 @property(nonatomic, copy, nullable) NSString *notes;
 
+/** Additional parameters. */
+@property(nonatomic, strong, nullable) NSArray<GTLRTagManager_Parameter *> *parameter;
+
 /** Parent folder id. */
 @property(nonatomic, copy, nullable) NSString *parentFolderId;
 
@@ -2073,6 +2166,8 @@ GTLR_EXTERN NSString * const kGTLRTagManager_WorkspaceProposalUser_Type_System;
  *    @arg @c kGTLRTagManager_Trigger_Type_Click Value "click"
  *    @arg @c kGTLRTagManager_Trigger_Type_CustomEvent Value "customEvent"
  *    @arg @c kGTLRTagManager_Trigger_Type_DomReady Value "domReady"
+ *    @arg @c kGTLRTagManager_Trigger_Type_ElementVisibility Value
+ *        "elementVisibility"
  *    @arg @c kGTLRTagManager_Trigger_Type_EventTypeUnspecified Value
  *        "eventTypeUnspecified"
  *    @arg @c kGTLRTagManager_Trigger_Type_FirebaseAppException Value
@@ -2104,8 +2199,10 @@ GTLR_EXTERN NSString * const kGTLRTagManager_WorkspaceProposalUser_Type_System;
  *    @arg @c kGTLRTagManager_Trigger_Type_JsError Value "jsError"
  *    @arg @c kGTLRTagManager_Trigger_Type_LinkClick Value "linkClick"
  *    @arg @c kGTLRTagManager_Trigger_Type_Pageview Value "pageview"
+ *    @arg @c kGTLRTagManager_Trigger_Type_ScrollDepth Value "scrollDepth"
  *    @arg @c kGTLRTagManager_Trigger_Type_Timer Value "timer"
  *    @arg @c kGTLRTagManager_Trigger_Type_WindowLoaded Value "windowLoaded"
+ *    @arg @c kGTLRTagManager_Trigger_Type_YouTubeVideo Value "youTubeVideo"
  */
 @property(nonatomic, copy, nullable) NSString *type;
 
@@ -2497,4 +2594,104 @@ GTLR_EXTERN NSString * const kGTLRTagManager_WorkspaceProposalUser_Type_System;
 
 @end
 
+
+/**
+ *  Represents a Google Tag Manager Zone's contents.
+ */
+@interface GTLRTagManager_Zone : GTLRObject
+
+/** GTM Account ID. */
+@property(nonatomic, copy, nullable) NSString *accountId;
+
+/** This Zone's boundary. */
+@property(nonatomic, strong, nullable) GTLRTagManager_ZoneBoundary *boundary;
+
+/** Containers that are children of this Zone. */
+@property(nonatomic, strong, nullable) NSArray<GTLRTagManager_ZoneChildContainer *> *childContainer;
+
+/** GTM Container ID. */
+@property(nonatomic, copy, nullable) NSString *containerId;
+
+/**
+ *  The fingerprint of the GTM Zone as computed at storage time. This value is
+ *  recomputed whenever the zone is modified.
+ */
+@property(nonatomic, copy, nullable) NSString *fingerprint;
+
+/** Zone display name. */
+@property(nonatomic, copy, nullable) NSString *name;
+
+/** User notes on how to apply this zone in the container. */
+@property(nonatomic, copy, nullable) NSString *notes;
+
+/** GTM Zone's API relative path. */
+@property(nonatomic, copy, nullable) NSString *path;
+
+/** Auto generated link to the tag manager UI */
+@property(nonatomic, copy, nullable) NSString *tagManagerUrl;
+
+/** This Zone's type restrictions. */
+@property(nonatomic, strong, nullable) GTLRTagManager_ZoneTypeRestriction *typeRestriction;
+
+/** GTM Workspace ID. */
+@property(nonatomic, copy, nullable) NSString *workspaceId;
+
+/** The Zone ID uniquely identifies the GTM Zone. */
+@property(nonatomic, copy, nullable) NSString *zoneId;
+
+@end
+
+
+/**
+ *  Represents a Zone's boundaries.
+ */
+@interface GTLRTagManager_ZoneBoundary : GTLRObject
+
+/** The conditions that, when conjoined, make up the boundary. */
+@property(nonatomic, strong, nullable) NSArray<GTLRTagManager_Condition *> *condition;
+
+/**
+ *  Custom evaluation trigger IDs. A zone will evaluate its boundary conditions
+ *  when any of the listed triggers are true.
+ */
+@property(nonatomic, strong, nullable) NSArray<NSString *> *customEvaluationTriggerId;
+
+@end
+
+
+/**
+ *  Represents a child container of a Zone.
+ */
+@interface GTLRTagManager_ZoneChildContainer : GTLRObject
+
+/** The zone's nickname for the child container. */
+@property(nonatomic, copy, nullable) NSString *nickname;
+
+/** The child container's public id. */
+@property(nonatomic, copy, nullable) NSString *publicId;
+
+@end
+
+
+/**
+ *  Represents a Zone's type restrictions.
+ */
+@interface GTLRTagManager_ZoneTypeRestriction : GTLRObject
+
+/**
+ *  True if type restrictions have been enabled for this Zone.
+ *
+ *  Uses NSNumber of boolValue.
+ */
+@property(nonatomic, strong, nullable) NSNumber *enable;
+
+/**
+ *  List of type public ids that have been whitelisted for use in this Zone.
+ */
+@property(nonatomic, strong, nullable) NSArray<NSString *> *whitelistedTypeId;
+
+@end
+
 NS_ASSUME_NONNULL_END
+
+#pragma clang diagnostic pop

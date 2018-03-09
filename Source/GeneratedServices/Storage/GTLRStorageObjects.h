@@ -19,7 +19,9 @@
 #endif
 
 @class GTLRStorage_Bucket;
+@class GTLRStorage_Bucket_Billing;
 @class GTLRStorage_Bucket_Cors_Item;
+@class GTLRStorage_Bucket_Encryption;
 @class GTLRStorage_Bucket_Labels;
 @class GTLRStorage_Bucket_Lifecycle;
 @class GTLRStorage_Bucket_Lifecycle_Rule_Item;
@@ -27,6 +29,7 @@
 @class GTLRStorage_Bucket_Lifecycle_Rule_Item_Condition;
 @class GTLRStorage_Bucket_Logging;
 @class GTLRStorage_Bucket_Owner;
+@class GTLRStorage_Bucket_RetentionPolicy;
 @class GTLRStorage_Bucket_Versioning;
 @class GTLRStorage_Bucket_Website;
 @class GTLRStorage_BucketAccessControl;
@@ -44,6 +47,11 @@
 @class GTLRStorage_ObjectAccessControl_ProjectTeam;
 @class GTLRStorage_Policy_Bindings_Item;
 
+// Generated comments include content from the discovery document; avoid them
+// causing warnings since clang's checks are some what arbitrary.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdocumentation"
+
 NS_ASSUME_NONNULL_BEGIN
 
 /**
@@ -54,19 +62,44 @@ NS_ASSUME_NONNULL_BEGIN
 /** Access controls on the bucket. */
 @property(nonatomic, strong, nullable) NSArray<GTLRStorage_BucketAccessControl *> *acl;
 
+/** The bucket's billing configuration. */
+@property(nonatomic, strong, nullable) GTLRStorage_Bucket_Billing *billing;
+
 /** The bucket's Cross-Origin Resource Sharing (CORS) configuration. */
 @property(nonatomic, strong, nullable) NSArray<GTLRStorage_Bucket_Cors_Item *> *cors;
+
+/**
+ *  Defines the default value for Event-Based hold on newly created objects in
+ *  this bucket. Event-Based hold is a way to retain objects indefinitely until
+ *  an event occurs, signified by the hold's release. After being released, such
+ *  objects will be subject to bucket-level retention (if any). One sample use
+ *  case of this flag is for banks to hold loan documents for at least 3 years
+ *  after loan is paid in full. Here bucket-level retention is 3 years and the
+ *  event is loan being paid in full. In this example these objects will be held
+ *  intact for any number of years until the event has occurred (hold is
+ *  released) and then 3 more years after that. Objects under Event-Based hold
+ *  cannot be deleted, overwritten or archived until the hold is removed.
+ *
+ *  Uses NSNumber of boolValue.
+ */
+@property(nonatomic, strong, nullable) NSNumber *defaultEventBasedHold;
 
 /**
  *  Default access controls to apply to new objects when no ACL is provided.
  */
 @property(nonatomic, strong, nullable) NSArray<GTLRStorage_ObjectAccessControl *> *defaultObjectAcl;
 
+/**
+ *  Encryption configuration used by default for newly inserted objects, when no
+ *  encryption config is specified.
+ */
+@property(nonatomic, strong, nullable) GTLRStorage_Bucket_Encryption *encryption;
+
 /** HTTP 1.1 Entity tag for the bucket. */
 @property(nonatomic, copy, nullable) NSString *ETag;
 
 /**
- *  The ID of the bucket. For buckets, the id and name properities are the same.
+ *  The ID of the bucket. For buckets, the id and name properties are the same.
  *
  *  identifier property maps to 'id' in JSON (to avoid Objective C's 'id').
  */
@@ -117,6 +150,19 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property(nonatomic, strong, nullable) NSNumber *projectNumber;
 
+/**
+ *  Defines the retention policy for a bucket. The Retention policy enforces a
+ *  minimum retention time for all objects contained in the bucket, based on
+ *  their creation time. Any attempt to overwrite or delete objects younger than
+ *  the retention period will result in a PERMISSION_DENIED error. An unlocked
+ *  retention policy can be modified or removed from the bucket via the
+ *  UpdateBucketMetadata RPC. A locked retention policy cannot be removed or
+ *  shortened in duration for the lifetime of the bucket. Attempting to remove
+ *  or decrease period of a locked retention policy will result in a
+ *  PERMISSION_DENIED error.
+ */
+@property(nonatomic, strong, nullable) GTLRStorage_Bucket_RetentionPolicy *retentionPolicy;
+
 /** The URI of this bucket. */
 @property(nonatomic, copy, nullable) NSString *selfLink;
 
@@ -146,6 +192,21 @@ NS_ASSUME_NONNULL_BEGIN
  *  more information.
  */
 @property(nonatomic, strong, nullable) GTLRStorage_Bucket_Website *website;
+
+@end
+
+
+/**
+ *  The bucket's billing configuration.
+ */
+@interface GTLRStorage_Bucket_Billing : GTLRObject
+
+/**
+ *  When set to true, Requester Pays is enabled for this bucket.
+ *
+ *  Uses NSNumber of boolValue.
+ */
+@property(nonatomic, strong, nullable) NSNumber *requesterPays;
 
 @end
 
@@ -181,6 +242,22 @@ NS_ASSUME_NONNULL_BEGIN
  *  permission for the user-agent to share across domains.
  */
 @property(nonatomic, strong, nullable) NSArray<NSString *> *responseHeader;
+
+@end
+
+
+/**
+ *  Encryption configuration used by default for newly inserted objects, when no
+ *  encryption config is specified.
+ */
+@interface GTLRStorage_Bucket_Encryption : GTLRObject
+
+/**
+ *  A Cloud KMS key that will be used to encrypt objects inserted into this
+ *  bucket, if no encryption method is specified. Limited availability; usable
+ *  only by enabled projects.
+ */
+@property(nonatomic, copy, nullable) NSString *defaultKmsKeyName;
 
 @end
 
@@ -239,6 +316,42 @@ NS_ASSUME_NONNULL_BEGIN
 
 /** The ID for the entity. */
 @property(nonatomic, copy, nullable) NSString *entityId;
+
+@end
+
+
+/**
+ *  Defines the retention policy for a bucket. The Retention policy enforces a
+ *  minimum retention time for all objects contained in the bucket, based on
+ *  their creation time. Any attempt to overwrite or delete objects younger than
+ *  the retention period will result in a PERMISSION_DENIED error. An unlocked
+ *  retention policy can be modified or removed from the bucket via the
+ *  UpdateBucketMetadata RPC. A locked retention policy cannot be removed or
+ *  shortened in duration for the lifetime of the bucket. Attempting to remove
+ *  or decrease period of a locked retention policy will result in a
+ *  PERMISSION_DENIED error.
+ */
+@interface GTLRStorage_Bucket_RetentionPolicy : GTLRObject
+
+/** The time from which policy was enforced and effective. RFC 3339 format. */
+@property(nonatomic, strong, nullable) GTLRDateTime *effectiveTime;
+
+/**
+ *  Once locked, an object retention policy cannot be modified.
+ *
+ *  Uses NSNumber of boolValue.
+ */
+@property(nonatomic, strong, nullable) NSNumber *isLocked;
+
+/**
+ *  Specifies the duration that objects need to be retained. Retention duration
+ *  must be greater than zero and less than 100 years. Note that enforcement of
+ *  retention periods less than a day is not guaranteed. Such periods should
+ *  only be used for testing purposes.
+ *
+ *  Uses NSNumber of longLongValue.
+ */
+@property(nonatomic, strong, nullable) NSNumber *retentionPeriod;
 
 @end
 
@@ -760,8 +873,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, copy, nullable) NSString *contentLanguage;
 
 /**
- *  Content-Type of the object data. If contentType is not specified, object
- *  downloads will be served as application/octet-stream.
+ *  Content-Type of the object data. If an object is stored without a
+ *  Content-Type, it is served as application/octet-stream.
  */
 @property(nonatomic, copy, nullable) NSString *contentType;
 
@@ -782,6 +895,21 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, copy, nullable) NSString *ETag;
 
 /**
+ *  Defines the Event-Based hold for an object. Event-Based hold is a way to
+ *  retain objects indefinitely until an event occurs, signified by the hold's
+ *  release. After being released, such objects will be subject to bucket-level
+ *  retention (if any). One sample use case of this flag is for banks to hold
+ *  loan documents for at least 3 years after loan is paid in full. Here
+ *  bucket-level retention is 3 years and the event is loan being paid in full.
+ *  In this example these objects will be held intact for any number of years
+ *  until the event has occurred (hold is released) and then 3 more years after
+ *  that.
+ *
+ *  Uses NSNumber of boolValue.
+ */
+@property(nonatomic, strong, nullable) NSNumber *eventBasedHold;
+
+/**
  *  The content generation of this object. Used for object versioning.
  *
  *  Uses NSNumber of longLongValue.
@@ -798,6 +926,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 /** The kind of item this is. For objects, this is always storage#object. */
 @property(nonatomic, copy, nullable) NSString *kind;
+
+/**
+ *  Cloud KMS Key used to encrypt this object, if the object is encrypted by
+ *  such a key. Limited availability; usable only by enabled projects.
+ */
+@property(nonatomic, copy, nullable) NSString *kmsKeyName;
 
 /**
  *  MD5 hash of the data; encoded using base64. For more information about using
@@ -829,6 +963,16 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property(nonatomic, strong, nullable) GTLRStorage_Object_Owner *owner;
 
+/**
+ *  Specifies the earliest time that the object's retention period expires. This
+ *  value is server-determined and is in RFC 3339 format. Note 1: This field is
+ *  not provided for objects with an active Event-Based hold, since retention
+ *  expiration is unknown until the hold is removed. Note 2: This value can be
+ *  provided even when TemporaryHold is set (so that the user can reason about
+ *  policy without having to first unset the TemporaryHold).
+ */
+@property(nonatomic, strong, nullable) GTLRDateTime *retentionExpirationTime;
+
 /** The link to this object. */
 @property(nonatomic, copy, nullable) NSString *selfLink;
 
@@ -841,6 +985,17 @@ NS_ASSUME_NONNULL_BEGIN
 
 /** Storage class of the object. */
 @property(nonatomic, copy, nullable) NSString *storageClass;
+
+/**
+ *  Defines the temporary hold for an object. This flag is used to enforce a
+ *  temporary hold on an object. While it is set to true, the object is
+ *  protected against deletion and overwrites. A common use case of this flag is
+ *  regulatory investigations where objects need to be retained while the
+ *  investigation is ongoing.
+ *
+ *  Uses NSNumber of boolValue.
+ */
+@property(nonatomic, strong, nullable) NSNumber *temporaryHold;
 
 /** The creation time of the object in RFC 3339 format. */
 @property(nonatomic, strong, nullable) GTLRDateTime *timeCreated;
@@ -1082,10 +1237,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  *  The ID of the resource to which this policy belongs. Will be of the form
- *  buckets/bucket for buckets, and buckets/bucket/objects/object for objects. A
- *  specific generation may be specified by appending #generationNumber to the
- *  end of the object name, e.g. buckets/my-bucket/objects/data.txt#17. The
- *  current generation can be denoted with #0. This field is ignored on input.
+ *  projects/_/buckets/bucket for buckets, and
+ *  projects/_/buckets/bucket/objects/object for objects. A specific generation
+ *  may be specified by appending #generationNumber to the end of the object
+ *  name, e.g. projects/_/buckets/my-bucket/objects/data.txt#17. The current
+ *  generation can be denoted with #0. This field is ignored on input.
  */
 @property(nonatomic, copy, nullable) NSString *resourceId;
 
@@ -1096,6 +1252,13 @@ NS_ASSUME_NONNULL_BEGIN
  *  GTLRStorage_Policy_Bindings_Item
  */
 @interface GTLRStorage_Policy_Bindings_Item : GTLRObject
+
+/**
+ *  condition
+ *
+ *  Can be any valid JSON type.
+ */
+@property(nonatomic, strong, nullable) id condition;
 
 /**
  *  A collection of identifiers for members who may assume the provided role.
@@ -1174,7 +1337,7 @@ NS_ASSUME_NONNULL_BEGIN
  *  The total size of the object being copied in bytes. This property is always
  *  present in the response.
  *
- *  Uses NSNumber of unsignedLongLongValue.
+ *  Uses NSNumber of longLongValue.
  */
 @property(nonatomic, strong, nullable) NSNumber *objectSize;
 
@@ -1194,7 +1357,7 @@ NS_ASSUME_NONNULL_BEGIN
  *  The total bytes written so far, which can be used to provide a waiting user
  *  with a progress indicator. This property is always present in the response.
  *
- *  Uses NSNumber of unsignedLongLongValue.
+ *  Uses NSNumber of longLongValue.
  */
 @property(nonatomic, strong, nullable) NSNumber *totalBytesRewritten;
 
@@ -1250,3 +1413,5 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 NS_ASSUME_NONNULL_END
+
+#pragma clang diagnostic pop

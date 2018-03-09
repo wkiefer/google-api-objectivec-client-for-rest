@@ -23,6 +23,8 @@
 @class GTLRAnalytics_Account_Permissions;
 @class GTLRAnalytics_AccountRef;
 @class GTLRAnalytics_AccountSummary;
+@class GTLRAnalytics_AccountTreeRequest_AccountSettings;
+@class GTLRAnalytics_AccountTreeResponse_AccountSettings;
 @class GTLRAnalytics_AdWordsAccount;
 @class GTLRAnalytics_Column;
 @class GTLRAnalytics_Column_Attributes;
@@ -100,6 +102,11 @@
 @class GTLRAnalytics_Webproperty_Permissions;
 @class GTLRAnalytics_WebPropertyRef;
 @class GTLRAnalytics_WebPropertySummary;
+
+// Generated comments include content from the discovery document; avoid them
+// causing warnings since clang's checks are some what arbitrary.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdocumentation"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -389,6 +396,152 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 /**
+ *  JSON template for an Analytics account tree requests. The account tree
+ *  request is used in the provisioning api to create an account, property, and
+ *  view (profile). It contains the basic information required to make these
+ *  fields.
+ */
+@interface GTLRAnalytics_AccountTreeRequest : GTLRObject
+
+@property(nonatomic, copy, nullable) NSString *accountName;
+@property(nonatomic, strong, nullable) GTLRAnalytics_AccountTreeRequest_AccountSettings *accountSettings;
+
+/** Resource type for account ticket. */
+@property(nonatomic, copy, nullable) NSString *kind;
+
+@property(nonatomic, copy, nullable) NSString *profileName;
+@property(nonatomic, copy, nullable) NSString *timezone;
+@property(nonatomic, copy, nullable) NSString *webpropertyName;
+@property(nonatomic, copy, nullable) NSString *websiteUrl;
+
+@end
+
+
+/**
+ *  GTLRAnalytics_AccountTreeRequest_AccountSettings
+ */
+@interface GTLRAnalytics_AccountTreeRequest_AccountSettings : GTLRObject
+
+/**
+ *  admobReporting
+ *
+ *  Uses NSNumber of boolValue.
+ */
+@property(nonatomic, strong, nullable) NSNumber *admobReporting;
+
+/**
+ *  sharingWithGoogleAnySales
+ *
+ *  Uses NSNumber of boolValue.
+ */
+@property(nonatomic, strong, nullable) NSNumber *sharingWithGoogleAnySales;
+
+/**
+ *  sharingWithGoogleProducts
+ *
+ *  Uses NSNumber of boolValue.
+ */
+@property(nonatomic, strong, nullable) NSNumber *sharingWithGoogleProducts;
+
+/**
+ *  sharingWithGoogleSales
+ *
+ *  Uses NSNumber of boolValue.
+ */
+@property(nonatomic, strong, nullable) NSNumber *sharingWithGoogleSales;
+
+/**
+ *  sharingWithGoogleSupport
+ *
+ *  Uses NSNumber of boolValue.
+ */
+@property(nonatomic, strong, nullable) NSNumber *sharingWithGoogleSupport;
+
+/**
+ *  sharingWithOthers
+ *
+ *  Uses NSNumber of boolValue.
+ */
+@property(nonatomic, strong, nullable) NSNumber *sharingWithOthers;
+
+@end
+
+
+/**
+ *  JSON template for an Analytics account tree response. The account tree
+ *  response is used in the provisioning api to return the result of creating an
+ *  account, property, and view (profile).
+ */
+@interface GTLRAnalytics_AccountTreeResponse : GTLRObject
+
+/** The account created. */
+@property(nonatomic, strong, nullable) GTLRAnalytics_Account *account;
+
+@property(nonatomic, strong, nullable) GTLRAnalytics_AccountTreeResponse_AccountSettings *accountSettings;
+
+/** Resource type for account ticket. */
+@property(nonatomic, copy, nullable) NSString *kind;
+
+/** View (Profile) for the account. */
+@property(nonatomic, strong, nullable) GTLRAnalytics_Profile *profile;
+
+/** Web property for the account. */
+@property(nonatomic, strong, nullable) GTLRAnalytics_Webproperty *webproperty;
+
+@end
+
+
+/**
+ *  GTLRAnalytics_AccountTreeResponse_AccountSettings
+ */
+@interface GTLRAnalytics_AccountTreeResponse_AccountSettings : GTLRObject
+
+/**
+ *  admobReporting
+ *
+ *  Uses NSNumber of boolValue.
+ */
+@property(nonatomic, strong, nullable) NSNumber *admobReporting;
+
+/**
+ *  sharingWithGoogleAnySales
+ *
+ *  Uses NSNumber of boolValue.
+ */
+@property(nonatomic, strong, nullable) NSNumber *sharingWithGoogleAnySales;
+
+/**
+ *  sharingWithGoogleProducts
+ *
+ *  Uses NSNumber of boolValue.
+ */
+@property(nonatomic, strong, nullable) NSNumber *sharingWithGoogleProducts;
+
+/**
+ *  sharingWithGoogleSales
+ *
+ *  Uses NSNumber of boolValue.
+ */
+@property(nonatomic, strong, nullable) NSNumber *sharingWithGoogleSales;
+
+/**
+ *  sharingWithGoogleSupport
+ *
+ *  Uses NSNumber of boolValue.
+ */
+@property(nonatomic, strong, nullable) NSNumber *sharingWithGoogleSupport;
+
+/**
+ *  sharingWithOthers
+ *
+ *  Uses NSNumber of boolValue.
+ */
+@property(nonatomic, strong, nullable) NSNumber *sharingWithOthers;
+
+@end
+
+
+/**
  *  JSON template for an AdWords account.
  */
 @interface GTLRAnalytics_AdWordsAccount : GTLRObject
@@ -525,6 +678,9 @@ NS_ASSUME_NONNULL_BEGIN
 /** IDs of views (profiles) linked to the custom data source. */
 @property(nonatomic, strong, nullable) NSArray<NSString *> *profilesLinked;
 
+/** Collection of schema headers of the custom data source. */
+@property(nonatomic, strong, nullable) NSArray<NSString *> *schema;
+
 /** Link for this Analytics custom data source. */
 @property(nonatomic, copy, nullable) NSString *selfLink;
 
@@ -534,6 +690,7 @@ NS_ASSUME_NONNULL_BEGIN
 /** Time this custom data source was last modified. */
 @property(nonatomic, strong, nullable) GTLRDateTime *updated;
 
+/** Upload type of the custom data source. */
 @property(nonatomic, copy, nullable) NSString *uploadType;
 
 /**
@@ -2572,7 +2729,10 @@ NS_ASSUME_NONNULL_BEGIN
 /** The status of this foreign account link. */
 @property(nonatomic, copy, nullable) NSString *status;
 
-/** The type of the foreign account. For example `ADWORDS_LINKS`. */
+/**
+ *  The type of the foreign account. For example, `ADWORDS_LINKS`, `DBM_LINKS`,
+ *  `MCC_LINKS` or `OPTIMIZE`.
+ */
 @property(nonatomic, copy, nullable) NSString *type;
 
 /**
@@ -3859,6 +4019,9 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property(nonatomic, copy, nullable) NSString *status;
 
+/** Time this file is uploaded. */
+@property(nonatomic, strong, nullable) GTLRDateTime *uploadTime;
+
 @end
 
 
@@ -4194,3 +4357,5 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 NS_ASSUME_NONNULL_END
+
+#pragma clang diagnostic pop

@@ -35,6 +35,11 @@
 @class GTLRGmail_VacationSettings;
 @class GTLRGmail_WatchRequest;
 
+// Generated comments include content from the discovery document; avoid them
+// causing warnings since clang's checks are some what arbitrary.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdocumentation"
+
 NS_ASSUME_NONNULL_BEGIN
 
 // ----------------------------------------------------------------------------
@@ -1199,8 +1204,8 @@ GTLR_EXTERN NSString * const kGTLRGmailInternalDateSourceReceivedTime;
 /**
  *  Only return messages matching the specified query. Supports the same query
  *  format as the Gmail search box. For example, "from:someuser\@example.com
- *  rfc822msgid: is:unread". Parameter cannot be used when accessing the api
- *  using the gmail.metadata scope.
+ *  rfc822msgid:<somemsgid\@example.com> is:unread". Parameter cannot be used
+ *  when accessing the api using the gmail.metadata scope.
  */
 @property(nonatomic, copy, nullable) NSString *q;
 
@@ -3019,3 +3024,5 @@ GTLR_EXTERN NSString * const kGTLRGmailInternalDateSourceReceivedTime;
 @end
 
 NS_ASSUME_NONNULL_END
+
+#pragma clang diagnostic pop

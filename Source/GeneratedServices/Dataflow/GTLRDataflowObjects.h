@@ -2,7 +2,7 @@
 
 // ----------------------------------------------------------------------------
 // API:
-//   Google Dataflow API (dataflow/v1b3)
+//   Dataflow API (dataflow/v1b3)
 // Description:
 //   Manages Google Cloud Dataflow projects on Google Cloud Platform.
 // Documentation:
@@ -51,6 +51,7 @@
 @class GTLRDataflow_FlattenInstruction;
 @class GTLRDataflow_FloatingPointList;
 @class GTLRDataflow_FloatingPointMean;
+@class GTLRDataflow_Histogram;
 @class GTLRDataflow_InstructionInput;
 @class GTLRDataflow_InstructionOutput;
 @class GTLRDataflow_InstructionOutput_Codec;
@@ -140,6 +141,8 @@
 @class GTLRDataflow_WorkerHealthReport;
 @class GTLRDataflow_WorkerHealthReport_Pods_Item;
 @class GTLRDataflow_WorkerHealthReportResponse;
+@class GTLRDataflow_WorkerLifecycleEvent;
+@class GTLRDataflow_WorkerLifecycleEvent_Metadata;
 @class GTLRDataflow_WorkerMessage;
 @class GTLRDataflow_WorkerMessage_Labels;
 @class GTLRDataflow_WorkerMessageCode;
@@ -149,11 +152,18 @@
 @class GTLRDataflow_WorkerPool_Metadata;
 @class GTLRDataflow_WorkerPool_PoolArgs;
 @class GTLRDataflow_WorkerSettings;
+@class GTLRDataflow_WorkerShutdownNotice;
+@class GTLRDataflow_WorkerShutdownNoticeResponse;
 @class GTLRDataflow_WorkItem;
 @class GTLRDataflow_WorkItemServiceState;
 @class GTLRDataflow_WorkItemServiceState_HarnessData;
 @class GTLRDataflow_WorkItemStatus;
 @class GTLRDataflow_WriteInstruction;
+
+// Generated comments include content from the discovery document; avoid them
+// causing warnings since clang's checks are some what arbitrary.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdocumentation"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -1022,6 +1032,59 @@ GTLR_EXTERN NSString * const kGTLRDataflow_TransformSummary_Kind_UnknownKind;
 GTLR_EXTERN NSString * const kGTLRDataflow_TransformSummary_Kind_WriteKind;
 
 // ----------------------------------------------------------------------------
+// GTLRDataflow_WorkerLifecycleEvent.event
+
+/**
+ *  Our container code starts running. Multiple containers could be
+ *  distinguished with WorkerMessage.labels if desired.
+ *
+ *  Value: "CONTAINER_START"
+ */
+GTLR_EXTERN NSString * const kGTLRDataflow_WorkerLifecycleEvent_Event_ContainerStart;
+/**
+ *  The worker has a functional external network connection.
+ *
+ *  Value: "NETWORK_UP"
+ */
+GTLR_EXTERN NSString * const kGTLRDataflow_WorkerLifecycleEvent_Event_NetworkUp;
+/**
+ *  The time the VM started.
+ *
+ *  Value: "OS_START"
+ */
+GTLR_EXTERN NSString * const kGTLRDataflow_WorkerLifecycleEvent_Event_OsStart;
+/**
+ *  Finished installing SDK.
+ *
+ *  Value: "SDK_INSTALL_FINISH"
+ */
+GTLR_EXTERN NSString * const kGTLRDataflow_WorkerLifecycleEvent_Event_SdkInstallFinish;
+/**
+ *  For applicable SDKs, started installation of SDK and worker packages.
+ *
+ *  Value: "SDK_INSTALL_START"
+ */
+GTLR_EXTERN NSString * const kGTLRDataflow_WorkerLifecycleEvent_Event_SdkInstallStart;
+/**
+ *  Finished downloading all staging files.
+ *
+ *  Value: "STAGING_FILES_DOWNLOAD_FINISH"
+ */
+GTLR_EXTERN NSString * const kGTLRDataflow_WorkerLifecycleEvent_Event_StagingFilesDownloadFinish;
+/**
+ *  Started downloading staging files.
+ *
+ *  Value: "STAGING_FILES_DOWNLOAD_START"
+ */
+GTLR_EXTERN NSString * const kGTLRDataflow_WorkerLifecycleEvent_Event_StagingFilesDownloadStart;
+/**
+ *  Invalid event.
+ *
+ *  Value: "UNKNOWN_EVENT"
+ */
+GTLR_EXTERN NSString * const kGTLRDataflow_WorkerLifecycleEvent_Event_UnknownEvent;
+
+// ----------------------------------------------------------------------------
 // GTLRDataflow_WorkerPool.defaultPackageSet
 
 /**
@@ -1366,9 +1429,6 @@ GTLR_EXTERN NSString * const kGTLRDataflow_WorkerPool_TeardownPolicy_TeardownPol
 /** The system stage name. */
 @property(nonatomic, copy, nullable) NSString *systemStageName;
 
-/** The user stage name. */
-@property(nonatomic, copy, nullable) NSString *userStageName;
-
 @end
 
 
@@ -1471,6 +1531,18 @@ GTLR_EXTERN NSString * const kGTLRDataflow_WorkerPool_TeardownPolicy_TeardownPol
 @property(nonatomic, copy, nullable) NSString *executionStepName;
 
 /**
+ *  Index of an input collection that's being read from/written to as a side
+ *  input.
+ *  The index identifies a step's side inputs starting by 1 (e.g. the first
+ *  side input has input_index 1, the third has input_index 3).
+ *  Side inputs are identified by a pair of (original_step_name, input_index).
+ *  This field helps uniquely identify them.
+ *
+ *  Uses NSNumber of intValue.
+ */
+@property(nonatomic, strong, nullable) NSNumber *inputIndex;
+
+/**
  *  Counter name. Not necessarily globally-unique, but unique within the
  *  context of the other fields.
  *  Required.
@@ -1487,6 +1559,13 @@ GTLR_EXTERN NSString * const kGTLRDataflow_WorkerPool_TeardownPolicy_TeardownPol
  *        created by the user. (Value: "USER")
  */
 @property(nonatomic, copy, nullable) NSString *origin;
+
+/**
+ *  The step name requesting an operation, such as GBK.
+ *  I.e. the ParDo causing a read/write from shuffle to occur, or a
+ *  read from side inputs.
+ */
+@property(nonatomic, copy, nullable) NSString *originalRequestingStepName;
 
 /**
  *  System generated name of the original step in the user's graph, before
@@ -1861,6 +1940,9 @@ GTLR_EXTERN NSString * const kGTLRDataflow_WorkerPool_TeardownPolicy_TeardownPol
 
 /** The count of the number of elements present in the distribution. */
 @property(nonatomic, strong, nullable) GTLRDataflow_SplitInt64 *count;
+
+/** (Optional) Histogram of value counts for the distribution. */
+@property(nonatomic, strong, nullable) GTLRDataflow_Histogram *histogram;
 
 /** The maximum value present in the distribution. */
 @property(nonatomic, strong, nullable) GTLRDataflow_SplitInt64 *max;
@@ -2283,6 +2365,38 @@ GTLR_EXTERN NSString * const kGTLRDataflow_WorkerPool_TeardownPolicy_TeardownPol
  *  request will be indicated in the error_details.
  */
 @property(nonatomic, strong, nullable) GTLRDataflow_Status *status;
+
+@end
+
+
+/**
+ *  Histogram of value counts for a distribution.
+ *  Buckets have an inclusive lower bound and exclusive upper bound and use
+ *  "1,2,5 bucketing": The first bucket range is from [0,1) and all subsequent
+ *  bucket boundaries are powers of ten multiplied by 1, 2, or 5. Thus, bucket
+ *  boundaries are 0, 1, 2, 5, 10, 20, 50, 100, 200, 500, 1000, ...
+ *  Negative values are not supported.
+ */
+@interface GTLRDataflow_Histogram : GTLRObject
+
+/**
+ *  Counts of values in each bucket. For efficiency, prefix and trailing
+ *  buckets with count = 0 are elided. Buckets can store the full range of
+ *  values of an unsigned long, with ULLONG_MAX falling into the 59th bucket
+ *  with range [1e19, 2e19).
+ *
+ *  Uses NSNumber of longLongValue.
+ */
+@property(nonatomic, strong, nullable) NSArray<NSNumber *> *bucketCounts;
+
+/**
+ *  Starting index of first stored bucket. The non-inclusive upper-bound of
+ *  the ith bucket is given by:
+ *  pow(10,(i-first_bucket_offset)/3) * (1,2,5)[(i-first_bucket_offset)%3]
+ *
+ *  Uses NSNumber of intValue.
+ */
+@property(nonatomic, strong, nullable) NSNumber *firstBucketOffset;
 
 @end
 
@@ -3133,6 +3247,13 @@ GTLR_EXTERN NSString * const kGTLRDataflow_WorkerPool_TeardownPolicy_TeardownPol
 @property(nonatomic, strong, nullable) NSNumber *cumulative;
 
 /**
+ *  A struct value describing properties of a distribution of numeric values.
+ *
+ *  Can be any valid JSON type.
+ */
+@property(nonatomic, strong, nullable) id distribution;
+
+/**
  *  Worker-computed aggregate value for internal use by the Dataflow
  *  service.
  *
@@ -3142,7 +3263,7 @@ GTLR_EXTERN NSString * const kGTLRDataflow_WorkerPool_TeardownPolicy_TeardownPol
 
 /**
  *  Metric aggregation kind. The possible metric aggregation kinds are
- *  "Sum", "Max", "Min", "Mean", "Set", "And", and "Or".
+ *  "Sum", "Max", "Min", "Mean", "Set", "And", "Or", and "Distribution".
  *  The specified aggregation kind is case-insensitive.
  *  If omitted, this is not an aggregated value but instead
  *  a single metric sample value.
@@ -3702,6 +3823,9 @@ GTLR_EXTERN NSString * const kGTLRDataflow_WorkerPool_TeardownPolicy_TeardownPol
  */
 @interface GTLRDataflow_RuntimeEnvironment : GTLRObject
 
+/** Additional experiment flags for the job. */
+@property(nonatomic, strong, nullable) NSArray<NSString *> *additionalExperiments;
+
 /**
  *  Whether to bypass the safety checks for the job's temporary directory.
  *  Use with caution.
@@ -3711,6 +3835,12 @@ GTLR_EXTERN NSString * const kGTLRDataflow_WorkerPool_TeardownPolicy_TeardownPol
 @property(nonatomic, strong, nullable) NSNumber *bypassTempDirValidation;
 
 /**
+ *  The machine type to use for the job. Defaults to the value from the
+ *  template if not specified.
+ */
+@property(nonatomic, copy, nullable) NSString *machineType;
+
+/**
  *  The maximum number of Google Compute Engine instances to be made
  *  available to your pipeline during execution, from 1 to 1000.
  *
@@ -3718,8 +3848,20 @@ GTLR_EXTERN NSString * const kGTLRDataflow_WorkerPool_TeardownPolicy_TeardownPol
  */
 @property(nonatomic, strong, nullable) NSNumber *maxWorkers;
 
+/**
+ *  Network to which VMs will be assigned. If empty or unspecified,
+ *  the service will use the network "default".
+ */
+@property(nonatomic, copy, nullable) NSString *network;
+
 /** The email address of the service account to run the job as. */
 @property(nonatomic, copy, nullable) NSString *serviceAccountEmail;
+
+/**
+ *  Subnetwork to which VMs will be assigned, if desired. Expected to be of
+ *  the form "regions/REGION/subnetworks/SUBNETWORK".
+ */
+@property(nonatomic, copy, nullable) NSString *subnetwork;
 
 /**
  *  The Cloud Storage path to use for temporary files.
@@ -4120,8 +4262,29 @@ GTLR_EXTERN NSString * const kGTLRDataflow_WorkerPool_TeardownPolicy_TeardownPol
 /** Information about a request to get metadata about a source. */
 @property(nonatomic, strong, nullable) GTLRDataflow_SourceGetMetadataRequest *getMetadata;
 
+/** User-provided name of the Read instruction for this source. */
+@property(nonatomic, copy, nullable) NSString *name;
+
+/**
+ *  System-defined name for the Read instruction for this source
+ *  in the original workflow graph.
+ */
+@property(nonatomic, copy, nullable) NSString *originalName;
+
 /** Information about a request to split a source. */
 @property(nonatomic, strong, nullable) GTLRDataflow_SourceSplitRequest *split;
+
+/**
+ *  System-defined name of the stage containing the source operation.
+ *  Unique across the workflow.
+ */
+@property(nonatomic, copy, nullable) NSString *stageName;
+
+/**
+ *  System-defined name of the Read instruction for this source.
+ *  Unique across the workflow.
+ */
+@property(nonatomic, copy, nullable) NSString *systemName;
 
 @end
 
@@ -4345,7 +4508,7 @@ GTLR_EXTERN NSString * const kGTLRDataflow_WorkerPool_TeardownPolicy_TeardownPol
  *  error message is needed, put the localized message in the error details or
  *  localize it in the client. The optional error details may contain arbitrary
  *  information about the error. There is a predefined set of error detail types
- *  in the package `google.rpc` which can be used for common error conditions.
+ *  in the package `google.rpc` that can be used for common error conditions.
  *  # Language mapping
  *  The `Status` message is the logical representation of the error model, but
  *  it
@@ -4363,7 +4526,7 @@ GTLR_EXTERN NSString * const kGTLRDataflow_WorkerPool_TeardownPolicy_TeardownPol
  *  it may embed the `Status` in the normal response to indicate the partial
  *  errors.
  *  - Workflow errors. A typical workflow has multiple steps. Each step may
- *  have a `Status` message for error reporting purpose.
+ *  have a `Status` message for error reporting.
  *  - Batch operations. If a client uses batch request and batch response, the
  *  `Status` message should be used directly inside batch response, one for
  *  each error sub-response.
@@ -4383,8 +4546,8 @@ GTLR_EXTERN NSString * const kGTLRDataflow_WorkerPool_TeardownPolicy_TeardownPol
 @property(nonatomic, strong, nullable) NSNumber *code;
 
 /**
- *  A list of messages that carry the error details. There will be a
- *  common set of message types for APIs to use.
+ *  A list of messages that carry the error details. There is a common set of
+ *  message types for APIs to use.
  */
 @property(nonatomic, strong, nullable) NSArray<GTLRDataflow_Status_Details_Item *> *details;
 
@@ -4541,6 +4704,22 @@ GTLR_EXTERN NSString * const kGTLRDataflow_WorkerPool_TeardownPolicy_TeardownPol
 
 /** Map from user step names to state families. */
 @property(nonatomic, strong, nullable) GTLRDataflow_StreamingConfigTask_UserStepToStateFamilyNameMap *userStepToStateFamilyNameMap;
+
+/**
+ *  If present, the worker must use this endpoint to communicate with Windmill
+ *  Service dispatchers, otherwise the worker must continue to use whatever
+ *  endpoint it had been using.
+ */
+@property(nonatomic, copy, nullable) NSString *windmillServiceEndpoint;
+
+/**
+ *  If present, the worker must use this port to communicate with Windmill
+ *  Service dispatchers. Only applicable when windmill_service_endpoint is
+ *  specified.
+ *
+ *  Uses NSNumber of longLongValue.
+ */
+@property(nonatomic, strong, nullable) NSNumber *windmillServicePort;
 
 @end
 
@@ -4792,16 +4971,6 @@ GTLR_EXTERN NSString * const kGTLRDataflow_WorkerPool_TeardownPolicy_TeardownPol
 @interface GTLRDataflow_TemplateMetadata : GTLRObject
 
 /**
- *  If true, will bypass the validation that the temp directory is
- *  writable. This should only be used with templates for pipelines
- *  that are guaranteed not to need to write to the temp directory,
- *  which is subject to change based on the optimizer.
- *
- *  Uses NSNumber of boolValue.
- */
-@property(nonatomic, strong, nullable) NSNumber *bypassTempDirValidation;
-
-/**
  *  Optional. A description of the template.
  *
  *  Remapped to 'descriptionProperty' to avoid NSObject's 'description'.
@@ -4979,6 +5148,73 @@ GTLR_EXTERN NSString * const kGTLRDataflow_WorkerPool_TeardownPolicy_TeardownPol
 
 
 /**
+ *  A report of an event in a worker's lifecycle.
+ *  The proto contains one event, because the worker is expected to
+ *  asynchronously send each message immediately after the event.
+ *  Due to this asynchrony, messages may arrive out of order (or missing), and
+ *  it
+ *  is up to the consumer to interpret.
+ *  The timestamp of the event is in the enclosing WorkerMessage proto.
+ */
+@interface GTLRDataflow_WorkerLifecycleEvent : GTLRObject
+
+/**
+ *  The start time of this container. All events will report this so that
+ *  events can be grouped together across container/VM restarts.
+ */
+@property(nonatomic, strong, nullable) GTLRDateTime *containerStartTime;
+
+/**
+ *  The event being reported.
+ *
+ *  Likely values:
+ *    @arg @c kGTLRDataflow_WorkerLifecycleEvent_Event_ContainerStart Our
+ *        container code starts running. Multiple containers could be
+ *        distinguished with WorkerMessage.labels if desired. (Value:
+ *        "CONTAINER_START")
+ *    @arg @c kGTLRDataflow_WorkerLifecycleEvent_Event_NetworkUp The worker has
+ *        a functional external network connection. (Value: "NETWORK_UP")
+ *    @arg @c kGTLRDataflow_WorkerLifecycleEvent_Event_OsStart The time the VM
+ *        started. (Value: "OS_START")
+ *    @arg @c kGTLRDataflow_WorkerLifecycleEvent_Event_SdkInstallFinish Finished
+ *        installing SDK. (Value: "SDK_INSTALL_FINISH")
+ *    @arg @c kGTLRDataflow_WorkerLifecycleEvent_Event_SdkInstallStart For
+ *        applicable SDKs, started installation of SDK and worker packages.
+ *        (Value: "SDK_INSTALL_START")
+ *    @arg @c kGTLRDataflow_WorkerLifecycleEvent_Event_StagingFilesDownloadFinish
+ *        Finished downloading all staging files. (Value:
+ *        "STAGING_FILES_DOWNLOAD_FINISH")
+ *    @arg @c kGTLRDataflow_WorkerLifecycleEvent_Event_StagingFilesDownloadStart
+ *        Started downloading staging files. (Value:
+ *        "STAGING_FILES_DOWNLOAD_START")
+ *    @arg @c kGTLRDataflow_WorkerLifecycleEvent_Event_UnknownEvent Invalid
+ *        event. (Value: "UNKNOWN_EVENT")
+ */
+@property(nonatomic, copy, nullable) NSString *event;
+
+/**
+ *  Other stats that can accompany an event. E.g.
+ *  { "downloaded_bytes" : "123456" }
+ */
+@property(nonatomic, strong, nullable) GTLRDataflow_WorkerLifecycleEvent_Metadata *metadata;
+
+@end
+
+
+/**
+ *  Other stats that can accompany an event. E.g.
+ *  { "downloaded_bytes" : "123456" }
+ *
+ *  @note This class is documented as having more properties of NSString. Use @c
+ *        -additionalJSONKeys and @c -additionalPropertyForName: to get the list
+ *        of properties and then fetch them; or @c -additionalProperties to
+ *        fetch them all at once.
+ */
+@interface GTLRDataflow_WorkerLifecycleEvent_Metadata : GTLRObject
+@end
+
+
+/**
  *  WorkerMessage provides information to the backend about a worker.
  */
 @interface GTLRDataflow_WorkerMessage : GTLRObject
@@ -5003,11 +5239,17 @@ GTLR_EXTERN NSString * const kGTLRDataflow_WorkerPool_TeardownPolicy_TeardownPol
 /** The health of a worker. */
 @property(nonatomic, strong, nullable) GTLRDataflow_WorkerHealthReport *workerHealthReport;
 
+/** Record of worker lifecycle events. */
+@property(nonatomic, strong, nullable) GTLRDataflow_WorkerLifecycleEvent *workerLifecycleEvent;
+
 /** A worker message code. */
 @property(nonatomic, strong, nullable) GTLRDataflow_WorkerMessageCode *workerMessageCode;
 
 /** Resource metrics reported by workers. */
 @property(nonatomic, strong, nullable) GTLRDataflow_ResourceUtilizationReport *workerMetrics;
+
+/** Shutdown notice by workers. */
+@property(nonatomic, strong, nullable) GTLRDataflow_WorkerShutdownNotice *workerShutdownNotice;
 
 @end
 
@@ -5119,6 +5361,9 @@ GTLR_EXTERN NSString * const kGTLRDataflow_WorkerPool_TeardownPolicy_TeardownPol
 
 /** Service's response to reporting worker metrics (currently empty). */
 @property(nonatomic, strong, nullable) GTLRDataflow_ResourceUtilizationReportResponse *workerMetricsResponse;
+
+/** Service's response to shutdown notice (currently empty). */
+@property(nonatomic, strong, nullable) GTLRDataflow_WorkerShutdownNoticeResponse *workerShutdownNoticeResponse;
 
 @end
 
@@ -5378,6 +5623,32 @@ GTLR_EXTERN NSString * const kGTLRDataflow_WorkerPool_TeardownPolicy_TeardownPol
 
 
 /**
+ *  Shutdown notification from workers. This is to be sent by the shutdown
+ *  script of the worker VM so that the backend knows that the VM is being
+ *  shut down.
+ */
+@interface GTLRDataflow_WorkerShutdownNotice : GTLRObject
+
+/**
+ *  The reason for the worker shutdown.
+ *  Current possible values are:
+ *  "UNKNOWN": shutdown reason is unknown.
+ *  "PREEMPTION": shutdown reason is preemption.
+ *  Other possible reasons may be added in the future.
+ */
+@property(nonatomic, copy, nullable) NSString *reason;
+
+@end
+
+
+/**
+ *  Service-side response to WorkerMessage issuing shutdown notice.
+ */
+@interface GTLRDataflow_WorkerShutdownNoticeResponse : GTLRObject
+@end
+
+
+/**
  *  WorkItem represents basic information about a WorkItem to be executed
  *  in the cloud.
  */
@@ -5605,6 +5876,13 @@ GTLR_EXTERN NSString * const kGTLRDataflow_WorkerPool_TeardownPolicy_TeardownPol
  */
 @property(nonatomic, strong, nullable) GTLRDataflow_Position *stopPosition;
 
+/**
+ *  Total time the worker spent being throttled by external systems.
+ *
+ *  Uses NSNumber of doubleValue.
+ */
+@property(nonatomic, strong, nullable) NSNumber *totalThrottlerWaitTimeSeconds;
+
 /** Identifies the WorkItem. */
 @property(nonatomic, copy, nullable) NSString *workItemId;
 
@@ -5626,3 +5904,5 @@ GTLR_EXTERN NSString * const kGTLRDataflow_WorkerPool_TeardownPolicy_TeardownPol
 @end
 
 NS_ASSUME_NONNULL_END
+
+#pragma clang diagnostic pop

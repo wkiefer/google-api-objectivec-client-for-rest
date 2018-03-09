@@ -32,6 +32,11 @@
 @class GTLRReports_UsageReports_Warnings_Item;
 @class GTLRReports_UsageReports_Warnings_Item_Data_Item;
 
+// Generated comments include content from the discovery document; avoid them
+// causing warnings since clang's checks are some what arbitrary.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdocumentation"
+
 NS_ASSUME_NONNULL_BEGIN
 
 /**
@@ -299,13 +304,19 @@ NS_ASSUME_NONNULL_BEGIN
 /** Obfuscated customer id for the record. */
 @property(nonatomic, copy, nullable) NSString *customerId;
 
+/**
+ *  Object key. Only relevant if entity.type = "OBJECT" Note: external-facing
+ *  name of report is "Entities" rather than "Objects".
+ */
+@property(nonatomic, copy, nullable) NSString *entityId;
+
 /** Obfuscated user id for the record. */
 @property(nonatomic, copy, nullable) NSString *profileId;
 
-/** The type of item, can be a customer or user. */
+/** The type of item, can be customer, user, or entity (aka. object). */
 @property(nonatomic, copy, nullable) NSString *type;
 
-/** user's email. */
+/** user's email. Only relevant if entity.type = "USER" */
 @property(nonatomic, copy, nullable) NSString *userEmail;
 
 @end
@@ -417,3 +428,5 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 NS_ASSUME_NONNULL_END
+
+#pragma clang diagnostic pop

@@ -2,7 +2,7 @@
 
 // ----------------------------------------------------------------------------
 // API:
-//   Google Dataflow API (dataflow/v1b3)
+//   Dataflow API (dataflow/v1b3)
 // Description:
 //   Manages Google Cloud Dataflow projects on Google Cloud Platform.
 // Documentation:
@@ -13,9 +13,10 @@
 // ----------------------------------------------------------------------------
 // Authorization scopes
 
-NSString * const kGTLRAuthScopeDataflowCloudPlatform = @"https://www.googleapis.com/auth/cloud-platform";
-NSString * const kGTLRAuthScopeDataflowCompute       = @"https://www.googleapis.com/auth/compute";
-NSString * const kGTLRAuthScopeDataflowUserinfoEmail = @"https://www.googleapis.com/auth/userinfo.email";
+NSString * const kGTLRAuthScopeDataflowCloudPlatform   = @"https://www.googleapis.com/auth/cloud-platform";
+NSString * const kGTLRAuthScopeDataflowCompute         = @"https://www.googleapis.com/auth/compute";
+NSString * const kGTLRAuthScopeDataflowComputeReadonly = @"https://www.googleapis.com/auth/compute.readonly";
+NSString * const kGTLRAuthScopeDataflowUserinfoEmail   = @"https://www.googleapis.com/auth/userinfo.email";
 
 // ----------------------------------------------------------------------------
 //   GTLRDataflowService

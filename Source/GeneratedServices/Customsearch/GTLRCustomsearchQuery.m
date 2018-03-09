@@ -4,7 +4,7 @@
 // API:
 //   CustomSearch API (customsearch/v1)
 // Description:
-//   Lets you search over a website or collection of websites
+//   Searches over a website or collection of websites
 // Documentation:
 //   https://developers.google.com/custom-search/v1/using_rest
 
@@ -113,7 +113,7 @@ NSString * const kGTLRCustomsearchSiteSearchFilterI = @"i";
 
 @implementation GTLRCustomsearchQuery_CseList
 
-@dynamic c2coff, cr, cref, cx, dateRestrict, exactTerms, excludeTerms, fileType,
+@dynamic c2coff, cr, cx, dateRestrict, exactTerms, excludeTerms, fileType,
          filter, gl, googlehost, highRange, hl, hq, imgColorType,
          imgDominantColor, imgSize, imgType, linkSite, lowRange, lr, num,
          orTerms, q, relatedSite, rights, safe, searchType, siteSearch,
@@ -128,6 +128,28 @@ NSString * const kGTLRCustomsearchSiteSearchFilterI = @"i";
   query.q = q;
   query.expectedObjectClass = [GTLRCustomsearch_Search class];
   query.loggingName = @"search.cse.list";
+  return query;
+}
+
+@end
+
+@implementation GTLRCustomsearchQuery_CseSiterestrictList
+
+@dynamic c2coff, cr, cx, dateRestrict, exactTerms, excludeTerms, fileType,
+         filter, gl, googlehost, highRange, hl, hq, imgColorType,
+         imgDominantColor, imgSize, imgType, linkSite, lowRange, lr, num,
+         orTerms, q, relatedSite, rights, safe, searchType, siteSearch,
+         siteSearchFilter, sort, start;
+
++ (instancetype)queryWithQ:(NSString *)q {
+  NSString *pathURITemplate = @"v1/siterestrict";
+  GTLRCustomsearchQuery_CseSiterestrictList *query =
+    [[self alloc] initWithPathURITemplate:pathURITemplate
+                               HTTPMethod:nil
+                       pathParameterNames:nil];
+  query.q = q;
+  query.expectedObjectClass = [GTLRCustomsearch_Search class];
+  query.loggingName = @"search.cse.siterestrict.list";
   return query;
 }
 

@@ -21,6 +21,11 @@
 @class GTLRSlides_BatchUpdatePresentationRequest;
 @class GTLRSlides_Presentation;
 
+// Generated comments include content from the discovery document; avoid them
+// causing warnings since clang's checks are some what arbitrary.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdocumentation"
+
 NS_ASSUME_NONNULL_BEGIN
 
 // ----------------------------------------------------------------------------
@@ -77,6 +82,7 @@ GTLR_EXTERN NSString * const kGTLRSlidesThumbnailPropertiesThumbnailSizeThumbnai
  *
  *  Authorization scope(s):
  *    @c kGTLRAuthScopeSlidesDrive
+ *    @c kGTLRAuthScopeSlidesDriveFile
  *    @c kGTLRAuthScopeSlidesDriveReadonly
  *    @c kGTLRAuthScopeSlidesPresentations
  *    @c kGTLRAuthScopeSlidesSpreadsheets
@@ -130,6 +136,7 @@ GTLR_EXTERN NSString * const kGTLRSlidesThumbnailPropertiesThumbnailSizeThumbnai
  *
  *  Authorization scope(s):
  *    @c kGTLRAuthScopeSlidesDrive
+ *    @c kGTLRAuthScopeSlidesDriveFile
  *    @c kGTLRAuthScopeSlidesPresentations
  */
 @interface GTLRSlidesQuery_PresentationsCreate : GTLRSlidesQuery
@@ -158,6 +165,7 @@ GTLR_EXTERN NSString * const kGTLRSlidesThumbnailPropertiesThumbnailSizeThumbnai
  *
  *  Authorization scope(s):
  *    @c kGTLRAuthScopeSlidesDrive
+ *    @c kGTLRAuthScopeSlidesDriveFile
  *    @c kGTLRAuthScopeSlidesDriveReadonly
  *    @c kGTLRAuthScopeSlidesPresentations
  *    @c kGTLRAuthScopeSlidesPresentationsReadonly
@@ -189,6 +197,7 @@ GTLR_EXTERN NSString * const kGTLRSlidesThumbnailPropertiesThumbnailSizeThumbnai
  *
  *  Authorization scope(s):
  *    @c kGTLRAuthScopeSlidesDrive
+ *    @c kGTLRAuthScopeSlidesDriveFile
  *    @c kGTLRAuthScopeSlidesDriveReadonly
  *    @c kGTLRAuthScopeSlidesPresentations
  *    @c kGTLRAuthScopeSlidesPresentationsReadonly
@@ -221,11 +230,14 @@ GTLR_EXTERN NSString * const kGTLRSlidesThumbnailPropertiesThumbnailSizeThumbnai
 /**
  *  Generates a thumbnail of the latest version of the specified page in the
  *  presentation and returns a URL to the thumbnail image.
+ *  This request counts as an [expensive read request](/slides/limits) for
+ *  quota purposes.
  *
  *  Method: slides.presentations.pages.getThumbnail
  *
  *  Authorization scope(s):
  *    @c kGTLRAuthScopeSlidesDrive
+ *    @c kGTLRAuthScopeSlidesDriveFile
  *    @c kGTLRAuthScopeSlidesDriveReadonly
  *    @c kGTLRAuthScopeSlidesPresentations
  *    @c kGTLRAuthScopeSlidesPresentationsReadonly
@@ -266,6 +278,8 @@ GTLR_EXTERN NSString * const kGTLRSlidesThumbnailPropertiesThumbnailSizeThumbnai
  *
  *  Generates a thumbnail of the latest version of the specified page in the
  *  presentation and returns a URL to the thumbnail image.
+ *  This request counts as an [expensive read request](/slides/limits) for
+ *  quota purposes.
  *
  *  @param presentationId The ID of the presentation to retrieve.
  *  @param pageObjectId The object ID of the page whose thumbnail to retrieve.
@@ -278,3 +292,5 @@ GTLR_EXTERN NSString * const kGTLRSlidesThumbnailPropertiesThumbnailSizeThumbnai
 @end
 
 NS_ASSUME_NONNULL_END
+
+#pragma clang diagnostic pop

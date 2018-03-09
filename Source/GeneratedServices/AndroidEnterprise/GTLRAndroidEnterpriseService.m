@@ -27,7 +27,7 @@ NSString * const kGTLRAuthScopeAndroidEnterprise = @"https://www.googleapis.com/
     // From discovery.
     self.rootURLString = @"https://www.googleapis.com/";
     self.servicePath = @"androidenterprise/v1/";
-    self.batchPath = @"batch";
+    self.batchPath = @"batch/androidenterprise/v1";
     self.prettyPrintQueryParameterNames = @[ @"prettyPrint" ];
   }
   return self;
@@ -37,9 +37,11 @@ NSString * const kGTLRAuthScopeAndroidEnterprise = @"https://www.googleapis.com/
   return @{
     @"androidenterprise#administratorWebToken" : [GTLRAndroidEnterprise_AdministratorWebToken class],
     @"androidenterprise#administratorWebTokenSpec" : [GTLRAndroidEnterprise_AdministratorWebTokenSpec class],
+    @"androidenterprise#androidDevicePolicyConfig" : [GTLRAndroidEnterprise_AndroidDevicePolicyConfig class],
     @"androidenterprise#appRestrictionsSchema" : [GTLRAndroidEnterprise_AppRestrictionsSchema class],
     @"androidenterprise#approvalUrlInfo" : [GTLRAndroidEnterprise_ApprovalUrlInfo class],
     @"androidenterprise#authenticationToken" : [GTLRAndroidEnterprise_AuthenticationToken class],
+    @"androidenterprise#configurationVariables" : [GTLRAndroidEnterprise_ConfigurationVariables class],
     @"androidenterprise#device" : [GTLRAndroidEnterprise_Device class],
     @"androidenterprise#devicesListResponse" : [GTLRAndroidEnterprise_DevicesListResponse class],
     @"androidenterprise#deviceState" : [GTLRAndroidEnterprise_DeviceState class],
@@ -56,6 +58,8 @@ NSString * const kGTLRAuthScopeAndroidEnterprise = @"https://www.googleapis.com/
     @"androidenterprise#managedConfiguration" : [GTLRAndroidEnterprise_ManagedConfiguration class],
     @"androidenterprise#managedConfigurationsForDeviceListResponse" : [GTLRAndroidEnterprise_ManagedConfigurationsForDeviceListResponse class],
     @"androidenterprise#managedConfigurationsForUserListResponse" : [GTLRAndroidEnterprise_ManagedConfigurationsForUserListResponse class],
+    @"androidenterprise#managedConfigurationsSettings" : [GTLRAndroidEnterprise_ManagedConfigurationsSettings class],
+    @"androidenterprise#managedConfigurationsSettingsListResponse" : [GTLRAndroidEnterprise_ManagedConfigurationsSettingsListResponse class],
     @"androidenterprise#notificationSet" : [GTLRAndroidEnterprise_NotificationSet class],
     @"androidenterprise#permission" : [GTLRAndroidEnterprise_Permission class],
     @"androidenterprise#product" : [GTLRAndroidEnterprise_Product class],
@@ -73,6 +77,7 @@ NSString * const kGTLRAuthScopeAndroidEnterprise = @"https://www.googleapis.com/
     @"androidenterprise#user" : [GTLRAndroidEnterprise_User class],
     @"androidenterprise#usersListResponse" : [GTLRAndroidEnterprise_UsersListResponse class],
     @"androidenterprise#userToken" : [GTLRAndroidEnterprise_UserToken class],
+    @"androidenterprise#variableSet" : [GTLRAndroidEnterprise_VariableSet class],
   };
 }
 

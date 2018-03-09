@@ -19,6 +19,7 @@
 #endif
 
 @class GTLRAnalytics_AccountTicket;
+@class GTLRAnalytics_AccountTreeRequest;
 @class GTLRAnalytics_CustomDimension;
 @class GTLRAnalytics_CustomMetric;
 @class GTLRAnalytics_DataimportDeleteUploadDataRequest;
@@ -32,6 +33,11 @@
 @class GTLRAnalytics_RemarketingAudience;
 @class GTLRAnalytics_UnsampledReport;
 @class GTLRAnalytics_Webproperty;
+
+// Generated comments include content from the discovery document; avoid them
+// causing warnings since clang's checks are some what arbitrary.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdocumentation"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -3818,4 +3824,32 @@ GTLR_EXTERN NSString * const kGTLRAnalyticsSamplingLevelHigherPrecision;
 
 @end
 
+/**
+ *  Provision account.
+ *
+ *  Method: analytics.provisioning.createAccountTree
+ *
+ *  Authorization scope(s):
+ *    @c kGTLRAuthScopeAnalyticsProvision
+ */
+@interface GTLRAnalyticsQuery_ProvisioningCreateAccountTree : GTLRAnalyticsQuery
+// Previous library name was
+//   +[GTLQueryAnalytics queryForProvisioningCreateAccountTreeWithObject:]
+
+/**
+ *  Fetches a @c GTLRAnalytics_AccountTreeResponse.
+ *
+ *  Provision account.
+ *
+ *  @param object The @c GTLRAnalytics_AccountTreeRequest to include in the
+ *    query.
+ *
+ *  @returns GTLRAnalyticsQuery_ProvisioningCreateAccountTree
+ */
++ (instancetype)queryWithObject:(GTLRAnalytics_AccountTreeRequest *)object;
+
+@end
+
 NS_ASSUME_NONNULL_END
+
+#pragma clang diagnostic pop

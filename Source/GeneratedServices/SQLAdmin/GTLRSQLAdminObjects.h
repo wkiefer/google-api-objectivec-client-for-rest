@@ -28,6 +28,9 @@
 @class GTLRSQLAdmin_DatabaseFlags;
 @class GTLRSQLAdmin_DatabaseInstance;
 @class GTLRSQLAdmin_DatabaseInstance_FailoverReplica;
+@class GTLRSQLAdmin_DemoteMasterConfiguration;
+@class GTLRSQLAdmin_DemoteMasterContext;
+@class GTLRSQLAdmin_DemoteMasterMySqlReplicaConfiguration;
 @class GTLRSQLAdmin_ExportContext;
 @class GTLRSQLAdmin_ExportContext_CsvExportOptions;
 @class GTLRSQLAdmin_ExportContext_SqlExportOptions;
@@ -37,7 +40,6 @@
 @class GTLRSQLAdmin_ImportContext_CsvImportOptions;
 @class GTLRSQLAdmin_IpConfiguration;
 @class GTLRSQLAdmin_IpMapping;
-@class GTLRSQLAdmin_Labels;
 @class GTLRSQLAdmin_LocationPreference;
 @class GTLRSQLAdmin_MaintenanceWindow;
 @class GTLRSQLAdmin_MySqlReplicaConfiguration;
@@ -48,11 +50,17 @@
 @class GTLRSQLAdmin_ReplicaConfiguration;
 @class GTLRSQLAdmin_RestoreBackupContext;
 @class GTLRSQLAdmin_Settings;
+@class GTLRSQLAdmin_Settings_UserLabels;
 @class GTLRSQLAdmin_SslCert;
 @class GTLRSQLAdmin_SslCertDetail;
 @class GTLRSQLAdmin_Tier;
 @class GTLRSQLAdmin_TruncateLogContext;
 @class GTLRSQLAdmin_User;
+
+// Generated comments include content from the discovery document; avoid them
+// causing warnings since clang's checks are some what arbitrary.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdocumentation"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -101,6 +109,15 @@ NS_ASSUME_NONNULL_BEGIN
 
 /** This is always sql#backupConfiguration. */
 @property(nonatomic, copy, nullable) NSString *kind;
+
+/**
+ *  Whether replication log archiving is enabled. Replication log archiving is
+ *  required for the point-in-time recovery (PITR) feature. PostgreSQL instances
+ *  only.
+ *
+ *  Uses NSNumber of boolValue.
+ */
+@property(nonatomic, strong, nullable) NSNumber *replicationLogArchivingEnabled;
 
 /**
  *  Start time for the daily backup configuration in UTC timezone in the 24 hour
@@ -250,6 +267,15 @@ NS_ASSUME_NONNULL_BEGIN
 /** This is always sql#cloneContext. */
 @property(nonatomic, copy, nullable) NSString *kind;
 
+/**
+ *  The epoch timestamp, in milliseconds, of the time to which a point-in-time
+ *  recovery (PITR) is performed. PostgreSQL instances only. For MySQL
+ *  instances, use the binLogCoordinates property.
+ *
+ *  Uses NSNumber of longLongValue.
+ */
+@property(nonatomic, strong, nullable) NSNumber *pitrTimestampMs;
+
 @end
 
 
@@ -344,9 +370,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, strong, nullable) NSNumber *currentDiskSize;
 
 /**
- *  The database engine type and version. The databaseVersion can not be changed
- *  after instance creation. Can be MYSQL_5_5, MYSQL_5_6 or MYSQL_5_7. Defaults
- *  to MYSQL_5_6. MYSQL_5_7 is applicable only to Second Generation instances.
+ *  The database engine type and version. The databaseVersion field can not be
+ *  changed after instance creation. MySQL Second Generation instances:
+ *  MYSQL_5_7 (default) or MYSQL_5_6. PostgreSQL instances: POSTGRES_9_6 MySQL
+ *  First Generation instances: MYSQL_5_6 (default) or MYSQL_5_5
  */
 @property(nonatomic, copy, nullable) NSString *databaseVersion;
 
@@ -358,6 +385,13 @@ NS_ASSUME_NONNULL_BEGIN
  *  only to Second Generation instances.
  */
 @property(nonatomic, strong, nullable) GTLRSQLAdmin_DatabaseInstance_FailoverReplica *failoverReplica;
+
+/**
+ *  The Compute Engine zone that the instance is currently serving from. This
+ *  value could be different from the zone that was specified when the instance
+ *  was created if the instance has failed over to its secondary zone.
+ */
+@property(nonatomic, copy, nullable) NSString *gceZone;
 
 /**
  *  The instance type. This can be one of the following.
@@ -504,6 +538,93 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 /**
+ *  Read-replica configuration for connecting to the on-premises master.
+ */
+@interface GTLRSQLAdmin_DemoteMasterConfiguration : GTLRObject
+
+/** This is always sql#demoteMasterConfiguration. */
+@property(nonatomic, copy, nullable) NSString *kind;
+
+/**
+ *  MySQL specific configuration when replicating from a MySQL on-premises
+ *  master. Replication configuration information such as the username,
+ *  password, certificates, and keys are not stored in the instance metadata.
+ *  The configuration information is used only to set up the replication
+ *  connection and is stored by MySQL in a file named master.info in the data
+ *  directory.
+ */
+@property(nonatomic, strong, nullable) GTLRSQLAdmin_DemoteMasterMySqlReplicaConfiguration *mysqlReplicaConfiguration;
+
+@end
+
+
+/**
+ *  Database instance demote master context.
+ */
+@interface GTLRSQLAdmin_DemoteMasterContext : GTLRObject
+
+/** This is always sql#demoteMasterContext. */
+@property(nonatomic, copy, nullable) NSString *kind;
+
+/**
+ *  The name of the instance which will act as on-premises master in the
+ *  replication setup.
+ */
+@property(nonatomic, copy, nullable) NSString *masterInstanceName;
+
+/**
+ *  Configuration specific to read-replicas replicating from the on-premises
+ *  master.
+ */
+@property(nonatomic, strong, nullable) GTLRSQLAdmin_DemoteMasterConfiguration *replicaConfiguration;
+
+/**
+ *  Verify GTID consistency for demote operation. Default value: True. Second
+ *  Generation instances only. Setting this flag to false enables you to bypass
+ *  GTID consistency check between on-premises master and Cloud SQL instance
+ *  during the demotion operation but also exposes you to the risk of future
+ *  replication failures. Change the value only if you know the reason for the
+ *  GTID divergence and are confident that doing so will not cause any
+ *  replication issues.
+ *
+ *  Uses NSNumber of boolValue.
+ */
+@property(nonatomic, strong, nullable) NSNumber *verifyGtidConsistency;
+
+@end
+
+
+/**
+ *  Read-replica configuration specific to MySQL databases.
+ */
+@interface GTLRSQLAdmin_DemoteMasterMySqlReplicaConfiguration : GTLRObject
+
+/** PEM representation of the trusted CA's x509 certificate. */
+@property(nonatomic, copy, nullable) NSString *caCertificate;
+
+/** PEM representation of the slave's x509 certificate. */
+@property(nonatomic, copy, nullable) NSString *clientCertificate;
+
+/**
+ *  PEM representation of the slave's private key. The corresponsing public key
+ *  is encoded in the client's certificate. The format of the slave's private
+ *  key can be either PKCS #1 or PKCS #8.
+ */
+@property(nonatomic, copy, nullable) NSString *clientKey;
+
+/** This is always sql#demoteMasterMysqlReplicaConfiguration. */
+@property(nonatomic, copy, nullable) NSString *kind;
+
+/** The password for the replication connection. */
+@property(nonatomic, copy, nullable) NSString *password;
+
+/** The username for the replication connection. */
+@property(nonatomic, copy, nullable) NSString *username;
+
+@end
+
+
+/**
  *  Database instance export context.
  */
 @interface GTLRSQLAdmin_ExportContext : GTLRObject
@@ -536,8 +657,8 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  *  The path to the file in Google Cloud Storage where the export will be
  *  stored. The URI is in the form gs://bucketName/fileName. If the file already
- *  exists, the operation fails. If fileType is SQL and the filename ends with
- *  .gz, the contents are compressed.
+ *  exists, the requests succeeds, but the operation fails. If fileType is SQL
+ *  and the filename ends with .gz, the contents are compressed.
  */
 @property(nonatomic, copy, nullable) NSString *uri;
 
@@ -695,6 +816,12 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property(nonatomic, copy, nullable) NSString *fileType;
 
+/**
+ *  The PostgreSQL user for this import operation. Defaults to
+ *  cloudsqlsuperuser. Used only for PostgreSQL instances.
+ */
+@property(nonatomic, copy, nullable) NSString *importUser;
+
 /** This is always sql#importContext. */
 @property(nonatomic, copy, nullable) NSString *kind;
 
@@ -732,6 +859,17 @@ NS_ASSUME_NONNULL_BEGIN
 
 /** Contains details about the clone operation. */
 @property(nonatomic, strong, nullable) GTLRSQLAdmin_CloneContext *cloneContext;
+
+@end
+
+
+/**
+ *  Database demote master request.
+ */
+@interface GTLRSQLAdmin_InstancesDemoteMasterRequest : GTLRObject
+
+/** Contains details about the demoteMaster operation. */
+@property(nonatomic, strong, nullable) GTLRSQLAdmin_DemoteMasterContext *demoteMasterContext;
 
 @end
 
@@ -841,8 +979,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, strong, nullable) NSNumber *ipv4Enabled;
 
 /**
- *  Whether the mysqld should default to 'REQUIRE X509' for users connecting
- *  over IP.
+ *  Whether SSL connections over IP should be enforced or not.
  *
  *  Uses NSNumber of boolValue.
  */
@@ -872,20 +1009,6 @@ NS_ASSUME_NONNULL_BEGIN
  *  connections originating from the instance, if supported.
  */
 @property(nonatomic, copy, nullable) NSString *type;
-
-@end
-
-
-/**
- *  User defined labels for Cloud SQL instances.
- */
-@interface GTLRSQLAdmin_Labels : GTLRObject
-
-/** The key of the label. */
-@property(nonatomic, copy, nullable) NSString *key;
-
-/** The value of the label. */
-@property(nonatomic, copy, nullable) NSString *value;
 
 @end
 
@@ -941,6 +1064,10 @@ NS_ASSUME_NONNULL_BEGIN
 /** This is always sql#maintenanceWindow. */
 @property(nonatomic, copy, nullable) NSString *kind;
 
+/**
+ *  Maintenance timing setting: canary (Earlier) or stable (Later).
+ *  Learn more.
+ */
 @property(nonatomic, copy, nullable) NSString *updateTrack;
 
 @end
@@ -1090,7 +1217,6 @@ NS_ASSUME_NONNULL_BEGIN
 /** Name of the database instance related to this operation. */
 @property(nonatomic, copy, nullable) NSString *targetId;
 
-/** The URI of the instance related to the operation. */
 @property(nonatomic, copy, nullable) NSString *targetLink;
 
 /** The project ID of the target instance related to this operation. */
@@ -1224,16 +1350,15 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  *  The activation policy specifies when the instance is activated; it is
- *  applicable only when the instance state is RUNNABLE. The activation policy
- *  cannot be updated together with other settings for Second Generation
- *  instances. Valid values:
- *  ALWAYS: The instance is on; it is not deactivated by inactivity.
+ *  applicable only when the instance state is RUNNABLE. Valid values:
+ *  ALWAYS: The instance is on, and remains so even in the absence of connection
+ *  requests.
  *  NEVER: The instance is off; it is not activated, even if a connection
  *  request arrives.
- *  ON_DEMAND: The instance responds to incoming requests, and turns itself off
- *  when not in use. Instances with PER_USE pricing turn off after 15 minutes of
- *  inactivity. Instances with PER_PACKAGE pricing turn off after 12 hours of
- *  inactivity.
+ *  ON_DEMAND: First Generation instances only. The instance responds to
+ *  incoming requests, and turns itself off when not in use. Instances with
+ *  PER_USE pricing turn off after 15 minutes of inactivity. Instances with
+ *  PER_PACKAGE pricing turn off after 12 hours of inactivity.
  */
 @property(nonatomic, copy, nullable) NSString *activationPolicy;
 
@@ -1243,7 +1368,14 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property(nonatomic, strong, nullable) NSArray<NSString *> *authorizedGaeApplications;
 
-/** Reserved for future use. */
+/**
+ *  Availability type (PostgreSQL instances only). Potential values:
+ *  ZONAL: The instance serves data from only one zone. Outages in that zone
+ *  affect data accessibility.
+ *  REGIONAL: The instance can serve data from more than one zone in a region
+ *  (it is highly available).
+ *  For more information, see Overview of the High Availability Configuration.
+ */
 @property(nonatomic, copy, nullable) NSString *availabilityType;
 
 /** The daily backup configuration for the instance. */
@@ -1293,14 +1425,11 @@ NS_ASSUME_NONNULL_BEGIN
 /** This is always sql#settings. */
 @property(nonatomic, copy, nullable) NSString *kind;
 
-/** User defined labels. */
-@property(nonatomic, strong, nullable) NSArray<GTLRSQLAdmin_Labels *> *labels;
-
 /**
  *  The location preference settings. This allows the instance to be located as
- *  near as possible to either an App Engine app or GCE zone for better
- *  performance. App Engine co-location is only applicable to First Generation
- *  instances.
+ *  near as possible to either an App Engine app or Compute Engine zone for
+ *  better performance. App Engine co-location is only applicable to First
+ *  Generation instances.
  */
 @property(nonatomic, strong, nullable) GTLRSQLAdmin_LocationPreference *locationPreference;
 
@@ -1336,7 +1465,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  *  Configuration to increase storage size automatically. The default value is
- *  false. Applies only to Second Generation instances.
+ *  true. Applies only to Second Generation instances.
  *
  *  Uses NSNumber of boolValue.
  */
@@ -1357,6 +1486,25 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property(nonatomic, copy, nullable) NSString *tier;
 
+/**
+ *  User-provided labels, represented as a dictionary where each label is a
+ *  single key value pair.
+ */
+@property(nonatomic, strong, nullable) GTLRSQLAdmin_Settings_UserLabels *userLabels;
+
+@end
+
+
+/**
+ *  User-provided labels, represented as a dictionary where each label is a
+ *  single key value pair.
+ *
+ *  @note This class is documented as having more properties of NSString. Use @c
+ *        -additionalJSONKeys and @c -additionalPropertyForName: to get the list
+ *        of properties and then fetch them; or @c -additionalProperties to
+ *        fetch them all at once.
+ */
+@interface GTLRSQLAdmin_Settings_UserLabels : GTLRObject
 @end
 
 
@@ -1450,8 +1598,8 @@ NS_ASSUME_NONNULL_BEGIN
 @interface GTLRSQLAdmin_SslCertsInsertResponse : GTLRObject
 
 /**
- *  The new client certificate and private key. The new certificate will not
- *  work until the instance is restarted for First Generation instances.
+ *  The new client certificate and private key. For First Generation instances,
+ *  the new certificate does not take effect until the instance is restarted.
  */
 @property(nonatomic, strong, nullable) GTLRSQLAdmin_SslCertDetail *clientCert;
 
@@ -1640,3 +1788,5 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 NS_ASSUME_NONNULL_END
+
+#pragma clang diagnostic pop

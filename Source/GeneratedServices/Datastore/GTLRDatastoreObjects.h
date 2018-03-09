@@ -25,6 +25,13 @@
 @class GTLRDatastore_Entity_Properties;
 @class GTLRDatastore_EntityResult;
 @class GTLRDatastore_Filter;
+@class GTLRDatastore_GoogleDatastoreAdminV1beta1CommonMetadata;
+@class GTLRDatastore_GoogleDatastoreAdminV1beta1CommonMetadata_Labels;
+@class GTLRDatastore_GoogleDatastoreAdminV1beta1EntityFilter;
+@class GTLRDatastore_GoogleDatastoreAdminV1beta1Progress;
+@class GTLRDatastore_GoogleLongrunningOperation;
+@class GTLRDatastore_GoogleLongrunningOperation_Metadata;
+@class GTLRDatastore_GoogleLongrunningOperation_Response;
 @class GTLRDatastore_GqlQuery;
 @class GTLRDatastore_GqlQuery_NamedBindings;
 @class GTLRDatastore_GqlQueryParameter;
@@ -41,8 +48,18 @@
 @class GTLRDatastore_PropertyReference;
 @class GTLRDatastore_Query;
 @class GTLRDatastore_QueryResultBatch;
+@class GTLRDatastore_ReadOnly;
 @class GTLRDatastore_ReadOptions;
+@class GTLRDatastore_ReadWrite;
+@class GTLRDatastore_Status;
+@class GTLRDatastore_Status_Details_Item;
+@class GTLRDatastore_TransactionOptions;
 @class GTLRDatastore_Value;
+
+// Generated comments include content from the discovery document; avoid them
+// causing warnings since clang's checks are some what arbitrary.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdocumentation"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -88,6 +105,82 @@ GTLR_EXTERN NSString * const kGTLRDatastore_CompositeFilter_Op_And;
  *  Value: "OPERATOR_UNSPECIFIED"
  */
 GTLR_EXTERN NSString * const kGTLRDatastore_CompositeFilter_Op_OperatorUnspecified;
+
+// ----------------------------------------------------------------------------
+// GTLRDatastore_GoogleDatastoreAdminV1beta1CommonMetadata.operationType
+
+/**
+ *  ExportEntities.
+ *
+ *  Value: "EXPORT_ENTITIES"
+ */
+GTLR_EXTERN NSString * const kGTLRDatastore_GoogleDatastoreAdminV1beta1CommonMetadata_OperationType_ExportEntities;
+/**
+ *  ImportEntities.
+ *
+ *  Value: "IMPORT_ENTITIES"
+ */
+GTLR_EXTERN NSString * const kGTLRDatastore_GoogleDatastoreAdminV1beta1CommonMetadata_OperationType_ImportEntities;
+/**
+ *  Unspecified.
+ *
+ *  Value: "OPERATION_TYPE_UNSPECIFIED"
+ */
+GTLR_EXTERN NSString * const kGTLRDatastore_GoogleDatastoreAdminV1beta1CommonMetadata_OperationType_OperationTypeUnspecified;
+
+// ----------------------------------------------------------------------------
+// GTLRDatastore_GoogleDatastoreAdminV1beta1CommonMetadata.state
+
+/**
+ *  Request has finished being cancelled after user called
+ *  google.longrunning.Operations.CancelOperation.
+ *
+ *  Value: "CANCELLED"
+ */
+GTLR_EXTERN NSString * const kGTLRDatastore_GoogleDatastoreAdminV1beta1CommonMetadata_State_Cancelled;
+/**
+ *  Request is in the process of being cancelled after user called
+ *  google.longrunning.Operations.CancelOperation on the operation.
+ *
+ *  Value: "CANCELLING"
+ */
+GTLR_EXTERN NSString * const kGTLRDatastore_GoogleDatastoreAdminV1beta1CommonMetadata_State_Cancelling;
+/**
+ *  Request has finished being processed, but encountered an error.
+ *
+ *  Value: "FAILED"
+ */
+GTLR_EXTERN NSString * const kGTLRDatastore_GoogleDatastoreAdminV1beta1CommonMetadata_State_Failed;
+/**
+ *  Request has been processed and is in its finalization stage.
+ *
+ *  Value: "FINALIZING"
+ */
+GTLR_EXTERN NSString * const kGTLRDatastore_GoogleDatastoreAdminV1beta1CommonMetadata_State_Finalizing;
+/**
+ *  Request is being prepared for processing.
+ *
+ *  Value: "INITIALIZING"
+ */
+GTLR_EXTERN NSString * const kGTLRDatastore_GoogleDatastoreAdminV1beta1CommonMetadata_State_Initializing;
+/**
+ *  Request is actively being processed.
+ *
+ *  Value: "PROCESSING"
+ */
+GTLR_EXTERN NSString * const kGTLRDatastore_GoogleDatastoreAdminV1beta1CommonMetadata_State_Processing;
+/**
+ *  Unspecified.
+ *
+ *  Value: "STATE_UNSPECIFIED"
+ */
+GTLR_EXTERN NSString * const kGTLRDatastore_GoogleDatastoreAdminV1beta1CommonMetadata_State_StateUnspecified;
+/**
+ *  Request has completed successfully.
+ *
+ *  Value: "SUCCESSFUL"
+ */
+GTLR_EXTERN NSString * const kGTLRDatastore_GoogleDatastoreAdminV1beta1CommonMetadata_State_Successful;
 
 // ----------------------------------------------------------------------------
 // GTLRDatastore_PropertyFilter.op
@@ -208,7 +301,7 @@ GTLR_EXTERN NSString * const kGTLRDatastore_QueryResultBatch_MoreResults_MoreRes
  */
 GTLR_EXTERN NSString * const kGTLRDatastore_QueryResultBatch_MoreResults_MoreResultsTypeUnspecified;
 /**
- *  The query has been exhausted.
+ *  The query is finished, and there are no more results.
  *
  *  Value: "NO_MORE_RESULTS"
  */
@@ -299,6 +392,10 @@ GTLR_EXTERN NSString * const kGTLRDatastore_Value_NullValue_NullValue;
  *  The request for Datastore.BeginTransaction.
  */
 @interface GTLRDatastore_BeginTransactionRequest : GTLRObject
+
+/** Options for a new transaction. */
+@property(nonatomic, strong, nullable) GTLRDatastore_TransactionOptions *transactionOptions;
+
 @end
 
 
@@ -415,6 +512,19 @@ GTLR_EXTERN NSString * const kGTLRDatastore_Value_NullValue_NullValue;
 
 
 /**
+ *  A generic empty message that you can re-use to avoid defining duplicated
+ *  empty messages in your APIs. A typical example is to use it as the request
+ *  or the response type of an API method. For instance:
+ *  service Foo {
+ *  rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty);
+ *  }
+ *  The JSON representation for `Empty` is empty JSON object `{}`.
+ */
+@interface GTLRDatastore_Empty : GTLRObject
+@end
+
+
+/**
  *  A Datastore data object.
  *  An entity is limited to 1 megabyte when stored. That _roughly_
  *  corresponds to a limit of 1 megabyte for the serialized form of this
@@ -505,6 +615,318 @@ GTLR_EXTERN NSString * const kGTLRDatastore_Value_NullValue_NullValue;
 /** A filter on a property. */
 @property(nonatomic, strong, nullable) GTLRDatastore_PropertyFilter *propertyFilter;
 
+@end
+
+
+/**
+ *  Metadata common to all Datastore Admin operations.
+ */
+@interface GTLRDatastore_GoogleDatastoreAdminV1beta1CommonMetadata : GTLRObject
+
+/** The time the operation ended, either successfully or otherwise. */
+@property(nonatomic, strong, nullable) GTLRDateTime *endTime;
+
+/**
+ *  The client-assigned labels which were provided when the operation was
+ *  created. May also include additional labels.
+ */
+@property(nonatomic, strong, nullable) GTLRDatastore_GoogleDatastoreAdminV1beta1CommonMetadata_Labels *labels;
+
+/**
+ *  The type of the operation. Can be used as a filter in
+ *  ListOperationsRequest.
+ *
+ *  Likely values:
+ *    @arg @c kGTLRDatastore_GoogleDatastoreAdminV1beta1CommonMetadata_OperationType_ExportEntities
+ *        ExportEntities. (Value: "EXPORT_ENTITIES")
+ *    @arg @c kGTLRDatastore_GoogleDatastoreAdminV1beta1CommonMetadata_OperationType_ImportEntities
+ *        ImportEntities. (Value: "IMPORT_ENTITIES")
+ *    @arg @c kGTLRDatastore_GoogleDatastoreAdminV1beta1CommonMetadata_OperationType_OperationTypeUnspecified
+ *        Unspecified. (Value: "OPERATION_TYPE_UNSPECIFIED")
+ */
+@property(nonatomic, copy, nullable) NSString *operationType;
+
+/** The time that work began on the operation. */
+@property(nonatomic, strong, nullable) GTLRDateTime *startTime;
+
+/**
+ *  The current state of the Operation.
+ *
+ *  Likely values:
+ *    @arg @c kGTLRDatastore_GoogleDatastoreAdminV1beta1CommonMetadata_State_Cancelled
+ *        Request has finished being cancelled after user called
+ *        google.longrunning.Operations.CancelOperation. (Value: "CANCELLED")
+ *    @arg @c kGTLRDatastore_GoogleDatastoreAdminV1beta1CommonMetadata_State_Cancelling
+ *        Request is in the process of being cancelled after user called
+ *        google.longrunning.Operations.CancelOperation on the operation.
+ *        (Value: "CANCELLING")
+ *    @arg @c kGTLRDatastore_GoogleDatastoreAdminV1beta1CommonMetadata_State_Failed
+ *        Request has finished being processed, but encountered an error.
+ *        (Value: "FAILED")
+ *    @arg @c kGTLRDatastore_GoogleDatastoreAdminV1beta1CommonMetadata_State_Finalizing
+ *        Request has been processed and is in its finalization stage. (Value:
+ *        "FINALIZING")
+ *    @arg @c kGTLRDatastore_GoogleDatastoreAdminV1beta1CommonMetadata_State_Initializing
+ *        Request is being prepared for processing. (Value: "INITIALIZING")
+ *    @arg @c kGTLRDatastore_GoogleDatastoreAdminV1beta1CommonMetadata_State_Processing
+ *        Request is actively being processed. (Value: "PROCESSING")
+ *    @arg @c kGTLRDatastore_GoogleDatastoreAdminV1beta1CommonMetadata_State_StateUnspecified
+ *        Unspecified. (Value: "STATE_UNSPECIFIED")
+ *    @arg @c kGTLRDatastore_GoogleDatastoreAdminV1beta1CommonMetadata_State_Successful
+ *        Request has completed successfully. (Value: "SUCCESSFUL")
+ */
+@property(nonatomic, copy, nullable) NSString *state;
+
+@end
+
+
+/**
+ *  The client-assigned labels which were provided when the operation was
+ *  created. May also include additional labels.
+ *
+ *  @note This class is documented as having more properties of NSString. Use @c
+ *        -additionalJSONKeys and @c -additionalPropertyForName: to get the list
+ *        of properties and then fetch them; or @c -additionalProperties to
+ *        fetch them all at once.
+ */
+@interface GTLRDatastore_GoogleDatastoreAdminV1beta1CommonMetadata_Labels : GTLRObject
+@end
+
+
+/**
+ *  Identifies a subset of entities in a project. This is specified as
+ *  combinations of kinds and namespaces (either or both of which may be all, as
+ *  described in the following examples).
+ *  Example usage:
+ *  Entire project:
+ *  kinds=[], namespace_ids=[]
+ *  Kinds Foo and Bar in all namespaces:
+ *  kinds=['Foo', 'Bar'], namespace_ids=[]
+ *  Kinds Foo and Bar only in the default namespace:
+ *  kinds=['Foo', 'Bar'], namespace_ids=['']
+ *  Kinds Foo and Bar in both the default and Baz namespaces:
+ *  kinds=['Foo', 'Bar'], namespace_ids=['', 'Baz']
+ *  The entire Baz namespace:
+ *  kinds=[], namespace_ids=['Baz']
+ */
+@interface GTLRDatastore_GoogleDatastoreAdminV1beta1EntityFilter : GTLRObject
+
+/** If empty, then this represents all kinds. */
+@property(nonatomic, strong, nullable) NSArray<NSString *> *kinds;
+
+/**
+ *  An empty list represents all namespaces. This is the preferred
+ *  usage for projects that don't use namespaces.
+ *  An empty string element represents the default namespace. This should be
+ *  used if the project has data in non-default namespaces, but doesn't want to
+ *  include them.
+ *  Each namespace in this list must be unique.
+ */
+@property(nonatomic, strong, nullable) NSArray<NSString *> *namespaceIds;
+
+@end
+
+
+/**
+ *  Metadata for ExportEntities operations.
+ */
+@interface GTLRDatastore_GoogleDatastoreAdminV1beta1ExportEntitiesMetadata : GTLRObject
+
+/** Metadata common to all Datastore Admin operations. */
+@property(nonatomic, strong, nullable) GTLRDatastore_GoogleDatastoreAdminV1beta1CommonMetadata *common;
+
+/** Description of which entities are being exported. */
+@property(nonatomic, strong, nullable) GTLRDatastore_GoogleDatastoreAdminV1beta1EntityFilter *entityFilter;
+
+/**
+ *  Location for the export metadata and data files. This will be the same
+ *  value as the
+ *  google.datastore.admin.v1beta1.ExportEntitiesRequest.output_url_prefix
+ *  field. The final output location is provided in
+ *  google.datastore.admin.v1beta1.ExportEntitiesResponse.output_url.
+ */
+@property(nonatomic, copy, nullable) NSString *outputUrlPrefix;
+
+/** An estimate of the number of bytes processed. */
+@property(nonatomic, strong, nullable) GTLRDatastore_GoogleDatastoreAdminV1beta1Progress *progressBytes;
+
+/** An estimate of the number of entities processed. */
+@property(nonatomic, strong, nullable) GTLRDatastore_GoogleDatastoreAdminV1beta1Progress *progressEntities;
+
+@end
+
+
+/**
+ *  The response for
+ *  google.datastore.admin.v1beta1.DatastoreAdmin.ExportEntities.
+ */
+@interface GTLRDatastore_GoogleDatastoreAdminV1beta1ExportEntitiesResponse : GTLRObject
+
+/**
+ *  Location of the output metadata file. This can be used to begin an import
+ *  into Cloud Datastore (this project or another project). See
+ *  google.datastore.admin.v1beta1.ImportEntitiesRequest.input_url.
+ *  Only present if the operation completed successfully.
+ */
+@property(nonatomic, copy, nullable) NSString *outputUrl;
+
+@end
+
+
+/**
+ *  Metadata for ImportEntities operations.
+ */
+@interface GTLRDatastore_GoogleDatastoreAdminV1beta1ImportEntitiesMetadata : GTLRObject
+
+/** Metadata common to all Datastore Admin operations. */
+@property(nonatomic, strong, nullable) GTLRDatastore_GoogleDatastoreAdminV1beta1CommonMetadata *common;
+
+/** Description of which entities are being imported. */
+@property(nonatomic, strong, nullable) GTLRDatastore_GoogleDatastoreAdminV1beta1EntityFilter *entityFilter;
+
+/**
+ *  The location of the import metadata file. This will be the same value as
+ *  the google.datastore.admin.v1beta1.ExportEntitiesResponse.output_url
+ *  field.
+ */
+@property(nonatomic, copy, nullable) NSString *inputUrl;
+
+/** An estimate of the number of bytes processed. */
+@property(nonatomic, strong, nullable) GTLRDatastore_GoogleDatastoreAdminV1beta1Progress *progressBytes;
+
+/** An estimate of the number of entities processed. */
+@property(nonatomic, strong, nullable) GTLRDatastore_GoogleDatastoreAdminV1beta1Progress *progressEntities;
+
+@end
+
+
+/**
+ *  Measures the progress of a particular metric.
+ */
+@interface GTLRDatastore_GoogleDatastoreAdminV1beta1Progress : GTLRObject
+
+/**
+ *  The amount of work that has been completed. Note that this may be greater
+ *  than work_estimated.
+ *
+ *  Uses NSNumber of longLongValue.
+ */
+@property(nonatomic, strong, nullable) NSNumber *workCompleted;
+
+/**
+ *  An estimate of how much work needs to be performed. May be zero if the
+ *  work estimate is unavailable.
+ *
+ *  Uses NSNumber of longLongValue.
+ */
+@property(nonatomic, strong, nullable) NSNumber *workEstimated;
+
+@end
+
+
+/**
+ *  The response message for Operations.ListOperations.
+ *
+ *  @note This class supports NSFastEnumeration and indexed subscripting over
+ *        its "operations" property. If returned as the result of a query, it
+ *        should support automatic pagination (when @c shouldFetchNextPages is
+ *        enabled).
+ */
+@interface GTLRDatastore_GoogleLongrunningListOperationsResponse : GTLRCollectionObject
+
+/** The standard List next-page token. */
+@property(nonatomic, copy, nullable) NSString *nextPageToken;
+
+/**
+ *  A list of operations that matches the specified filter in the request.
+ *
+ *  @note This property is used to support NSFastEnumeration and indexed
+ *        subscripting on this class.
+ */
+@property(nonatomic, strong, nullable) NSArray<GTLRDatastore_GoogleLongrunningOperation *> *operations;
+
+@end
+
+
+/**
+ *  This resource represents a long-running operation that is the result of a
+ *  network API call.
+ */
+@interface GTLRDatastore_GoogleLongrunningOperation : GTLRObject
+
+/**
+ *  If the value is `false`, it means the operation is still in progress.
+ *  If `true`, the operation is completed, and either `error` or `response` is
+ *  available.
+ *
+ *  Uses NSNumber of boolValue.
+ */
+@property(nonatomic, strong, nullable) NSNumber *done;
+
+/** The error result of the operation in case of failure or cancellation. */
+@property(nonatomic, strong, nullable) GTLRDatastore_Status *error;
+
+/**
+ *  Service-specific metadata associated with the operation. It typically
+ *  contains progress information and common metadata such as create time.
+ *  Some services might not provide such metadata. Any method that returns a
+ *  long-running operation should document the metadata type, if any.
+ */
+@property(nonatomic, strong, nullable) GTLRDatastore_GoogleLongrunningOperation_Metadata *metadata;
+
+/**
+ *  The server-assigned name, which is only unique within the same service that
+ *  originally returns it. If you use the default HTTP mapping, the
+ *  `name` should have the format of `operations/some/unique/name`.
+ */
+@property(nonatomic, copy, nullable) NSString *name;
+
+/**
+ *  The normal response of the operation in case of success. If the original
+ *  method returns no data on success, such as `Delete`, the response is
+ *  `google.protobuf.Empty`. If the original method is standard
+ *  `Get`/`Create`/`Update`, the response should be the resource. For other
+ *  methods, the response should have the type `XxxResponse`, where `Xxx`
+ *  is the original method name. For example, if the original method name
+ *  is `TakeSnapshot()`, the inferred response type is
+ *  `TakeSnapshotResponse`.
+ */
+@property(nonatomic, strong, nullable) GTLRDatastore_GoogleLongrunningOperation_Response *response;
+
+@end
+
+
+/**
+ *  Service-specific metadata associated with the operation. It typically
+ *  contains progress information and common metadata such as create time.
+ *  Some services might not provide such metadata. Any method that returns a
+ *  long-running operation should document the metadata type, if any.
+ *
+ *  @note This class is documented as having more properties of any valid JSON
+ *        type. Use @c -additionalJSONKeys and @c -additionalPropertyForName: to
+ *        get the list of properties and then fetch them; or @c
+ *        -additionalProperties to fetch them all at once.
+ */
+@interface GTLRDatastore_GoogleLongrunningOperation_Metadata : GTLRObject
+@end
+
+
+/**
+ *  The normal response of the operation in case of success. If the original
+ *  method returns no data on success, such as `Delete`, the response is
+ *  `google.protobuf.Empty`. If the original method is standard
+ *  `Get`/`Create`/`Update`, the response should be the resource. For other
+ *  methods, the response should have the type `XxxResponse`, where `Xxx`
+ *  is the original method name. For example, if the original method name
+ *  is `TakeSnapshot()`, the inferred response type is
+ *  `TakeSnapshotResponse`.
+ *
+ *  @note This class is documented as having more properties of any valid JSON
+ *        type. Use @c -additionalJSONKeys and @c -additionalPropertyForName: to
+ *        get the list of properties and then fetch them; or @c
+ *        -additionalProperties to fetch them all at once.
+ */
+@interface GTLRDatastore_GoogleLongrunningOperation_Response : GTLRObject
 @end
 
 
@@ -638,38 +1060,6 @@ GTLR_EXTERN NSString * const kGTLRDatastore_Value_NullValue_NullValue;
  *  specified otherwise, this must conform to the
  *  <a href="http://www.unoosa.org/pdf/icg/2012/template/WGS_84.pdf">WGS84
  *  standard</a>. Values must be within normalized ranges.
- *  Example of normalization code in Python:
- *  def NormalizeLongitude(longitude):
- *  """Wraps decimal degrees longitude to [-180.0, 180.0]."""
- *  q, r = divmod(longitude, 360.0)
- *  if r > 180.0 or (r == 180.0 and q <= -1.0):
- *  return r - 360.0
- *  return r
- *  def NormalizeLatLng(latitude, longitude):
- *  """Wraps decimal degrees latitude and longitude to
- *  [-90.0, 90.0] and [-180.0, 180.0], respectively."""
- *  r = latitude % 360.0
- *  if r <= 90.0:
- *  return r, NormalizeLongitude(longitude)
- *  elif r >= 270.0:
- *  return r - 360, NormalizeLongitude(longitude)
- *  else:
- *  return 180 - r, NormalizeLongitude(longitude + 180.0)
- *  assert 180.0 == NormalizeLongitude(180.0)
- *  assert -180.0 == NormalizeLongitude(-180.0)
- *  assert -179.0 == NormalizeLongitude(181.0)
- *  assert (0.0, 0.0) == NormalizeLatLng(360.0, 0.0)
- *  assert (0.0, 0.0) == NormalizeLatLng(-360.0, 0.0)
- *  assert (85.0, 180.0) == NormalizeLatLng(95.0, 0.0)
- *  assert (-85.0, -170.0) == NormalizeLatLng(-95.0, 10.0)
- *  assert (90.0, 10.0) == NormalizeLatLng(90.0, 10.0)
- *  assert (-90.0, -10.0) == NormalizeLatLng(-90.0, -10.0)
- *  assert (0.0, -170.0) == NormalizeLatLng(-180.0, 10.0)
- *  assert (0.0, -170.0) == NormalizeLatLng(180.0, 10.0)
- *  assert (-90.0, 10.0) == NormalizeLatLng(270.0, 10.0)
- *  assert (90.0, 10.0) == NormalizeLatLng(-270.0, 10.0)
- *  The code in logs/storage/validator/logs_validator_traits.cc treats this type
- *  as if it were annotated as ST_LOCATION.
  */
 @interface GTLRDatastore_LatLng : GTLRObject
 
@@ -1077,7 +1467,8 @@ GTLR_EXTERN NSString * const kGTLRDatastore_Value_NullValue_NullValue;
  *        Unspecified. This value is never used. (Value:
  *        "MORE_RESULTS_TYPE_UNSPECIFIED")
  *    @arg @c kGTLRDatastore_QueryResultBatch_MoreResults_NoMoreResults The
- *        query has been exhausted. (Value: "NO_MORE_RESULTS")
+ *        query is finished, and there are no more results. (Value:
+ *        "NO_MORE_RESULTS")
  *    @arg @c kGTLRDatastore_QueryResultBatch_MoreResults_NotFinished There may
  *        be additional batches to fetch from this query. (Value:
  *        "NOT_FINISHED")
@@ -1118,6 +1509,13 @@ GTLR_EXTERN NSString * const kGTLRDatastore_Value_NullValue_NullValue;
 
 
 /**
+ *  Options specific to read-only transactions.
+ */
+@interface GTLRDatastore_ReadOnly : GTLRObject
+@end
+
+
+/**
  *  The options shared by read requests.
  */
 @interface GTLRDatastore_ReadOptions : GTLRObject
@@ -1147,6 +1545,46 @@ GTLR_EXTERN NSString * const kGTLRDatastore_Value_NullValue_NullValue;
  */
 @property(nonatomic, copy, nullable) NSString *transaction;
 
+@end
+
+
+/**
+ *  Options specific to read / write transactions.
+ */
+@interface GTLRDatastore_ReadWrite : GTLRObject
+
+/**
+ *  The transaction identifier of the transaction being retried.
+ *
+ *  Contains encoded binary data; GTLRBase64 can encode/decode (probably
+ *  web-safe format).
+ */
+@property(nonatomic, copy, nullable) NSString *previousTransaction;
+
+@end
+
+
+/**
+ *  The request for Datastore.ReserveIds.
+ */
+@interface GTLRDatastore_ReserveIdsRequest : GTLRObject
+
+/** If not empty, the ID of the database against which to make the request. */
+@property(nonatomic, copy, nullable) NSString *databaseId;
+
+/**
+ *  A list of keys with complete key paths whose numeric IDs should not be
+ *  auto-allocated.
+ */
+@property(nonatomic, strong, nullable) NSArray<GTLRDatastore_Key *> *keys;
+
+@end
+
+
+/**
+ *  The response for Datastore.ReserveIds.
+ */
+@interface GTLRDatastore_ReserveIdsResponse : GTLRObject
 @end
 
 
@@ -1210,6 +1648,105 @@ GTLR_EXTERN NSString * const kGTLRDatastore_Value_NullValue_NullValue;
 
 /** The parsed form of the `GqlQuery` from the request, if it was set. */
 @property(nonatomic, strong, nullable) GTLRDatastore_Query *query;
+
+@end
+
+
+/**
+ *  The `Status` type defines a logical error model that is suitable for
+ *  different
+ *  programming environments, including REST APIs and RPC APIs. It is used by
+ *  [gRPC](https://github.com/grpc). The error model is designed to be:
+ *  - Simple to use and understand for most users
+ *  - Flexible enough to meet unexpected needs
+ *  # Overview
+ *  The `Status` message contains three pieces of data: error code, error
+ *  message,
+ *  and error details. The error code should be an enum value of
+ *  google.rpc.Code, but it may accept additional error codes if needed. The
+ *  error message should be a developer-facing English message that helps
+ *  developers *understand* and *resolve* the error. If a localized user-facing
+ *  error message is needed, put the localized message in the error details or
+ *  localize it in the client. The optional error details may contain arbitrary
+ *  information about the error. There is a predefined set of error detail types
+ *  in the package `google.rpc` that can be used for common error conditions.
+ *  # Language mapping
+ *  The `Status` message is the logical representation of the error model, but
+ *  it
+ *  is not necessarily the actual wire format. When the `Status` message is
+ *  exposed in different client libraries and different wire protocols, it can
+ *  be
+ *  mapped differently. For example, it will likely be mapped to some exceptions
+ *  in Java, but more likely mapped to some error codes in C.
+ *  # Other uses
+ *  The error model and the `Status` message can be used in a variety of
+ *  environments, either with or without APIs, to provide a
+ *  consistent developer experience across different environments.
+ *  Example uses of this error model include:
+ *  - Partial errors. If a service needs to return partial errors to the client,
+ *  it may embed the `Status` in the normal response to indicate the partial
+ *  errors.
+ *  - Workflow errors. A typical workflow has multiple steps. Each step may
+ *  have a `Status` message for error reporting.
+ *  - Batch operations. If a client uses batch request and batch response, the
+ *  `Status` message should be used directly inside batch response, one for
+ *  each error sub-response.
+ *  - Asynchronous operations. If an API call embeds asynchronous operation
+ *  results in its response, the status of those operations should be
+ *  represented directly using the `Status` message.
+ *  - Logging. If some API errors are stored in logs, the message `Status` could
+ *  be used directly after any stripping needed for security/privacy reasons.
+ */
+@interface GTLRDatastore_Status : GTLRObject
+
+/**
+ *  The status code, which should be an enum value of google.rpc.Code.
+ *
+ *  Uses NSNumber of intValue.
+ */
+@property(nonatomic, strong, nullable) NSNumber *code;
+
+/**
+ *  A list of messages that carry the error details. There is a common set of
+ *  message types for APIs to use.
+ */
+@property(nonatomic, strong, nullable) NSArray<GTLRDatastore_Status_Details_Item *> *details;
+
+/**
+ *  A developer-facing error message, which should be in English. Any
+ *  user-facing error message should be localized and sent in the
+ *  google.rpc.Status.details field, or localized by the client.
+ */
+@property(nonatomic, copy, nullable) NSString *message;
+
+@end
+
+
+/**
+ *  GTLRDatastore_Status_Details_Item
+ *
+ *  @note This class is documented as having more properties of any valid JSON
+ *        type. Use @c -additionalJSONKeys and @c -additionalPropertyForName: to
+ *        get the list of properties and then fetch them; or @c
+ *        -additionalProperties to fetch them all at once.
+ */
+@interface GTLRDatastore_Status_Details_Item : GTLRObject
+@end
+
+
+/**
+ *  Options for beginning a new transaction.
+ *  Transactions can be created explicitly with calls to
+ *  Datastore.BeginTransaction or implicitly by setting
+ *  ReadOptions.new_transaction in read requests.
+ */
+@interface GTLRDatastore_TransactionOptions : GTLRObject
+
+/** The transaction should only allow reads. */
+@property(nonatomic, strong, nullable) GTLRDatastore_ReadOnly *readOnly;
+
+/** The transaction should allow both reads and writes. */
+@property(nonatomic, strong, nullable) GTLRDatastore_ReadWrite *readWrite;
 
 @end
 
@@ -1316,3 +1853,5 @@ GTLR_EXTERN NSString * const kGTLRDatastore_Value_NullValue_NullValue;
 @end
 
 NS_ASSUME_NONNULL_END
+
+#pragma clang diagnostic pop

@@ -28,7 +28,7 @@ NSString * const kGTLRAuthScopeIdentityToolkitFirebase      = @"https://www.goog
     // From discovery.
     self.rootURLString = @"https://www.googleapis.com/";
     self.servicePath = @"identitytoolkit/v3/relyingparty/";
-    self.batchPath = @"batch";
+    self.batchPath = @"batch/identitytoolkit/v3";
     self.prettyPrintQueryParameterNames = @[ @"prettyPrint" ];
   }
   return self;
@@ -39,6 +39,7 @@ NSString * const kGTLRAuthScopeIdentityToolkitFirebase      = @"https://www.goog
     @"identitytoolkit#CreateAuthUriResponse" : [GTLRIdentityToolkit_CreateAuthUriResponse class],
     @"identitytoolkit#DeleteAccountResponse" : [GTLRIdentityToolkit_DeleteAccountResponse class],
     @"identitytoolkit#DownloadAccountResponse" : [GTLRIdentityToolkit_DownloadAccountResponse class],
+    @"identitytoolkit#EmailLinkSigninResponse" : [GTLRIdentityToolkit_EmailLinkSigninResponse class],
     @"identitytoolkit#GetAccountInfoResponse" : [GTLRIdentityToolkit_GetAccountInfoResponse class],
     @"identitytoolkit#GetOobConfirmationCodeResponse" : [GTLRIdentityToolkit_GetOobConfirmationCodeResponse class],
     @"identitytoolkit#GetRecaptchaParamResponse" : [GTLRIdentityToolkit_GetRecaptchaParamResponse class],

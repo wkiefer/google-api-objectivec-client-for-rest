@@ -46,6 +46,11 @@
 @class GTLRDrive_TeamDrive_Capabilities;
 @class GTLRDrive_User;
 
+// Generated comments include content from the discovery document; avoid them
+// causing warnings since clang's checks are some what arbitrary.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdocumentation"
+
 NS_ASSUME_NONNULL_BEGIN
 
 /**
@@ -59,6 +64,13 @@ NS_ASSUME_NONNULL_BEGIN
  *  Uses NSNumber of boolValue.
  */
 @property(nonatomic, strong, nullable) NSNumber *appInstalled;
+
+/**
+ *  Whether the user can create Team Drives.
+ *
+ *  Uses NSNumber of boolValue.
+ */
+@property(nonatomic, strong, nullable) NSNumber *canCreateTeamDrives;
 
 /**
  *  A map of source MIME type to possible targets for all supported exports.
@@ -559,7 +571,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, strong, nullable) NSNumber *hasAugmentedPermissions;
 
 /**
- *  Whether this file has a thumbnail.
+ *  Whether this file has a thumbnail. This does not indicate whether the
+ *  requesting app has access to the thumbnail. To check access, look for the
+ *  presence of the thumbnailLink field.
  *
  *  Uses NSNumber of boolValue.
  */
@@ -664,10 +678,15 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  *  The IDs of the parent folders which contain the file.
  *  If not specified as part of a create request, the file will be placed
- *  directly in the My Drive folder. Update requests must use the addParents and
- *  removeParents parameters to modify the values.
+ *  directly in the user's My Drive folder. If not specified as part of a copy
+ *  request, the file will inherit any discoverable parents of the source file.
+ *  Update requests must use the addParents and removeParents parameters to
+ *  modify the parents list.
  */
 @property(nonatomic, strong, nullable) NSArray<NSString *> *parents;
+
+/** List of permission IDs for users with access to this file. */
+@property(nonatomic, strong, nullable) NSArray<NSString *> *permissionIds;
 
 /**
  *  The full list of permissions for the file. This is only available if the
@@ -846,6 +865,14 @@ NS_ASSUME_NONNULL_BEGIN
  *  Uses NSNumber of boolValue.
  */
 @property(nonatomic, strong, nullable) NSNumber *canAddChildren;
+
+/**
+ *  Whether the current user can change whether viewers can copy the contents of
+ *  this file.
+ *
+ *  Uses NSNumber of boolValue.
+ */
+@property(nonatomic, strong, nullable) NSNumber *canChangeViewersCanCopyContent;
 
 /**
  *  Whether the current user can comment on this file.
@@ -1278,8 +1305,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, strong, nullable) NSNumber *allowFileDiscovery;
 
 /**
- *  Whether the account of the permission has been deleted. This field only
- *  pertains to user and group permissions.
+ *  Whether the account associated with this permission has been deleted. This
+ *  field only pertains to user and group permissions.
  *
  *  Uses NSNumber of boolValue.
  */
@@ -1383,7 +1410,6 @@ NS_ASSUME_NONNULL_BEGIN
  *  The Team Drive permission type for this user. While new values may be added
  *  in future, the following are currently possible:
  *  - file
- *  -
  *  - member
  */
 @property(nonatomic, copy, nullable) NSString *teamDrivePermissionType;
@@ -1661,9 +1687,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  *  An image file and cropping parameters from which a background image for this
- *  Team Drive is set. This is a write only field that can only be set on a
- *  drive.teamdrives.update request that does not set themeId. When specified,
- *  all fields of the backgroundImageFile must be set.
+ *  Team Drive is set. This is a write only field; it can only be set on
+ *  drive.teamdrives.update requests that don't set themeId. When specified, all
+ *  fields of the backgroundImageFile must be set.
  */
 @property(nonatomic, strong, nullable) GTLRDrive_TeamDrive_BackgroundImageFile *backgroundImageFile;
 
@@ -1678,6 +1704,9 @@ NS_ASSUME_NONNULL_BEGIN
  *  drive.teamdrives.update request that does not set themeId.
  */
 @property(nonatomic, copy, nullable) NSString *colorRgb;
+
+/** The time at which the Team Drive was created (RFC 3339 date-time). */
+@property(nonatomic, strong, nullable) GTLRDateTime *createdTime;
 
 /**
  *  The ID of this Team Drive which is also the ID of the top level folder for
@@ -1701,8 +1730,8 @@ NS_ASSUME_NONNULL_BEGIN
  *  The set of possible teamDriveThemes can be retrieved from a drive.about.get
  *  response. When not specified on a drive.teamdrives.create request, a random
  *  theme is chosen from which the background image and color are set. This is a
- *  write only field that can only be set on a request that does not set
- *  colorRgb or backgroundImageFile.
+ *  write-only field; it can only be set on requests that don't set colorRgb or
+ *  backgroundImageFile.
  */
 @property(nonatomic, copy, nullable) NSString *themeId;
 
@@ -1711,9 +1740,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  *  An image file and cropping parameters from which a background image for this
- *  Team Drive is set. This is a write only field that can only be set on a
- *  drive.teamdrives.update request that does not set themeId. When specified,
- *  all fields of the backgroundImageFile must be set.
+ *  Team Drive is set. This is a write only field; it can only be set on
+ *  drive.teamdrives.update requests that don't set themeId. When specified, all
+ *  fields of the backgroundImageFile must be set.
  */
 @interface GTLRDrive_TeamDrive_BackgroundImageFile : GTLRObject
 
@@ -1725,10 +1754,11 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, copy, nullable) NSString *identifier;
 
 /**
- *  The width of the cropped image in the closed range of 0 to 1, which is the
- *  width of the cropped image divided by the width of the entire image. The
- *  height is computed by applying a width to height aspect ratio of 80 to 9.
- *  The resulting image must be at least 1280 pixels wide and 144 pixels high.
+ *  The width of the cropped image in the closed range of 0 to 1. This value
+ *  represents the width of the cropped image divided by the width of the entire
+ *  image. The height is computed by applying a width to height aspect ratio of
+ *  80 to 9. The resulting image must be at least 1280 pixels wide and 144
+ *  pixels high.
  *
  *  Uses NSNumber of floatValue.
  */
@@ -1736,9 +1766,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  *  The X coordinate of the upper left corner of the cropping area in the
- *  background image. This is a value in the closed range of 0 to 1 which is the
- *  horizontal distance from the left side of the entire image to the left side
- *  of the cropping area divided by the width of the entire image.
+ *  background image. This is a value in the closed range of 0 to 1. This value
+ *  represents the horizontal distance from the left side of the entire image to
+ *  the left side of the cropping area divided by the width of the entire image.
  *
  *  Uses NSNumber of floatValue.
  */
@@ -1746,9 +1776,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  *  The Y coordinate of the upper left corner of the cropping area in the
- *  background image. This is a value in the closed range of 0 to 1 which is the
- *  vertical distance from the top side of the entire image to the top side of
- *  the cropping area divided by the height of the entire image.
+ *  background image. This is a value in the closed range of 0 to 1. This value
+ *  represents the vertical distance from the top side of the entire image to
+ *  the top side of the cropping area divided by the height of the entire image.
  *
  *  Uses NSNumber of floatValue.
  */
@@ -1941,3 +1971,5 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 NS_ASSUME_NONNULL_END
+
+#pragma clang diagnostic pop

@@ -4,11 +4,8 @@
 // API:
 //   Google Safe Browsing API (safebrowsing/v4)
 // Description:
-//   The Safe Browsing API is an experimental API that allows client
-//   applications to check URLs against Google's constantly-updated blacklists
-//   of suspected phishing and malware pages. Your client application can use
-//   the API to download an encrypted table for local, client-side lookups of
-//   URLs.
+//   Enables client applications to check web resources (most commonly URLs)
+//   against Google-generated lists of unsafe web resources.
 // Documentation:
 //   https://developers.google.com/safe-browsing/
 
@@ -43,9 +40,18 @@ NSString * const kGTLRSafeBrowsing_ListUpdateRequest_ThreatEntryType_ThreatEntry
 NSString * const kGTLRSafeBrowsing_ListUpdateRequest_ThreatEntryType_Url = @"URL";
 
 // GTLRSafeBrowsing_ListUpdateRequest.threatType
+NSString * const kGTLRSafeBrowsing_ListUpdateRequest_ThreatType_ApiAbuse = @"API_ABUSE";
+NSString * const kGTLRSafeBrowsing_ListUpdateRequest_ThreatType_ApkMalwareOffline = @"APK_MALWARE_OFFLINE";
+NSString * const kGTLRSafeBrowsing_ListUpdateRequest_ThreatType_ClientIncident = @"CLIENT_INCIDENT";
+NSString * const kGTLRSafeBrowsing_ListUpdateRequest_ThreatType_ClientIncidentWhitelist = @"CLIENT_INCIDENT_WHITELIST";
+NSString * const kGTLRSafeBrowsing_ListUpdateRequest_ThreatType_CsdDownloadWhitelist = @"CSD_DOWNLOAD_WHITELIST";
+NSString * const kGTLRSafeBrowsing_ListUpdateRequest_ThreatType_CsdWhitelist = @"CSD_WHITELIST";
+NSString * const kGTLRSafeBrowsing_ListUpdateRequest_ThreatType_MaliciousBinary = @"MALICIOUS_BINARY";
 NSString * const kGTLRSafeBrowsing_ListUpdateRequest_ThreatType_Malware = @"MALWARE";
 NSString * const kGTLRSafeBrowsing_ListUpdateRequest_ThreatType_PotentiallyHarmfulApplication = @"POTENTIALLY_HARMFUL_APPLICATION";
 NSString * const kGTLRSafeBrowsing_ListUpdateRequest_ThreatType_SocialEngineering = @"SOCIAL_ENGINEERING";
+NSString * const kGTLRSafeBrowsing_ListUpdateRequest_ThreatType_SocialEngineeringInternal = @"SOCIAL_ENGINEERING_INTERNAL";
+NSString * const kGTLRSafeBrowsing_ListUpdateRequest_ThreatType_SubresourceFilter = @"SUBRESOURCE_FILTER";
 NSString * const kGTLRSafeBrowsing_ListUpdateRequest_ThreatType_ThreatTypeUnspecified = @"THREAT_TYPE_UNSPECIFIED";
 NSString * const kGTLRSafeBrowsing_ListUpdateRequest_ThreatType_UnwantedSoftware = @"UNWANTED_SOFTWARE";
 
@@ -75,9 +81,18 @@ NSString * const kGTLRSafeBrowsing_ListUpdateResponse_ThreatEntryType_ThreatEntr
 NSString * const kGTLRSafeBrowsing_ListUpdateResponse_ThreatEntryType_Url = @"URL";
 
 // GTLRSafeBrowsing_ListUpdateResponse.threatType
+NSString * const kGTLRSafeBrowsing_ListUpdateResponse_ThreatType_ApiAbuse = @"API_ABUSE";
+NSString * const kGTLRSafeBrowsing_ListUpdateResponse_ThreatType_ApkMalwareOffline = @"APK_MALWARE_OFFLINE";
+NSString * const kGTLRSafeBrowsing_ListUpdateResponse_ThreatType_ClientIncident = @"CLIENT_INCIDENT";
+NSString * const kGTLRSafeBrowsing_ListUpdateResponse_ThreatType_ClientIncidentWhitelist = @"CLIENT_INCIDENT_WHITELIST";
+NSString * const kGTLRSafeBrowsing_ListUpdateResponse_ThreatType_CsdDownloadWhitelist = @"CSD_DOWNLOAD_WHITELIST";
+NSString * const kGTLRSafeBrowsing_ListUpdateResponse_ThreatType_CsdWhitelist = @"CSD_WHITELIST";
+NSString * const kGTLRSafeBrowsing_ListUpdateResponse_ThreatType_MaliciousBinary = @"MALICIOUS_BINARY";
 NSString * const kGTLRSafeBrowsing_ListUpdateResponse_ThreatType_Malware = @"MALWARE";
 NSString * const kGTLRSafeBrowsing_ListUpdateResponse_ThreatType_PotentiallyHarmfulApplication = @"POTENTIALLY_HARMFUL_APPLICATION";
 NSString * const kGTLRSafeBrowsing_ListUpdateResponse_ThreatType_SocialEngineering = @"SOCIAL_ENGINEERING";
+NSString * const kGTLRSafeBrowsing_ListUpdateResponse_ThreatType_SocialEngineeringInternal = @"SOCIAL_ENGINEERING_INTERNAL";
+NSString * const kGTLRSafeBrowsing_ListUpdateResponse_ThreatType_SubresourceFilter = @"SUBRESOURCE_FILTER";
 NSString * const kGTLRSafeBrowsing_ListUpdateResponse_ThreatType_ThreatTypeUnspecified = @"THREAT_TYPE_UNSPECIFIED";
 NSString * const kGTLRSafeBrowsing_ListUpdateResponse_ThreatType_UnwantedSoftware = @"UNWANTED_SOFTWARE";
 
@@ -85,6 +100,33 @@ NSString * const kGTLRSafeBrowsing_ListUpdateResponse_ThreatType_UnwantedSoftwar
 NSString * const kGTLRSafeBrowsing_ThreatEntrySet_CompressionType_CompressionTypeUnspecified = @"COMPRESSION_TYPE_UNSPECIFIED";
 NSString * const kGTLRSafeBrowsing_ThreatEntrySet_CompressionType_Raw = @"RAW";
 NSString * const kGTLRSafeBrowsing_ThreatEntrySet_CompressionType_Rice = @"RICE";
+
+// GTLRSafeBrowsing_ThreatHit.platformType
+NSString * const kGTLRSafeBrowsing_ThreatHit_PlatformType_AllPlatforms = @"ALL_PLATFORMS";
+NSString * const kGTLRSafeBrowsing_ThreatHit_PlatformType_Android = @"ANDROID";
+NSString * const kGTLRSafeBrowsing_ThreatHit_PlatformType_AnyPlatform = @"ANY_PLATFORM";
+NSString * const kGTLRSafeBrowsing_ThreatHit_PlatformType_Chrome = @"CHROME";
+NSString * const kGTLRSafeBrowsing_ThreatHit_PlatformType_Ios  = @"IOS";
+NSString * const kGTLRSafeBrowsing_ThreatHit_PlatformType_Linux = @"LINUX";
+NSString * const kGTLRSafeBrowsing_ThreatHit_PlatformType_Osx  = @"OSX";
+NSString * const kGTLRSafeBrowsing_ThreatHit_PlatformType_PlatformTypeUnspecified = @"PLATFORM_TYPE_UNSPECIFIED";
+NSString * const kGTLRSafeBrowsing_ThreatHit_PlatformType_Windows = @"WINDOWS";
+
+// GTLRSafeBrowsing_ThreatHit.threatType
+NSString * const kGTLRSafeBrowsing_ThreatHit_ThreatType_ApiAbuse = @"API_ABUSE";
+NSString * const kGTLRSafeBrowsing_ThreatHit_ThreatType_ApkMalwareOffline = @"APK_MALWARE_OFFLINE";
+NSString * const kGTLRSafeBrowsing_ThreatHit_ThreatType_ClientIncident = @"CLIENT_INCIDENT";
+NSString * const kGTLRSafeBrowsing_ThreatHit_ThreatType_ClientIncidentWhitelist = @"CLIENT_INCIDENT_WHITELIST";
+NSString * const kGTLRSafeBrowsing_ThreatHit_ThreatType_CsdDownloadWhitelist = @"CSD_DOWNLOAD_WHITELIST";
+NSString * const kGTLRSafeBrowsing_ThreatHit_ThreatType_CsdWhitelist = @"CSD_WHITELIST";
+NSString * const kGTLRSafeBrowsing_ThreatHit_ThreatType_MaliciousBinary = @"MALICIOUS_BINARY";
+NSString * const kGTLRSafeBrowsing_ThreatHit_ThreatType_Malware = @"MALWARE";
+NSString * const kGTLRSafeBrowsing_ThreatHit_ThreatType_PotentiallyHarmfulApplication = @"POTENTIALLY_HARMFUL_APPLICATION";
+NSString * const kGTLRSafeBrowsing_ThreatHit_ThreatType_SocialEngineering = @"SOCIAL_ENGINEERING";
+NSString * const kGTLRSafeBrowsing_ThreatHit_ThreatType_SocialEngineeringInternal = @"SOCIAL_ENGINEERING_INTERNAL";
+NSString * const kGTLRSafeBrowsing_ThreatHit_ThreatType_SubresourceFilter = @"SUBRESOURCE_FILTER";
+NSString * const kGTLRSafeBrowsing_ThreatHit_ThreatType_ThreatTypeUnspecified = @"THREAT_TYPE_UNSPECIFIED";
+NSString * const kGTLRSafeBrowsing_ThreatHit_ThreatType_UnwantedSoftware = @"UNWANTED_SOFTWARE";
 
 // GTLRSafeBrowsing_ThreatInfo.platformTypes
 NSString * const kGTLRSafeBrowsing_ThreatInfo_PlatformTypes_AllPlatforms = @"ALL_PLATFORMS";
@@ -107,9 +149,18 @@ NSString * const kGTLRSafeBrowsing_ThreatInfo_ThreatEntryTypes_ThreatEntryTypeUn
 NSString * const kGTLRSafeBrowsing_ThreatInfo_ThreatEntryTypes_Url = @"URL";
 
 // GTLRSafeBrowsing_ThreatInfo.threatTypes
+NSString * const kGTLRSafeBrowsing_ThreatInfo_ThreatTypes_ApiAbuse = @"API_ABUSE";
+NSString * const kGTLRSafeBrowsing_ThreatInfo_ThreatTypes_ApkMalwareOffline = @"APK_MALWARE_OFFLINE";
+NSString * const kGTLRSafeBrowsing_ThreatInfo_ThreatTypes_ClientIncident = @"CLIENT_INCIDENT";
+NSString * const kGTLRSafeBrowsing_ThreatInfo_ThreatTypes_ClientIncidentWhitelist = @"CLIENT_INCIDENT_WHITELIST";
+NSString * const kGTLRSafeBrowsing_ThreatInfo_ThreatTypes_CsdDownloadWhitelist = @"CSD_DOWNLOAD_WHITELIST";
+NSString * const kGTLRSafeBrowsing_ThreatInfo_ThreatTypes_CsdWhitelist = @"CSD_WHITELIST";
+NSString * const kGTLRSafeBrowsing_ThreatInfo_ThreatTypes_MaliciousBinary = @"MALICIOUS_BINARY";
 NSString * const kGTLRSafeBrowsing_ThreatInfo_ThreatTypes_Malware = @"MALWARE";
 NSString * const kGTLRSafeBrowsing_ThreatInfo_ThreatTypes_PotentiallyHarmfulApplication = @"POTENTIALLY_HARMFUL_APPLICATION";
 NSString * const kGTLRSafeBrowsing_ThreatInfo_ThreatTypes_SocialEngineering = @"SOCIAL_ENGINEERING";
+NSString * const kGTLRSafeBrowsing_ThreatInfo_ThreatTypes_SocialEngineeringInternal = @"SOCIAL_ENGINEERING_INTERNAL";
+NSString * const kGTLRSafeBrowsing_ThreatInfo_ThreatTypes_SubresourceFilter = @"SUBRESOURCE_FILTER";
 NSString * const kGTLRSafeBrowsing_ThreatInfo_ThreatTypes_ThreatTypeUnspecified = @"THREAT_TYPE_UNSPECIFIED";
 NSString * const kGTLRSafeBrowsing_ThreatInfo_ThreatTypes_UnwantedSoftware = @"UNWANTED_SOFTWARE";
 
@@ -134,9 +185,18 @@ NSString * const kGTLRSafeBrowsing_ThreatListDescriptor_ThreatEntryType_ThreatEn
 NSString * const kGTLRSafeBrowsing_ThreatListDescriptor_ThreatEntryType_Url = @"URL";
 
 // GTLRSafeBrowsing_ThreatListDescriptor.threatType
+NSString * const kGTLRSafeBrowsing_ThreatListDescriptor_ThreatType_ApiAbuse = @"API_ABUSE";
+NSString * const kGTLRSafeBrowsing_ThreatListDescriptor_ThreatType_ApkMalwareOffline = @"APK_MALWARE_OFFLINE";
+NSString * const kGTLRSafeBrowsing_ThreatListDescriptor_ThreatType_ClientIncident = @"CLIENT_INCIDENT";
+NSString * const kGTLRSafeBrowsing_ThreatListDescriptor_ThreatType_ClientIncidentWhitelist = @"CLIENT_INCIDENT_WHITELIST";
+NSString * const kGTLRSafeBrowsing_ThreatListDescriptor_ThreatType_CsdDownloadWhitelist = @"CSD_DOWNLOAD_WHITELIST";
+NSString * const kGTLRSafeBrowsing_ThreatListDescriptor_ThreatType_CsdWhitelist = @"CSD_WHITELIST";
+NSString * const kGTLRSafeBrowsing_ThreatListDescriptor_ThreatType_MaliciousBinary = @"MALICIOUS_BINARY";
 NSString * const kGTLRSafeBrowsing_ThreatListDescriptor_ThreatType_Malware = @"MALWARE";
 NSString * const kGTLRSafeBrowsing_ThreatListDescriptor_ThreatType_PotentiallyHarmfulApplication = @"POTENTIALLY_HARMFUL_APPLICATION";
 NSString * const kGTLRSafeBrowsing_ThreatListDescriptor_ThreatType_SocialEngineering = @"SOCIAL_ENGINEERING";
+NSString * const kGTLRSafeBrowsing_ThreatListDescriptor_ThreatType_SocialEngineeringInternal = @"SOCIAL_ENGINEERING_INTERNAL";
+NSString * const kGTLRSafeBrowsing_ThreatListDescriptor_ThreatType_SubresourceFilter = @"SUBRESOURCE_FILTER";
 NSString * const kGTLRSafeBrowsing_ThreatListDescriptor_ThreatType_ThreatTypeUnspecified = @"THREAT_TYPE_UNSPECIFIED";
 NSString * const kGTLRSafeBrowsing_ThreatListDescriptor_ThreatType_UnwantedSoftware = @"UNWANTED_SOFTWARE";
 
@@ -161,11 +221,27 @@ NSString * const kGTLRSafeBrowsing_ThreatMatch_ThreatEntryType_ThreatEntryTypeUn
 NSString * const kGTLRSafeBrowsing_ThreatMatch_ThreatEntryType_Url = @"URL";
 
 // GTLRSafeBrowsing_ThreatMatch.threatType
+NSString * const kGTLRSafeBrowsing_ThreatMatch_ThreatType_ApiAbuse = @"API_ABUSE";
+NSString * const kGTLRSafeBrowsing_ThreatMatch_ThreatType_ApkMalwareOffline = @"APK_MALWARE_OFFLINE";
+NSString * const kGTLRSafeBrowsing_ThreatMatch_ThreatType_ClientIncident = @"CLIENT_INCIDENT";
+NSString * const kGTLRSafeBrowsing_ThreatMatch_ThreatType_ClientIncidentWhitelist = @"CLIENT_INCIDENT_WHITELIST";
+NSString * const kGTLRSafeBrowsing_ThreatMatch_ThreatType_CsdDownloadWhitelist = @"CSD_DOWNLOAD_WHITELIST";
+NSString * const kGTLRSafeBrowsing_ThreatMatch_ThreatType_CsdWhitelist = @"CSD_WHITELIST";
+NSString * const kGTLRSafeBrowsing_ThreatMatch_ThreatType_MaliciousBinary = @"MALICIOUS_BINARY";
 NSString * const kGTLRSafeBrowsing_ThreatMatch_ThreatType_Malware = @"MALWARE";
 NSString * const kGTLRSafeBrowsing_ThreatMatch_ThreatType_PotentiallyHarmfulApplication = @"POTENTIALLY_HARMFUL_APPLICATION";
 NSString * const kGTLRSafeBrowsing_ThreatMatch_ThreatType_SocialEngineering = @"SOCIAL_ENGINEERING";
+NSString * const kGTLRSafeBrowsing_ThreatMatch_ThreatType_SocialEngineeringInternal = @"SOCIAL_ENGINEERING_INTERNAL";
+NSString * const kGTLRSafeBrowsing_ThreatMatch_ThreatType_SubresourceFilter = @"SUBRESOURCE_FILTER";
 NSString * const kGTLRSafeBrowsing_ThreatMatch_ThreatType_ThreatTypeUnspecified = @"THREAT_TYPE_UNSPECIFIED";
 NSString * const kGTLRSafeBrowsing_ThreatMatch_ThreatType_UnwantedSoftware = @"UNWANTED_SOFTWARE";
+
+// GTLRSafeBrowsing_ThreatSource.type
+NSString * const kGTLRSafeBrowsing_ThreatSource_Type_MatchingUrl = @"MATCHING_URL";
+NSString * const kGTLRSafeBrowsing_ThreatSource_Type_TabRedirect = @"TAB_REDIRECT";
+NSString * const kGTLRSafeBrowsing_ThreatSource_Type_TabResource = @"TAB_RESOURCE";
+NSString * const kGTLRSafeBrowsing_ThreatSource_Type_TabUrl    = @"TAB_URL";
+NSString * const kGTLRSafeBrowsing_ThreatSource_Type_ThreatSourceTypeUnspecified = @"THREAT_SOURCE_TYPE_UNSPECIFIED";
 
 // ----------------------------------------------------------------------------
 //
@@ -193,7 +269,8 @@ NSString * const kGTLRSafeBrowsing_ThreatMatch_ThreatType_UnwantedSoftware = @"U
 //
 
 @implementation GTLRSafeBrowsing_Constraints
-@dynamic maxDatabaseEntries, maxUpdateEntries, region, supportedCompressions;
+@dynamic deviceLocation, language, maxDatabaseEntries, maxUpdateEntries, region,
+         supportedCompressions;
 
 + (NSDictionary<NSString *, Class> *)arrayPropertyToClassMap {
   NSDictionary<NSString *, Class> *map = @{
@@ -202,6 +279,15 @@ NSString * const kGTLRSafeBrowsing_ThreatMatch_ThreatType_UnwantedSoftware = @"U
   return map;
 }
 
+@end
+
+
+// ----------------------------------------------------------------------------
+//
+//   GTLRSafeBrowsing_Empty
+//
+
+@implementation GTLRSafeBrowsing_Empty
 @end
 
 
@@ -446,6 +532,24 @@ NSString * const kGTLRSafeBrowsing_ThreatMatch_ThreatType_UnwantedSoftware = @"U
 
 // ----------------------------------------------------------------------------
 //
+//   GTLRSafeBrowsing_ThreatHit
+//
+
+@implementation GTLRSafeBrowsing_ThreatHit
+@dynamic clientInfo, entry, platformType, resources, threatType, userInfo;
+
++ (NSDictionary<NSString *, Class> *)arrayPropertyToClassMap {
+  NSDictionary<NSString *, Class> *map = @{
+    @"resources" : [GTLRSafeBrowsing_ThreatSource class]
+  };
+  return map;
+}
+
+@end
+
+
+// ----------------------------------------------------------------------------
+//
 //   GTLRSafeBrowsing_ThreatInfo
 //
 
@@ -483,4 +587,24 @@ NSString * const kGTLRSafeBrowsing_ThreatMatch_ThreatType_UnwantedSoftware = @"U
 @implementation GTLRSafeBrowsing_ThreatMatch
 @dynamic cacheDuration, platformType, threat, threatEntryMetadata,
          threatEntryType, threatType;
+@end
+
+
+// ----------------------------------------------------------------------------
+//
+//   GTLRSafeBrowsing_ThreatSource
+//
+
+@implementation GTLRSafeBrowsing_ThreatSource
+@dynamic referrer, remoteIp, type, url;
+@end
+
+
+// ----------------------------------------------------------------------------
+//
+//   GTLRSafeBrowsing_UserInfo
+//
+
+@implementation GTLRSafeBrowsing_UserInfo
+@dynamic regionCode, userId;
 @end

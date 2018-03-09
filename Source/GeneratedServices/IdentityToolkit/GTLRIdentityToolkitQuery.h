@@ -22,8 +22,10 @@
 @class GTLRIdentityToolkit_RelyingpartyCreateAuthUriRequest;
 @class GTLRIdentityToolkit_RelyingpartyDeleteAccountRequest;
 @class GTLRIdentityToolkit_RelyingpartyDownloadAccountRequest;
+@class GTLRIdentityToolkit_RelyingpartyEmailLinkSigninRequest;
 @class GTLRIdentityToolkit_RelyingpartyGetAccountInfoRequest;
 @class GTLRIdentityToolkit_RelyingpartyResetPasswordRequest;
+@class GTLRIdentityToolkit_RelyingpartySendVerificationCodeRequest;
 @class GTLRIdentityToolkit_RelyingpartySetAccountInfoRequest;
 @class GTLRIdentityToolkit_RelyingpartySetProjectConfigRequest;
 @class GTLRIdentityToolkit_RelyingpartySignOutUserRequest;
@@ -32,6 +34,12 @@
 @class GTLRIdentityToolkit_RelyingpartyVerifyAssertionRequest;
 @class GTLRIdentityToolkit_RelyingpartyVerifyCustomTokenRequest;
 @class GTLRIdentityToolkit_RelyingpartyVerifyPasswordRequest;
+@class GTLRIdentityToolkit_RelyingpartyVerifyPhoneNumberRequest;
+
+// Generated comments include content from the discovery document; avoid them
+// causing warnings since clang's checks are some what arbitrary.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdocumentation"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -121,6 +129,32 @@ NS_ASSUME_NONNULL_BEGIN
  *  @returns GTLRIdentityToolkitQuery_RelyingpartyDownloadAccount
  */
 + (instancetype)queryWithObject:(GTLRIdentityToolkit_RelyingpartyDownloadAccountRequest *)object;
+
+@end
+
+/**
+ *  Reset password for a user.
+ *
+ *  Method: identitytoolkit.relyingparty.emailLinkSignin
+ *
+ *  Authorization scope(s):
+ *    @c kGTLRAuthScopeIdentityToolkitCloudPlatform
+ */
+@interface GTLRIdentityToolkitQuery_RelyingpartyEmailLinkSignin : GTLRIdentityToolkitQuery
+// Previous library name was
+//   +[GTLQueryIdentityToolkit queryForRelyingpartyEmailLinkSigninWithObject:]
+
+/**
+ *  Fetches a @c GTLRIdentityToolkit_EmailLinkSigninResponse.
+ *
+ *  Reset password for a user.
+ *
+ *  @param object The @c GTLRIdentityToolkit_RelyingpartyEmailLinkSigninRequest
+ *    to include in the query.
+ *
+ *  @returns GTLRIdentityToolkitQuery_RelyingpartyEmailLinkSignin
+ */
++ (instancetype)queryWithObject:(GTLRIdentityToolkit_RelyingpartyEmailLinkSigninRequest *)object;
 
 @end
 
@@ -274,6 +308,33 @@ NS_ASSUME_NONNULL_BEGIN
  *  @returns GTLRIdentityToolkitQuery_RelyingpartyResetPassword
  */
 + (instancetype)queryWithObject:(GTLRIdentityToolkit_RelyingpartyResetPasswordRequest *)object;
+
+@end
+
+/**
+ *  Send SMS verification code.
+ *
+ *  Method: identitytoolkit.relyingparty.sendVerificationCode
+ *
+ *  Authorization scope(s):
+ *    @c kGTLRAuthScopeIdentityToolkitCloudPlatform
+ */
+@interface GTLRIdentityToolkitQuery_RelyingpartySendVerificationCode : GTLRIdentityToolkitQuery
+// Previous library name was
+//   +[GTLQueryIdentityToolkit queryForRelyingpartySendVerificationCodeWithObject:]
+
+/**
+ *  Fetches a @c GTLRIdentityToolkit_RelyingpartySendVerificationCodeResponse.
+ *
+ *  Send SMS verification code.
+ *
+ *  @param object The @c
+ *    GTLRIdentityToolkit_RelyingpartySendVerificationCodeRequest to include in
+ *    the query.
+ *
+ *  @returns GTLRIdentityToolkitQuery_RelyingpartySendVerificationCode
+ */
++ (instancetype)queryWithObject:(GTLRIdentityToolkit_RelyingpartySendVerificationCodeRequest *)object;
 
 @end
 
@@ -487,4 +548,35 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+/**
+ *  Verifies ownership of a phone number and creates/updates the user account
+ *  accordingly.
+ *
+ *  Method: identitytoolkit.relyingparty.verifyPhoneNumber
+ *
+ *  Authorization scope(s):
+ *    @c kGTLRAuthScopeIdentityToolkitCloudPlatform
+ */
+@interface GTLRIdentityToolkitQuery_RelyingpartyVerifyPhoneNumber : GTLRIdentityToolkitQuery
+// Previous library name was
+//   +[GTLQueryIdentityToolkit queryForRelyingpartyVerifyPhoneNumberWithObject:]
+
+/**
+ *  Fetches a @c GTLRIdentityToolkit_RelyingpartyVerifyPhoneNumberResponse.
+ *
+ *  Verifies ownership of a phone number and creates/updates the user account
+ *  accordingly.
+ *
+ *  @param object The @c
+ *    GTLRIdentityToolkit_RelyingpartyVerifyPhoneNumberRequest to include in the
+ *    query.
+ *
+ *  @returns GTLRIdentityToolkitQuery_RelyingpartyVerifyPhoneNumber
+ */
++ (instancetype)queryWithObject:(GTLRIdentityToolkit_RelyingpartyVerifyPhoneNumberRequest *)object;
+
+@end
+
 NS_ASSUME_NONNULL_END
+
+#pragma clang diagnostic pop

@@ -21,6 +21,7 @@ NSString * const kGTLRToolResults_BasicPerfSampleSeries_PerfMetricType_Network =
 NSString * const kGTLRToolResults_BasicPerfSampleSeries_PerfMetricType_PerfMetricTypeUnspecified = @"perfMetricTypeUnspecified";
 
 // GTLRToolResults_BasicPerfSampleSeries.perfUnit
+NSString * const kGTLRToolResults_BasicPerfSampleSeries_PerfUnit_Byte = @"byte";
 NSString * const kGTLRToolResults_BasicPerfSampleSeries_PerfUnit_BytesPerSecond = @"bytesPerSecond";
 NSString * const kGTLRToolResults_BasicPerfSampleSeries_PerfUnit_FramesPerSecond = @"framesPerSecond";
 NSString * const kGTLRToolResults_BasicPerfSampleSeries_PerfUnit_Kibibyte = @"kibibyte";
@@ -68,6 +69,72 @@ NSString * const kGTLRToolResults_Step_State_InProgress   = @"inProgress";
 NSString * const kGTLRToolResults_Step_State_Pending      = @"pending";
 NSString * const kGTLRToolResults_Step_State_UnknownState = @"unknownState";
 
+// GTLRToolResults_TestIssue.severity
+NSString * const kGTLRToolResults_TestIssue_Severity_Info      = @"info";
+NSString * const kGTLRToolResults_TestIssue_Severity_Severe    = @"severe";
+NSString * const kGTLRToolResults_TestIssue_Severity_UnspecifiedSeverity = @"unspecifiedSeverity";
+NSString * const kGTLRToolResults_TestIssue_Severity_Warning   = @"warning";
+
+// GTLRToolResults_TestIssue.type
+NSString * const kGTLRToolResults_TestIssue_Type_Anr           = @"anr";
+NSString * const kGTLRToolResults_TestIssue_Type_CompatibleWithOrchestrator = @"compatibleWithOrchestrator";
+NSString * const kGTLRToolResults_TestIssue_Type_FatalException = @"fatalException";
+NSString * const kGTLRToolResults_TestIssue_Type_LauncherActivityNotFound = @"launcherActivityNotFound";
+NSString * const kGTLRToolResults_TestIssue_Type_NativeCrash   = @"nativeCrash";
+NSString * const kGTLRToolResults_TestIssue_Type_StartActivityNotFound = @"startActivityNotFound";
+NSString * const kGTLRToolResults_TestIssue_Type_UnspecifiedType = @"unspecifiedType";
+NSString * const kGTLRToolResults_TestIssue_Type_UnusedRoboDirective = @"unusedRoboDirective";
+
+// ----------------------------------------------------------------------------
+//
+//   GTLRToolResults_AndroidAppInfo
+//
+
+@implementation GTLRToolResults_AndroidAppInfo
+@dynamic name, packageName, versionCode, versionName;
+@end
+
+
+// ----------------------------------------------------------------------------
+//
+//   GTLRToolResults_AndroidInstrumentationTest
+//
+
+@implementation GTLRToolResults_AndroidInstrumentationTest
+@dynamic testPackageId, testRunnerClass, testTargets, useOrchestrator;
+
++ (NSDictionary<NSString *, Class> *)arrayPropertyToClassMap {
+  NSDictionary<NSString *, Class> *map = @{
+    @"testTargets" : [NSString class]
+  };
+  return map;
+}
+
+@end
+
+
+// ----------------------------------------------------------------------------
+//
+//   GTLRToolResults_AndroidRoboTest
+//
+
+@implementation GTLRToolResults_AndroidRoboTest
+@dynamic appInitialActivity, bootstrapPackageId, bootstrapRunnerClass, maxDepth,
+         maxSteps;
+@end
+
+
+// ----------------------------------------------------------------------------
+//
+//   GTLRToolResults_AndroidTest
+//
+
+@implementation GTLRToolResults_AndroidTest
+@dynamic androidAppInfo, androidInstrumentationTest, androidRoboTest,
+         testTimeout;
+@end
+
+
 // ----------------------------------------------------------------------------
 //
 //   GTLRToolResults_Any
@@ -75,6 +142,16 @@ NSString * const kGTLRToolResults_Step_State_UnknownState = @"unknownState";
 
 @implementation GTLRToolResults_Any
 @dynamic typeUrl, value;
+@end
+
+
+// ----------------------------------------------------------------------------
+//
+//   GTLRToolResults_AppStartTime
+//
+
+@implementation GTLRToolResults_AppStartTime
+@dynamic fullyDrawnTime, initialDisplayTime;
 @end
 
 
@@ -150,8 +227,8 @@ NSString * const kGTLRToolResults_Step_State_UnknownState = @"unknownState";
 //
 
 @implementation GTLRToolResults_Execution
-@dynamic completionTime, creationTime, executionId, outcome, state,
-         testExecutionMatrixId;
+@dynamic completionTime, creationTime, executionId, outcome, specification,
+         state, testExecutionMatrixId;
 @end
 
 
@@ -172,6 +249,36 @@ NSString * const kGTLRToolResults_Step_State_UnknownState = @"unknownState";
 
 @implementation GTLRToolResults_FileReference
 @dynamic fileUri;
+@end
+
+
+// ----------------------------------------------------------------------------
+//
+//   GTLRToolResults_GraphicsStats
+//
+
+@implementation GTLRToolResults_GraphicsStats
+@dynamic buckets, highInputLatencyCount, jankyFrames, missedVsyncCount,
+         p50Millis, p90Millis, p95Millis, p99Millis, slowBitmapUploadCount,
+         slowDrawCount, slowUiThreadCount, totalFrames;
+
++ (NSDictionary<NSString *, Class> *)arrayPropertyToClassMap {
+  NSDictionary<NSString *, Class> *map = @{
+    @"buckets" : [GTLRToolResults_GraphicsStatsBucket class]
+  };
+  return map;
+}
+
+@end
+
+
+// ----------------------------------------------------------------------------
+//
+//   GTLRToolResults_GraphicsStatsBucket
+//
+
+@implementation GTLRToolResults_GraphicsStatsBucket
+@dynamic frameCount, renderMillis;
 @end
 
 
@@ -291,6 +398,24 @@ NSString * const kGTLRToolResults_Step_State_UnknownState = @"unknownState";
 
 // ----------------------------------------------------------------------------
 //
+//   GTLRToolResults_ListScreenshotClustersResponse
+//
+
+@implementation GTLRToolResults_ListScreenshotClustersResponse
+@dynamic clusters;
+
++ (NSDictionary<NSString *, Class> *)arrayPropertyToClassMap {
+  NSDictionary<NSString *, Class> *map = @{
+    @"clusters" : [GTLRToolResults_ScreenshotCluster class]
+  };
+  return map;
+}
+
+@end
+
+
+// ----------------------------------------------------------------------------
+//
 //   GTLRToolResults_ListStepsResponse
 //
 
@@ -370,8 +495,8 @@ NSString * const kGTLRToolResults_Step_State_UnknownState = @"unknownState";
 //
 
 @implementation GTLRToolResults_PerfMetricsSummary
-@dynamic executionId, historyId, perfEnvironment, perfMetrics, projectId,
-         stepId;
+@dynamic appStartTime, executionId, graphicsStats, historyId, perfEnvironment,
+         perfMetrics, projectId, stepId;
 
 + (NSDictionary<NSString *, Class> *)arrayPropertyToClassMap {
   NSDictionary<NSString *, Class> *map = @{
@@ -434,6 +559,34 @@ NSString * const kGTLRToolResults_Step_State_UnknownState = @"unknownState";
 
 // ----------------------------------------------------------------------------
 //
+//   GTLRToolResults_Screen
+//
+
+@implementation GTLRToolResults_Screen
+@dynamic fileReference, locale, model, version;
+@end
+
+
+// ----------------------------------------------------------------------------
+//
+//   GTLRToolResults_ScreenshotCluster
+//
+
+@implementation GTLRToolResults_ScreenshotCluster
+@dynamic activity, clusterId, keyScreen, screens;
+
++ (NSDictionary<NSString *, Class> *)arrayPropertyToClassMap {
+  NSDictionary<NSString *, Class> *map = @{
+    @"screens" : [GTLRToolResults_Screen class]
+  };
+  return map;
+}
+
+@end
+
+
+// ----------------------------------------------------------------------------
+//
 //   GTLRToolResults_SkippedDetail
 //
 
@@ -444,11 +597,21 @@ NSString * const kGTLRToolResults_Step_State_UnknownState = @"unknownState";
 
 // ----------------------------------------------------------------------------
 //
+//   GTLRToolResults_Specification
+//
+
+@implementation GTLRToolResults_Specification
+@dynamic androidTest;
+@end
+
+
+// ----------------------------------------------------------------------------
+//
 //   GTLRToolResults_StackTrace
 //
 
 @implementation GTLRToolResults_StackTrace
-@dynamic exception;
+@dynamic clusterId, exception, reportId;
 @end
 
 
@@ -565,7 +728,7 @@ NSString * const kGTLRToolResults_Step_State_UnknownState = @"unknownState";
 //
 
 @implementation GTLRToolResults_TestIssue
-@dynamic errorMessage, stackTrace;
+@dynamic errorMessage, severity, stackTrace, type, warning;
 @end
 
 

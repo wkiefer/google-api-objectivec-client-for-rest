@@ -21,14 +21,19 @@
 #endif
 
 @class GTLRDirectory_Asp;
+@class GTLRDirectory_Building;
+@class GTLRDirectory_BuildingCoordinates;
 @class GTLRDirectory_CalendarResource;
 @class GTLRDirectory_Channel_Params;
 @class GTLRDirectory_ChromeOsDevice;
 @class GTLRDirectory_ChromeOsDevice_ActiveTimeRanges_Item;
+@class GTLRDirectory_ChromeOsDevice_DeviceFiles_Item;
 @class GTLRDirectory_ChromeOsDevice_RecentUsers_Item;
+@class GTLRDirectory_ChromeOsDevice_TpmVersionInfo;
 @class GTLRDirectory_CustomerPostalAddress;
 @class GTLRDirectory_DomainAlias;
 @class GTLRDirectory_Domains;
+@class GTLRDirectory_Feature;
 @class GTLRDirectory_Group;
 @class GTLRDirectory_Member;
 @class GTLRDirectory_MobileDevice;
@@ -43,11 +48,17 @@
 @class GTLRDirectory_SchemaFieldSpec;
 @class GTLRDirectory_SchemaFieldSpec_NumericIndexingSpec;
 @class GTLRDirectory_Token;
+@class GTLRDirectory_TrustedAppId;
 @class GTLRDirectory_User;
 @class GTLRDirectory_User_CustomSchemas;
 @class GTLRDirectory_UserCustomProperties;
 @class GTLRDirectory_UserName;
 @class GTLRDirectory_VerificationCode;
+
+// Generated comments include content from the discovery document; avoid them
+// causing warnings since clang's checks are some what arbitrary.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdocumentation"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -95,6 +106,60 @@ NS_ASSUME_NONNULL_BEGIN
 
 /** Kind of resource this is. */
 @property(nonatomic, copy, nullable) NSString *kind;
+
+@end
+
+
+/**
+ *  JSON template for App Access Collections Resource object in Directory API.
+ */
+@interface GTLRDirectory_AppAccessCollections : GTLRObject
+
+/** List of blocked api access buckets. */
+@property(nonatomic, strong, nullable) NSArray<NSString *> *blockedApiAccessBuckets;
+
+/**
+ *  Boolean to indicate whether to enforce app access settings on Android Drive
+ *  or not.
+ *
+ *  Uses NSNumber of boolValue.
+ */
+@property(nonatomic, strong, nullable) NSNumber *enforceSettingsForAndroidDrive;
+
+/**
+ *  Error message provided by the Admin that will be shown to the user when an
+ *  app is blocked.
+ */
+@property(nonatomic, copy, nullable) NSString *errorMessage;
+
+/** ETag of the resource. */
+@property(nonatomic, copy, nullable) NSString *ETag;
+
+/**
+ *  Identifies the resource as an app access collection. Value:
+ *  admin#directory#appaccesscollection
+ */
+@property(nonatomic, copy, nullable) NSString *kind;
+
+/**
+ *  Unique ID of app access collection. (Readonly)
+ *
+ *  Uses NSNumber of longLongValue.
+ */
+@property(nonatomic, strong, nullable) NSNumber *resourceId;
+
+/**
+ *  Resource name given by the customer while creating/updating. Should be
+ *  unique under given customer.
+ */
+@property(nonatomic, copy, nullable) NSString *resourceName;
+
+/**
+ *  Boolean that indicates whether to trust domain owned apps.
+ *
+ *  Uses NSNumber of boolValue.
+ */
+@property(nonatomic, strong, nullable) NSNumber *trustDomainOwnedApps;
 
 @end
 
@@ -169,12 +234,143 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 /**
+ *  JSON template for Building object in Directory API.
+ */
+@interface GTLRDirectory_Building : GTLRObject
+
+/**
+ *  Unique identifier for the building. The maximum length is 100 characters.
+ */
+@property(nonatomic, copy, nullable) NSString *buildingId;
+
+/**
+ *  The building name as seen by users in Calendar. Must be unique for the
+ *  customer. For example, "NYC-CHEL". The maximum length is 100 characters.
+ */
+@property(nonatomic, copy, nullable) NSString *buildingName;
+
+/**
+ *  The geographic coordinates of the center of the building, expressed as
+ *  latitude and longitude in decimal degrees.
+ */
+@property(nonatomic, strong, nullable) GTLRDirectory_BuildingCoordinates *coordinates;
+
+/**
+ *  A brief description of the building. For example, "Chelsea Market".
+ *
+ *  Remapped to 'descriptionProperty' to avoid NSObject's 'description'.
+ */
+@property(nonatomic, copy, nullable) NSString *descriptionProperty;
+
+/** ETag of the resource. */
+@property(nonatomic, copy, nullable) NSString *etags;
+
+/**
+ *  The display names for all floors in this building. The floors are expected
+ *  to be sorted in ascending order, from lowest floor to highest floor. For
+ *  example, ["B2", "B1", "L", "1", "2", "2M", "3", "PH"] Must contain at least
+ *  one entry.
+ */
+@property(nonatomic, strong, nullable) NSArray<NSString *> *floorNames;
+
+/** Kind of resource this is. */
+@property(nonatomic, copy, nullable) NSString *kind;
+
+@end
+
+
+/**
+ *  JSON template for coordinates of a building in Directory API.
+ */
+@interface GTLRDirectory_BuildingCoordinates : GTLRObject
+
+/**
+ *  Latitude in decimal degrees.
+ *
+ *  Uses NSNumber of doubleValue.
+ */
+@property(nonatomic, strong, nullable) NSNumber *latitude;
+
+/**
+ *  Longitude in decimal degrees.
+ *
+ *  Uses NSNumber of doubleValue.
+ */
+@property(nonatomic, strong, nullable) NSNumber *longitude;
+
+@end
+
+
+/**
+ *  JSON template for Building List Response object in Directory API.
+ *
+ *  @note This class supports NSFastEnumeration and indexed subscripting over
+ *        its "buildings" property. If returned as the result of a query, it
+ *        should support automatic pagination (when @c shouldFetchNextPages is
+ *        enabled).
+ */
+@interface GTLRDirectory_Buildings : GTLRCollectionObject
+
+/**
+ *  The Buildings in this page of results.
+ *
+ *  @note This property is used to support NSFastEnumeration and indexed
+ *        subscripting on this class.
+ */
+@property(nonatomic, strong, nullable) NSArray<GTLRDirectory_Building *> *buildings;
+
+/** ETag of the resource. */
+@property(nonatomic, copy, nullable) NSString *ETag;
+
+/** Kind of resource this is. */
+@property(nonatomic, copy, nullable) NSString *kind;
+
+/**
+ *  The continuation token, used to page through large result sets. Provide this
+ *  value in a subsequent request to return the next page of results.
+ */
+@property(nonatomic, copy, nullable) NSString *nextPageToken;
+
+@end
+
+
+/**
  *  JSON template for Calendar Resource object in Directory API.
  */
 @interface GTLRDirectory_CalendarResource : GTLRObject
 
+/** Unique ID for the building a resource is located in. */
+@property(nonatomic, copy, nullable) NSString *buildingId;
+
+/**
+ *  Capacity of a resource, number of seats in a room.
+ *
+ *  Uses NSNumber of intValue.
+ */
+@property(nonatomic, strong, nullable) NSNumber *capacity;
+
 /** ETag of the resource. */
 @property(nonatomic, copy, nullable) NSString *etags;
+
+/**
+ *  featureInstances
+ *
+ *  Can be any valid JSON type.
+ */
+@property(nonatomic, strong, nullable) id featureInstances;
+
+/** Name of the floor a resource is located on. */
+@property(nonatomic, copy, nullable) NSString *floorName;
+
+/** Name of the section within a floor a resource is located in. */
+@property(nonatomic, copy, nullable) NSString *floorSection;
+
+/**
+ *  The read-only auto-generated name of the calendar resource which includes
+ *  metadata about the resource such as building name, floor, capacity, etc. For
+ *  example, "NYC-2-Training Room 1A (16)".
+ */
+@property(nonatomic, copy, nullable) NSString *generatedResourceName;
 
 /**
  *  The type of the resource. For calendar resources, the value is
@@ -182,26 +378,32 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property(nonatomic, copy, nullable) NSString *kind;
 
-/** The brief description of the calendar resource. */
+/**
+ *  The category of the calendar resource. Either CONFERENCE_ROOM or OTHER.
+ *  Legacy data is set to CATEGORY_UNKNOWN.
+ */
+@property(nonatomic, copy, nullable) NSString *resourceCategory;
+
+/** Description of the resource, visible only to admins. */
 @property(nonatomic, copy, nullable) NSString *resourceDescription;
 
 /**
- *  The read-only email ID for the calendar resource. Generated as part of
- *  creating a new calendar resource.
+ *  The read-only email for the calendar resource. Generated as part of creating
+ *  a new calendar resource.
  */
 @property(nonatomic, copy, nullable) NSString *resourceEmail;
 
 /** The unique ID for the calendar resource. */
 @property(nonatomic, copy, nullable) NSString *resourceId;
 
-/** The name of the calendar resource. For example, Training Room 1A */
+/** The name of the calendar resource. For example, "Training Room 1A". */
 @property(nonatomic, copy, nullable) NSString *resourceName;
 
-/**
- *  The type of the calendar resource. Used for grouping resources in the
- *  calendar user interface.
- */
+/** The type of the calendar resource, intended for non-room resources. */
 @property(nonatomic, copy, nullable) NSString *resourceType;
+
+/** Description of the resource, visible to users and admins. */
+@property(nonatomic, copy, nullable) NSString *userVisibleDescription;
 
 @end
 
@@ -334,6 +536,9 @@ NS_ASSUME_NONNULL_BEGIN
 /** Chromebook boot mode (Read-only) */
 @property(nonatomic, copy, nullable) NSString *bootMode;
 
+/** List of device files to download (Read-only) */
+@property(nonatomic, strong, nullable) NSArray<GTLRDirectory_ChromeOsDevice_DeviceFiles_Item *> *deviceFiles;
+
 /** Unique identifier of Chrome OS Device (Read-only) */
 @property(nonatomic, copy, nullable) NSString *deviceId;
 
@@ -354,7 +559,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  *  Date and time the device was last synchronized with the policy settings in
- *  the Google Apps administrator control panel (Read-only)
+ *  the G Suite administrator control panel (Read-only)
  */
 @property(nonatomic, strong, nullable) GTLRDateTime *lastSync;
 
@@ -400,6 +605,8 @@ NS_ASSUME_NONNULL_BEGIN
 /** Final date the device will be supported (Read-only) */
 @property(nonatomic, strong, nullable) GTLRDateTime *supportEndDate;
 
+@property(nonatomic, strong, nullable) GTLRDirectory_ChromeOsDevice_TpmVersionInfo *tpmVersionInfo;
+
 /**
  *  Will Chromebook auto renew after support end date (Read-only)
  *
@@ -433,6 +640,26 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 /**
+ *  GTLRDirectory_ChromeOsDevice_DeviceFiles_Item
+ */
+@interface GTLRDirectory_ChromeOsDevice_DeviceFiles_Item : GTLRObject
+
+/** Date and time the file was created */
+@property(nonatomic, strong, nullable) GTLRDateTime *createTime;
+
+/** File downlod URL */
+@property(nonatomic, copy, nullable) NSString *downloadUrl;
+
+/** File name */
+@property(nonatomic, copy, nullable) NSString *name;
+
+/** File type */
+@property(nonatomic, copy, nullable) NSString *type;
+
+@end
+
+
+/**
  *  GTLRDirectory_ChromeOsDevice_RecentUsers_Item
  */
 @interface GTLRDirectory_ChromeOsDevice_RecentUsers_Item : GTLRObject
@@ -442,6 +669,21 @@ NS_ASSUME_NONNULL_BEGIN
 
 /** The type of the user */
 @property(nonatomic, copy, nullable) NSString *type;
+
+@end
+
+
+/**
+ *  GTLRDirectory_ChromeOsDevice_TpmVersionInfo
+ */
+@interface GTLRDirectory_ChromeOsDevice_TpmVersionInfo : GTLRObject
+
+@property(nonatomic, copy, nullable) NSString *family;
+@property(nonatomic, copy, nullable) NSString *firmwareVersion;
+@property(nonatomic, copy, nullable) NSString *manufacturer;
+@property(nonatomic, copy, nullable) NSString *specLevel;
+@property(nonatomic, copy, nullable) NSString *tpmModel;
+@property(nonatomic, copy, nullable) NSString *vendorSpecific;
 
 @end
 
@@ -492,6 +734,18 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 /**
+ *  JSON request template for moving ChromeOs Device to given OU in Directory
+ *  Devices API.
+ */
+@interface GTLRDirectory_ChromeOsMoveDevicesToOu : GTLRObject
+
+/** ChromeOs Devices to be moved to OU */
+@property(nonatomic, strong, nullable) NSArray<NSString *> *deviceIds;
+
+@end
+
+
+/**
  *  JSON template for Customer Resource object in Directory API.
  */
 @interface GTLRDirectory_Customer : GTLRObject
@@ -515,7 +769,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, copy, nullable) NSString *ETag;
 
 /**
- *  The unique ID for the customer's Google account. (Readonly)
+ *  The unique ID for the customer's G Suite account. (Readonly)
  *
  *  identifier property maps to 'id' in JSON (to avoid Objective C's 'id').
  */
@@ -700,6 +954,77 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 /**
+ *  JSON template for Feature object in Directory API.
+ */
+@interface GTLRDirectory_Feature : GTLRObject
+
+/** ETag of the resource. */
+@property(nonatomic, copy, nullable) NSString *etags;
+
+/** Kind of resource this is. */
+@property(nonatomic, copy, nullable) NSString *kind;
+
+/** The name of the feature. */
+@property(nonatomic, copy, nullable) NSString *name;
+
+@end
+
+
+/**
+ *  JSON template for a "feature instance".
+ */
+@interface GTLRDirectory_FeatureInstance : GTLRObject
+
+@property(nonatomic, strong, nullable) GTLRDirectory_Feature *feature;
+
+@end
+
+
+/**
+ *  JSON request template for renaming a feature.
+ */
+@interface GTLRDirectory_FeatureRename : GTLRObject
+
+/** New name of the feature. */
+@property(nonatomic, copy, nullable) NSString *newName NS_RETURNS_NOT_RETAINED;
+
+@end
+
+
+/**
+ *  JSON template for Feature List Response object in Directory API.
+ *
+ *  @note This class supports NSFastEnumeration and indexed subscripting over
+ *        its "features" property. If returned as the result of a query, it
+ *        should support automatic pagination (when @c shouldFetchNextPages is
+ *        enabled).
+ */
+@interface GTLRDirectory_Features : GTLRCollectionObject
+
+/** ETag of the resource. */
+@property(nonatomic, copy, nullable) NSString *ETag;
+
+/**
+ *  The Features in this page of results.
+ *
+ *  @note This property is used to support NSFastEnumeration and indexed
+ *        subscripting on this class.
+ */
+@property(nonatomic, strong, nullable) NSArray<GTLRDirectory_Feature *> *features;
+
+/** Kind of resource this is. */
+@property(nonatomic, copy, nullable) NSString *kind;
+
+/**
+ *  The continuation token, used to page through large result sets. Provide this
+ *  value in a subsequent request to return the next page of results.
+ */
+@property(nonatomic, copy, nullable) NSString *nextPageToken;
+
+@end
+
+
+/**
  *  JSON template for Group resource in Directory API.
  */
 @interface GTLRDirectory_Group : GTLRObject
@@ -848,6 +1173,21 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 /**
+ *  JSON template for Has Member response in Directory API.
+ */
+@interface GTLRDirectory_MembersHasMember : GTLRObject
+
+/**
+ *  Identifies whether given user is a member or not.
+ *
+ *  Uses NSNumber of boolValue.
+ */
+@property(nonatomic, strong, nullable) NSNumber *isMember;
+
+@end
+
+
+/**
  *  JSON template for Mobile Device resource in Directory API.
  */
 @interface GTLRDirectory_MobileDevice : GTLRObject
@@ -904,7 +1244,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  *  Date and time the device was first synchronized with the policy settings in
- *  the Google Apps administrator control panel (Read-only)
+ *  the G Suite administrator control panel (Read-only)
  */
 @property(nonatomic, strong, nullable) GTLRDateTime *firstSync;
 
@@ -925,7 +1265,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  *  Date and time the device was last synchronized with the policy settings in
- *  the Google Apps administrator control panel (Read-only)
+ *  the G Suite administrator control panel (Read-only)
  */
 @property(nonatomic, strong, nullable) GTLRDateTime *lastSync;
 
@@ -1623,6 +1963,57 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 /**
+ *  JSON template for Trusted App Ids Resource object in Directory API.
+ */
+@interface GTLRDirectory_TrustedAppId : GTLRObject
+
+/** Android package name. */
+@property(nonatomic, copy, nullable) NSString *androidPackageName;
+
+/** SHA1 signature of the app certificate. */
+@property(nonatomic, copy, nullable) NSString *certificateHashSHA1;
+
+/** SHA256 signature of the app certificate. */
+@property(nonatomic, copy, nullable) NSString *certificateHashSHA256;
+
+@property(nonatomic, copy, nullable) NSString *ETag;
+
+/** Identifies the resource as a trusted AppId. */
+@property(nonatomic, copy, nullable) NSString *kind;
+
+@end
+
+
+/**
+ *  JSON template for Trusted Apps response object of a user in Directory API.
+ *
+ *  @note This class supports NSFastEnumeration and indexed subscripting over
+ *        its "trustedApps" property. If returned as the result of a query, it
+ *        should support automatic pagination (when @c shouldFetchNextPages is
+ *        enabled).
+ */
+@interface GTLRDirectory_TrustedApps : GTLRCollectionObject
+
+/** ETag of the resource. */
+@property(nonatomic, copy, nullable) NSString *ETag;
+
+/** Identifies the resource as trusted apps response. */
+@property(nonatomic, copy, nullable) NSString *kind;
+
+@property(nonatomic, copy, nullable) NSString *nextPageToken;
+
+/**
+ *  Trusted Apps list.
+ *
+ *  @note This property is used to support NSFastEnumeration and indexed
+ *        subscripting on this class.
+ */
+@property(nonatomic, strong, nullable) NSArray<GTLRDirectory_TrustedAppId *> *trustedApps;
+
+@end
+
+
+/**
  *  JSON template for User object in Directory API.
  */
 @interface GTLRDirectory_User : GTLRObject
@@ -1651,7 +2042,7 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property(nonatomic, strong, nullable) NSNumber *changePasswordAtNextLogin;
 
-/** User's Google account creation time. (Read-only) */
+/** User's G Suite account creation time. (Read-only) */
 @property(nonatomic, strong, nullable) GTLRDateTime *creationTime;
 
 /** CustomerId of User (Read-only) */
@@ -1678,6 +2069,13 @@ NS_ASSUME_NONNULL_BEGIN
  *  Can be any valid JSON type.
  */
 @property(nonatomic, strong, nullable) id externalIds;
+
+/**
+ *  gender
+ *
+ *  Can be any valid JSON type.
+ */
+@property(nonatomic, strong, nullable) id gender;
 
 /** Hash function name for password. Supported are MD5, SHA-1 and crypt */
 @property(nonatomic, copy, nullable) NSString *hashFunction;
@@ -1745,11 +2143,32 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property(nonatomic, strong, nullable) NSNumber *isMailboxSetup;
 
+/**
+ *  keywords
+ *
+ *  Can be any valid JSON type.
+ */
+@property(nonatomic, strong, nullable) id keywords;
+
 /** Kind of resource this is. */
 @property(nonatomic, copy, nullable) NSString *kind;
 
+/**
+ *  languages
+ *
+ *  Can be any valid JSON type.
+ */
+@property(nonatomic, strong, nullable) id languages;
+
 /** User's last login time. (Read-only) */
 @property(nonatomic, strong, nullable) GTLRDateTime *lastLoginTime;
+
+/**
+ *  locations
+ *
+ *  Can be any valid JSON type.
+ */
+@property(nonatomic, strong, nullable) id locations;
 
 /** User's name */
 @property(nonatomic, strong, nullable) GTLRDirectory_UserName *name;
@@ -1987,6 +2406,26 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 /**
+ *  GTLRDirectory_UserGender
+ */
+@interface GTLRDirectory_UserGender : GTLRObject
+
+/**
+ *  AddressMeAs. A human-readable string containing the proper way to refer to
+ *  the profile owner by humans, for example "he/him/his" or "they/them/their".
+ */
+@property(nonatomic, copy, nullable) NSString *addressMeAs;
+
+/** Custom gender. */
+@property(nonatomic, copy, nullable) NSString *customGender;
+
+/** Gender. */
+@property(nonatomic, copy, nullable) NSString *type;
+
+@end
+
+
+/**
  *  JSON template for instant messenger of an user.
  */
 @interface GTLRDirectory_UserIm : GTLRObject
@@ -2019,6 +2458,92 @@ NS_ASSUME_NONNULL_BEGIN
  *  example instant messengers could be of home, work etc. In addition to the
  *  standard type, an entry can have a custom type and can take any value. Such
  *  types should have the CUSTOM value as type and also have a customType value.
+ */
+@property(nonatomic, copy, nullable) NSString *type;
+
+@end
+
+
+/**
+ *  JSON template for a keyword entry.
+ */
+@interface GTLRDirectory_UserKeyword : GTLRObject
+
+/** Custom Type. */
+@property(nonatomic, copy, nullable) NSString *customType;
+
+/**
+ *  Each entry can have a type which indicates standard type of that entry. For
+ *  example, keyword could be of type occupation or outlook. In addition to the
+ *  standard type, an entry can have a custom type and can give it any name.
+ *  Such types should have the CUSTOM value as type and also have a customType
+ *  value.
+ */
+@property(nonatomic, copy, nullable) NSString *type;
+
+/** Keyword. */
+@property(nonatomic, copy, nullable) NSString *value;
+
+@end
+
+
+/**
+ *  JSON template for a language entry.
+ */
+@interface GTLRDirectory_UserLanguage : GTLRObject
+
+/**
+ *  Other language. User can provide own language name if there is no
+ *  corresponding Google III language code. If this is set LanguageCode can't be
+ *  set
+ */
+@property(nonatomic, copy, nullable) NSString *customLanguage;
+
+/**
+ *  Language Code. Should be used for storing Google III LanguageCode string
+ *  representation for language. Illegal values cause SchemaException.
+ */
+@property(nonatomic, copy, nullable) NSString *languageCode;
+
+@end
+
+
+/**
+ *  JSON template for a location entry.
+ */
+@interface GTLRDirectory_UserLocation : GTLRObject
+
+/**
+ *  Textual location. This is most useful for display purposes to concisely
+ *  describe the location. For example, "Mountain View, CA", "Near Seattle",
+ *  "US-NYC-9TH 9A209A".
+ */
+@property(nonatomic, copy, nullable) NSString *area;
+
+/** Building Identifier. */
+@property(nonatomic, copy, nullable) NSString *buildingId;
+
+/** Custom Type. */
+@property(nonatomic, copy, nullable) NSString *customType;
+
+/** Most specific textual code of individual desk location. */
+@property(nonatomic, copy, nullable) NSString *deskCode;
+
+/** Floor name/number. */
+@property(nonatomic, copy, nullable) NSString *floorName;
+
+/**
+ *  Floor section. More specific location within the floor. For example, if a
+ *  floor is divided into sections "A", "B", and "C", this field would identify
+ *  one of those values.
+ */
+@property(nonatomic, copy, nullable) NSString *floorSection;
+
+/**
+ *  Each entry can have a type which indicates standard types of that entry. For
+ *  example location could be of types default and desk. In addition to standard
+ *  type, an entry can have a custom type and can give it any name. Such types
+ *  should have "custom" as type and also have a customType value.
  */
 @property(nonatomic, copy, nullable) NSString *type;
 
@@ -2081,6 +2606,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 /** The domain to which the organization belongs to. */
 @property(nonatomic, copy, nullable) NSString *domain;
+
+/**
+ *  The full-time equivalent percent within the organization (100000 = 100%).
+ *
+ *  Uses NSNumber of intValue.
+ */
+@property(nonatomic, strong, nullable) NSNumber *fullTimeEquivalent;
 
 /** Location of the organization. This need not be fully qualified address. */
 @property(nonatomic, copy, nullable) NSString *location;
@@ -2198,13 +2730,16 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @interface GTLRDirectory_UserPosixAccount : GTLRObject
 
-/** The GECOS (user information) entry for this account. */
+/** A POSIX account field identifier. (Read-only) */
+@property(nonatomic, copy, nullable) NSString *accountId;
+
+/** The GECOS (user information) for this account. */
 @property(nonatomic, copy, nullable) NSString *gecos;
 
 /**
  *  The default group ID.
  *
- *  Uses NSNumber of intValue.
+ *  Uses NSNumber of unsignedLongLongValue.
  */
 @property(nonatomic, strong, nullable) NSNumber *gid;
 
@@ -2225,9 +2760,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, copy, nullable) NSString *systemId;
 
 /**
- *  The user ID.
+ *  The POSIX compliant user ID.
  *
- *  Uses NSNumber of intValue.
+ *  Uses NSNumber of unsignedLongLongValue.
  */
 @property(nonatomic, strong, nullable) NSNumber *uid;
 
@@ -2406,3 +2941,5 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 NS_ASSUME_NONNULL_END
+
+#pragma clang diagnostic pop

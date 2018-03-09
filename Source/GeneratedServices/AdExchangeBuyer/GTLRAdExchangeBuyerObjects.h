@@ -73,7 +73,14 @@
 @class GTLRAdExchangeBuyer_TargetingValueCreativeSize;
 @class GTLRAdExchangeBuyer_TargetingValueDayPartTargeting;
 @class GTLRAdExchangeBuyer_TargetingValueDayPartTargetingDayPart;
+@class GTLRAdExchangeBuyer_TargetingValueDemogAgeCriteria;
+@class GTLRAdExchangeBuyer_TargetingValueDemogGenderCriteria;
 @class GTLRAdExchangeBuyer_TargetingValueSize;
+
+// Generated comments include content from the discovery document; avoid them
+// causing warnings since clang's checks are some what arbitrary.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdocumentation"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -81,6 +88,17 @@ NS_ASSUME_NONNULL_BEGIN
  *  Configuration data for an Ad Exchange buyer account.
  */
 @interface GTLRAdExchangeBuyer_Account : GTLRObject
+
+/**
+ *  When this is false, bid requests that include a deal ID for a private
+ *  auction or preferred deal are always sent to your bidder. When true, all
+ *  active pretargeting configs will be applied to private auctions and
+ *  preferred deals. Programmatic Guaranteed deals (when enabled) are always
+ *  sent to your bidder.
+ *
+ *  Uses NSNumber of boolValue.
+ */
+@property(nonatomic, strong, nullable) NSNumber *applyPretargetingToNonGuaranteedDeals;
 
 /** Your bidder locations that have distinct URLs. */
 @property(nonatomic, strong, nullable) NSArray<GTLRAdExchangeBuyer_Account_BidderLocation_Item *> *bidderLocation;
@@ -147,8 +165,10 @@ NS_ASSUME_NONNULL_BEGIN
  *  - PROTOCOL_OPENRTB_2_2
  *  - PROTOCOL_OPENRTB_2_3
  *  - PROTOCOL_OPENRTB_2_4
+ *  - PROTOCOL_OPENRTB_2_5
  *  - PROTOCOL_OPENRTB_PROTOBUF_2_3
  *  - PROTOCOL_OPENRTB_PROTOBUF_2_4
+ *  - PROTOCOL_OPENRTB_PROTOBUF_2_5
  */
 @property(nonatomic, copy, nullable) NSString *bidProtocol;
 
@@ -500,7 +520,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  *  The HTML snippet that displays the ad when inserted in the web page. If set,
- *  videoURL should not be set.
+ *  videoURL, videoVastXML, and nativeAd should not be set.
  */
 @property(nonatomic, copy, nullable) NSString *HTMLSnippet;
 
@@ -517,8 +537,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, strong, nullable) NSArray<NSString *> *languages;
 
 /**
- *  If nativeAd is set, HTMLSnippet and the videoURL outside of nativeAd should
- *  not be set. (The videoURL inside nativeAd can be set.)
+ *  If nativeAd is set, HTMLSnippet, videoVastXML, and the videoURL outside of
+ *  nativeAd should not be set. (The videoURL inside nativeAd can be set.)
  */
 @property(nonatomic, strong, nullable) GTLRAdExchangeBuyer_Creative_NativeAd *nativeAd;
 
@@ -562,7 +582,8 @@ NS_ASSUME_NONNULL_BEGIN
  *  The granular status of this ad in specific contexts. A context here relates
  *  to where something ultimately serves (for example, a physical location, a
  *  platform, an HTTPS vs HTTP request, or the type of auction). Read-only. This
- *  field should not be set in requests.
+ *  field should not be set in requests. See the examples in the Creatives guide
+ *  for more details.
  */
 @property(nonatomic, strong, nullable) NSArray<GTLRAdExchangeBuyer_Creative_ServingRestrictions_Item *> *servingRestrictions;
 
@@ -583,10 +604,18 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, strong, nullable) NSNumber *version;
 
 /**
- *  The URL to fetch a video ad. If set, HTMLSnippet and the nativeAd should not
- *  be set. Note, this is different from resource.native_ad.video_url above.
+ *  The URL to fetch a video ad. If set, HTMLSnippet, videoVastXML, and nativeAd
+ *  should not be set. Note, this is different from resource.native_ad.video_url
+ *  above.
  */
 @property(nonatomic, copy, nullable) NSString *videoURL;
+
+/**
+ *  The contents of a VAST document for a video ad. This document should conform
+ *  to the VAST 2.0 or 3.0 standard. If set, HTMLSnippet, videoURL, and nativeAd
+ *  and should not be set.
+ */
+@property(nonatomic, copy, nullable) NSString *videoVastXML;
 
 /**
  *  Ad width.
@@ -634,8 +663,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 /**
- *  If nativeAd is set, HTMLSnippet and the videoURL outside of nativeAd should
- *  not be set. (The videoURL inside nativeAd can be set.)
+ *  If nativeAd is set, HTMLSnippet, videoVastXML, and the videoURL outside of
+ *  nativeAd should not be set. (The videoURL inside nativeAd can be set.)
  */
 @interface GTLRAdExchangeBuyer_Creative_NativeAd : GTLRObject
 
@@ -1120,7 +1149,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  *  The timestamp (in ms since epoch) when the original reservation price for
  *  the deal was first converted to DFP currency. This is used to convert the
- *  contracted price into advertiser's currency without discrepancy.
+ *  contracted price into buyer's currency without discrepancy.
  *
  *  Uses NSNumber of longLongValue.
  */
@@ -1506,6 +1535,14 @@ NS_ASSUME_NONNULL_BEGIN
  *  Uses NSNumber of boolValue.
  */
 @property(nonatomic, strong, nullable) NSNumber *isRfpTemplate;
+
+/**
+ *  True, if the buyside inventory setup is complete for this deal. (readonly,
+ *  except via OrderSetupCompleted action)
+ *
+ *  Uses NSNumber of boolValue.
+ */
+@property(nonatomic, strong, nullable) NSNumber *isSetupComplete;
 
 /**
  *  Identifies what kind of resource this is. Value: the fixed string
@@ -2155,17 +2192,19 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 /**
- *  Used to specify pricing rules for buyers/advertisers. Each PricePerBuyer in
- *  an product can become [0,1] deals. To check if there is a PricePerBuyer for
- *  a particular buyer or buyer/advertiser pair, we look for the most specific
- *  matching rule - we first look for a rule matching the buyer and advertiser,
- *  next a rule with the buyer but an empty advertiser list, and otherwise look
- *  for a matching rule where no buyer is set.
+ *  Used to specify pricing rules for buyers. Each PricePerBuyer in a product
+ *  can become [0,1] deals. To check if there is a PricePerBuyer for a
+ *  particular buyer we look for the most specific matching rule - we first look
+ *  for a rule matching the buyer and otherwise look for a matching rule where
+ *  no buyer is set.
  */
 @interface GTLRAdExchangeBuyer_PricePerBuyer : GTLRObject
 
 /** Optional access type for this buyer. */
 @property(nonatomic, copy, nullable) NSString *auctionTier;
+
+/** Reference to the buyer that will get billed. */
+@property(nonatomic, strong, nullable) GTLRAdExchangeBuyer_Buyer *billedBuyer;
 
 /**
  *  The buyer who will pay this price. If unset, all buyers can pay this price
@@ -2211,6 +2250,18 @@ NS_ASSUME_NONNULL_BEGIN
 @interface GTLRAdExchangeBuyer_Product : GTLRObject
 
 /**
+ *  The billed buyer corresponding to the buyer that created the offer.
+ *  (readonly, except on create)
+ */
+@property(nonatomic, strong, nullable) GTLRAdExchangeBuyer_Buyer *billedBuyer;
+
+/**
+ *  The buyer that created the offer if this is a buyer initiated offer
+ *  (readonly, except on create)
+ */
+@property(nonatomic, strong, nullable) GTLRAdExchangeBuyer_Buyer *buyer;
+
+/**
  *  Creation time in ms. since epoch (readonly)
  *
  *  Uses NSNumber of longLongValue.
@@ -2222,6 +2273,11 @@ NS_ASSUME_NONNULL_BEGIN
  *  (buyer-readonly)
  */
 @property(nonatomic, strong, nullable) NSArray<GTLRAdExchangeBuyer_ContactInformation *> *creatorContacts;
+
+/**
+ *  The role that created the offer. Set to BUYER for buyer initiated offers.
+ */
+@property(nonatomic, copy, nullable) NSString *creatorRole;
 
 /**
  *  The set of fields around delivery control that are interesting for a buyer
@@ -2405,7 +2461,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  *  True, if the buyside inventory setup is complete for this proposal.
- *  (readonly, except via OrderSetupCompleted action)
+ *  (readonly, except via OrderSetupCompleted action) Deprecated in favor of
+ *  deal level setup complete flag.
  *
  *  Uses NSNumber of boolValue.
  */
@@ -2474,7 +2531,7 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @interface GTLRAdExchangeBuyer_PublisherProfileApiProto : GTLRObject
 
-/** The account id of the seller. */
+/** Deprecated: use the seller.account_id. The account id of the seller. */
 @property(nonatomic, copy, nullable) NSString *accountId;
 
 /** Publisher provided info on its audience. */
@@ -2643,6 +2700,9 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property(nonatomic, strong, nullable) GTLRAdExchangeBuyer_TargetingValueDayPartTargeting *dayPartTargetingValue;
 
+@property(nonatomic, strong, nullable) GTLRAdExchangeBuyer_TargetingValueDemogAgeCriteria *demogAgeCriteriaValue;
+@property(nonatomic, strong, nullable) GTLRAdExchangeBuyer_TargetingValueDemogGenderCriteria *demogGenderCriteriaValue;
+
 /**
  *  The long value to exclude/include.
  *
@@ -2657,15 +2717,21 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 /**
- *  GTLRAdExchangeBuyer_TargetingValueCreativeSize
+ *  Next Id: 7
  */
 @interface GTLRAdExchangeBuyer_TargetingValueCreativeSize : GTLRObject
+
+/** The formats allowed by the publisher. */
+@property(nonatomic, strong, nullable) NSArray<NSString *> *allowedFormats;
 
 /** For video size type, the list of companion sizes. */
 @property(nonatomic, strong, nullable) NSArray<GTLRAdExchangeBuyer_TargetingValueSize *> *companionSizes;
 
 /** The Creative size type. */
 @property(nonatomic, copy, nullable) NSString *creativeSizeType;
+
+/** The native template for native ad. */
+@property(nonatomic, copy, nullable) NSString *nativeTemplate;
 
 /**
  *  For regular or video creative size type, specifies the size of the creative.
@@ -2728,6 +2794,26 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 /**
+ *  GTLRAdExchangeBuyer_TargetingValueDemogAgeCriteria
+ */
+@interface GTLRAdExchangeBuyer_TargetingValueDemogAgeCriteria : GTLRObject
+
+@property(nonatomic, strong, nullable) NSArray<NSString *> *demogAgeCriteriaIds;
+
+@end
+
+
+/**
+ *  GTLRAdExchangeBuyer_TargetingValueDemogGenderCriteria
+ */
+@interface GTLRAdExchangeBuyer_TargetingValueDemogGenderCriteria : GTLRObject
+
+@property(nonatomic, strong, nullable) NSArray<NSString *> *demogGenderCriteriaIds;
+
+@end
+
+
+/**
  *  GTLRAdExchangeBuyer_TargetingValueSize
  */
 @interface GTLRAdExchangeBuyer_TargetingValueSize : GTLRObject
@@ -2773,3 +2859,5 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 NS_ASSUME_NONNULL_END
+
+#pragma clang diagnostic pop

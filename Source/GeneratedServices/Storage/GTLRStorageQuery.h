@@ -27,6 +27,11 @@
 @class GTLRStorage_ObjectAccessControl;
 @class GTLRStorage_Policy;
 
+// Generated comments include content from the discovery document; avoid them
+// causing warnings since clang's checks are some what arbitrary.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdocumentation"
+
 NS_ASSUME_NONNULL_BEGIN
 
 // ----------------------------------------------------------------------------
@@ -194,6 +199,12 @@ GTLR_EXTERN NSString * const kGTLRStorageProjectionNoAcl;
 @property(nonatomic, copy, nullable) NSString *entity;
 
 /**
+ *  The project to be billed for this request. Required for Requester Pays
+ *  buckets.
+ */
+@property(nonatomic, copy, nullable) NSString *userProject;
+
+/**
  *  Upon successful completion, the callback's object and error parameters will
  *  be nil. This query does not fetch an object.
  *
@@ -235,6 +246,12 @@ GTLR_EXTERN NSString * const kGTLRStorageProjectionNoAcl;
 @property(nonatomic, copy, nullable) NSString *entity;
 
 /**
+ *  The project to be billed for this request. Required for Requester Pays
+ *  buckets.
+ */
+@property(nonatomic, copy, nullable) NSString *userProject;
+
+/**
  *  Fetches a @c GTLRStorage_BucketAccessControl.
  *
  *  Returns the ACL entry for the specified entity on the specified bucket.
@@ -268,6 +285,12 @@ GTLR_EXTERN NSString * const kGTLRStorageProjectionNoAcl;
 @property(nonatomic, copy, nullable) NSString *bucket;
 
 /**
+ *  The project to be billed for this request. Required for Requester Pays
+ *  buckets.
+ */
+@property(nonatomic, copy, nullable) NSString *userProject;
+
+/**
  *  Fetches a @c GTLRStorage_BucketAccessControl.
  *
  *  Creates a new ACL entry on the specified bucket.
@@ -298,6 +321,12 @@ GTLR_EXTERN NSString * const kGTLRStorageProjectionNoAcl;
 
 /** Name of a bucket. */
 @property(nonatomic, copy, nullable) NSString *bucket;
+
+/**
+ *  The project to be billed for this request. Required for Requester Pays
+ *  buckets.
+ */
+@property(nonatomic, copy, nullable) NSString *userProject;
 
 /**
  *  Fetches a @c GTLRStorage_BucketAccessControls.
@@ -334,6 +363,12 @@ GTLR_EXTERN NSString * const kGTLRStorageProjectionNoAcl;
  *  group-groupId, group-emailAddress, allUsers, or allAuthenticatedUsers.
  */
 @property(nonatomic, copy, nullable) NSString *entity;
+
+/**
+ *  The project to be billed for this request. Required for Requester Pays
+ *  buckets.
+ */
+@property(nonatomic, copy, nullable) NSString *userProject;
 
 /**
  *  Fetches a @c GTLRStorage_BucketAccessControl.
@@ -377,6 +412,12 @@ GTLR_EXTERN NSString * const kGTLRStorageProjectionNoAcl;
  *  group-groupId, group-emailAddress, allUsers, or allAuthenticatedUsers.
  */
 @property(nonatomic, copy, nullable) NSString *entity;
+
+/**
+ *  The project to be billed for this request. Required for Requester Pays
+ *  buckets.
+ */
+@property(nonatomic, copy, nullable) NSString *userProject;
 
 /**
  *  Fetches a @c GTLRStorage_BucketAccessControl.
@@ -425,6 +466,12 @@ GTLR_EXTERN NSString * const kGTLRStorageProjectionNoAcl;
  *  value.
  */
 @property(nonatomic, assign) long long ifMetagenerationNotMatch;
+
+/**
+ *  The project to be billed for this request. Required for Requester Pays
+ *  buckets.
+ */
+@property(nonatomic, copy, nullable) NSString *userProject;
 
 /**
  *  Upon successful completion, the callback's object and error parameters will
@@ -482,6 +529,12 @@ GTLR_EXTERN NSString * const kGTLRStorageProjectionNoAcl;
 @property(nonatomic, copy, nullable) NSString *projection;
 
 /**
+ *  The project to be billed for this request. Required for Requester Pays
+ *  buckets.
+ */
+@property(nonatomic, copy, nullable) NSString *userProject;
+
+/**
  *  Fetches a @c GTLRStorage_Bucket.
  *
  *  Returns metadata for the specified bucket.
@@ -512,6 +565,12 @@ GTLR_EXTERN NSString * const kGTLRStorageProjectionNoAcl;
 
 /** Name of a bucket. */
 @property(nonatomic, copy, nullable) NSString *bucket;
+
+/**
+ *  The project to be billed for this request. Required for Requester Pays
+ *  buckets.
+ */
+@property(nonatomic, copy, nullable) NSString *userProject;
 
 /**
  *  Fetches a @c GTLRStorage_Policy.
@@ -596,6 +655,9 @@ GTLR_EXTERN NSString * const kGTLRStorageProjectionNoAcl;
  */
 @property(nonatomic, copy, nullable) NSString *projection;
 
+/** The project to be billed for this request. */
+@property(nonatomic, copy, nullable) NSString *userProject;
+
 /**
  *  Fetches a @c GTLRStorage_Bucket.
  *
@@ -657,6 +719,9 @@ GTLR_EXTERN NSString * const kGTLRStorageProjectionNoAcl;
  */
 @property(nonatomic, copy, nullable) NSString *projection;
 
+/** The project to be billed for this request. */
+@property(nonatomic, copy, nullable) NSString *userProject;
+
 /**
  *  Fetches a @c GTLRStorage_Buckets.
  *
@@ -671,6 +736,51 @@ GTLR_EXTERN NSString * const kGTLRStorageProjectionNoAcl;
  *        information.
  */
 + (instancetype)queryWithProject:(NSString *)project;
+
+@end
+
+/**
+ *  Locks retention policy on a bucket.
+ *
+ *  Method: storage.buckets.lockRetentionPolicy
+ *
+ *  Authorization scope(s):
+ *    @c kGTLRAuthScopeStorageCloudPlatform
+ *    @c kGTLRAuthScopeStorageDevstorageFullControl
+ *    @c kGTLRAuthScopeStorageDevstorageReadWrite
+ */
+@interface GTLRStorageQuery_BucketsLockRetentionPolicy : GTLRStorageQuery
+// Previous library name was
+//   +[GTLQueryStorage queryForBucketsLockRetentionPolicyWithbucket:ifMetagenerationMatch:]
+
+/** Name of a bucket. */
+@property(nonatomic, copy, nullable) NSString *bucket;
+
+/**
+ *  Makes the operation conditional on whether bucket's current metageneration
+ *  matches the given value.
+ */
+@property(nonatomic, assign) long long ifMetagenerationMatch;
+
+/**
+ *  The project to be billed for this request. Required for Requester Pays
+ *  buckets.
+ */
+@property(nonatomic, copy, nullable) NSString *userProject;
+
+/**
+ *  Fetches a @c GTLRStorage_Bucket.
+ *
+ *  Locks retention policy on a bucket.
+ *
+ *  @param bucket Name of a bucket.
+ *  @param ifMetagenerationMatch Makes the operation conditional on whether
+ *    bucket's current metageneration matches the given value.
+ *
+ *  @returns GTLRStorageQuery_BucketsLockRetentionPolicy
+ */
++ (instancetype)queryWithBucket:(NSString *)bucket
+          ifMetagenerationMatch:(long long)ifMetagenerationMatch;
 
 @end
 
@@ -757,6 +867,12 @@ GTLR_EXTERN NSString * const kGTLRStorageProjectionNoAcl;
 @property(nonatomic, copy, nullable) NSString *projection;
 
 /**
+ *  The project to be billed for this request. Required for Requester Pays
+ *  buckets.
+ */
+@property(nonatomic, copy, nullable) NSString *userProject;
+
+/**
  *  Fetches a @c GTLRStorage_Bucket.
  *
  *  Updates a bucket. Changes to the bucket will be readable immediately after
@@ -789,6 +905,12 @@ GTLR_EXTERN NSString * const kGTLRStorageProjectionNoAcl;
 
 /** Name of a bucket. */
 @property(nonatomic, copy, nullable) NSString *bucket;
+
+/**
+ *  The project to be billed for this request. Required for Requester Pays
+ *  buckets.
+ */
+@property(nonatomic, copy, nullable) NSString *userProject;
 
 /**
  *  Fetches a @c GTLRStorage_Policy.
@@ -827,6 +949,12 @@ GTLR_EXTERN NSString * const kGTLRStorageProjectionNoAcl;
 
 /** Permissions to test. */
 @property(nonatomic, strong, nullable) NSArray<NSString *> *permissions;
+
+/**
+ *  The project to be billed for this request. Required for Requester Pays
+ *  buckets.
+ */
+@property(nonatomic, copy, nullable) NSString *userProject;
 
 /**
  *  Fetches a @c GTLRStorage_TestIamPermissionsResponse.
@@ -926,6 +1054,12 @@ GTLR_EXTERN NSString * const kGTLRStorageProjectionNoAcl;
 @property(nonatomic, copy, nullable) NSString *projection;
 
 /**
+ *  The project to be billed for this request. Required for Requester Pays
+ *  buckets.
+ */
+@property(nonatomic, copy, nullable) NSString *userProject;
+
+/**
  *  Fetches a @c GTLRStorage_Bucket.
  *
  *  Updates a bucket. Changes to the bucket will be readable immediately after
@@ -995,6 +1129,12 @@ GTLR_EXTERN NSString * const kGTLRStorageProjectionNoAcl;
 @property(nonatomic, copy, nullable) NSString *entity;
 
 /**
+ *  The project to be billed for this request. Required for Requester Pays
+ *  buckets.
+ */
+@property(nonatomic, copy, nullable) NSString *userProject;
+
+/**
  *  Upon successful completion, the callback's object and error parameters will
  *  be nil. This query does not fetch an object.
  *
@@ -1037,6 +1177,12 @@ GTLR_EXTERN NSString * const kGTLRStorageProjectionNoAcl;
 @property(nonatomic, copy, nullable) NSString *entity;
 
 /**
+ *  The project to be billed for this request. Required for Requester Pays
+ *  buckets.
+ */
+@property(nonatomic, copy, nullable) NSString *userProject;
+
+/**
  *  Fetches a @c GTLRStorage_ObjectAccessControl.
  *
  *  Returns the default object ACL entry for the specified entity on the
@@ -1069,6 +1215,12 @@ GTLR_EXTERN NSString * const kGTLRStorageProjectionNoAcl;
 
 /** Name of a bucket. */
 @property(nonatomic, copy, nullable) NSString *bucket;
+
+/**
+ *  The project to be billed for this request. Required for Requester Pays
+ *  buckets.
+ */
+@property(nonatomic, copy, nullable) NSString *userProject;
 
 /**
  *  Fetches a @c GTLRStorage_ObjectAccessControl.
@@ -1115,6 +1267,12 @@ GTLR_EXTERN NSString * const kGTLRStorageProjectionNoAcl;
 @property(nonatomic, assign) long long ifMetagenerationNotMatch;
 
 /**
+ *  The project to be billed for this request. Required for Requester Pays
+ *  buckets.
+ */
+@property(nonatomic, copy, nullable) NSString *userProject;
+
+/**
  *  Fetches a @c GTLRStorage_ObjectAccessControls.
  *
  *  Retrieves default object ACL entries on the specified bucket.
@@ -1149,6 +1307,12 @@ GTLR_EXTERN NSString * const kGTLRStorageProjectionNoAcl;
  *  group-groupId, group-emailAddress, allUsers, or allAuthenticatedUsers.
  */
 @property(nonatomic, copy, nullable) NSString *entity;
+
+/**
+ *  The project to be billed for this request. Required for Requester Pays
+ *  buckets.
+ */
+@property(nonatomic, copy, nullable) NSString *userProject;
 
 /**
  *  Fetches a @c GTLRStorage_ObjectAccessControl.
@@ -1194,6 +1358,12 @@ GTLR_EXTERN NSString * const kGTLRStorageProjectionNoAcl;
 @property(nonatomic, copy, nullable) NSString *entity;
 
 /**
+ *  The project to be billed for this request. Required for Requester Pays
+ *  buckets.
+ */
+@property(nonatomic, copy, nullable) NSString *userProject;
+
+/**
  *  Fetches a @c GTLRStorage_ObjectAccessControl.
  *
  *  Updates a default object ACL entry on the specified bucket.
@@ -1234,6 +1404,12 @@ GTLR_EXTERN NSString * const kGTLRStorageProjectionNoAcl;
 @property(nonatomic, copy, nullable) NSString *notification;
 
 /**
+ *  The project to be billed for this request. Required for Requester Pays
+ *  buckets.
+ */
+@property(nonatomic, copy, nullable) NSString *userProject;
+
+/**
  *  Upon successful completion, the callback's object and error parameters will
  *  be nil. This query does not fetch an object.
  *
@@ -1272,6 +1448,12 @@ GTLR_EXTERN NSString * const kGTLRStorageProjectionNoAcl;
 @property(nonatomic, copy, nullable) NSString *notification;
 
 /**
+ *  The project to be billed for this request. Required for Requester Pays
+ *  buckets.
+ */
+@property(nonatomic, copy, nullable) NSString *userProject;
+
+/**
  *  Fetches a @c GTLRStorage_Notification.
  *
  *  View a notification configuration.
@@ -1304,6 +1486,12 @@ GTLR_EXTERN NSString * const kGTLRStorageProjectionNoAcl;
 @property(nonatomic, copy, nullable) NSString *bucket;
 
 /**
+ *  The project to be billed for this request. Required for Requester Pays
+ *  buckets.
+ */
+@property(nonatomic, copy, nullable) NSString *userProject;
+
+/**
  *  Fetches a @c GTLRStorage_Notification.
  *
  *  Creates a notification subscription for a given bucket.
@@ -1334,15 +1522,21 @@ GTLR_EXTERN NSString * const kGTLRStorageProjectionNoAcl;
 // Previous library name was
 //   +[GTLQueryStorage queryForNotificationsListWithbucket:]
 
-/** Name of a GCS bucket. */
+/** Name of a Google Cloud Storage bucket. */
 @property(nonatomic, copy, nullable) NSString *bucket;
+
+/**
+ *  The project to be billed for this request. Required for Requester Pays
+ *  buckets.
+ */
+@property(nonatomic, copy, nullable) NSString *userProject;
 
 /**
  *  Fetches a @c GTLRStorage_Notifications.
  *
  *  Retrieves a list of notification subscriptions for a given bucket.
  *
- *  @param bucket Name of a GCS bucket.
+ *  @param bucket Name of a Google Cloud Storage bucket.
  *
  *  @returns GTLRStorageQuery_NotificationsList
  */
@@ -1384,6 +1578,12 @@ GTLR_EXTERN NSString * const kGTLRStorageProjectionNoAcl;
  *  be path safe, see Encoding URI Path Parts.
  */
 @property(nonatomic, copy, nullable) NSString *object;
+
+/**
+ *  The project to be billed for this request. Required for Requester Pays
+ *  buckets.
+ */
+@property(nonatomic, copy, nullable) NSString *userProject;
 
 /**
  *  Upon successful completion, the callback's object and error parameters will
@@ -1442,6 +1642,12 @@ GTLR_EXTERN NSString * const kGTLRStorageProjectionNoAcl;
 @property(nonatomic, copy, nullable) NSString *object;
 
 /**
+ *  The project to be billed for this request. Required for Requester Pays
+ *  buckets.
+ */
+@property(nonatomic, copy, nullable) NSString *userProject;
+
+/**
  *  Fetches a @c GTLRStorage_ObjectAccessControl.
  *
  *  Returns the ACL entry for the specified entity on the specified object.
@@ -1490,6 +1696,12 @@ GTLR_EXTERN NSString * const kGTLRStorageProjectionNoAcl;
 @property(nonatomic, copy, nullable) NSString *object;
 
 /**
+ *  The project to be billed for this request. Required for Requester Pays
+ *  buckets.
+ */
+@property(nonatomic, copy, nullable) NSString *userProject;
+
+/**
  *  Fetches a @c GTLRStorage_ObjectAccessControl.
  *
  *  Creates a new ACL entry on the specified object.
@@ -1497,14 +1709,14 @@ GTLR_EXTERN NSString * const kGTLRStorageProjectionNoAcl;
  *  @param object The @c GTLRStorage_ObjectAccessControl to include in the
  *    query.
  *  @param bucket Name of a bucket.
- *  @param object Name of the object. For information about how to URL encode
- *    object names to be path safe, see Encoding URI Path Parts.
+ *  @param object_param Name of the object. For information about how to URL
+ *    encode object names to be path safe, see Encoding URI Path Parts.
  *
  *  @returns GTLRStorageQuery_ObjectAccessControlsInsert
  */
 + (instancetype)queryWithObject:(GTLRStorage_ObjectAccessControl *)object
                          bucket:(NSString *)bucket
-                         object:(NSString *)object;
+                         object:(NSString *)object_param;
 
 @end
 
@@ -1535,6 +1747,12 @@ GTLR_EXTERN NSString * const kGTLRStorageProjectionNoAcl;
  *  be path safe, see Encoding URI Path Parts.
  */
 @property(nonatomic, copy, nullable) NSString *object;
+
+/**
+ *  The project to be billed for this request. Required for Requester Pays
+ *  buckets.
+ */
+@property(nonatomic, copy, nullable) NSString *userProject;
 
 /**
  *  Fetches a @c GTLRStorage_ObjectAccessControls.
@@ -1588,6 +1806,12 @@ GTLR_EXTERN NSString * const kGTLRStorageProjectionNoAcl;
 @property(nonatomic, copy, nullable) NSString *object;
 
 /**
+ *  The project to be billed for this request. Required for Requester Pays
+ *  buckets.
+ */
+@property(nonatomic, copy, nullable) NSString *userProject;
+
+/**
  *  Fetches a @c GTLRStorage_ObjectAccessControl.
  *
  *  Updates an ACL entry on the specified object. This method supports patch
@@ -1596,8 +1820,8 @@ GTLR_EXTERN NSString * const kGTLRStorageProjectionNoAcl;
  *  @param object The @c GTLRStorage_ObjectAccessControl to include in the
  *    query.
  *  @param bucket Name of a bucket.
- *  @param object Name of the object. For information about how to URL encode
- *    object names to be path safe, see Encoding URI Path Parts.
+ *  @param object_param Name of the object. For information about how to URL
+ *    encode object names to be path safe, see Encoding URI Path Parts.
  *  @param entity The entity holding the permission. Can be user-userId,
  *    user-emailAddress, group-groupId, group-emailAddress, allUsers, or
  *    allAuthenticatedUsers.
@@ -1606,7 +1830,7 @@ GTLR_EXTERN NSString * const kGTLRStorageProjectionNoAcl;
  */
 + (instancetype)queryWithObject:(GTLRStorage_ObjectAccessControl *)object
                          bucket:(NSString *)bucket
-                         object:(NSString *)object
+                         object:(NSString *)object_param
                          entity:(NSString *)entity;
 
 @end
@@ -1646,6 +1870,12 @@ GTLR_EXTERN NSString * const kGTLRStorageProjectionNoAcl;
 @property(nonatomic, copy, nullable) NSString *object;
 
 /**
+ *  The project to be billed for this request. Required for Requester Pays
+ *  buckets.
+ */
+@property(nonatomic, copy, nullable) NSString *userProject;
+
+/**
  *  Fetches a @c GTLRStorage_ObjectAccessControl.
  *
  *  Updates an ACL entry on the specified object.
@@ -1653,8 +1883,8 @@ GTLR_EXTERN NSString * const kGTLRStorageProjectionNoAcl;
  *  @param object The @c GTLRStorage_ObjectAccessControl to include in the
  *    query.
  *  @param bucket Name of a bucket.
- *  @param object Name of the object. For information about how to URL encode
- *    object names to be path safe, see Encoding URI Path Parts.
+ *  @param object_param Name of the object. For information about how to URL
+ *    encode object names to be path safe, see Encoding URI Path Parts.
  *  @param entity The entity holding the permission. Can be user-userId,
  *    user-emailAddress, group-groupId, group-emailAddress, allUsers, or
  *    allAuthenticatedUsers.
@@ -1663,7 +1893,7 @@ GTLR_EXTERN NSString * const kGTLRStorageProjectionNoAcl;
  */
 + (instancetype)queryWithObject:(GTLRStorage_ObjectAccessControl *)object
                          bucket:(NSString *)bucket
-                         object:(NSString *)object
+                         object:(NSString *)object_param
                          entity:(NSString *)entity;
 
 @end
@@ -1717,7 +1947,8 @@ GTLR_EXTERN NSString * const kGTLRStorageProjectionNoAcl;
 
 /**
  *  Makes the operation conditional on whether the object's current generation
- *  matches the given value.
+ *  matches the given value. Setting to 0 makes the operation succeed only if
+ *  there are no live versions of the object.
  */
 @property(nonatomic, assign) long long ifGenerationMatch;
 
@@ -1726,6 +1957,20 @@ GTLR_EXTERN NSString * const kGTLRStorageProjectionNoAcl;
  *  metageneration matches the given value.
  */
 @property(nonatomic, assign) long long ifMetagenerationMatch;
+
+/**
+ *  Resource name of the Cloud KMS key, of the form
+ *  projects/my-project/locations/global/keyRings/my-kr/cryptoKeys/my-key, that
+ *  will be used to encrypt the object. Overrides the object metadata's
+ *  kms_key_name value, if any.
+ */
+@property(nonatomic, copy, nullable) NSString *kmsKeyName;
+
+/**
+ *  The project to be billed for this request. Required for Requester Pays
+ *  buckets.
+ */
+@property(nonatomic, copy, nullable) NSString *userProject;
 
 /**
  *  Fetches a @c GTLRStorage_Object.
@@ -1744,24 +1989,6 @@ GTLR_EXTERN NSString * const kGTLRStorageProjectionNoAcl;
 + (instancetype)queryWithObject:(GTLRStorage_ComposeRequest *)object
               destinationBucket:(NSString *)destinationBucket
               destinationObject:(NSString *)destinationObject;
-
-/**
- *  Fetches the requested resource data as a @c GTLRDataObject.
- *
- *  Concatenates a list of existing objects into a new object in the same
- *  bucket.
- *
- *  @param object The @c GTLRStorage_ComposeRequest to include in the query.
- *  @param destinationBucket Name of the bucket in which to store the new
- *    object.
- *  @param destinationObject Name of the new object. For information about how
- *    to URL encode object names to be path safe, see Encoding URI Path Parts.
- *
- *  @returns GTLRStorageQuery_ObjectsCompose
- */
-+ (instancetype)queryForMediaWithObject:(GTLRStorage_ComposeRequest *)object
-                      destinationBucket:(NSString *)destinationBucket
-                      destinationObject:(NSString *)destinationObject;
 
 @end
 
@@ -1818,13 +2045,16 @@ GTLR_EXTERN NSString * const kGTLRStorageProjectionNoAcl;
 
 /**
  *  Makes the operation conditional on whether the destination object's current
- *  generation matches the given value.
+ *  generation matches the given value. Setting to 0 makes the operation succeed
+ *  only if there are no live versions of the object.
  */
 @property(nonatomic, assign) long long ifGenerationMatch;
 
 /**
  *  Makes the operation conditional on whether the destination object's current
- *  generation does not match the given value.
+ *  generation does not match the given value. If no live object exists, the
+ *  precondition fails. Setting to 0 makes the operation succeed only if there
+ *  is a live version of the object.
  */
 @property(nonatomic, assign) long long ifGenerationNotMatch;
 
@@ -1841,14 +2071,14 @@ GTLR_EXTERN NSString * const kGTLRStorageProjectionNoAcl;
 @property(nonatomic, assign) long long ifMetagenerationNotMatch;
 
 /**
- *  Makes the operation conditional on whether the source object's generation
- *  matches the given value.
+ *  Makes the operation conditional on whether the source object's current
+ *  generation matches the given value.
  */
 @property(nonatomic, assign) long long ifSourceGenerationMatch;
 
 /**
- *  Makes the operation conditional on whether the source object's generation
- *  does not match the given value.
+ *  Makes the operation conditional on whether the source object's current
+ *  generation does not match the given value.
  */
 @property(nonatomic, assign) long long ifSourceGenerationNotMatch;
 
@@ -1891,6 +2121,12 @@ GTLR_EXTERN NSString * const kGTLRStorageProjectionNoAcl;
 @property(nonatomic, copy, nullable) NSString *sourceObject;
 
 /**
+ *  The project to be billed for this request. Required for Requester Pays
+ *  buckets.
+ */
+@property(nonatomic, copy, nullable) NSString *userProject;
+
+/**
  *  Fetches a @c GTLRStorage_Object.
  *
  *  Copies a source object to a destination object. Optionally overrides
@@ -1915,32 +2151,6 @@ GTLR_EXTERN NSString * const kGTLRStorageProjectionNoAcl;
                    sourceObject:(NSString *)sourceObject
               destinationBucket:(NSString *)destinationBucket
               destinationObject:(NSString *)destinationObject;
-
-/**
- *  Fetches the requested resource data as a @c GTLRDataObject.
- *
- *  Copies a source object to a destination object. Optionally overrides
- *  metadata.
- *
- *  @param object The @c GTLRStorage_Object to include in the query.
- *  @param sourceBucket Name of the bucket in which to find the source object.
- *  @param sourceObject Name of the source object. For information about how to
- *    URL encode object names to be path safe, see Encoding URI Path Parts.
- *  @param destinationBucket Name of the bucket in which to store the new
- *    object. Overrides the provided object metadata's bucket value, if any.For
- *    information about how to URL encode object names to be path safe, see
- *    Encoding URI Path Parts.
- *  @param destinationObject Name of the new object. Required when the object
- *    metadata is not otherwise provided. Overrides the object metadata's name
- *    value, if any.
- *
- *  @returns GTLRStorageQuery_ObjectsCopy
- */
-+ (instancetype)queryForMediaWithObject:(GTLRStorage_Object *)object
-                           sourceBucket:(NSString *)sourceBucket
-                           sourceObject:(NSString *)sourceObject
-                      destinationBucket:(NSString *)destinationBucket
-                      destinationObject:(NSString *)destinationObject;
 
 @end
 
@@ -1970,13 +2180,16 @@ GTLR_EXTERN NSString * const kGTLRStorageProjectionNoAcl;
 
 /**
  *  Makes the operation conditional on whether the object's current generation
- *  matches the given value.
+ *  matches the given value. Setting to 0 makes the operation succeed only if
+ *  there are no live versions of the object.
  */
 @property(nonatomic, assign) long long ifGenerationMatch;
 
 /**
  *  Makes the operation conditional on whether the object's current generation
- *  does not match the given value.
+ *  does not match the given value. If no live object exists, the precondition
+ *  fails. Setting to 0 makes the operation succeed only if there is a live
+ *  version of the object.
  */
 @property(nonatomic, assign) long long ifGenerationNotMatch;
 
@@ -1997,6 +2210,12 @@ GTLR_EXTERN NSString * const kGTLRStorageProjectionNoAcl;
  *  be path safe, see Encoding URI Path Parts.
  */
 @property(nonatomic, copy, nullable) NSString *object;
+
+/**
+ *  The project to be billed for this request. Required for Requester Pays
+ *  buckets.
+ */
+@property(nonatomic, copy, nullable) NSString *userProject;
 
 /**
  *  Upon successful completion, the callback's object and error parameters will
@@ -2042,14 +2261,17 @@ GTLR_EXTERN NSString * const kGTLRStorageProjectionNoAcl;
 @property(nonatomic, assign) long long generation;
 
 /**
- *  Makes the operation conditional on whether the object's generation matches
- *  the given value.
+ *  Makes the operation conditional on whether the object's current generation
+ *  matches the given value. Setting to 0 makes the operation succeed only if
+ *  there are no live versions of the object.
  */
 @property(nonatomic, assign) long long ifGenerationMatch;
 
 /**
- *  Makes the operation conditional on whether the object's generation does not
- *  match the given value.
+ *  Makes the operation conditional on whether the object's current generation
+ *  does not match the given value. If no live object exists, the precondition
+ *  fails. Setting to 0 makes the operation succeed only if there is a live
+ *  version of the object.
  */
 @property(nonatomic, assign) long long ifGenerationNotMatch;
 
@@ -2080,6 +2302,12 @@ GTLR_EXTERN NSString * const kGTLRStorageProjectionNoAcl;
  *        "noAcl")
  */
 @property(nonatomic, copy, nullable) NSString *projection;
+
+/**
+ *  The project to be billed for this request. Required for Requester Pays
+ *  buckets.
+ */
+@property(nonatomic, copy, nullable) NSString *userProject;
 
 /**
  *  Fetches a @c GTLRStorage_Object.
@@ -2143,6 +2371,12 @@ GTLR_EXTERN NSString * const kGTLRStorageProjectionNoAcl;
 @property(nonatomic, copy, nullable) NSString *object;
 
 /**
+ *  The project to be billed for this request. Required for Requester Pays
+ *  buckets.
+ */
+@property(nonatomic, copy, nullable) NSString *userProject;
+
+/**
  *  Fetches a @c GTLRStorage_Policy.
  *
  *  Returns an IAM policy for the specified object.
@@ -2188,13 +2422,16 @@ GTLR_EXTERN NSString * const kGTLRStorageProjectionNoAcl;
 
 /**
  *  Makes the operation conditional on whether the object's current generation
- *  matches the given value.
+ *  matches the given value. Setting to 0 makes the operation succeed only if
+ *  there are no live versions of the object.
  */
 @property(nonatomic, assign) long long ifGenerationMatch;
 
 /**
  *  Makes the operation conditional on whether the object's current generation
- *  does not match the given value.
+ *  does not match the given value. If no live object exists, the precondition
+ *  fails. Setting to 0 makes the operation succeed only if there is a live
+ *  version of the object.
  */
 @property(nonatomic, assign) long long ifGenerationNotMatch;
 
@@ -2209,6 +2446,15 @@ GTLR_EXTERN NSString * const kGTLRStorageProjectionNoAcl;
  *  metageneration does not match the given value.
  */
 @property(nonatomic, assign) long long ifMetagenerationNotMatch;
+
+/**
+ *  Resource name of the Cloud KMS key, of the form
+ *  projects/my-project/locations/global/keyRings/my-kr/cryptoKeys/my-key, that
+ *  will be used to encrypt the object. Overrides the object metadata's
+ *  kms_key_name value, if any. Limited availability; usable only by enabled
+ *  projects.
+ */
+@property(nonatomic, copy, nullable) NSString *kmsKeyName;
 
 /**
  *  Name of the object. Required when the object metadata is not otherwise
@@ -2253,6 +2499,12 @@ GTLR_EXTERN NSString * const kGTLRStorageProjectionNoAcl;
 @property(nonatomic, copy, nullable) NSString *projection;
 
 /**
+ *  The project to be billed for this request. Required for Requester Pays
+ *  buckets.
+ */
+@property(nonatomic, copy, nullable) NSString *userProject;
+
+/**
  *  Fetches a @c GTLRStorage_Object.
  *
  *  Stores a new object and metadata.
@@ -2268,23 +2520,6 @@ GTLR_EXTERN NSString * const kGTLRStorageProjectionNoAcl;
 + (instancetype)queryWithObject:(GTLRStorage_Object *)object
                          bucket:(NSString *)bucket
                uploadParameters:(nullable GTLRUploadParameters *)uploadParameters;
-
-/**
- *  Fetches the requested resource data as a @c GTLRDataObject.
- *
- *  Stores a new object and metadata.
- *
- *  @param object The @c GTLRStorage_Object to include in the query.
- *  @param bucket Name of the bucket in which to store the new object. Overrides
- *    the provided object metadata's bucket value, if any.
- *  @param uploadParameters The media to include in this query. Accepted MIME
- *    type: * / *
- *
- *  @returns GTLRStorageQuery_ObjectsInsert
- */
-+ (instancetype)queryForMediaWithObject:(GTLRStorage_Object *)object
-                                 bucket:(NSString *)bucket
-                       uploadParameters:(nullable GTLRUploadParameters *)uploadParameters;
 
 @end
 
@@ -2346,6 +2581,12 @@ GTLR_EXTERN NSString * const kGTLRStorageProjectionNoAcl;
 @property(nonatomic, copy, nullable) NSString *projection;
 
 /**
+ *  The project to be billed for this request. Required for Requester Pays
+ *  buckets.
+ */
+@property(nonatomic, copy, nullable) NSString *userProject;
+
+/**
  *  If true, lists all versions of an object as distinct results. The default is
  *  false. For more information, see Object Versioning.
  */
@@ -2369,7 +2610,7 @@ GTLR_EXTERN NSString * const kGTLRStorageProjectionNoAcl;
 @end
 
 /**
- *  Updates an object's metadata. This method supports patch semantics.
+ *  Patches an object's metadata.
  *
  *  Method: storage.objects.patch
  *
@@ -2392,13 +2633,16 @@ GTLR_EXTERN NSString * const kGTLRStorageProjectionNoAcl;
 
 /**
  *  Makes the operation conditional on whether the object's current generation
- *  matches the given value.
+ *  matches the given value. Setting to 0 makes the operation succeed only if
+ *  there are no live versions of the object.
  */
 @property(nonatomic, assign) long long ifGenerationMatch;
 
 /**
  *  Makes the operation conditional on whether the object's current generation
- *  does not match the given value.
+ *  does not match the given value. If no live object exists, the precondition
+ *  fails. Setting to 0 makes the operation succeed only if there is a live
+ *  version of the object.
  */
 @property(nonatomic, assign) long long ifGenerationNotMatch;
 
@@ -2453,21 +2697,24 @@ GTLR_EXTERN NSString * const kGTLRStorageProjectionNoAcl;
  */
 @property(nonatomic, copy, nullable) NSString *projection;
 
+/** The project to be billed for this request, for Requester Pays buckets. */
+@property(nonatomic, copy, nullable) NSString *userProject;
+
 /**
  *  Fetches a @c GTLRStorage_Object.
  *
- *  Updates an object's metadata. This method supports patch semantics.
+ *  Patches an object's metadata.
  *
  *  @param object The @c GTLRStorage_Object to include in the query.
  *  @param bucket Name of the bucket in which the object resides.
- *  @param object Name of the object. For information about how to URL encode
- *    object names to be path safe, see Encoding URI Path Parts.
+ *  @param object_param Name of the object. For information about how to URL
+ *    encode object names to be path safe, see Encoding URI Path Parts.
  *
  *  @returns GTLRStorageQuery_ObjectsPatch
  */
 + (instancetype)queryWithObject:(GTLRStorage_Object *)object
                          bucket:(NSString *)bucket
-                         object:(NSString *)object;
+                         object:(NSString *)object_param;
 
 @end
 
@@ -2491,6 +2738,14 @@ GTLR_EXTERN NSString * const kGTLRStorageProjectionNoAcl;
  *  object metadata's bucket value, if any.
  */
 @property(nonatomic, copy, nullable) NSString *destinationBucket;
+
+/**
+ *  Resource name of the Cloud KMS key, of the form
+ *  projects/my-project/locations/global/keyRings/my-kr/cryptoKeys/my-key, that
+ *  will be used to encrypt the object. Overrides the object metadata's
+ *  kms_key_name value, if any.
+ */
+@property(nonatomic, copy, nullable) NSString *destinationKmsKeyName;
 
 /**
  *  Name of the new object. Required when the object metadata is not otherwise
@@ -2524,14 +2779,17 @@ GTLR_EXTERN NSString * const kGTLRStorageProjectionNoAcl;
 @property(nonatomic, copy, nullable) NSString *destinationPredefinedAcl;
 
 /**
- *  Makes the operation conditional on whether the destination object's current
- *  generation matches the given value.
+ *  Makes the operation conditional on whether the object's current generation
+ *  matches the given value. Setting to 0 makes the operation succeed only if
+ *  there are no live versions of the object.
  */
 @property(nonatomic, assign) long long ifGenerationMatch;
 
 /**
- *  Makes the operation conditional on whether the destination object's current
- *  generation does not match the given value.
+ *  Makes the operation conditional on whether the object's current generation
+ *  does not match the given value. If no live object exists, the precondition
+ *  fails. Setting to 0 makes the operation succeed only if there is a live
+ *  version of the object.
  */
 @property(nonatomic, assign) long long ifGenerationNotMatch;
 
@@ -2548,14 +2806,14 @@ GTLR_EXTERN NSString * const kGTLRStorageProjectionNoAcl;
 @property(nonatomic, assign) long long ifMetagenerationNotMatch;
 
 /**
- *  Makes the operation conditional on whether the source object's generation
- *  matches the given value.
+ *  Makes the operation conditional on whether the source object's current
+ *  generation matches the given value.
  */
 @property(nonatomic, assign) long long ifSourceGenerationMatch;
 
 /**
- *  Makes the operation conditional on whether the source object's generation
- *  does not match the given value.
+ *  Makes the operation conditional on whether the source object's current
+ *  generation does not match the given value.
  */
 @property(nonatomic, assign) long long ifSourceGenerationNotMatch;
 
@@ -2618,6 +2876,12 @@ GTLR_EXTERN NSString * const kGTLRStorageProjectionNoAcl;
 @property(nonatomic, copy, nullable) NSString *sourceObject;
 
 /**
+ *  The project to be billed for this request. Required for Requester Pays
+ *  buckets.
+ */
+@property(nonatomic, copy, nullable) NSString *userProject;
+
+/**
  *  Fetches a @c GTLRStorage_RewriteResponse.
  *
  *  Rewrites a source object to a destination object. Optionally overrides
@@ -2674,20 +2938,26 @@ GTLR_EXTERN NSString * const kGTLRStorageProjectionNoAcl;
 @property(nonatomic, copy, nullable) NSString *object;
 
 /**
+ *  The project to be billed for this request. Required for Requester Pays
+ *  buckets.
+ */
+@property(nonatomic, copy, nullable) NSString *userProject;
+
+/**
  *  Fetches a @c GTLRStorage_Policy.
  *
  *  Updates an IAM policy for the specified object.
  *
  *  @param object The @c GTLRStorage_Policy to include in the query.
  *  @param bucket Name of the bucket in which the object resides.
- *  @param object Name of the object. For information about how to URL encode
- *    object names to be path safe, see Encoding URI Path Parts.
+ *  @param object_param Name of the object. For information about how to URL
+ *    encode object names to be path safe, see Encoding URI Path Parts.
  *
  *  @returns GTLRStorageQuery_ObjectsSetIamPolicy
  */
 + (instancetype)queryWithObject:(GTLRStorage_Policy *)object
                          bucket:(NSString *)bucket
-                         object:(NSString *)object;
+                         object:(NSString *)object_param;
 
 @end
 
@@ -2725,6 +2995,12 @@ GTLR_EXTERN NSString * const kGTLRStorageProjectionNoAcl;
 
 /** Permissions to test. */
 @property(nonatomic, strong, nullable) NSArray<NSString *> *permissions;
+
+/**
+ *  The project to be billed for this request. Required for Requester Pays
+ *  buckets.
+ */
+@property(nonatomic, copy, nullable) NSString *userProject;
 
 /**
  *  Fetches a @c GTLRStorage_TestIamPermissionsResponse.
@@ -2769,13 +3045,16 @@ GTLR_EXTERN NSString * const kGTLRStorageProjectionNoAcl;
 
 /**
  *  Makes the operation conditional on whether the object's current generation
- *  matches the given value.
+ *  matches the given value. Setting to 0 makes the operation succeed only if
+ *  there are no live versions of the object.
  */
 @property(nonatomic, assign) long long ifGenerationMatch;
 
 /**
  *  Makes the operation conditional on whether the object's current generation
- *  does not match the given value.
+ *  does not match the given value. If no live object exists, the precondition
+ *  fails. Setting to 0 makes the operation succeed only if there is a live
+ *  version of the object.
  */
 @property(nonatomic, assign) long long ifGenerationNotMatch;
 
@@ -2831,36 +3110,26 @@ GTLR_EXTERN NSString * const kGTLRStorageProjectionNoAcl;
 @property(nonatomic, copy, nullable) NSString *projection;
 
 /**
+ *  The project to be billed for this request. Required for Requester Pays
+ *  buckets.
+ */
+@property(nonatomic, copy, nullable) NSString *userProject;
+
+/**
  *  Fetches a @c GTLRStorage_Object.
  *
  *  Updates an object's metadata.
  *
  *  @param object The @c GTLRStorage_Object to include in the query.
  *  @param bucket Name of the bucket in which the object resides.
- *  @param object Name of the object. For information about how to URL encode
- *    object names to be path safe, see Encoding URI Path Parts.
+ *  @param object_param Name of the object. For information about how to URL
+ *    encode object names to be path safe, see Encoding URI Path Parts.
  *
  *  @returns GTLRStorageQuery_ObjectsUpdate
  */
 + (instancetype)queryWithObject:(GTLRStorage_Object *)object
                          bucket:(NSString *)bucket
-                         object:(NSString *)object;
-
-/**
- *  Fetches the requested resource data as a @c GTLRDataObject.
- *
- *  Updates an object's metadata.
- *
- *  @param object The @c GTLRStorage_Object to include in the query.
- *  @param bucket Name of the bucket in which the object resides.
- *  @param object Name of the object. For information about how to URL encode
- *    object names to be path safe, see Encoding URI Path Parts.
- *
- *  @returns GTLRStorageQuery_ObjectsUpdate
- */
-+ (instancetype)queryForMediaWithObject:(GTLRStorage_Object *)object
-                                 bucket:(NSString *)bucket
-                                 object:(NSString *)object;
+                         object:(NSString *)object_param;
 
 @end
 
@@ -2922,6 +3191,12 @@ GTLR_EXTERN NSString * const kGTLRStorageProjectionNoAcl;
 @property(nonatomic, copy, nullable) NSString *projection;
 
 /**
+ *  The project to be billed for this request. Required for Requester Pays
+ *  buckets.
+ */
+@property(nonatomic, copy, nullable) NSString *userProject;
+
+/**
  *  If true, lists all versions of an object as distinct results. The default is
  *  false. For more information, see Object Versioning.
  */
@@ -2943,7 +3218,8 @@ GTLR_EXTERN NSString * const kGTLRStorageProjectionNoAcl;
 @end
 
 /**
- *  Get the email address of this project's GCS service account.
+ *  Get the email address of this project's Google Cloud Storage service
+ *  account.
  *
  *  Method: storage.projects.serviceAccount.get
  *
@@ -2961,10 +3237,14 @@ GTLR_EXTERN NSString * const kGTLRStorageProjectionNoAcl;
 /** Project ID */
 @property(nonatomic, copy, nullable) NSString *projectId;
 
+/** The project to be billed for this request. */
+@property(nonatomic, copy, nullable) NSString *userProject;
+
 /**
  *  Fetches a @c GTLRStorage_ServiceAccount.
  *
- *  Get the email address of this project's GCS service account.
+ *  Get the email address of this project's Google Cloud Storage service
+ *  account.
  *
  *  @param projectId Project ID
  *
@@ -2975,3 +3255,5 @@ GTLR_EXTERN NSString * const kGTLRStorageProjectionNoAcl;
 @end
 
 NS_ASSUME_NONNULL_END
+
+#pragma clang diagnostic pop

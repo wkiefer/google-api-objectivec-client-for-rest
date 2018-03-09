@@ -26,6 +26,11 @@
 @class GTLRServiceControl_ReportRequest;
 @class GTLRServiceControl_StartReconciliationRequest;
 
+// Generated comments include content from the discovery document; avoid them
+// causing warnings since clang's checks are some what arbitrary.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdocumentation"
+
 NS_ASSUME_NONNULL_BEGIN
 
 /**
@@ -43,15 +48,11 @@ NS_ASSUME_NONNULL_BEGIN
  *  before the operation is executed.
  *  This method requires the `servicemanagement.services.quota`
  *  permission on the specified service. For more information, see
- *  [Google Cloud IAM](https://cloud.google.com/iam).
- *  **NOTE:** the client code **must** fail-open if the server returns one
- *  of the following quota errors:
- *  - `PROJECT_STATUS_UNAVAILABLE`
- *  - `SERVICE_STATUS_UNAVAILABLE`
- *  - `BILLING_STATUS_UNAVAILABLE`
- *  - `QUOTA_SYSTEM_UNAVAILABLE`
- *  The server may inject above errors to prohibit any hard dependency
- *  on the quota system.
+ *  [Cloud IAM](https://cloud.google.com/iam).
+ *  **NOTE:** The client **must** fail-open on server errors `INTERNAL`,
+ *  `UNKNOWN`, `DEADLINE_EXCEEDED`, and `UNAVAILABLE`. To ensure system
+ *  reliability, the server may inject these errors to prohibit any hard
+ *  dependency on the quota functionality.
  *
  *  Method: servicecontrol.services.allocateQuota
  *
@@ -77,15 +78,11 @@ NS_ASSUME_NONNULL_BEGIN
  *  before the operation is executed.
  *  This method requires the `servicemanagement.services.quota`
  *  permission on the specified service. For more information, see
- *  [Google Cloud IAM](https://cloud.google.com/iam).
- *  **NOTE:** the client code **must** fail-open if the server returns one
- *  of the following quota errors:
- *  - `PROJECT_STATUS_UNAVAILABLE`
- *  - `SERVICE_STATUS_UNAVAILABLE`
- *  - `BILLING_STATUS_UNAVAILABLE`
- *  - `QUOTA_SYSTEM_UNAVAILABLE`
- *  The server may inject above errors to prohibit any hard dependency
- *  on the quota system.
+ *  [Cloud IAM](https://cloud.google.com/iam).
+ *  **NOTE:** The client **must** fail-open on server errors `INTERNAL`,
+ *  `UNKNOWN`, `DEADLINE_EXCEEDED`, and `UNAVAILABLE`. To ensure system
+ *  reliability, the server may inject these errors to prohibit any hard
+ *  dependency on the quota functionality.
  *
  *  @param object The @c GTLRServiceControl_AllocateQuotaRequest to include in
  *    the query.
@@ -108,7 +105,7 @@ NS_ASSUME_NONNULL_BEGIN
  *  If feasible, the client should cache the check results and reuse them for
  *  60 seconds. In case of server errors, the client can rely on the cached
  *  results for longer time.
- *  NOTE: the `CheckRequest` has the size limit of 64KB.
+ *  NOTE: the CheckRequest has the size limit of 64KB.
  *  This method requires the `servicemanagement.services.check` permission
  *  on the specified service. For more information, see
  *  [Google Cloud IAM](https://cloud.google.com/iam).
@@ -126,7 +123,9 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  *  The service name as specified in its service configuration. For example,
  *  `"pubsub.googleapis.com"`.
- *  See google.api.Service for the definition of a service name.
+ *  See
+ *  [google.api.Service](https://cloud.google.com/service-management/reference/rpc/google.api#google.api.Service)
+ *  for the definition of a service name.
  */
 @property(nonatomic, copy, nullable) NSString *serviceName;
 
@@ -139,7 +138,7 @@ NS_ASSUME_NONNULL_BEGIN
  *  If feasible, the client should cache the check results and reuse them for
  *  60 seconds. In case of server errors, the client can rely on the cached
  *  results for longer time.
- *  NOTE: the `CheckRequest` has the size limit of 64KB.
+ *  NOTE: the CheckRequest has the size limit of 64KB.
  *  This method requires the `servicemanagement.services.check` permission
  *  on the specified service. For more information, see
  *  [Google Cloud IAM](https://cloud.google.com/iam).
@@ -149,7 +148,9 @@ NS_ASSUME_NONNULL_BEGIN
  *  @param serviceName The service name as specified in its service
  *    configuration. For example,
  *    `"pubsub.googleapis.com"`.
- *    See google.api.Service for the definition of a service name.
+ *    See
+ *    [google.api.Service](https://cloud.google.com/service-management/reference/rpc/google.api#google.api.Service)
+ *    for the definition of a service name.
  *
  *  @returns GTLRServiceControlQuery_ServicesCheck
  */
@@ -209,15 +210,11 @@ NS_ASSUME_NONNULL_BEGIN
  *  Releases previously allocated quota done through AllocateQuota method.
  *  This method requires the `servicemanagement.services.quota`
  *  permission on the specified service. For more information, see
- *  [Google Cloud IAM](https://cloud.google.com/iam).
- *  **NOTE:** the client code **must** fail-open if the server returns one
- *  of the following quota errors:
- *  - `PROJECT_STATUS_UNAVAILABLE`
- *  - `SERVICE_STATUS_UNAVAILABLE`
- *  - `BILLING_STATUS_UNAVAILABLE`
- *  - `QUOTA_SYSTEM_UNAVAILABLE`
- *  The server may inject above errors to prohibit any hard dependency
- *  on the quota system.
+ *  [Cloud IAM](https://cloud.google.com/iam).
+ *  **NOTE:** The client **must** fail-open on server errors `INTERNAL`,
+ *  `UNKNOWN`, `DEADLINE_EXCEEDED`, and `UNAVAILABLE`. To ensure system
+ *  reliability, the server may inject these errors to prohibit any hard
+ *  dependency on the quota functionality.
  *
  *  Method: servicecontrol.services.releaseQuota
  *
@@ -242,15 +239,11 @@ NS_ASSUME_NONNULL_BEGIN
  *  Releases previously allocated quota done through AllocateQuota method.
  *  This method requires the `servicemanagement.services.quota`
  *  permission on the specified service. For more information, see
- *  [Google Cloud IAM](https://cloud.google.com/iam).
- *  **NOTE:** the client code **must** fail-open if the server returns one
- *  of the following quota errors:
- *  - `PROJECT_STATUS_UNAVAILABLE`
- *  - `SERVICE_STATUS_UNAVAILABLE`
- *  - `BILLING_STATUS_UNAVAILABLE`
- *  - `QUOTA_SYSTEM_UNAVAILABLE`
- *  The server may inject above errors to prohibit any hard dependency
- *  on the quota system.
+ *  [Cloud IAM](https://cloud.google.com/iam).
+ *  **NOTE:** The client **must** fail-open on server errors `INTERNAL`,
+ *  `UNKNOWN`, `DEADLINE_EXCEEDED`, and `UNAVAILABLE`. To ensure system
+ *  reliability, the server may inject these errors to prohibit any hard
+ *  dependency on the quota functionality.
  *
  *  @param object The @c GTLRServiceControl_ReleaseQuotaRequest to include in
  *    the query.
@@ -274,7 +267,7 @@ NS_ASSUME_NONNULL_BEGIN
  *  reduce data loss during client crashes. Clients should carefully choose
  *  the aggregation time window to avoid data loss risk more than 0.01%
  *  for business and compliance reasons.
- *  NOTE: the `ReportRequest` has the size limit of 1MB.
+ *  NOTE: the ReportRequest has the size limit of 1MB.
  *  This method requires the `servicemanagement.services.report` permission
  *  on the specified service. For more information, see
  *  [Google Cloud IAM](https://cloud.google.com/iam).
@@ -292,7 +285,9 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  *  The service name as specified in its service configuration. For example,
  *  `"pubsub.googleapis.com"`.
- *  See google.api.Service for the definition of a service name.
+ *  See
+ *  [google.api.Service](https://cloud.google.com/service-management/reference/rpc/google.api#google.api.Service)
+ *  for the definition of a service name.
  */
 @property(nonatomic, copy, nullable) NSString *serviceName;
 
@@ -306,7 +301,7 @@ NS_ASSUME_NONNULL_BEGIN
  *  reduce data loss during client crashes. Clients should carefully choose
  *  the aggregation time window to avoid data loss risk more than 0.01%
  *  for business and compliance reasons.
- *  NOTE: the `ReportRequest` has the size limit of 1MB.
+ *  NOTE: the ReportRequest has the size limit of 1MB.
  *  This method requires the `servicemanagement.services.report` permission
  *  on the specified service. For more information, see
  *  [Google Cloud IAM](https://cloud.google.com/iam).
@@ -316,7 +311,9 @@ NS_ASSUME_NONNULL_BEGIN
  *  @param serviceName The service name as specified in its service
  *    configuration. For example,
  *    `"pubsub.googleapis.com"`.
- *    See google.api.Service for the definition of a service name.
+ *    See
+ *    [google.api.Service](https://cloud.google.com/service-management/reference/rpc/google.api#google.api.Service)
+ *    for the definition of a service name.
  *
  *  @returns GTLRServiceControlQuery_ServicesReport
  */
@@ -409,3 +406,5 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 NS_ASSUME_NONNULL_END
+
+#pragma clang diagnostic pop

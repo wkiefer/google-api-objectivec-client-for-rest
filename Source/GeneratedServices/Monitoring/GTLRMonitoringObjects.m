@@ -69,6 +69,11 @@ NSString * const kGTLRMonitoring_MetricDescriptor_ValueType_Money = @"MONEY";
 NSString * const kGTLRMonitoring_MetricDescriptor_ValueType_String = @"STRING";
 NSString * const kGTLRMonitoring_MetricDescriptor_ValueType_ValueTypeUnspecified = @"VALUE_TYPE_UNSPECIFIED";
 
+// GTLRMonitoring_ResourceGroup.resourceType
+NSString * const kGTLRMonitoring_ResourceGroup_ResourceType_AwsElbLoadBalancer = @"AWS_ELB_LOAD_BALANCER";
+NSString * const kGTLRMonitoring_ResourceGroup_ResourceType_Instance = @"INSTANCE";
+NSString * const kGTLRMonitoring_ResourceGroup_ResourceType_ResourceTypeUnspecified = @"RESOURCE_TYPE_UNSPECIFIED";
+
 // GTLRMonitoring_TimeSeries.metricKind
 NSString * const kGTLRMonitoring_TimeSeries_MetricKind_Cumulative = @"CUMULATIVE";
 NSString * const kGTLRMonitoring_TimeSeries_MetricKind_Delta   = @"DELTA";
@@ -87,6 +92,30 @@ NSString * const kGTLRMonitoring_TimeSeries_ValueType_ValueTypeUnspecified = @"V
 // GTLRMonitoring_Type.syntax
 NSString * const kGTLRMonitoring_Type_Syntax_SyntaxProto2 = @"SYNTAX_PROTO2";
 NSString * const kGTLRMonitoring_Type_Syntax_SyntaxProto3 = @"SYNTAX_PROTO3";
+
+// GTLRMonitoring_UptimeCheckConfig.selectedRegions
+NSString * const kGTLRMonitoring_UptimeCheckConfig_SelectedRegions_AsiaPacific = @"ASIA_PACIFIC";
+NSString * const kGTLRMonitoring_UptimeCheckConfig_SelectedRegions_Europe = @"EUROPE";
+NSString * const kGTLRMonitoring_UptimeCheckConfig_SelectedRegions_RegionUnspecified = @"REGION_UNSPECIFIED";
+NSString * const kGTLRMonitoring_UptimeCheckConfig_SelectedRegions_SouthAmerica = @"SOUTH_AMERICA";
+NSString * const kGTLRMonitoring_UptimeCheckConfig_SelectedRegions_Usa = @"USA";
+
+// GTLRMonitoring_UptimeCheckIp.region
+NSString * const kGTLRMonitoring_UptimeCheckIp_Region_AsiaPacific = @"ASIA_PACIFIC";
+NSString * const kGTLRMonitoring_UptimeCheckIp_Region_Europe   = @"EUROPE";
+NSString * const kGTLRMonitoring_UptimeCheckIp_Region_RegionUnspecified = @"REGION_UNSPECIFIED";
+NSString * const kGTLRMonitoring_UptimeCheckIp_Region_SouthAmerica = @"SOUTH_AMERICA";
+NSString * const kGTLRMonitoring_UptimeCheckIp_Region_Usa      = @"USA";
+
+// ----------------------------------------------------------------------------
+//
+//   GTLRMonitoring_BasicAuthentication
+//
+
+@implementation GTLRMonitoring_BasicAuthentication
+@dynamic password, username;
+@end
+
 
 // ----------------------------------------------------------------------------
 //
@@ -133,11 +162,49 @@ NSString * const kGTLRMonitoring_Type_Syntax_SyntaxProto3 = @"SYNTAX_PROTO3";
 
 // ----------------------------------------------------------------------------
 //
+//   GTLRMonitoring_CollectdPayloadError
+//
+
+@implementation GTLRMonitoring_CollectdPayloadError
+@dynamic error, index, valueErrors;
+
++ (NSDictionary<NSString *, Class> *)arrayPropertyToClassMap {
+  NSDictionary<NSString *, Class> *map = @{
+    @"valueErrors" : [GTLRMonitoring_CollectdValueError class]
+  };
+  return map;
+}
+
+@end
+
+
+// ----------------------------------------------------------------------------
+//
 //   GTLRMonitoring_CollectdValue
 //
 
 @implementation GTLRMonitoring_CollectdValue
 @dynamic dataSourceName, dataSourceType, value;
+@end
+
+
+// ----------------------------------------------------------------------------
+//
+//   GTLRMonitoring_CollectdValueError
+//
+
+@implementation GTLRMonitoring_CollectdValueError
+@dynamic error, index;
+@end
+
+
+// ----------------------------------------------------------------------------
+//
+//   GTLRMonitoring_ContentMatcher
+//
+
+@implementation GTLRMonitoring_ContentMatcher
+@dynamic content;
 @end
 
 
@@ -152,6 +219,24 @@ NSString * const kGTLRMonitoring_Type_Syntax_SyntaxProto3 = @"SYNTAX_PROTO3";
 + (NSDictionary<NSString *, Class> *)arrayPropertyToClassMap {
   NSDictionary<NSString *, Class> *map = @{
     @"collectdPayloads" : [GTLRMonitoring_CollectdPayload class]
+  };
+  return map;
+}
+
+@end
+
+
+// ----------------------------------------------------------------------------
+//
+//   GTLRMonitoring_CreateCollectdTimeSeriesResponse
+//
+
+@implementation GTLRMonitoring_CreateCollectdTimeSeriesResponse
+@dynamic payloadErrors;
+
++ (NSDictionary<NSString *, Class> *)arrayPropertyToClassMap {
+  NSDictionary<NSString *, Class> *map = @{
+    @"payloadErrors" : [GTLRMonitoring_CollectdPayloadError class]
   };
   return map;
 }
@@ -264,6 +349,40 @@ NSString * const kGTLRMonitoring_Type_Syntax_SyntaxProto3 = @"SYNTAX_PROTO3";
 
 @implementation GTLRMonitoring_Group
 @dynamic displayName, filter, isCluster, name, parentName;
+@end
+
+
+// ----------------------------------------------------------------------------
+//
+//   GTLRMonitoring_HttpCheck
+//
+
+@implementation GTLRMonitoring_HttpCheck
+@dynamic authInfo, headers, maskHeaders, path, port, useSsl;
+@end
+
+
+// ----------------------------------------------------------------------------
+//
+//   GTLRMonitoring_HttpCheck_Headers
+//
+
+@implementation GTLRMonitoring_HttpCheck_Headers
+
++ (Class)classForAdditionalProperties {
+  return [NSString class];
+}
+
+@end
+
+
+// ----------------------------------------------------------------------------
+//
+//   GTLRMonitoring_InternalChecker
+//
+
+@implementation GTLRMonitoring_InternalChecker
+@dynamic checkerId, displayName, gcpZone, network, projectId;
 @end
 
 
@@ -404,6 +523,50 @@ NSString * const kGTLRMonitoring_Type_Syntax_SyntaxProto3 = @"SYNTAX_PROTO3";
 
 // ----------------------------------------------------------------------------
 //
+//   GTLRMonitoring_ListUptimeCheckConfigsResponse
+//
+
+@implementation GTLRMonitoring_ListUptimeCheckConfigsResponse
+@dynamic nextPageToken, totalSize, uptimeCheckConfigs;
+
++ (NSDictionary<NSString *, Class> *)arrayPropertyToClassMap {
+  NSDictionary<NSString *, Class> *map = @{
+    @"uptimeCheckConfigs" : [GTLRMonitoring_UptimeCheckConfig class]
+  };
+  return map;
+}
+
++ (NSString *)collectionItemsKey {
+  return @"uptimeCheckConfigs";
+}
+
+@end
+
+
+// ----------------------------------------------------------------------------
+//
+//   GTLRMonitoring_ListUptimeCheckIpsResponse
+//
+
+@implementation GTLRMonitoring_ListUptimeCheckIpsResponse
+@dynamic nextPageToken, uptimeCheckIps;
+
++ (NSDictionary<NSString *, Class> *)arrayPropertyToClassMap {
+  NSDictionary<NSString *, Class> *map = @{
+    @"uptimeCheckIps" : [GTLRMonitoring_UptimeCheckIp class]
+  };
+  return map;
+}
+
++ (NSString *)collectionItemsKey {
+  return @"uptimeCheckIps";
+}
+
+@end
+
+
+// ----------------------------------------------------------------------------
+//
 //   GTLRMonitoring_Metric
 //
 
@@ -497,6 +660,44 @@ NSString * const kGTLRMonitoring_Type_Syntax_SyntaxProto3 = @"SYNTAX_PROTO3";
 
 // ----------------------------------------------------------------------------
 //
+//   GTLRMonitoring_MonitoredResourceMetadata
+//
+
+@implementation GTLRMonitoring_MonitoredResourceMetadata
+@dynamic systemLabels, userLabels;
+@end
+
+
+// ----------------------------------------------------------------------------
+//
+//   GTLRMonitoring_MonitoredResourceMetadata_SystemLabels
+//
+
+@implementation GTLRMonitoring_MonitoredResourceMetadata_SystemLabels
+
++ (Class)classForAdditionalProperties {
+  return [NSObject class];
+}
+
+@end
+
+
+// ----------------------------------------------------------------------------
+//
+//   GTLRMonitoring_MonitoredResourceMetadata_UserLabels
+//
+
+@implementation GTLRMonitoring_MonitoredResourceMetadata_UserLabels
+
++ (Class)classForAdditionalProperties {
+  return [NSString class];
+}
+
+@end
+
+
+// ----------------------------------------------------------------------------
+//
 //   GTLRMonitoring_Option
 //
 
@@ -541,11 +742,63 @@ NSString * const kGTLRMonitoring_Type_Syntax_SyntaxProto3 = @"SYNTAX_PROTO3";
 
 // ----------------------------------------------------------------------------
 //
+//   GTLRMonitoring_ResourceGroup
+//
+
+@implementation GTLRMonitoring_ResourceGroup
+@dynamic groupId, resourceType;
+@end
+
+
+// ----------------------------------------------------------------------------
+//
 //   GTLRMonitoring_SourceContext
 //
 
 @implementation GTLRMonitoring_SourceContext
 @dynamic fileName;
+@end
+
+
+// ----------------------------------------------------------------------------
+//
+//   GTLRMonitoring_Status
+//
+
+@implementation GTLRMonitoring_Status
+@dynamic code, details, message;
+
++ (NSDictionary<NSString *, Class> *)arrayPropertyToClassMap {
+  NSDictionary<NSString *, Class> *map = @{
+    @"details" : [GTLRMonitoring_Status_Details_Item class]
+  };
+  return map;
+}
+
+@end
+
+
+// ----------------------------------------------------------------------------
+//
+//   GTLRMonitoring_Status_Details_Item
+//
+
+@implementation GTLRMonitoring_Status_Details_Item
+
++ (Class)classForAdditionalProperties {
+  return [NSObject class];
+}
+
+@end
+
+
+// ----------------------------------------------------------------------------
+//
+//   GTLRMonitoring_TcpCheck
+//
+
+@implementation GTLRMonitoring_TcpCheck
+@dynamic port;
 @end
 
 
@@ -565,7 +818,7 @@ NSString * const kGTLRMonitoring_Type_Syntax_SyntaxProto3 = @"SYNTAX_PROTO3";
 //
 
 @implementation GTLRMonitoring_TimeSeries
-@dynamic metric, metricKind, points, resource, valueType;
+@dynamic metadata, metric, metricKind, points, resource, valueType;
 
 + (NSDictionary<NSString *, Class> *)arrayPropertyToClassMap {
   NSDictionary<NSString *, Class> *map = @{
@@ -604,4 +857,36 @@ NSString * const kGTLRMonitoring_Type_Syntax_SyntaxProto3 = @"SYNTAX_PROTO3";
 
 @implementation GTLRMonitoring_TypedValue
 @dynamic boolValue, distributionValue, doubleValue, int64Value, stringValue;
+@end
+
+
+// ----------------------------------------------------------------------------
+//
+//   GTLRMonitoring_UptimeCheckConfig
+//
+
+@implementation GTLRMonitoring_UptimeCheckConfig
+@dynamic contentMatchers, displayName, httpCheck, internalCheckers, isInternal,
+         monitoredResource, name, period, resourceGroup, selectedRegions,
+         tcpCheck, timeout;
+
++ (NSDictionary<NSString *, Class> *)arrayPropertyToClassMap {
+  NSDictionary<NSString *, Class> *map = @{
+    @"contentMatchers" : [GTLRMonitoring_ContentMatcher class],
+    @"internalCheckers" : [GTLRMonitoring_InternalChecker class],
+    @"selectedRegions" : [NSString class]
+  };
+  return map;
+}
+
+@end
+
+
+// ----------------------------------------------------------------------------
+//
+//   GTLRMonitoring_UptimeCheckIp
+//
+
+@implementation GTLRMonitoring_UptimeCheckIp
+@dynamic ipAddress, location, region;
 @end

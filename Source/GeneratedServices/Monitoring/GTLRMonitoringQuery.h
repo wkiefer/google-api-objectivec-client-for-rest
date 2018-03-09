@@ -24,6 +24,12 @@
 @class GTLRMonitoring_CreateTimeSeriesRequest;
 @class GTLRMonitoring_Group;
 @class GTLRMonitoring_MetricDescriptor;
+@class GTLRMonitoring_UptimeCheckConfig;
+
+// Generated comments include content from the discovery document; avoid them
+// causing warnings since clang's checks are some what arbitrary.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdocumentation"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -35,6 +41,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 /** Value: "REDUCE_COUNT" */
 GTLR_EXTERN NSString * const kGTLRMonitoringAggregationCrossSeriesReducerReduceCount;
+/** Value: "REDUCE_COUNT_FALSE" */
+GTLR_EXTERN NSString * const kGTLRMonitoringAggregationCrossSeriesReducerReduceCountFalse;
 /** Value: "REDUCE_COUNT_TRUE" */
 GTLR_EXTERN NSString * const kGTLRMonitoringAggregationCrossSeriesReducerReduceCountTrue;
 /** Value: "REDUCE_FRACTION_TRUE" */
@@ -65,6 +73,8 @@ GTLR_EXTERN NSString * const kGTLRMonitoringAggregationCrossSeriesReducerReduceS
 
 /** Value: "ALIGN_COUNT" */
 GTLR_EXTERN NSString * const kGTLRMonitoringAggregationPerSeriesAlignerAlignCount;
+/** Value: "ALIGN_COUNT_FALSE" */
+GTLR_EXTERN NSString * const kGTLRMonitoringAggregationPerSeriesAlignerAlignCountFalse;
 /** Value: "ALIGN_COUNT_TRUE" */
 GTLR_EXTERN NSString * const kGTLRMonitoringAggregationPerSeriesAlignerAlignCountTrue;
 /** Value: "ALIGN_DELTA" */
@@ -83,6 +93,8 @@ GTLR_EXTERN NSString * const kGTLRMonitoringAggregationPerSeriesAlignerAlignMin;
 GTLR_EXTERN NSString * const kGTLRMonitoringAggregationPerSeriesAlignerAlignNextOlder;
 /** Value: "ALIGN_NONE" */
 GTLR_EXTERN NSString * const kGTLRMonitoringAggregationPerSeriesAlignerAlignNone;
+/** Value: "ALIGN_PERCENT_CHANGE" */
+GTLR_EXTERN NSString * const kGTLRMonitoringAggregationPerSeriesAlignerAlignPercentChange;
 /** Value: "ALIGN_PERCENTILE_05" */
 GTLR_EXTERN NSString * const kGTLRMonitoringAggregationPerSeriesAlignerAlignPercentile05;
 /** Value: "ALIGN_PERCENTILE_50" */
@@ -97,74 +109,6 @@ GTLR_EXTERN NSString * const kGTLRMonitoringAggregationPerSeriesAlignerAlignRate
 GTLR_EXTERN NSString * const kGTLRMonitoringAggregationPerSeriesAlignerAlignStddev;
 /** Value: "ALIGN_SUM" */
 GTLR_EXTERN NSString * const kGTLRMonitoringAggregationPerSeriesAlignerAlignSum;
-
-// ----------------------------------------------------------------------------
-// secondaryAggregationCrossSeriesReducer
-
-/** Value: "REDUCE_COUNT" */
-GTLR_EXTERN NSString * const kGTLRMonitoringSecondaryAggregationCrossSeriesReducerReduceCount;
-/** Value: "REDUCE_COUNT_TRUE" */
-GTLR_EXTERN NSString * const kGTLRMonitoringSecondaryAggregationCrossSeriesReducerReduceCountTrue;
-/** Value: "REDUCE_FRACTION_TRUE" */
-GTLR_EXTERN NSString * const kGTLRMonitoringSecondaryAggregationCrossSeriesReducerReduceFractionTrue;
-/** Value: "REDUCE_MAX" */
-GTLR_EXTERN NSString * const kGTLRMonitoringSecondaryAggregationCrossSeriesReducerReduceMax;
-/** Value: "REDUCE_MEAN" */
-GTLR_EXTERN NSString * const kGTLRMonitoringSecondaryAggregationCrossSeriesReducerReduceMean;
-/** Value: "REDUCE_MIN" */
-GTLR_EXTERN NSString * const kGTLRMonitoringSecondaryAggregationCrossSeriesReducerReduceMin;
-/** Value: "REDUCE_NONE" */
-GTLR_EXTERN NSString * const kGTLRMonitoringSecondaryAggregationCrossSeriesReducerReduceNone;
-/** Value: "REDUCE_PERCENTILE_05" */
-GTLR_EXTERN NSString * const kGTLRMonitoringSecondaryAggregationCrossSeriesReducerReducePercentile05;
-/** Value: "REDUCE_PERCENTILE_50" */
-GTLR_EXTERN NSString * const kGTLRMonitoringSecondaryAggregationCrossSeriesReducerReducePercentile50;
-/** Value: "REDUCE_PERCENTILE_95" */
-GTLR_EXTERN NSString * const kGTLRMonitoringSecondaryAggregationCrossSeriesReducerReducePercentile95;
-/** Value: "REDUCE_PERCENTILE_99" */
-GTLR_EXTERN NSString * const kGTLRMonitoringSecondaryAggregationCrossSeriesReducerReducePercentile99;
-/** Value: "REDUCE_STDDEV" */
-GTLR_EXTERN NSString * const kGTLRMonitoringSecondaryAggregationCrossSeriesReducerReduceStddev;
-/** Value: "REDUCE_SUM" */
-GTLR_EXTERN NSString * const kGTLRMonitoringSecondaryAggregationCrossSeriesReducerReduceSum;
-
-// ----------------------------------------------------------------------------
-// secondaryAggregationPerSeriesAligner
-
-/** Value: "ALIGN_COUNT" */
-GTLR_EXTERN NSString * const kGTLRMonitoringSecondaryAggregationPerSeriesAlignerAlignCount;
-/** Value: "ALIGN_COUNT_TRUE" */
-GTLR_EXTERN NSString * const kGTLRMonitoringSecondaryAggregationPerSeriesAlignerAlignCountTrue;
-/** Value: "ALIGN_DELTA" */
-GTLR_EXTERN NSString * const kGTLRMonitoringSecondaryAggregationPerSeriesAlignerAlignDelta;
-/** Value: "ALIGN_FRACTION_TRUE" */
-GTLR_EXTERN NSString * const kGTLRMonitoringSecondaryAggregationPerSeriesAlignerAlignFractionTrue;
-/** Value: "ALIGN_INTERPOLATE" */
-GTLR_EXTERN NSString * const kGTLRMonitoringSecondaryAggregationPerSeriesAlignerAlignInterpolate;
-/** Value: "ALIGN_MAX" */
-GTLR_EXTERN NSString * const kGTLRMonitoringSecondaryAggregationPerSeriesAlignerAlignMax;
-/** Value: "ALIGN_MEAN" */
-GTLR_EXTERN NSString * const kGTLRMonitoringSecondaryAggregationPerSeriesAlignerAlignMean;
-/** Value: "ALIGN_MIN" */
-GTLR_EXTERN NSString * const kGTLRMonitoringSecondaryAggregationPerSeriesAlignerAlignMin;
-/** Value: "ALIGN_NEXT_OLDER" */
-GTLR_EXTERN NSString * const kGTLRMonitoringSecondaryAggregationPerSeriesAlignerAlignNextOlder;
-/** Value: "ALIGN_NONE" */
-GTLR_EXTERN NSString * const kGTLRMonitoringSecondaryAggregationPerSeriesAlignerAlignNone;
-/** Value: "ALIGN_PERCENTILE_05" */
-GTLR_EXTERN NSString * const kGTLRMonitoringSecondaryAggregationPerSeriesAlignerAlignPercentile05;
-/** Value: "ALIGN_PERCENTILE_50" */
-GTLR_EXTERN NSString * const kGTLRMonitoringSecondaryAggregationPerSeriesAlignerAlignPercentile50;
-/** Value: "ALIGN_PERCENTILE_95" */
-GTLR_EXTERN NSString * const kGTLRMonitoringSecondaryAggregationPerSeriesAlignerAlignPercentile95;
-/** Value: "ALIGN_PERCENTILE_99" */
-GTLR_EXTERN NSString * const kGTLRMonitoringSecondaryAggregationPerSeriesAlignerAlignPercentile99;
-/** Value: "ALIGN_RATE" */
-GTLR_EXTERN NSString * const kGTLRMonitoringSecondaryAggregationPerSeriesAlignerAlignRate;
-/** Value: "ALIGN_STDDEV" */
-GTLR_EXTERN NSString * const kGTLRMonitoringSecondaryAggregationPerSeriesAlignerAlignStddev;
-/** Value: "ALIGN_SUM" */
-GTLR_EXTERN NSString * const kGTLRMonitoringSecondaryAggregationPerSeriesAlignerAlignSum;
 
 // ----------------------------------------------------------------------------
 // view
@@ -189,9 +133,9 @@ GTLR_EXTERN NSString * const kGTLRMonitoringViewHeaders;
 @end
 
 /**
- *  Stackdriver Monitoring Agent only: Creates a new time series.<aside
- *  class="caution">This method is only for use by the Stackdriver Monitoring
- *  Agent. Use projects.timeSeries.create instead.</aside>
+ *  Stackdriver Monitoring Agent only: Creates a new time
+ *  series.<aside class="caution">This method is only for use by the Stackdriver
+ *  Monitoring Agent. Use projects.timeSeries.create instead.</aside>
  *
  *  Method: monitoring.projects.collectdTimeSeries.create
  *
@@ -211,11 +155,11 @@ GTLR_EXTERN NSString * const kGTLRMonitoringViewHeaders;
 @property(nonatomic, copy, nullable) NSString *name;
 
 /**
- *  Fetches a @c GTLRMonitoring_Empty.
+ *  Fetches a @c GTLRMonitoring_CreateCollectdTimeSeriesResponse.
  *
- *  Stackdriver Monitoring Agent only: Creates a new time series.<aside
- *  class="caution">This method is only for use by the Stackdriver Monitoring
- *  Agent. Use projects.timeSeries.create instead.</aside>
+ *  Stackdriver Monitoring Agent only: Creates a new time
+ *  series.<aside class="caution">This method is only for use by the Stackdriver
+ *  Monitoring Agent. Use projects.timeSeries.create instead.</aside>
  *
  *  @param object The @c GTLRMonitoring_CreateCollectdTimeSeriesRequest to
  *    include in the query.
@@ -883,6 +827,8 @@ GTLR_EXTERN NSString * const kGTLRMonitoringViewHeaders;
  *        "REDUCE_COUNT"
  *    @arg @c kGTLRMonitoringAggregationCrossSeriesReducerReduceCountTrue Value
  *        "REDUCE_COUNT_TRUE"
+ *    @arg @c kGTLRMonitoringAggregationCrossSeriesReducerReduceCountFalse Value
+ *        "REDUCE_COUNT_FALSE"
  *    @arg @c kGTLRMonitoringAggregationCrossSeriesReducerReduceFractionTrue
  *        Value "REDUCE_FRACTION_TRUE"
  *    @arg @c kGTLRMonitoringAggregationCrossSeriesReducerReducePercentile99
@@ -945,6 +891,8 @@ GTLR_EXTERN NSString * const kGTLRMonitoringViewHeaders;
  *        "ALIGN_STDDEV"
  *    @arg @c kGTLRMonitoringAggregationPerSeriesAlignerAlignCountTrue Value
  *        "ALIGN_COUNT_TRUE"
+ *    @arg @c kGTLRMonitoringAggregationPerSeriesAlignerAlignCountFalse Value
+ *        "ALIGN_COUNT_FALSE"
  *    @arg @c kGTLRMonitoringAggregationPerSeriesAlignerAlignFractionTrue Value
  *        "ALIGN_FRACTION_TRUE"
  *    @arg @c kGTLRMonitoringAggregationPerSeriesAlignerAlignPercentile99 Value
@@ -955,6 +903,8 @@ GTLR_EXTERN NSString * const kGTLRMonitoringViewHeaders;
  *        "ALIGN_PERCENTILE_50"
  *    @arg @c kGTLRMonitoringAggregationPerSeriesAlignerAlignPercentile05 Value
  *        "ALIGN_PERCENTILE_05"
+ *    @arg @c kGTLRMonitoringAggregationPerSeriesAlignerAlignPercentChange Value
+ *        "ALIGN_PERCENT_CHANGE"
  */
 @property(nonatomic, copy, nullable) NSString *aggregationPerSeriesAligner;
 
@@ -984,9 +934,8 @@ GTLR_EXTERN NSString * const kGTLRMonitoringViewHeaders;
 @property(nonatomic, copy, nullable) NSString *name;
 
 /**
- *  Specifies the order in which the points of the time series should be
- *  returned. By default, results are not ordered. Currently, this field must be
- *  left blank.
+ *  Unsupported: must be left blank. The points in each time series are returned
+ *  in reverse time order.
  */
 @property(nonatomic, copy, nullable) NSString *orderBy;
 
@@ -1004,117 +953,6 @@ GTLR_EXTERN NSString * const kGTLRMonitoringViewHeaders;
  *  method to return additional results from the previous method call.
  */
 @property(nonatomic, copy, nullable) NSString *pageToken;
-
-/**
- *  The alignment period for per-time series alignment. If present,
- *  alignmentPeriod must be at least 60 seconds. After per-time series
- *  alignment, each time series will contain data points only on the period
- *  boundaries. If perSeriesAligner is not specified or equals ALIGN_NONE, then
- *  this field is ignored. If perSeriesAligner is specified and does not equal
- *  ALIGN_NONE, then this field must be defined; otherwise an error is returned.
- */
-@property(nonatomic, strong, nullable) GTLRDuration *secondaryAggregationAlignmentPeriod;
-
-/**
- *  The approach to be used to combine time series. Not all reducer functions
- *  may be applied to all time series, depending on the metric type and the
- *  value type of the original time series. Reduction may change the metric type
- *  of value type of the time series.Time series data must be aligned in order
- *  to perform cross-time series reduction. If crossSeriesReducer is specified,
- *  then perSeriesAligner must be specified and not equal ALIGN_NONE and
- *  alignmentPeriod must be specified; otherwise, an error is returned.
- *
- *  Likely values:
- *    @arg @c kGTLRMonitoringSecondaryAggregationCrossSeriesReducerReduceNone
- *        Value "REDUCE_NONE"
- *    @arg @c kGTLRMonitoringSecondaryAggregationCrossSeriesReducerReduceMean
- *        Value "REDUCE_MEAN"
- *    @arg @c kGTLRMonitoringSecondaryAggregationCrossSeriesReducerReduceMin
- *        Value "REDUCE_MIN"
- *    @arg @c kGTLRMonitoringSecondaryAggregationCrossSeriesReducerReduceMax
- *        Value "REDUCE_MAX"
- *    @arg @c kGTLRMonitoringSecondaryAggregationCrossSeriesReducerReduceSum
- *        Value "REDUCE_SUM"
- *    @arg @c kGTLRMonitoringSecondaryAggregationCrossSeriesReducerReduceStddev
- *        Value "REDUCE_STDDEV"
- *    @arg @c kGTLRMonitoringSecondaryAggregationCrossSeriesReducerReduceCount
- *        Value "REDUCE_COUNT"
- *    @arg @c kGTLRMonitoringSecondaryAggregationCrossSeriesReducerReduceCountTrue
- *        Value "REDUCE_COUNT_TRUE"
- *    @arg @c kGTLRMonitoringSecondaryAggregationCrossSeriesReducerReduceFractionTrue
- *        Value "REDUCE_FRACTION_TRUE"
- *    @arg @c kGTLRMonitoringSecondaryAggregationCrossSeriesReducerReducePercentile99
- *        Value "REDUCE_PERCENTILE_99"
- *    @arg @c kGTLRMonitoringSecondaryAggregationCrossSeriesReducerReducePercentile95
- *        Value "REDUCE_PERCENTILE_95"
- *    @arg @c kGTLRMonitoringSecondaryAggregationCrossSeriesReducerReducePercentile50
- *        Value "REDUCE_PERCENTILE_50"
- *    @arg @c kGTLRMonitoringSecondaryAggregationCrossSeriesReducerReducePercentile05
- *        Value "REDUCE_PERCENTILE_05"
- */
-@property(nonatomic, copy, nullable) NSString *secondaryAggregationCrossSeriesReducer;
-
-/**
- *  The set of fields to preserve when crossSeriesReducer is specified. The
- *  groupByFields determine how the time series are partitioned into subsets
- *  prior to applying the aggregation function. Each subset contains time series
- *  that have the same value for each of the grouping fields. Each individual
- *  time series is a member of exactly one subset. The crossSeriesReducer is
- *  applied to each subset of time series. It is not possible to reduce across
- *  different resource types, so this field implicitly contains resource.type.
- *  Fields not specified in groupByFields are aggregated away. If groupByFields
- *  is not specified and all the time series have the same resource type, then
- *  the time series are aggregated into a single output time series. If
- *  crossSeriesReducer is not defined, this field is ignored.
- */
-@property(nonatomic, strong, nullable) NSArray<NSString *> *secondaryAggregationGroupByFields;
-
-/**
- *  The approach to be used to align individual time series. Not all alignment
- *  functions may be applied to all time series, depending on the metric type
- *  and value type of the original time series. Alignment may change the metric
- *  type or the value type of the time series.Time series data must be aligned
- *  in order to perform cross-time series reduction. If crossSeriesReducer is
- *  specified, then perSeriesAligner must be specified and not equal ALIGN_NONE
- *  and alignmentPeriod must be specified; otherwise, an error is returned.
- *
- *  Likely values:
- *    @arg @c kGTLRMonitoringSecondaryAggregationPerSeriesAlignerAlignNone Value
- *        "ALIGN_NONE"
- *    @arg @c kGTLRMonitoringSecondaryAggregationPerSeriesAlignerAlignDelta
- *        Value "ALIGN_DELTA"
- *    @arg @c kGTLRMonitoringSecondaryAggregationPerSeriesAlignerAlignRate Value
- *        "ALIGN_RATE"
- *    @arg @c kGTLRMonitoringSecondaryAggregationPerSeriesAlignerAlignInterpolate
- *        Value "ALIGN_INTERPOLATE"
- *    @arg @c kGTLRMonitoringSecondaryAggregationPerSeriesAlignerAlignNextOlder
- *        Value "ALIGN_NEXT_OLDER"
- *    @arg @c kGTLRMonitoringSecondaryAggregationPerSeriesAlignerAlignMin Value
- *        "ALIGN_MIN"
- *    @arg @c kGTLRMonitoringSecondaryAggregationPerSeriesAlignerAlignMax Value
- *        "ALIGN_MAX"
- *    @arg @c kGTLRMonitoringSecondaryAggregationPerSeriesAlignerAlignMean Value
- *        "ALIGN_MEAN"
- *    @arg @c kGTLRMonitoringSecondaryAggregationPerSeriesAlignerAlignCount
- *        Value "ALIGN_COUNT"
- *    @arg @c kGTLRMonitoringSecondaryAggregationPerSeriesAlignerAlignSum Value
- *        "ALIGN_SUM"
- *    @arg @c kGTLRMonitoringSecondaryAggregationPerSeriesAlignerAlignStddev
- *        Value "ALIGN_STDDEV"
- *    @arg @c kGTLRMonitoringSecondaryAggregationPerSeriesAlignerAlignCountTrue
- *        Value "ALIGN_COUNT_TRUE"
- *    @arg @c kGTLRMonitoringSecondaryAggregationPerSeriesAlignerAlignFractionTrue
- *        Value "ALIGN_FRACTION_TRUE"
- *    @arg @c kGTLRMonitoringSecondaryAggregationPerSeriesAlignerAlignPercentile99
- *        Value "ALIGN_PERCENTILE_99"
- *    @arg @c kGTLRMonitoringSecondaryAggregationPerSeriesAlignerAlignPercentile95
- *        Value "ALIGN_PERCENTILE_95"
- *    @arg @c kGTLRMonitoringSecondaryAggregationPerSeriesAlignerAlignPercentile50
- *        Value "ALIGN_PERCENTILE_50"
- *    @arg @c kGTLRMonitoringSecondaryAggregationPerSeriesAlignerAlignPercentile05
- *        Value "ALIGN_PERCENTILE_05"
- */
-@property(nonatomic, copy, nullable) NSString *secondaryAggregationPerSeriesAligner;
 
 /**
  *  Specifies which information is returned about the time series.
@@ -1144,4 +982,269 @@ GTLR_EXTERN NSString * const kGTLRMonitoringViewHeaders;
 
 @end
 
+/**
+ *  Creates a new uptime check configuration.
+ *
+ *  Method: monitoring.projects.uptimeCheckConfigs.create
+ *
+ *  Authorization scope(s):
+ *    @c kGTLRAuthScopeMonitoring
+ *    @c kGTLRAuthScopeMonitoringCloudPlatform
+ */
+@interface GTLRMonitoringQuery_ProjectsUptimeCheckConfigsCreate : GTLRMonitoringQuery
+// Previous library name was
+//   +[GTLQueryMonitoring queryForProjectsUptimeCheckConfigsCreateWithObject:parent:]
+
+/**
+ *  The project in which to create the uptime check. The format is
+ *  projects/[PROJECT_ID].
+ */
+@property(nonatomic, copy, nullable) NSString *parent;
+
+/**
+ *  Fetches a @c GTLRMonitoring_UptimeCheckConfig.
+ *
+ *  Creates a new uptime check configuration.
+ *
+ *  @param object The @c GTLRMonitoring_UptimeCheckConfig to include in the
+ *    query.
+ *  @param parent The project in which to create the uptime check. The format is
+ *    projects/[PROJECT_ID].
+ *
+ *  @returns GTLRMonitoringQuery_ProjectsUptimeCheckConfigsCreate
+ */
++ (instancetype)queryWithObject:(GTLRMonitoring_UptimeCheckConfig *)object
+                         parent:(NSString *)parent;
+
+@end
+
+/**
+ *  Deletes an uptime check configuration. Note that this method will fail if
+ *  the uptime check configuration is referenced by an alert policy or other
+ *  dependent configs that would be rendered invalid by the deletion.
+ *
+ *  Method: monitoring.projects.uptimeCheckConfigs.delete
+ *
+ *  Authorization scope(s):
+ *    @c kGTLRAuthScopeMonitoring
+ *    @c kGTLRAuthScopeMonitoringCloudPlatform
+ */
+@interface GTLRMonitoringQuery_ProjectsUptimeCheckConfigsDelete : GTLRMonitoringQuery
+// Previous library name was
+//   +[GTLQueryMonitoring queryForProjectsUptimeCheckConfigsDeleteWithname:]
+
+/**
+ *  The uptime check configuration to delete. The format is
+ *  projects/[PROJECT_ID]/uptimeCheckConfigs/[UPTIME_CHECK_ID].
+ */
+@property(nonatomic, copy, nullable) NSString *name;
+
+/**
+ *  Fetches a @c GTLRMonitoring_Empty.
+ *
+ *  Deletes an uptime check configuration. Note that this method will fail if
+ *  the uptime check configuration is referenced by an alert policy or other
+ *  dependent configs that would be rendered invalid by the deletion.
+ *
+ *  @param name The uptime check configuration to delete. The format is
+ *    projects/[PROJECT_ID]/uptimeCheckConfigs/[UPTIME_CHECK_ID].
+ *
+ *  @returns GTLRMonitoringQuery_ProjectsUptimeCheckConfigsDelete
+ */
++ (instancetype)queryWithName:(NSString *)name;
+
+@end
+
+/**
+ *  Gets a single uptime check configuration.
+ *
+ *  Method: monitoring.projects.uptimeCheckConfigs.get
+ *
+ *  Authorization scope(s):
+ *    @c kGTLRAuthScopeMonitoring
+ *    @c kGTLRAuthScopeMonitoringCloudPlatform
+ *    @c kGTLRAuthScopeMonitoringRead
+ */
+@interface GTLRMonitoringQuery_ProjectsUptimeCheckConfigsGet : GTLRMonitoringQuery
+// Previous library name was
+//   +[GTLQueryMonitoring queryForProjectsUptimeCheckConfigsGetWithname:]
+
+/**
+ *  The uptime check configuration to retrieve. The format is
+ *  projects/[PROJECT_ID]/uptimeCheckConfigs/[UPTIME_CHECK_ID].
+ */
+@property(nonatomic, copy, nullable) NSString *name;
+
+/**
+ *  Fetches a @c GTLRMonitoring_UptimeCheckConfig.
+ *
+ *  Gets a single uptime check configuration.
+ *
+ *  @param name The uptime check configuration to retrieve. The format is
+ *    projects/[PROJECT_ID]/uptimeCheckConfigs/[UPTIME_CHECK_ID].
+ *
+ *  @returns GTLRMonitoringQuery_ProjectsUptimeCheckConfigsGet
+ */
++ (instancetype)queryWithName:(NSString *)name;
+
+@end
+
+/**
+ *  Lists the existing valid uptime check configurations for the project,
+ *  leaving out any invalid configurations.
+ *
+ *  Method: monitoring.projects.uptimeCheckConfigs.list
+ *
+ *  Authorization scope(s):
+ *    @c kGTLRAuthScopeMonitoring
+ *    @c kGTLRAuthScopeMonitoringCloudPlatform
+ *    @c kGTLRAuthScopeMonitoringRead
+ */
+@interface GTLRMonitoringQuery_ProjectsUptimeCheckConfigsList : GTLRMonitoringQuery
+// Previous library name was
+//   +[GTLQueryMonitoring queryForProjectsUptimeCheckConfigsListWithparent:]
+
+/**
+ *  The maximum number of results to return in a single response. The server may
+ *  further constrain the maximum number of results returned in a single page.
+ *  If the page_size is <=0, the server will decide the number of results to be
+ *  returned.
+ */
+@property(nonatomic, assign) NSInteger pageSize;
+
+/**
+ *  If this field is not empty then it must contain the nextPageToken value
+ *  returned by a previous call to this method. Using this field causes the
+ *  method to return more results from the previous method call.
+ */
+@property(nonatomic, copy, nullable) NSString *pageToken;
+
+/**
+ *  The project whose uptime check configurations are listed. The format is
+ *  projects/[PROJECT_ID].
+ */
+@property(nonatomic, copy, nullable) NSString *parent;
+
+/**
+ *  Fetches a @c GTLRMonitoring_ListUptimeCheckConfigsResponse.
+ *
+ *  Lists the existing valid uptime check configurations for the project,
+ *  leaving out any invalid configurations.
+ *
+ *  @param parent The project whose uptime check configurations are listed. The
+ *    format is projects/[PROJECT_ID].
+ *
+ *  @returns GTLRMonitoringQuery_ProjectsUptimeCheckConfigsList
+ *
+ *  @note Automatic pagination will be done when @c shouldFetchNextPages is
+ *        enabled. See @c shouldFetchNextPages on @c GTLRService for more
+ *        information.
+ */
++ (instancetype)queryWithParent:(NSString *)parent;
+
+@end
+
+/**
+ *  Updates an uptime check configuration. You can either replace the entire
+ *  configuration with a new one or replace only certain fields in the current
+ *  configuration by specifying the fields to be updated via "updateMask".
+ *  Returns the updated configuration.
+ *
+ *  Method: monitoring.projects.uptimeCheckConfigs.patch
+ *
+ *  Authorization scope(s):
+ *    @c kGTLRAuthScopeMonitoring
+ *    @c kGTLRAuthScopeMonitoringCloudPlatform
+ */
+@interface GTLRMonitoringQuery_ProjectsUptimeCheckConfigsPatch : GTLRMonitoringQuery
+// Previous library name was
+//   +[GTLQueryMonitoring queryForProjectsUptimeCheckConfigsPatchWithObject:name:]
+
+/**
+ *  A unique resource name for this UptimeCheckConfig. The format
+ *  is:projects/[PROJECT_ID]/uptimeCheckConfigs/[UPTIME_CHECK_ID].This field
+ *  should be omitted when creating the uptime check configuration; on create,
+ *  the resource name is assigned by the server and included in the response.
+ */
+@property(nonatomic, copy, nullable) NSString *name;
+
+/**
+ *  Optional. If present, only the listed fields in the current uptime check
+ *  configuration are updated with values from the new configuration. If this
+ *  field is empty, then the current configuration is completely replaced with
+ *  the new configuration.
+ *
+ *  String format is a comma-separated list of fields.
+ */
+@property(nonatomic, copy, nullable) NSString *updateMask;
+
+/**
+ *  Fetches a @c GTLRMonitoring_UptimeCheckConfig.
+ *
+ *  Updates an uptime check configuration. You can either replace the entire
+ *  configuration with a new one or replace only certain fields in the current
+ *  configuration by specifying the fields to be updated via "updateMask".
+ *  Returns the updated configuration.
+ *
+ *  @param object The @c GTLRMonitoring_UptimeCheckConfig to include in the
+ *    query.
+ *  @param name A unique resource name for this UptimeCheckConfig. The format
+ *    is:projects/[PROJECT_ID]/uptimeCheckConfigs/[UPTIME_CHECK_ID].This field
+ *    should be omitted when creating the uptime check configuration; on create,
+ *    the resource name is assigned by the server and included in the response.
+ *
+ *  @returns GTLRMonitoringQuery_ProjectsUptimeCheckConfigsPatch
+ */
++ (instancetype)queryWithObject:(GTLRMonitoring_UptimeCheckConfig *)object
+                           name:(NSString *)name;
+
+@end
+
+/**
+ *  Returns the list of IPs that checkers run from
+ *
+ *  Method: monitoring.uptimeCheckIps.list
+ *
+ *  Authorization scope(s):
+ *    @c kGTLRAuthScopeMonitoring
+ *    @c kGTLRAuthScopeMonitoringCloudPlatform
+ *    @c kGTLRAuthScopeMonitoringRead
+ */
+@interface GTLRMonitoringQuery_UptimeCheckIpsList : GTLRMonitoringQuery
+// Previous library name was
+//   +[GTLQueryMonitoring queryForUptimeCheckIpsList]
+
+/**
+ *  The maximum number of results to return in a single response. The server may
+ *  further constrain the maximum number of results returned in a single page.
+ *  If the page_size is <=0, the server will decide the number of results to be
+ *  returned. NOTE: this field is not yet implemented
+ */
+@property(nonatomic, assign) NSInteger pageSize;
+
+/**
+ *  If this field is not empty then it must contain the nextPageToken value
+ *  returned by a previous call to this method. Using this field causes the
+ *  method to return more results from the previous method call. NOTE: this
+ *  field is not yet implemented
+ */
+@property(nonatomic, copy, nullable) NSString *pageToken;
+
+/**
+ *  Fetches a @c GTLRMonitoring_ListUptimeCheckIpsResponse.
+ *
+ *  Returns the list of IPs that checkers run from
+ *
+ *  @returns GTLRMonitoringQuery_UptimeCheckIpsList
+ *
+ *  @note Automatic pagination will be done when @c shouldFetchNextPages is
+ *        enabled. See @c shouldFetchNextPages on @c GTLRService for more
+ *        information.
+ */
++ (instancetype)query;
+
+@end
+
 NS_ASSUME_NONNULL_END
+
+#pragma clang diagnostic pop

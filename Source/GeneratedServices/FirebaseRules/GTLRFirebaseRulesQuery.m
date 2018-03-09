@@ -13,6 +13,18 @@
 
 #import "GTLRFirebaseRulesObjects.h"
 
+// ----------------------------------------------------------------------------
+// Constants
+
+// executableVersion
+NSString * const kGTLRFirebaseRulesExecutableVersionFirebaseRulesExecutableV1 = @"FIREBASE_RULES_EXECUTABLE_V1";
+NSString * const kGTLRFirebaseRulesExecutableVersionFirebaseRulesExecutableV2 = @"FIREBASE_RULES_EXECUTABLE_V2";
+NSString * const kGTLRFirebaseRulesExecutableVersionReleaseExecutableVersionUnspecified = @"RELEASE_EXECUTABLE_VERSION_UNSPECIFIED";
+
+// ----------------------------------------------------------------------------
+// Query Classes
+//
+
 @implementation GTLRFirebaseRulesQuery
 
 @dynamic fields;
@@ -82,6 +94,25 @@
 
 @end
 
+@implementation GTLRFirebaseRulesQuery_ProjectsReleasesGetExecutable
+
+@dynamic executableVersion, name;
+
++ (instancetype)queryWithName:(NSString *)name {
+  NSArray *pathParams = @[ @"name" ];
+  NSString *pathURITemplate = @"v1/{+name}:getExecutable";
+  GTLRFirebaseRulesQuery_ProjectsReleasesGetExecutable *query =
+    [[self alloc] initWithPathURITemplate:pathURITemplate
+                               HTTPMethod:nil
+                       pathParameterNames:pathParams];
+  query.name = name;
+  query.expectedObjectClass = [GTLRFirebaseRules_GetReleaseExecutableResponse class];
+  query.loggingName = @"firebaserules.projects.releases.getExecutable";
+  return query;
+}
+
+@end
+
 @implementation GTLRFirebaseRulesQuery_ProjectsReleasesList
 
 @dynamic filter, name, pageSize, pageToken;
@@ -101,11 +132,11 @@
 
 @end
 
-@implementation GTLRFirebaseRulesQuery_ProjectsReleasesUpdate
+@implementation GTLRFirebaseRulesQuery_ProjectsReleasesPatch
 
 @dynamic name;
 
-+ (instancetype)queryWithObject:(GTLRFirebaseRules_Release *)object
++ (instancetype)queryWithObject:(GTLRFirebaseRules_UpdateReleaseRequest *)object
                            name:(NSString *)name {
   if (object == nil) {
     GTLR_DEBUG_ASSERT(object != nil, @"Got a nil object");
@@ -113,14 +144,14 @@
   }
   NSArray *pathParams = @[ @"name" ];
   NSString *pathURITemplate = @"v1/{+name}";
-  GTLRFirebaseRulesQuery_ProjectsReleasesUpdate *query =
+  GTLRFirebaseRulesQuery_ProjectsReleasesPatch *query =
     [[self alloc] initWithPathURITemplate:pathURITemplate
-                               HTTPMethod:@"PUT"
+                               HTTPMethod:@"PATCH"
                        pathParameterNames:pathParams];
   query.bodyObject = object;
   query.name = name;
   query.expectedObjectClass = [GTLRFirebaseRules_Release class];
-  query.loggingName = @"firebaserules.projects.releases.update";
+  query.loggingName = @"firebaserules.projects.releases.patch";
   return query;
 }
 

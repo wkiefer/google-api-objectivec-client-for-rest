@@ -35,6 +35,11 @@
 @class GTLRPagespeedonline_Result_RuleGroups_RuleGroup;
 @class GTLRPagespeedonline_Result_Version;
 
+// Generated comments include content from the discovery document; avoid them
+// causing warnings since clang's checks are some what arbitrary.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdocumentation"
+
 NS_ASSUME_NONNULL_BEGIN
 
 /**
@@ -245,6 +250,9 @@ NS_ASSUME_NONNULL_BEGIN
  *  GTLRPagespeedonline_Result
  */
 @interface GTLRPagespeedonline_Result : GTLRObject
+
+/** The captcha verify result */
+@property(nonatomic, copy, nullable) NSString *captchaResult;
 
 /**
  *  Localized PageSpeed results. Contains a ruleResults entry for each PageSpeed
@@ -566,3 +574,5 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 NS_ASSUME_NONNULL_END
+
+#pragma clang diagnostic pop

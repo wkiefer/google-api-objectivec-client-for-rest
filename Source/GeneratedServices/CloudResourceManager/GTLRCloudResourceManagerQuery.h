@@ -2,7 +2,7 @@
 
 // ----------------------------------------------------------------------------
 // API:
-//   Google Cloud Resource Manager API (cloudresourcemanager/v1)
+//   Cloud Resource Manager API (cloudresourcemanager/v1)
 // Description:
 //   The Google Cloud Resource Manager API provides methods for creating,
 //   reading, and updating project metadata.
@@ -33,6 +33,11 @@
 @class GTLRCloudResourceManager_SetOrgPolicyRequest;
 @class GTLRCloudResourceManager_TestIamPermissionsRequest;
 @class GTLRCloudResourceManager_UndeleteProjectRequest;
+
+// Generated comments include content from the discovery document; avoid them
+// causing warnings since clang's checks are some what arbitrary.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdocumentation"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -513,6 +518,8 @@ NS_ASSUME_NONNULL_BEGIN
  *  Gets the access control policy for an Organization resource. May be empty
  *  if no such policy or resource exists. The `resource` field should be the
  *  organization's resource name, e.g. "organizations/123".
+ *  Authorization requires the Google IAM permission
+ *  `resourcemanager.organizations.getIamPolicy` on the specified organization
  *
  *  Method: cloudresourcemanager.organizations.getIamPolicy
  *
@@ -536,6 +543,8 @@ NS_ASSUME_NONNULL_BEGIN
  *  Gets the access control policy for an Organization resource. May be empty
  *  if no such policy or resource exists. The `resource` field should be the
  *  organization's resource name, e.g. "organizations/123".
+ *  Authorization requires the Google IAM permission
+ *  `resourcemanager.organizations.getIamPolicy` on the specified organization
  *
  *  @param object The @c GTLRCloudResourceManager_GetIamPolicyRequest to include
  *    in the query.
@@ -661,6 +670,8 @@ NS_ASSUME_NONNULL_BEGIN
  *  the specified filter. This method returns Organizations in an unspecified
  *  order. New Organizations do not necessarily appear at the end of the
  *  results.
+ *  Search will only return organizations on which the user has the permission
+ *  `resourcemanager.organizations.get`
  *
  *  Method: cloudresourcemanager.organizations.search
  *
@@ -679,6 +690,8 @@ NS_ASSUME_NONNULL_BEGIN
  *  the specified filter. This method returns Organizations in an unspecified
  *  order. New Organizations do not necessarily appear at the end of the
  *  results.
+ *  Search will only return organizations on which the user has the permission
+ *  `resourcemanager.organizations.get`
  *
  *  @param object The @c GTLRCloudResourceManager_SearchOrganizationsRequest to
  *    include in the query.
@@ -693,6 +706,8 @@ NS_ASSUME_NONNULL_BEGIN
  *  Sets the access control policy on an Organization resource. Replaces any
  *  existing policy. The `resource` field should be the organization's resource
  *  name, e.g. "organizations/123".
+ *  Authorization requires the Google IAM permission
+ *  `resourcemanager.organizations.setIamPolicy` on the specified organization
  *
  *  Method: cloudresourcemanager.organizations.setIamPolicy
  *
@@ -715,6 +730,8 @@ NS_ASSUME_NONNULL_BEGIN
  *  Sets the access control policy on an Organization resource. Replaces any
  *  existing policy. The `resource` field should be the organization's resource
  *  name, e.g. "organizations/123".
+ *  Authorization requires the Google IAM permission
+ *  `resourcemanager.organizations.setIamPolicy` on the specified organization
  *
  *  @param object The @c GTLRCloudResourceManager_SetIamPolicyRequest to include
  *    in the query.
@@ -770,6 +787,7 @@ NS_ASSUME_NONNULL_BEGIN
  *  Returns permissions that a caller has on the specified Organization.
  *  The `resource` field should be the organization's resource name,
  *  e.g. "organizations/123".
+ *  There are no permissions required for making this API call.
  *
  *  Method: cloudresourcemanager.organizations.testIamPermissions
  *
@@ -793,6 +811,7 @@ NS_ASSUME_NONNULL_BEGIN
  *  Returns permissions that a caller has on the specified Organization.
  *  The `resource` field should be the organization's resource name,
  *  e.g. "organizations/123".
+ *  There are no permissions required for making this API call.
  *
  *  @param object The @c GTLRCloudResourceManager_TestIamPermissionsRequest to
  *    include in the query.
@@ -846,6 +865,9 @@ NS_ASSUME_NONNULL_BEGIN
  *  percentile. As of 2016-08-29, we are observing 6 seconds 50th percentile
  *  latency. 95th percentile latency is around 11 seconds. We recommend
  *  polling at the 5th second with an exponential backoff.
+ *  Authorization requires the Google IAM permission
+ *  `resourcemanager.projects.create` on the specified parent for the new
+ *  project.
  *
  *  Method: cloudresourcemanager.projects.create
  *
@@ -866,6 +888,9 @@ NS_ASSUME_NONNULL_BEGIN
  *  percentile. As of 2016-08-29, we are observing 6 seconds 50th percentile
  *  latency. 95th percentile latency is around 11 seconds. We recommend
  *  polling at the 5th second with an exponential backoff.
+ *  Authorization requires the Google IAM permission
+ *  `resourcemanager.projects.create` on the specified parent for the new
+ *  project.
  *
  *  @param object The @c GTLRCloudResourceManager_Project to include in the
  *    query.
@@ -1061,6 +1086,10 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  *  Returns the IAM access control policy for the specified Project.
  *  Permission is denied if the policy or the resource does not exist.
+ *  Authorization requires the Google IAM permission
+ *  `resourcemanager.projects.getIamPolicy` on the project.
+ *  For additional information about resource structure and identification,
+ *  see [Resource Names](/apis/design/resource_names).
  *
  *  Method: cloudresourcemanager.projects.getIamPolicy
  *
@@ -1083,6 +1112,10 @@ NS_ASSUME_NONNULL_BEGIN
  *
  *  Returns the IAM access control policy for the specified Project.
  *  Permission is denied if the policy or the resource does not exist.
+ *  Authorization requires the Google IAM permission
+ *  `resourcemanager.projects.getIamPolicy` on the project.
+ *  For additional information about resource structure and identification,
+ *  see [Resource Names](/apis/design/resource_names).
  *
  *  @param object The @c GTLRCloudResourceManager_GetIamPolicyRequest to include
  *    in the query.
@@ -1140,7 +1173,11 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  *  Lists Projects that are visible to the user and satisfy the
  *  specified filter. This method returns Projects in an unspecified order.
- *  New Projects do not necessarily appear at the end of the list.
+ *  This method is eventually consistent with project mutations; this means
+ *  that a newly created project may not appear in the results or recent
+ *  updates to an existing project may not be reflected in the results. To
+ *  retrieve the latest state of a project, use the
+ *  GetProject method.
  *
  *  Method: cloudresourcemanager.projects.list
  *
@@ -1169,6 +1206,14 @@ NS_ASSUME_NONNULL_BEGIN
  *  |labels.color:red|The project's label `color` has the value `red`.|
  *  |labels.color:red&nbsp;labels.size:big|The project's label `color` has the
  *  value `red` and its label `size` has the value `big`.
+ *  If you specify a filter that has both `parent.type` and `parent.id`, then
+ *  the `resourcemanager.projects.list` permission is checked on the parent.
+ *  If the user has this permission, all projects under the parent will be
+ *  returned after remaining filters have been applied. If the user lacks this
+ *  permission, then all projects for which the user has the
+ *  `resourcemanager.projects.get` permission will be returned after remaining
+ *  filters have been applied. If no filter is specified, the call will return
+ *  projects for which the user has `resourcemanager.projects.get` permissions.
  *  Optional.
  */
 @property(nonatomic, copy, nullable) NSString *filter;
@@ -1193,7 +1238,11 @@ NS_ASSUME_NONNULL_BEGIN
  *
  *  Lists Projects that are visible to the user and satisfy the
  *  specified filter. This method returns Projects in an unspecified order.
- *  New Projects do not necessarily appear at the end of the list.
+ *  This method is eventually consistent with project mutations; this means
+ *  that a newly created project may not appear in the results or recent
+ *  updates to an existing project may not be reflected in the results. To
+ *  retrieve the latest state of a project, use the
+ *  GetProject method.
  *
  *  @returns GTLRCloudResourceManagerQuery_ProjectsList
  *
@@ -1272,7 +1321,7 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 /**
- *  Sets the IAM access control policy for the specified Project. Replaces
+ *  Sets the IAM access control policy for the specified Project. Overwrites
  *  any existing policy.
  *  The following constraints apply when using `setIamPolicy()`:
  *  + Project does not support `allUsers` and `allAuthenticatedUsers` as
@@ -1289,17 +1338,21 @@ NS_ASSUME_NONNULL_BEGIN
  *  they must be sent only using the Cloud Platform Console.
  *  + Membership changes that leave the project without any owners that have
  *  accepted the Terms of Service (ToS) will be rejected.
- *  + There must be at least one owner who has accepted the Terms of
- *  Service (ToS) agreement in the policy. Calling `setIamPolicy()` to
- *  remove the last ToS-accepted owner from the policy will fail. This
- *  restriction also applies to legacy projects that no longer have owners
- *  who have accepted the ToS. Edits to IAM policies will be rejected until
- *  the lack of a ToS-accepting owner is rectified.
- *  + Calling this method requires enabling the App Engine Admin API.
+ *  + If the project is not part of an organization, there must be at least
+ *  one owner who has accepted the Terms of Service (ToS) agreement in the
+ *  policy. Calling `setIamPolicy()` to remove the last ToS-accepted owner
+ *  from the policy will fail. This restriction also applies to legacy
+ *  projects that no longer have owners who have accepted the ToS. Edits to
+ *  IAM policies will be rejected until the lack of a ToS-accepting owner is
+ *  rectified.
+ *  + This method will replace the existing policy, and cannot be used to
+ *  append additional IAM settings.
  *  Note: Removing service accounts from policies or changing their roles
  *  can render services completely inoperable. It is important to understand
  *  how the service account is being used before removing or updating its
  *  roles.
+ *  Authorization requires the Google IAM permission
+ *  `resourcemanager.projects.setIamPolicy` on the project
  *
  *  Method: cloudresourcemanager.projects.setIamPolicy
  *
@@ -1319,7 +1372,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  *  Fetches a @c GTLRCloudResourceManager_Policy.
  *
- *  Sets the IAM access control policy for the specified Project. Replaces
+ *  Sets the IAM access control policy for the specified Project. Overwrites
  *  any existing policy.
  *  The following constraints apply when using `setIamPolicy()`:
  *  + Project does not support `allUsers` and `allAuthenticatedUsers` as
@@ -1336,17 +1389,21 @@ NS_ASSUME_NONNULL_BEGIN
  *  they must be sent only using the Cloud Platform Console.
  *  + Membership changes that leave the project without any owners that have
  *  accepted the Terms of Service (ToS) will be rejected.
- *  + There must be at least one owner who has accepted the Terms of
- *  Service (ToS) agreement in the policy. Calling `setIamPolicy()` to
- *  remove the last ToS-accepted owner from the policy will fail. This
- *  restriction also applies to legacy projects that no longer have owners
- *  who have accepted the ToS. Edits to IAM policies will be rejected until
- *  the lack of a ToS-accepting owner is rectified.
- *  + Calling this method requires enabling the App Engine Admin API.
+ *  + If the project is not part of an organization, there must be at least
+ *  one owner who has accepted the Terms of Service (ToS) agreement in the
+ *  policy. Calling `setIamPolicy()` to remove the last ToS-accepted owner
+ *  from the policy will fail. This restriction also applies to legacy
+ *  projects that no longer have owners who have accepted the ToS. Edits to
+ *  IAM policies will be rejected until the lack of a ToS-accepting owner is
+ *  rectified.
+ *  + This method will replace the existing policy, and cannot be used to
+ *  append additional IAM settings.
  *  Note: Removing service accounts from policies or changing their roles
  *  can render services completely inoperable. It is important to understand
  *  how the service account is being used before removing or updating its
  *  roles.
+ *  Authorization requires the Google IAM permission
+ *  `resourcemanager.projects.setIamPolicy` on the project
  *
  *  @param object The @c GTLRCloudResourceManager_SetIamPolicyRequest to include
  *    in the query.
@@ -1400,6 +1457,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  *  Returns permissions that a caller has on the specified Project.
+ *  There are no permissions required for making this API call.
  *
  *  Method: cloudresourcemanager.projects.testIamPermissions
  *
@@ -1421,6 +1479,7 @@ NS_ASSUME_NONNULL_BEGIN
  *  Fetches a @c GTLRCloudResourceManager_TestIamPermissionsResponse.
  *
  *  Returns permissions that a caller has on the specified Project.
+ *  There are no permissions required for making this API call.
  *
  *  @param object The @c GTLRCloudResourceManager_TestIamPermissionsRequest to
  *    include in the query.
@@ -1520,3 +1579,5 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 NS_ASSUME_NONNULL_END
+
+#pragma clang diagnostic pop

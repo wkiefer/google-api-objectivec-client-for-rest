@@ -42,6 +42,7 @@
 @class GTLRAnalyticsReporting_ReportData;
 @class GTLRAnalyticsReporting_ReportRequest;
 @class GTLRAnalyticsReporting_ReportRow;
+@class GTLRAnalyticsReporting_ResourceQuotasRemaining;
 @class GTLRAnalyticsReporting_Segment;
 @class GTLRAnalyticsReporting_SegmentDefinition;
 @class GTLRAnalyticsReporting_SegmentDimensionFilter;
@@ -51,6 +52,11 @@
 @class GTLRAnalyticsReporting_SegmentSequenceStep;
 @class GTLRAnalyticsReporting_SequenceSegment;
 @class GTLRAnalyticsReporting_SimpleSegment;
+
+// Generated comments include content from the discovery document; avoid them
+// causing warnings since clang's checks are some what arbitrary.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdocumentation"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -930,6 +936,23 @@ GTLR_EXTERN NSString * const kGTLRAnalyticsReporting_SegmentSequenceStep_MatchTy
  */
 @property(nonatomic, strong, nullable) NSArray<GTLRAnalyticsReporting_ReportRequest *> *reportRequests;
 
+/**
+ *  Enables
+ *  [resource based
+ *  quotas](/analytics/devguides/reporting/core/v4/limits-quotas#analytics_reporting_api_v4),
+ *  (defaults to `False`). If this field is set to `True` the
+ *  per view (profile) quotas are governed by the computational
+ *  cost of the request. Note that using cost based quotas will
+ *  higher enable sampling rates. (10 Million for `SMALL`,
+ *  100M for `LARGE`. See the
+ *  [limits and quotas
+ *  documentation](/analytics/devguides/reporting/core/v4/limits-quotas#analytics_reporting_api_v4)
+ *  for details.
+ *
+ *  Uses NSNumber of boolValue.
+ */
+@property(nonatomic, strong, nullable) NSNumber *useResourceQuotas;
+
 @end
 
 
@@ -939,8 +962,19 @@ GTLR_EXTERN NSString * const kGTLRAnalyticsReporting_SegmentSequenceStep_MatchTy
  */
 @interface GTLRAnalyticsReporting_GetReportsResponse : GTLRObject
 
+/**
+ *  The amount of resource quota tokens deducted to execute the query. Includes
+ *  all responses.
+ *
+ *  Uses NSNumber of intValue.
+ */
+@property(nonatomic, strong, nullable) NSNumber *queryCost;
+
 /** Responses corresponding to each of the request. */
 @property(nonatomic, strong, nullable) NSArray<GTLRAnalyticsReporting_Report *> *reports;
+
+/** The amount of resource quota remaining for the property. */
+@property(nonatomic, strong, nullable) GTLRAnalyticsReporting_ResourceQuotasRemaining *resourceQuotasRemaining;
 
 @end
 
@@ -1594,6 +1628,29 @@ GTLR_EXTERN NSString * const kGTLRAnalyticsReporting_SegmentSequenceStep_MatchTy
 
 
 /**
+ *  The resource quota tokens remaining for the property after the request is
+ *  completed.
+ */
+@interface GTLRAnalyticsReporting_ResourceQuotasRemaining : GTLRObject
+
+/**
+ *  Daily resource quota remaining remaining.
+ *
+ *  Uses NSNumber of intValue.
+ */
+@property(nonatomic, strong, nullable) NSNumber *dailyQuotaTokensRemaining;
+
+/**
+ *  Hourly resource quota tokens remaining.
+ *
+ *  Uses NSNumber of intValue.
+ */
+@property(nonatomic, strong, nullable) NSNumber *hourlyQuotaTokensRemaining;
+
+@end
+
+
+/**
  *  The segment definition, if the report needs to be segmented.
  *  A Segment is a subset of the Analytics data. For example, of the entire
  *  set of users, one Segment might be users from a particular country or city.
@@ -1917,3 +1974,5 @@ GTLR_EXTERN NSString * const kGTLRAnalyticsReporting_SegmentSequenceStep_MatchTy
 @end
 
 NS_ASSUME_NONNULL_END
+
+#pragma clang diagnostic pop

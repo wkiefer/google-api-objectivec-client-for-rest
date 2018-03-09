@@ -4,8 +4,7 @@
 // API:
 //   Firebase Dynamic Links API (firebasedynamiclinks/v1)
 // Description:
-//   Firebase Dynamic Links API enables third party developers to
-//   programmatically create and manage Dynamic Links.
+//   Programmatically creates and manages Firebase Dynamic Links.
 // Documentation:
 //   https://firebase.google.com/docs/dynamic-links/
 
@@ -20,6 +19,12 @@
 #endif
 
 @class GTLRFirebaseDynamicLinks_CreateShortDynamicLinkRequest;
+@class GTLRFirebaseDynamicLinks_GetIosPostInstallAttributionRequest;
+
+// Generated comments include content from the discovery document; avoid them
+// causing warnings since clang's checks are some what arbitrary.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdocumentation"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -71,4 +76,68 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+/**
+ *  Fetches analytics stats of a short Dynamic Link for a given
+ *  duration. Metrics include number of clicks, redirects, installs,
+ *  app first opens, and app reopens.
+ *
+ *  Method: firebasedynamiclinks.getLinkStats
+ *
+ *  Authorization scope(s):
+ *    @c kGTLRAuthScopeFirebaseDynamicLinksFirebase
+ */
+@interface GTLRFirebaseDynamicLinksQuery_V1GetLinkStats : GTLRFirebaseDynamicLinksQuery
+// Previous library name was
+//   +[GTLQueryFirebaseDynamicLinks queryForGetLinkStatsWithdynamicLink:]
+
+/** The span of time requested in days. */
+@property(nonatomic, assign) long long durationDays;
+
+/** Dynamic Link URL. e.g. https://abcd.app.goo.gl/wxyz */
+@property(nonatomic, copy, nullable) NSString *dynamicLink;
+
+/**
+ *  Fetches a @c GTLRFirebaseDynamicLinks_DynamicLinkStats.
+ *
+ *  Fetches analytics stats of a short Dynamic Link for a given
+ *  duration. Metrics include number of clicks, redirects, installs,
+ *  app first opens, and app reopens.
+ *
+ *  @param dynamicLink Dynamic Link URL. e.g. https://abcd.app.goo.gl/wxyz
+ *
+ *  @returns GTLRFirebaseDynamicLinksQuery_V1GetLinkStats
+ */
++ (instancetype)queryWithDynamicLink:(NSString *)dynamicLink;
+
+@end
+
+/**
+ *  Get iOS strong/weak-match info for post-install attribution.
+ *
+ *  Method: firebasedynamiclinks.installAttribution
+ *
+ *  Authorization scope(s):
+ *    @c kGTLRAuthScopeFirebaseDynamicLinksFirebase
+ */
+@interface GTLRFirebaseDynamicLinksQuery_V1InstallAttribution : GTLRFirebaseDynamicLinksQuery
+// Previous library name was
+//   +[GTLQueryFirebaseDynamicLinks queryForInstallAttributionWithObject:]
+
+/**
+ *  Fetches a @c GTLRFirebaseDynamicLinks_GetIosPostInstallAttributionResponse.
+ *
+ *  Get iOS strong/weak-match info for post-install attribution.
+ *
+ *  @param object The @c
+ *    GTLRFirebaseDynamicLinks_GetIosPostInstallAttributionRequest to include in
+ *    the query.
+ *
+ *  @returns GTLRFirebaseDynamicLinksQuery_V1InstallAttribution
+ */
++ (instancetype)queryWithObject:(GTLRFirebaseDynamicLinks_GetIosPostInstallAttributionRequest *)object;
+
+@end
+
 NS_ASSUME_NONNULL_END
+
+#pragma clang diagnostic pop

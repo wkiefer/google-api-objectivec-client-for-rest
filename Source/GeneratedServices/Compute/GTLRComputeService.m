@@ -32,7 +32,7 @@ NSString * const kGTLRAuthScopeComputeReadonly              = @"https://www.goog
     // From discovery.
     self.rootURLString = @"https://www.googleapis.com/";
     self.servicePath = @"compute/v1/projects/";
-    self.batchPath = @"batch";
+    self.batchPath = @"batch/compute/v1";
     self.prettyPrintQueryParameterNames = @[ @"prettyPrint" ];
   }
   return self;
@@ -40,6 +40,9 @@ NSString * const kGTLRAuthScopeComputeReadonly              = @"https://www.goog
 
 + (NSDictionary<NSString *, Class> *)kindStringToClassMap {
   return @{
+    @"compute#acceleratorType" : [GTLRCompute_AcceleratorType class],
+    @"compute#acceleratorTypeAggregatedList" : [GTLRCompute_AcceleratorTypeAggregatedList class],
+    @"compute#acceleratorTypeList" : [GTLRCompute_AcceleratorTypeList class],
     @"compute#accessConfig" : [GTLRCompute_AccessConfig class],
     @"compute#address" : [GTLRCompute_Address class],
     @"compute#addressAggregatedList" : [GTLRCompute_AddressAggregatedList class],
@@ -54,6 +57,9 @@ NSString * const kGTLRAuthScopeComputeReadonly              = @"https://www.goog
     @"compute#backendServiceAggregatedList" : [GTLRCompute_BackendServiceAggregatedList class],
     @"compute#backendServiceGroupHealth" : [GTLRCompute_BackendServiceGroupHealth class],
     @"compute#backendServiceList" : [GTLRCompute_BackendServiceList class],
+    @"compute#commitment" : [GTLRCompute_Commitment class],
+    @"compute#commitmentAggregatedList" : [GTLRCompute_CommitmentAggregatedList class],
+    @"compute#commitmentList" : [GTLRCompute_CommitmentList class],
     @"compute#disk" : [GTLRCompute_Disk class],
     @"compute#diskAggregatedList" : [GTLRCompute_DiskAggregatedList class],
     @"compute#diskList" : [GTLRCompute_DiskList class],
@@ -83,8 +89,16 @@ NSString * const kGTLRAuthScopeComputeReadonly              = @"https://www.goog
     @"compute#instanceGroupManagerList" : [GTLRCompute_InstanceGroupManagerList class],
     @"compute#instanceGroupsListInstances" : [GTLRCompute_InstanceGroupsListInstances class],
     @"compute#instanceList" : [GTLRCompute_InstanceList class],
+    @"compute#instanceListReferrers" : [GTLRCompute_InstanceListReferrers class],
     @"compute#instanceTemplate" : [GTLRCompute_InstanceTemplate class],
     @"compute#instanceTemplateList" : [GTLRCompute_InstanceTemplateList class],
+    @"compute#interconnect" : [GTLRCompute_Interconnect class],
+    @"compute#interconnectAttachment" : [GTLRCompute_InterconnectAttachment class],
+    @"compute#interconnectAttachmentAggregatedList" : [GTLRCompute_InterconnectAttachmentAggregatedList class],
+    @"compute#interconnectAttachmentList" : [GTLRCompute_InterconnectAttachmentList class],
+    @"compute#interconnectList" : [GTLRCompute_InterconnectList class],
+    @"compute#interconnectLocation" : [GTLRCompute_InterconnectLocation class],
+    @"compute#interconnectLocationList" : [GTLRCompute_InterconnectLocationList class],
     @"compute#license" : [GTLRCompute_License class],
     @"compute#machineType" : [GTLRCompute_MachineType class],
     @"compute#machineTypeAggregatedList" : [GTLRCompute_MachineTypeAggregatedList class],
@@ -97,6 +111,8 @@ NSString * const kGTLRAuthScopeComputeReadonly              = @"https://www.goog
     @"compute#operationAggregatedList" : [GTLRCompute_OperationAggregatedList class],
     @"compute#operationList" : [GTLRCompute_OperationList class],
     @"compute#project" : [GTLRCompute_Project class],
+    @"compute#projectsGetXpnResources" : [GTLRCompute_ProjectsGetXpnResources class],
+    @"compute#reference" : [GTLRCompute_Reference class],
     @"compute#region" : [GTLRCompute_Region class],
     @"compute#regionAutoscalerList" : [GTLRCompute_RegionAutoscalerList class],
     @"compute#regionInstanceGroupList" : [GTLRCompute_RegionInstanceGroupList class],
@@ -130,6 +146,8 @@ NSString * const kGTLRAuthScopeComputeReadonly              = @"https://www.goog
     @"compute#targetPoolList" : [GTLRCompute_TargetPoolList class],
     @"compute#targetSslProxy" : [GTLRCompute_TargetSslProxy class],
     @"compute#targetSslProxyList" : [GTLRCompute_TargetSslProxyList class],
+    @"compute#targetTcpProxy" : [GTLRCompute_TargetTcpProxy class],
+    @"compute#targetTcpProxyList" : [GTLRCompute_TargetTcpProxyList class],
     @"compute#targetVpnGateway" : [GTLRCompute_TargetVpnGateway class],
     @"compute#targetVpnGatewayAggregatedList" : [GTLRCompute_TargetVpnGatewayAggregatedList class],
     @"compute#targetVpnGatewayList" : [GTLRCompute_TargetVpnGatewayList class],
@@ -138,6 +156,7 @@ NSString * const kGTLRAuthScopeComputeReadonly              = @"https://www.goog
     @"compute#vpnTunnel" : [GTLRCompute_VpnTunnel class],
     @"compute#vpnTunnelAggregatedList" : [GTLRCompute_VpnTunnelAggregatedList class],
     @"compute#vpnTunnelList" : [GTLRCompute_VpnTunnelList class],
+    @"compute#xpnHostList" : [GTLRCompute_XpnHostList class],
     @"compute#zone" : [GTLRCompute_Zone class],
     @"compute#zoneList" : [GTLRCompute_ZoneList class],
   };

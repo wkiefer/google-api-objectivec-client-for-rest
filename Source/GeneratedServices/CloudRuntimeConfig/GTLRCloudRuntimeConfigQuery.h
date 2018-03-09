@@ -2,10 +2,12 @@
 
 // ----------------------------------------------------------------------------
 // API:
-//   Google Cloud RuntimeConfig API (runtimeconfig/v1)
+//   Google Cloud Runtime Configuration API (runtimeconfig/v1)
 // Description:
-//   Provides capabilities for dynamic configuration and coordination for
-//   applications running on Google Cloud Platform.
+//   The Runtime Configurator allows you to dynamically configure and expose
+//   variables through Google Cloud Platform. In addition, you can also set
+//   Watchers and Waiters that will watch for changes to your data and return
+//   based on certain conditions.
 // Documentation:
 //   https://cloud.google.com/deployment-manager/runtime-configurator/
 
@@ -20,6 +22,11 @@
 #endif
 
 @class GTLRCloudRuntimeConfig_CancelOperationRequest;
+
+// Generated comments include content from the discovery document; avoid them
+// causing warnings since clang's checks are some what arbitrary.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdocumentation"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -121,8 +128,13 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  *  Lists operations that match the specified filter in the request. If the
  *  server doesn't support this method, it returns `UNIMPLEMENTED`.
- *  NOTE: the `name` binding below allows API services to override the binding
- *  to use different resource name schemes, such as `users/ * /operations`.
+ *  NOTE: the `name` binding allows API services to override the binding
+ *  to use different resource name schemes, such as `users/ * /operations`. To
+ *  override the binding, API services can add a binding such as
+ *  `"/v1/{name=users/ *}/operations"` to their service configuration.
+ *  For backwards compatibility, the default name includes the operations
+ *  collection id, however overriding users must ensure the name binding
+ *  is the parent resource, without the operations collection id.
  *
  *  Method: runtimeconfig.operations.list
  *
@@ -137,7 +149,7 @@ NS_ASSUME_NONNULL_BEGIN
 /** The standard list filter. */
 @property(nonatomic, copy, nullable) NSString *filter;
 
-/** The name of the operation collection. */
+/** The name of the operation's parent resource. */
 @property(nonatomic, copy, nullable) NSString *name;
 
 /** The standard list page size. */
@@ -151,10 +163,15 @@ NS_ASSUME_NONNULL_BEGIN
  *
  *  Lists operations that match the specified filter in the request. If the
  *  server doesn't support this method, it returns `UNIMPLEMENTED`.
- *  NOTE: the `name` binding below allows API services to override the binding
- *  to use different resource name schemes, such as `users/ * /operations`.
+ *  NOTE: the `name` binding allows API services to override the binding
+ *  to use different resource name schemes, such as `users/ * /operations`. To
+ *  override the binding, API services can add a binding such as
+ *  `"/v1/{name=users/ *}/operations"` to their service configuration.
+ *  For backwards compatibility, the default name includes the operations
+ *  collection id, however overriding users must ensure the name binding
+ *  is the parent resource, without the operations collection id.
  *
- *  @param name The name of the operation collection.
+ *  @param name The name of the operation's parent resource.
  *
  *  @returns GTLRCloudRuntimeConfigQuery_OperationsList
  *
@@ -167,3 +184,5 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 NS_ASSUME_NONNULL_END
+
+#pragma clang diagnostic pop

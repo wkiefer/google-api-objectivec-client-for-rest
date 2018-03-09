@@ -119,6 +119,107 @@
 
 @end
 
+@implementation GTLRDatastoreQuery_ProjectsOperationsCancel
+
+@dynamic name;
+
++ (instancetype)queryWithName:(NSString *)name {
+  NSArray *pathParams = @[ @"name" ];
+  NSString *pathURITemplate = @"v1/{+name}:cancel";
+  GTLRDatastoreQuery_ProjectsOperationsCancel *query =
+    [[self alloc] initWithPathURITemplate:pathURITemplate
+                               HTTPMethod:@"POST"
+                       pathParameterNames:pathParams];
+  query.name = name;
+  query.expectedObjectClass = [GTLRDatastore_Empty class];
+  query.loggingName = @"datastore.projects.operations.cancel";
+  return query;
+}
+
+@end
+
+@implementation GTLRDatastoreQuery_ProjectsOperationsDelete
+
+@dynamic name;
+
++ (instancetype)queryWithName:(NSString *)name {
+  NSArray *pathParams = @[ @"name" ];
+  NSString *pathURITemplate = @"v1/{+name}";
+  GTLRDatastoreQuery_ProjectsOperationsDelete *query =
+    [[self alloc] initWithPathURITemplate:pathURITemplate
+                               HTTPMethod:@"DELETE"
+                       pathParameterNames:pathParams];
+  query.name = name;
+  query.expectedObjectClass = [GTLRDatastore_Empty class];
+  query.loggingName = @"datastore.projects.operations.delete";
+  return query;
+}
+
+@end
+
+@implementation GTLRDatastoreQuery_ProjectsOperationsGet
+
+@dynamic name;
+
++ (instancetype)queryWithName:(NSString *)name {
+  NSArray *pathParams = @[ @"name" ];
+  NSString *pathURITemplate = @"v1/{+name}";
+  GTLRDatastoreQuery_ProjectsOperationsGet *query =
+    [[self alloc] initWithPathURITemplate:pathURITemplate
+                               HTTPMethod:nil
+                       pathParameterNames:pathParams];
+  query.name = name;
+  query.expectedObjectClass = [GTLRDatastore_GoogleLongrunningOperation class];
+  query.loggingName = @"datastore.projects.operations.get";
+  return query;
+}
+
+@end
+
+@implementation GTLRDatastoreQuery_ProjectsOperationsList
+
+@dynamic filter, name, pageSize, pageToken;
+
++ (instancetype)queryWithName:(NSString *)name {
+  NSArray *pathParams = @[ @"name" ];
+  NSString *pathURITemplate = @"v1/{+name}/operations";
+  GTLRDatastoreQuery_ProjectsOperationsList *query =
+    [[self alloc] initWithPathURITemplate:pathURITemplate
+                               HTTPMethod:nil
+                       pathParameterNames:pathParams];
+  query.name = name;
+  query.expectedObjectClass = [GTLRDatastore_GoogleLongrunningListOperationsResponse class];
+  query.loggingName = @"datastore.projects.operations.list";
+  return query;
+}
+
+@end
+
+@implementation GTLRDatastoreQuery_ProjectsReserveIds
+
+@dynamic projectId;
+
++ (instancetype)queryWithObject:(GTLRDatastore_ReserveIdsRequest *)object
+                      projectId:(NSString *)projectId {
+  if (object == nil) {
+    GTLR_DEBUG_ASSERT(object != nil, @"Got a nil object");
+    return nil;
+  }
+  NSArray *pathParams = @[ @"projectId" ];
+  NSString *pathURITemplate = @"v1/projects/{projectId}:reserveIds";
+  GTLRDatastoreQuery_ProjectsReserveIds *query =
+    [[self alloc] initWithPathURITemplate:pathURITemplate
+                               HTTPMethod:@"POST"
+                       pathParameterNames:pathParams];
+  query.bodyObject = object;
+  query.projectId = projectId;
+  query.expectedObjectClass = [GTLRDatastore_ReserveIdsResponse class];
+  query.loggingName = @"datastore.projects.reserveIds";
+  return query;
+}
+
+@end
+
 @implementation GTLRDatastoreQuery_ProjectsRollback
 
 @dynamic projectId;

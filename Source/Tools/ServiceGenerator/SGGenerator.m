@@ -64,10 +64,25 @@ static NSString *kCommonQueryParamsKey            = @"commonQueryParam";
 static NSString *kCommonPrettyPrintQueryParamsKey = @"commonPrettyPrintQueryParams";
 static NSString *kEnumMapKey                      = @"enumMap";
 
+
+static NSString *kSuppressDocumentationWarningsBegin =
+  @"// Generated comments include content from the discovery document; avoid them\n"
+  @"// causing warnings since clang's checks are some what arbitrary.\n"
+  @"#pragma clang diagnostic push\n"
+  @"#pragma clang diagnostic ignored \"-Wdocumentation\"\n";
+static NSString *kSuppressDocumentationWarningsEnd =
+  @"#pragma clang diagnostic pop\n";
+
 typedef enum {
   kGenerateInterface = 1,
   kGenerateImplementation
 } GeneratorMode;
+
+typedef enum {
+  kOAuth2ScopeNamingModeShortURL,
+  kOAuth2ScopeNamingModeFullURL,
+  kOAuth2ScopeNamingModeUseEverything,
+} OAuth2ScopeNamingMode;
 
 // This is added so it can be called on Methods, Parameters, and Schema.
 @interface GTLRObject (SGGeneratorAdditions)
@@ -76,6 +91,7 @@ typedef enum {
 
 - (void)sg_setProperty:(id)obj forKey:(NSString *)key;
 - (id)sg_propertyForKey:(NSString *)key;
++ (NSArray *)sg_acceptedUnknowns;
 @end
 
 @interface GTLRDiscovery_RestDescription (SGGeneratorAdditions)
@@ -153,7 +169,6 @@ typedef enum {
 @interface SGGenerator ()
 @property(strong) NSMutableArray *warnings;
 @property(strong) NSMutableArray *infos;
-@property(readonly) BOOL useLegacyObjectNaming;
 @end
 
 // Helper to get the objects of a dictionary out in a sorted order.
@@ -196,6 +211,17 @@ static void CheckForUnknownJSON(GTLRObject *obj, NSArray *keyPath,
   Class additionalPropClass = [[obj class] classForAdditionalProperties];
   if (additionalPropClass == Nil) {
     NSArray *apiUnknowns = [obj additionalJSONKeys];
+
+    // The OP servers have added a few keys that aren't documented, this
+    // support allows some of them to be stripped from the audit report
+    // since they are noise.
+    NSArray *acceptedUnknowns = [[obj class] sg_acceptedUnknowns];
+    if (acceptedUnknowns.count) {
+      NSMutableArray *worker = [apiUnknowns mutableCopy];
+      [worker removeObjectsInArray:acceptedUnknowns];
+      apiUnknowns = worker.count ? worker : nil;
+    }
+
     if (apiUnknowns != nil) {
       apiUnknowns = [apiUnknowns sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
       NSString *info =
@@ -243,6 +269,8 @@ static void CheckForUnknownJSON(GTLRObject *obj, NSArray *keyPath,
   NSString *_formattedName;
   NSPredicate *_notRetainedPredicate;
   NSPredicate *_useCustomerGetterPredicate;
+
+  OAuth2ScopeNamingMode authScopeNamingMode;
 }
 
 @synthesize api = _api,
@@ -335,6 +363,8 @@ static void CheckForUnknownJSON(GTLRObject *obj, NSArray *keyPath,
   // That's all the preflighting we can do. Any errors from here out are
   // thrown as NSExceptions.
 
+  [self determineOAuth2ScopesNamingMode];
+
   [self.api sg_calculateMediaPaths];
 
   // Cause the objectEnumsMap to get calculated (and cached).
@@ -385,11 +415,6 @@ static void CheckForUnknownJSON(GTLRObject *obj, NSArray *keyPath,
 
 - (BOOL)auditJSON {
   BOOL result = (_options & kSGGeneratorOptionAuditJSON) != 0;
-  return result;
-}
-
-- (BOOL)useLegacyObjectNaming {
-  BOOL result = (_options & kSGGeneratorOptionLegacyObjectNaming) != 0;
   return result;
 }
 
@@ -487,6 +512,8 @@ static void CheckForUnknownJSON(GTLRObject *obj, NSArray *keyPath,
     [method.response.sg_resolvedSchema sg_setProperty:@YES
                                                forKey:kReturnsSchemaParameterKey];
 
+    [method.request sg_setProperty:[methodName stringByAppendingString:@"-Request"]
+                            forKey:kNameKey];
     [method.request sg_setProperty:generatorAsValue forKey:kWrappedGeneratorKey];
 
     // Spin over the parameters
@@ -740,10 +767,6 @@ static void CheckForUnknownJSON(GTLRObject *obj, NSArray *keyPath,
         [NSString stringWithFormat:@"Collision over the class name '%@' (schemas '%@' and '%@')",
          objcClassName,
          previousSchema.sg_fullSchemaName, schema.sg_fullSchemaName];
-      if (self.useLegacyObjectNaming) {
-        errStr =
-            [errStr stringByAppendingString:@", not using --useLegacyObjectClassNames will likely avoid this."];
-      }
       messageHandler(kSGGeneratorHandlerMessageError, errStr);
       allGood = NO;
     } else {
@@ -752,6 +775,34 @@ static void CheckForUnknownJSON(GTLRObject *obj, NSArray *keyPath,
   }
 
   return allGood;
+}
+
+- (void)determineOAuth2ScopesNamingMode {
+  GTLRDiscovery_RestDescription_Auth_Oauth2_Scopes *oauth2scopes = self.api.auth.oauth2.scopes;
+
+  OAuth2ScopeNamingMode modes[] = {
+    kOAuth2ScopeNamingModeShortURL,
+    kOAuth2ScopeNamingModeFullURL,
+    kOAuth2ScopeNamingModeUseEverything
+  };
+  int count = sizeof(modes) / sizeof(modes[0]);
+
+  for (int i = 0; i < count; ++i) {
+    authScopeNamingMode = modes[i];
+
+    NSMutableSet *names = [NSMutableSet set];
+    for (NSString *scope in oauth2scopes.additionalJSONKeys) {
+      [names addObject:[self authorizationScopeToConstant:scope]];
+    }
+
+    if (names.count == oauth2scopes.additionalJSONKeys.count) {
+      // No collisions, we're good.
+      return;
+    }
+  }
+
+  [NSException raise:kFatalGeneration
+              format:@"Cannot generated unique names out of the OAuth2 Scopes for this API."];
 }
 
 - (NSString *)objcServiceClassName {
@@ -800,6 +851,8 @@ static void CheckForUnknownJSON(GTLRObject *obj, NSArray *keyPath,
 
   NSString *versionCheck = [self headerVersionCheck];
   [parts addObject:versionCheck];
+
+  [parts addObject:kSuppressDocumentationWarningsBegin];
 
   [parts addObject:@"NS_ASSUME_NONNULL_BEGIN\n"];
 
@@ -861,6 +914,8 @@ static void CheckForUnknownJSON(GTLRObject *obj, NSArray *keyPath,
   [parts addObject:@"@end\n"];
 
   [parts addObject:@"NS_ASSUME_NONNULL_END\n"];
+
+  [parts addObject:kSuppressDocumentationWarningsEnd];
 
   return [parts componentsJoinedByString:@"\n"];
 }
@@ -1073,6 +1128,8 @@ static void CheckForUnknownJSON(GTLRObject *obj, NSArray *keyPath,
     [parts addObject:classForwards];
   }
 
+  [parts addObject:kSuppressDocumentationWarningsBegin];
+
   [parts addObject:@"NS_ASSUME_NONNULL_BEGIN\n"];
 
   NSString *commentExtra = @"For some of the query classes' properties below.";
@@ -1099,6 +1156,8 @@ static void CheckForUnknownJSON(GTLRObject *obj, NSArray *keyPath,
   }
 
   [parts addObject:@"NS_ASSUME_NONNULL_END\n"];
+
+  [parts addObject:kSuppressDocumentationWarningsEnd];
 
   return [parts componentsJoinedByString:@"\n"];
 }
@@ -1200,6 +1259,8 @@ static void CheckForUnknownJSON(GTLRObject *obj, NSArray *keyPath,
     [parts addObject:[subParts componentsJoinedByString:@""]];
   }
 
+  [parts addObject:kSuppressDocumentationWarningsBegin];
+
   [parts addObject:@"NS_ASSUME_NONNULL_BEGIN\n"];
 
   NSString *commentExtra = @"For some of the classes' properties below.";
@@ -1230,6 +1291,8 @@ static void CheckForUnknownJSON(GTLRObject *obj, NSArray *keyPath,
   [parts addObject:[classParts componentsJoinedByString:@"\n\n"]];
 
   [parts addObject:@"NS_ASSUME_NONNULL_END\n"];
+
+  [parts addObject:kSuppressDocumentationWarningsEnd];
 
   return [parts componentsJoinedByString:@"\n"];
 }
@@ -1394,7 +1457,7 @@ static void CheckForUnknownJSON(GTLRObject *obj, NSArray *keyPath,
 
 // Append "_param" to any name used as a local variable when generating the
 // query method implementation to avoid duplication variables.
-static NSString *MappedParamName(NSString *name) {
+static NSString *MappedParamImplName(NSString *name) {
   NSString *result = name;
 
   if ([name isEqual:@"object"] ||
@@ -1402,6 +1465,19 @@ static NSString *MappedParamName(NSString *name) {
       [name isEqual:@"pathParams"] ||
       [name isEqual:@"query"] ||
       [name isEqual:@"uploadParameters"]) {
+    result = [name stringByAppendingString:@"_param"];
+  }
+
+  return result;
+}
+
+// Append "_param" to any name used as a parameter when generating the
+// query method interface to avoid duplication variables.
+static NSString *MappedParamInterfaceName(NSString *name, BOOL takesObject, BOOL takesUploadParams) {
+  NSString *result = name;
+
+  if ((takesObject && [name isEqual:@"object"]) ||
+      (takesUploadParams && [name isEqual:@"uploadParameters"])) {
     result = [name stringByAppendingString:@"_param"];
   }
 
@@ -1897,10 +1973,14 @@ static NSString *MappedParamName(NSString *name) {
         NSString *capitalizeObjCName = param.sg_capObjCName;
         [methodStr appendFormat:@"With%@:(%@%@)%@",
          capitalizeObjCName, objcType, (asPtr ? @" *" : @""),
-         (mode == kGenerateInterface ? name : MappedParamName(name))];
+         (mode == kGenerateInterface
+          ? MappedParamInterfaceName(name, doesQueryTakeObject, supportsMediaUpload)
+          : MappedParamImplName(name))];
         [downloadMethodStr appendFormat:@"With%@:(%@%@)%@",
          capitalizeObjCName, objcType, (asPtr ? @" *" : @""),
-         (mode == kGenerateInterface ? name : MappedParamName(name))];
+         (mode == kGenerateInterface
+          ? MappedParamInterfaceName(name, doesQueryTakeObject, supportsMediaUpload)
+          : MappedParamImplName(name))];
         nameWidth += 4 + capitalizeObjCName.length; // 'With%@'
         downloadNameWidth += 4 + capitalizeObjCName.length;
         needsWith = NO;
@@ -1911,11 +1991,15 @@ static NSString *MappedParamName(NSString *name) {
         [methodStr appendFormat:@"\n%*s:(%@%@)%@",
          (int)nameWidth, name.UTF8String, objcType,
          (asPtr ? @" *" : @""),
-         (mode == kGenerateInterface ? name : MappedParamName(name))];
+         (mode == kGenerateInterface
+          ? MappedParamInterfaceName(name, doesQueryTakeObject, supportsMediaUpload)
+          : MappedParamImplName(name))];
         [downloadMethodStr appendFormat:@"\n%*s:(%@%@)%@",
          (int)downloadNameWidth, name.UTF8String, objcType,
          (asPtr ? @" *" : @""),
-         (mode == kGenerateInterface ? name : MappedParamName(name))];
+         (mode == kGenerateInterface
+          ? MappedParamInterfaceName(name, doesQueryTakeObject, supportsMediaUpload)
+          : MappedParamImplName(name))];
       }
 
       NSString *paramDesc = param.descriptionProperty;
@@ -1932,7 +2016,8 @@ static NSString *MappedParamName(NSString *name) {
       if (paramDesc.length == 0) {
         paramDesc = objcType;
       }
-      [methodHDoc appendParam:name string:paramDesc];
+      [methodHDoc appendParam:MappedParamInterfaceName(name, doesQueryTakeObject, supportsMediaUpload)
+                       string:paramDesc];
 
     }  // for (param in method.sg_sortedParameters)
 
@@ -2150,7 +2235,7 @@ static NSString *MappedParamName(NSString *name) {
         for (GTLRDiscovery_JsonSchema *param in method.sg_sortedParameters) {
           if (param.required.boolValue) {
             NSString *name = param.sg_objcName;
-            NSString *nameAsValue = MappedParamName(name);
+            NSString *nameAsValue = MappedParamImplName(name);
             [methodStr appendFormat:@"  query.%@ = %@;\n", name, nameAsValue];
           }
         }
@@ -2204,13 +2289,13 @@ static NSString *MappedParamName(NSString *name) {
           if (needsWith) {
             NSString *capitalizeObjCName = param.sg_capObjCName;
             [downloadMethodStr appendFormat:@"With%@:%@",
-             capitalizeObjCName, MappedParamName(param.sg_objcName)];
+             capitalizeObjCName, MappedParamImplName(param.sg_objcName)];
             nameWidth += 4 + capitalizeObjCName.length; // 'With%@'
             needsWith = NO;
           } else {
             NSString *name = param.sg_objcName;
             [downloadMethodStr appendFormat:@"\n%*s:%@",
-             (int)nameWidth, name.UTF8String, MappedParamName(name)];
+             (int)nameWidth, name.UTF8String, MappedParamImplName(name)];
           }
         }
       }
@@ -2795,21 +2880,57 @@ static NSString *MappedParamName(NSString *name) {
   NSString *prefix = [NSString stringWithFormat:@"k%@AuthScope%@",
                       kProjectPrefix, self.formattedAPIName];
 
-  NSString *scopeName;
-  NSRange lastSlash = [scope rangeOfString:@"/" options:NSBackwardsSearch];
-  if (lastSlash.location != NSNotFound) {
-    if (NSMaxRange(lastSlash) == scope.length) {
-      // Gmail has a scope of https://mail.google.com/, so deal with
-      // this sorta scope by just getting the hostname.
-      scopeName = [scope substringToIndex:lastSlash.location];
-      lastSlash = [scopeName rangeOfString:@"/" options:NSBackwardsSearch];
-      scopeName = [scopeName substringFromIndex:(lastSlash.location + 1)];
-    } else {
-      scopeName = [scope substringFromIndex:(lastSlash.location + 1)];
-    }
-  } else {
-    scopeName = scope;
+  if (authScopeNamingMode == kOAuth2ScopeNamingModeUseEverything) {
+    NSString *formattedScopeName =
+      [SGUtils objcName:scope shouldCapitalize:YES allowLeadingDigits:YES];
+    result = [prefix stringByAppendingString:formattedScopeName];
+    return result;
   }
+
+  NSString *scopeName;
+
+  static NSString *kCommonGoogleAuthPrefix = @"https://www.googleapis.com/auth/";
+  static NSString *kPrefixHTTPS = @"https://";
+  static NSString *kPrefixHTTP = @"http://";
+
+  if ([scope hasPrefix:kCommonGoogleAuthPrefix]) {
+    // It has the common Google auth prefix, remove that, and use the rest.
+    scopeName = [scope substringFromIndex:kCommonGoogleAuthPrefix.length];
+  } else {
+
+    NSString *worker = scope;
+    if ([worker hasPrefix:kPrefixHTTPS]) {
+      worker = [worker substringFromIndex:kPrefixHTTPS.length];
+    } else if ([worker hasPrefix:kPrefixHTTP]) {
+      worker = [worker substringFromIndex:kPrefixHTTP.length];
+    }
+
+    NSRange firstSlash = [worker rangeOfString:@"/"];
+    if (firstSlash.location == NSNotFound) {
+      // No slashes, just use what we started with.
+      scopeName = scope;
+    } else if (NSMaxRange(firstSlash) == worker.length) {
+      // Ended with a slash. There are some scopes that are just simple host
+      // urls (https://mail.google.com/). Just use that then.
+      scopeName = [worker substringToIndex:firstSlash.location];
+    } else {
+      // Seems to have been an url, so we assume the hostnames don't matter.
+      if (authScopeNamingMode == kOAuth2ScopeNamingModeFullURL) {
+        // Use the remainder of the url.
+        scopeName = [worker substringFromIndex:NSMaxRange(firstSlash)];
+      } else if (authScopeNamingMode == kOAuth2ScopeNamingModeShortURL) {
+        // Use the last item of the url (shorter names).
+        NSRange lastSlash = [worker rangeOfString:@"/" options:NSBackwardsSearch];
+        // No need to check for NSNotFound, worst case this finds the same slash
+        // that was found for firstSlash.
+        scopeName = [worker substringFromIndex:NSMaxRange(lastSlash)];
+      } else {
+        [NSException raise:kFatalGeneration
+                    format:@"Internal error generating OAuth2 Scope names."];
+      }
+    }
+  }
+
   NSString *lowerScopeName = [scopeName lowercaseString];
   NSString *lowerApiName = [self.api.name lowercaseString];
   if ([lowerScopeName isEqual:lowerApiName]) {
@@ -2818,11 +2939,12 @@ static NSString *MappedParamName(NSString *name) {
   } else {
     lowerApiName = [lowerApiName stringByAppendingString:@"."];
     if ([lowerScopeName hasPrefix:lowerApiName]) {
-      // Starts with ServiceName., stop that and use the rest.
+      // Starts with "ServiceName.", drop that and use the rest.
       scopeName = [scopeName substringFromIndex:lowerApiName.length];
     }
+    // This gets a prefix, so leading numbers are fine.
     NSString *formattedScopeName =
-      [SGUtils objcName:scopeName shouldCapitalize:YES];
+      [SGUtils objcName:scopeName shouldCapitalize:YES allowLeadingDigits:YES];
     result = [prefix stringByAppendingString:formattedScopeName];
   }
 
@@ -2904,6 +3026,10 @@ static NSString *MappedParamName(NSString *name) {
 
 - (id)sg_propertyForKey:(NSString *)key {
   return [self.userProperties objectForKey:key];
+}
+
++ (NSArray *)sg_acceptedUnknowns {
+  return nil;
 }
 
 @end
@@ -3563,6 +3689,10 @@ static NSDictionary *OverrideMap(EQueryOrObject queryOrObject,
       @"objectSpecifier",
       @"observationInfo",
       @"retainWeakReference",
+      // New as of High Sierra
+      @"CAMLType",
+      @"CA_prepareRenderValue",
+      @"CA_copyRenderValue",
     ];
     // GTLRObject methods
     NSArray *gtlrObjectReserved = @[
@@ -3888,9 +4018,7 @@ static NSString *OverrideName(NSString *name, EQueryOrObject queryOrObject,
   NSString *result = [resolvedSchema sg_propertyForKey:kSchemaObjCClassNameKey];
   if (result == nil) {
     NSArray *parts = [resolvedSchema sg_fullSchemaPath:YES foldArrayItems:YES];
-    SGGenerator *generator = self.sg_generator;
-    NSString *joiner = (generator.useLegacyObjectNaming ? @"" : @"_");
-    NSString *fullName = [parts componentsJoinedByString:joiner];
+    NSString *fullName = [parts componentsJoinedByString:@"_"];
 
     result = [NSString stringWithFormat:@"%@%@_%@",
               kProjectPrefix, self.sg_generator.formattedAPIName, fullName];
@@ -4487,6 +4615,13 @@ static SGTypeInfo *LookupTypeInfo(NSString *typeString,
   return result;
 }
 
++ (NSArray *)sg_acceptedUnknowns {
+  // "flatPath" has never been documented but is on every method of every
+  // OP api. There have been some indications it might get removed since
+  // it never was used.
+  return @[@"flatPath"];
+}
+
 @end
 
 @implementation GTLRDiscovery_RestMethod_Request (SGGeneratorAdditions)
@@ -4507,7 +4642,7 @@ static SGTypeInfo *LookupTypeInfo(NSString *typeString,
       result = schema.sg_resolvedSchema;
     } else {
       [NSException raise:kFatalGeneration
-                  format:@"Resolving schema '%@', referenced an undefined schema '%@'",
+                  format:@"Resolving request schema '%@', referenced an undefined schema '%@'",
        [self sg_propertyForKey:kNameKey], self.xRef];
     }
 
@@ -4530,7 +4665,7 @@ static SGTypeInfo *LookupTypeInfo(NSString *typeString,
       result = schema.sg_resolvedSchema;
     } else {
       [NSException raise:kFatalGeneration
-                  format:@"Resolving schema '%@', referenced an undefined schema '%@'",
+                  format:@"Resolving response schema '%@', referenced an undefined schema '%@'",
        [self sg_propertyForKey:kNameKey], self.xRef];
     }
 

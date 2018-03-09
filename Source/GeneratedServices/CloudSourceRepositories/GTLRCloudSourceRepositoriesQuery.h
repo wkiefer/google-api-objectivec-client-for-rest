@@ -6,7 +6,7 @@
 // Description:
 //   Access source code repositories hosted by Google.
 // Documentation:
-//   https://cloud.google.com/eap/cloud-repositories/cloud-sourcerepo-api
+//   https://cloud.google.com/source-repositories/docs/apis
 
 #if GTLR_BUILT_AS_FRAMEWORK
   #import "GTLR/GTLRQuery.h"
@@ -22,6 +22,11 @@
 @class GTLRCloudSourceRepositories_SetIamPolicyRequest;
 @class GTLRCloudSourceRepositories_TestIamPermissionsRequest;
 
+// Generated comments include content from the discovery document; avoid them
+// causing warnings since clang's checks are some what arbitrary.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdocumentation"
+
 NS_ASSUME_NONNULL_BEGIN
 
 /**
@@ -35,7 +40,7 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 /**
- *  Creates a repo in the given project with the given name..
+ *  Creates a repo in the given project with the given name.
  *  If the named repository already exists, `CreateRepo` returns
  *  `ALREADY_EXISTS`.
  *
@@ -43,6 +48,9 @@ NS_ASSUME_NONNULL_BEGIN
  *
  *  Authorization scope(s):
  *    @c kGTLRAuthScopeCloudSourceRepositoriesCloudPlatform
+ *    @c kGTLRAuthScopeCloudSourceRepositoriesSourceFullControl
+ *    @c kGTLRAuthScopeCloudSourceRepositoriesSourceReadOnly
+ *    @c kGTLRAuthScopeCloudSourceRepositoriesSourceReadWrite
  */
 @interface GTLRCloudSourceRepositoriesQuery_ProjectsReposCreate : GTLRCloudSourceRepositoriesQuery
 // Previous library name was
@@ -57,7 +65,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  *  Fetches a @c GTLRCloudSourceRepositories_Repo.
  *
- *  Creates a repo in the given project with the given name..
+ *  Creates a repo in the given project with the given name.
  *  If the named repository already exists, `CreateRepo` returns
  *  `ALREADY_EXISTS`.
  *
@@ -81,6 +89,9 @@ NS_ASSUME_NONNULL_BEGIN
  *
  *  Authorization scope(s):
  *    @c kGTLRAuthScopeCloudSourceRepositoriesCloudPlatform
+ *    @c kGTLRAuthScopeCloudSourceRepositoriesSourceFullControl
+ *    @c kGTLRAuthScopeCloudSourceRepositoriesSourceReadOnly
+ *    @c kGTLRAuthScopeCloudSourceRepositoriesSourceReadWrite
  */
 @interface GTLRCloudSourceRepositoriesQuery_ProjectsReposDelete : GTLRCloudSourceRepositoriesQuery
 // Previous library name was
@@ -113,6 +124,9 @@ NS_ASSUME_NONNULL_BEGIN
  *
  *  Authorization scope(s):
  *    @c kGTLRAuthScopeCloudSourceRepositoriesCloudPlatform
+ *    @c kGTLRAuthScopeCloudSourceRepositoriesSourceFullControl
+ *    @c kGTLRAuthScopeCloudSourceRepositoriesSourceReadOnly
+ *    @c kGTLRAuthScopeCloudSourceRepositoriesSourceReadWrite
  */
 @interface GTLRCloudSourceRepositoriesQuery_ProjectsReposGet : GTLRCloudSourceRepositoriesQuery
 // Previous library name was
@@ -147,6 +161,9 @@ NS_ASSUME_NONNULL_BEGIN
  *
  *  Authorization scope(s):
  *    @c kGTLRAuthScopeCloudSourceRepositoriesCloudPlatform
+ *    @c kGTLRAuthScopeCloudSourceRepositoriesSourceFullControl
+ *    @c kGTLRAuthScopeCloudSourceRepositoriesSourceReadOnly
+ *    @c kGTLRAuthScopeCloudSourceRepositoriesSourceReadWrite
  */
 @interface GTLRCloudSourceRepositoriesQuery_ProjectsReposGetIamPolicy : GTLRCloudSourceRepositoriesQuery
 // Previous library name was
@@ -176,12 +193,16 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 /**
- *  Returns all repos belonging to a project.
+ *  Returns all repos belonging to a project. The sizes of the repos are
+ *  not set by ListRepos. To get the size of a repo, use GetRepo.
  *
  *  Method: sourcerepo.projects.repos.list
  *
  *  Authorization scope(s):
  *    @c kGTLRAuthScopeCloudSourceRepositoriesCloudPlatform
+ *    @c kGTLRAuthScopeCloudSourceRepositoriesSourceFullControl
+ *    @c kGTLRAuthScopeCloudSourceRepositoriesSourceReadOnly
+ *    @c kGTLRAuthScopeCloudSourceRepositoriesSourceReadWrite
  */
 @interface GTLRCloudSourceRepositoriesQuery_ProjectsReposList : GTLRCloudSourceRepositoriesQuery
 // Previous library name was
@@ -194,15 +215,33 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, copy, nullable) NSString *name;
 
 /**
+ *  Maximum number of repositories to return; between 1 and 500.
+ *  If not set or zero, defaults to 100 at the server.
+ */
+@property(nonatomic, assign) NSInteger pageSize;
+
+/**
+ *  Resume listing repositories where a prior ListReposResponse
+ *  left off. This is an opaque token that must be obtained from
+ *  a recent, prior ListReposResponse's next_page_token field.
+ */
+@property(nonatomic, copy, nullable) NSString *pageToken;
+
+/**
  *  Fetches a @c GTLRCloudSourceRepositories_ListReposResponse.
  *
- *  Returns all repos belonging to a project.
+ *  Returns all repos belonging to a project. The sizes of the repos are
+ *  not set by ListRepos. To get the size of a repo, use GetRepo.
  *
  *  @param name The project ID whose repos should be listed. Values are of the
  *    form
  *    `projects/<project>`.
  *
  *  @returns GTLRCloudSourceRepositoriesQuery_ProjectsReposList
+ *
+ *  @note Automatic pagination will be done when @c shouldFetchNextPages is
+ *        enabled. See @c shouldFetchNextPages on @c GTLRService for more
+ *        information.
  */
 + (instancetype)queryWithName:(NSString *)name;
 
@@ -216,6 +255,9 @@ NS_ASSUME_NONNULL_BEGIN
  *
  *  Authorization scope(s):
  *    @c kGTLRAuthScopeCloudSourceRepositoriesCloudPlatform
+ *    @c kGTLRAuthScopeCloudSourceRepositoriesSourceFullControl
+ *    @c kGTLRAuthScopeCloudSourceRepositoriesSourceReadOnly
+ *    @c kGTLRAuthScopeCloudSourceRepositoriesSourceReadWrite
  */
 @interface GTLRCloudSourceRepositoriesQuery_ProjectsReposSetIamPolicy : GTLRCloudSourceRepositoriesQuery
 // Previous library name was
@@ -255,6 +297,9 @@ NS_ASSUME_NONNULL_BEGIN
  *
  *  Authorization scope(s):
  *    @c kGTLRAuthScopeCloudSourceRepositoriesCloudPlatform
+ *    @c kGTLRAuthScopeCloudSourceRepositoriesSourceFullControl
+ *    @c kGTLRAuthScopeCloudSourceRepositoriesSourceReadOnly
+ *    @c kGTLRAuthScopeCloudSourceRepositoriesSourceReadWrite
  */
 @interface GTLRCloudSourceRepositoriesQuery_ProjectsReposTestIamPermissions : GTLRCloudSourceRepositoriesQuery
 // Previous library name was
@@ -287,3 +332,5 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 NS_ASSUME_NONNULL_END
+
+#pragma clang diagnostic pop

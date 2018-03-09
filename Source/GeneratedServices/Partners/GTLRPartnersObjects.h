@@ -53,6 +53,11 @@
 @class GTLRPartners_UserOverrides;
 @class GTLRPartners_UserProfile;
 
+// Generated comments include content from the discovery document; avoid them
+// causing warnings since clang's checks are some what arbitrary.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdocumentation"
+
 NS_ASSUME_NONNULL_BEGIN
 
 // ----------------------------------------------------------------------------
@@ -905,76 +910,6 @@ GTLR_EXTERN NSString * const kGTLRPartners_ExamStatus_ExamType_CetShopping;
 GTLR_EXTERN NSString * const kGTLRPartners_ExamStatus_ExamType_CetVideoAds;
 
 // ----------------------------------------------------------------------------
-// GTLRPartners_ExamToken.examType
-
-/**
- *  Unchosen.
- *
- *  Value: "CERTIFICATION_EXAM_TYPE_UNSPECIFIED"
- */
-GTLR_EXTERN NSString * const kGTLRPartners_ExamToken_ExamType_CertificationExamTypeUnspecified;
-/**
- *  AdWords advanced display exam.
- *
- *  Value: "CET_ADWORDS_ADVANCED_DISPLAY"
- */
-GTLR_EXTERN NSString * const kGTLRPartners_ExamToken_ExamType_CetAdwordsAdvancedDisplay;
-/**
- *  AdWords advanced search exam.
- *
- *  Value: "CET_ADWORDS_ADVANCED_SEARCH"
- */
-GTLR_EXTERN NSString * const kGTLRPartners_ExamToken_ExamType_CetAdwordsAdvancedSearch;
-/**
- *  Adwords Fundamentals exam.
- *
- *  Value: "CET_ADWORDS_FUNDAMENTALS"
- */
-GTLR_EXTERN NSString * const kGTLRPartners_ExamToken_ExamType_CetAdwordsFundamentals;
-/**
- *  Analytics exam.
- *
- *  Value: "CET_ANALYTICS"
- */
-GTLR_EXTERN NSString * const kGTLRPartners_ExamToken_ExamType_CetAnalytics;
-/**
- *  Digital Sales exam.
- *
- *  Value: "CET_DIGITAL_SALES"
- */
-GTLR_EXTERN NSString * const kGTLRPartners_ExamToken_ExamType_CetDigitalSales;
-/**
- *  DoubleClick exam.
- *
- *  Value: "CET_DOUBLECLICK"
- */
-GTLR_EXTERN NSString * const kGTLRPartners_ExamToken_ExamType_CetDoubleclick;
-/**
- *  Mobile exam.
- *
- *  Value: "CET_MOBILE"
- */
-GTLR_EXTERN NSString * const kGTLRPartners_ExamToken_ExamType_CetMobile;
-/**
- *  Mobile Sites exam.
- *
- *  Value: "CET_MOBILE_SITES"
- */
-GTLR_EXTERN NSString * const kGTLRPartners_ExamToken_ExamType_CetMobileSites;
-/**
- *  Shopping exam.
- *
- *  Value: "CET_SHOPPING"
- */
-GTLR_EXTERN NSString * const kGTLRPartners_ExamToken_ExamType_CetShopping;
-/**
- *  VideoAds exam.
- *
- *  Value: "CET_VIDEO_ADS"
- */
-GTLR_EXTERN NSString * const kGTLRPartners_ExamToken_ExamType_CetVideoAds;
-
-// ----------------------------------------------------------------------------
 // GTLRPartners_HistoricalOffer.offerType
 
 /**
@@ -1682,6 +1617,12 @@ GTLR_EXTERN NSString * const kGTLRPartners_LogUserEventRequest_EventAction_Agenc
  */
 GTLR_EXTERN NSString * const kGTLRPartners_LogUserEventRequest_EventAction_AgencySelectedMobileFromAddChannel;
 /**
+ *  Agency opted in for migrating their exams to Academy for Ads.
+ *
+ *  Value: "AGENCY_SELECTED_OPT_IN_AFA_MIGRATION"
+ */
+GTLR_EXTERN NSString * const kGTLRPartners_LogUserEventRequest_EventAction_AgencySelectedOptInAfaMigration;
+/**
  *  Agency selected `opt-in beta tests and market research`.
  *
  *  Value: "AGENCY_SELECTED_OPT_IN_BETA_TESTS_AND_MKT_RESEARCH"
@@ -1723,6 +1664,12 @@ GTLR_EXTERN NSString * const kGTLRPartners_LogUserEventRequest_EventAction_Agenc
  *  Value: "AGENCY_SELECTED_OPT_IN_SELECT_ALL_EMAIL_NOTIFICATIONS"
  */
 GTLR_EXTERN NSString * const kGTLRPartners_LogUserEventRequest_EventAction_AgencySelectedOptInSelectAllEmailNotifications;
+/**
+ *  Agency opted out for migrating their exams to Academy for Ads.
+ *
+ *  Value: "AGENCY_SELECTED_OPT_OUT_AFA_MIGRATION"
+ */
+GTLR_EXTERN NSString * const kGTLRPartners_LogUserEventRequest_EventAction_AgencySelectedOptOutAfaMigration;
 /**
  *  Agency selected `opt-out unselect all email notifications`.
  *
@@ -2060,6 +2007,12 @@ GTLR_EXTERN NSString * const kGTLRPartners_LogUserEventRequest_EventAction_SmbVi
  *  Value: "SMB_VIEWED_A_PARTNER_PROFILE"
  */
 GTLR_EXTERN NSString * const kGTLRPartners_LogUserEventRequest_EventAction_SmbViewedAPartnerProfile;
+/**
+ *  Advertiser viewed Digital Sales certificate.
+ *
+ *  Value: "SMB_VIEWED_DIGITAL_SALES_CERTIFICATE"
+ */
+GTLR_EXTERN NSString * const kGTLRPartners_LogUserEventRequest_EventAction_SmbViewedDigitalSalesCertificate;
 /**
  *  Advertiser viewed DoubleClick certificate.
  *
@@ -2886,6 +2839,12 @@ GTLR_EXTERN NSString * const kGTLRPartners_SpecializationStatus_BadgeSpecializat
 @property(nonatomic, strong, nullable) GTLRDateTime *creationTime;
 
 /**
+ *  The internal company ID.
+ *  Only available for a whitelisted set of api clients.
+ */
+@property(nonatomic, copy, nullable) NSString *internalCompanyId;
+
+/**
  *  The flag that indicates if the company is pending verification.
  *
  *  Uses NSNumber of boolValue.
@@ -2907,6 +2866,15 @@ GTLR_EXTERN NSString * const kGTLRPartners_SpecializationStatus_BadgeSpecializat
 
 /** The phone number for the company's primary address. */
 @property(nonatomic, copy, nullable) NSString *phoneNumber;
+
+/** The primary location of the company. */
+@property(nonatomic, strong, nullable) GTLRPartners_Location *primaryAddress;
+
+/** The primary country code of the company. */
+@property(nonatomic, copy, nullable) NSString *primaryCountryCode;
+
+/** The primary language code of the company. */
+@property(nonatomic, copy, nullable) NSString *primaryLanguageCode;
 
 /**
  *  The timestamp when the user was approved.
@@ -3250,53 +3218,6 @@ GTLR_EXTERN NSString * const kGTLRPartners_SpecializationStatus_BadgeSpecializat
 
 
 /**
- *  A token that allows a user to take an exam.
- */
-@interface GTLRPartners_ExamToken : GTLRObject
-
-/**
- *  The id of the exam the token is for.
- *
- *  Uses NSNumber of longLongValue.
- */
-@property(nonatomic, strong, nullable) NSNumber *examId;
-
-/**
- *  The type of the exam the token belongs to.
- *
- *  Likely values:
- *    @arg @c kGTLRPartners_ExamToken_ExamType_CertificationExamTypeUnspecified
- *        Unchosen. (Value: "CERTIFICATION_EXAM_TYPE_UNSPECIFIED")
- *    @arg @c kGTLRPartners_ExamToken_ExamType_CetAdwordsAdvancedDisplay AdWords
- *        advanced display exam. (Value: "CET_ADWORDS_ADVANCED_DISPLAY")
- *    @arg @c kGTLRPartners_ExamToken_ExamType_CetAdwordsAdvancedSearch AdWords
- *        advanced search exam. (Value: "CET_ADWORDS_ADVANCED_SEARCH")
- *    @arg @c kGTLRPartners_ExamToken_ExamType_CetAdwordsFundamentals Adwords
- *        Fundamentals exam. (Value: "CET_ADWORDS_FUNDAMENTALS")
- *    @arg @c kGTLRPartners_ExamToken_ExamType_CetAnalytics Analytics exam.
- *        (Value: "CET_ANALYTICS")
- *    @arg @c kGTLRPartners_ExamToken_ExamType_CetDigitalSales Digital Sales
- *        exam. (Value: "CET_DIGITAL_SALES")
- *    @arg @c kGTLRPartners_ExamToken_ExamType_CetDoubleclick DoubleClick exam.
- *        (Value: "CET_DOUBLECLICK")
- *    @arg @c kGTLRPartners_ExamToken_ExamType_CetMobile Mobile exam. (Value:
- *        "CET_MOBILE")
- *    @arg @c kGTLRPartners_ExamToken_ExamType_CetMobileSites Mobile Sites exam.
- *        (Value: "CET_MOBILE_SITES")
- *    @arg @c kGTLRPartners_ExamToken_ExamType_CetShopping Shopping exam.
- *        (Value: "CET_SHOPPING")
- *    @arg @c kGTLRPartners_ExamToken_ExamType_CetVideoAds VideoAds exam.
- *        (Value: "CET_VIDEO_ADS")
- */
-@property(nonatomic, copy, nullable) NSString *examType;
-
-/** The token, only present if the user has access to the exam. */
-@property(nonatomic, copy, nullable) NSString *token;
-
-@end
-
-
-/**
  *  Response message for GetCompany.
  */
 @interface GTLRPartners_GetCompanyResponse : GTLRObject
@@ -3405,38 +3326,6 @@ GTLR_EXTERN NSString * const kGTLRPartners_SpecializationStatus_BadgeSpecializat
  *  specified otherwise, this must conform to the
  *  <a href="http://www.unoosa.org/pdf/icg/2012/template/WGS_84.pdf">WGS84
  *  standard</a>. Values must be within normalized ranges.
- *  Example of normalization code in Python:
- *  def NormalizeLongitude(longitude):
- *  """Wraps decimal degrees longitude to [-180.0, 180.0]."""
- *  q, r = divmod(longitude, 360.0)
- *  if r > 180.0 or (r == 180.0 and q <= -1.0):
- *  return r - 360.0
- *  return r
- *  def NormalizeLatLng(latitude, longitude):
- *  """Wraps decimal degrees latitude and longitude to
- *  [-90.0, 90.0] and [-180.0, 180.0], respectively."""
- *  r = latitude % 360.0
- *  if r <= 90.0:
- *  return r, NormalizeLongitude(longitude)
- *  elif r >= 270.0:
- *  return r - 360, NormalizeLongitude(longitude)
- *  else:
- *  return 180 - r, NormalizeLongitude(longitude + 180.0)
- *  assert 180.0 == NormalizeLongitude(180.0)
- *  assert -180.0 == NormalizeLongitude(-180.0)
- *  assert -179.0 == NormalizeLongitude(181.0)
- *  assert (0.0, 0.0) == NormalizeLatLng(360.0, 0.0)
- *  assert (0.0, 0.0) == NormalizeLatLng(-360.0, 0.0)
- *  assert (85.0, 180.0) == NormalizeLatLng(95.0, 0.0)
- *  assert (-85.0, -170.0) == NormalizeLatLng(-95.0, 10.0)
- *  assert (90.0, 10.0) == NormalizeLatLng(90.0, 10.0)
- *  assert (-90.0, -10.0) == NormalizeLatLng(-90.0, -10.0)
- *  assert (0.0, -170.0) == NormalizeLatLng(-180.0, 10.0)
- *  assert (0.0, -170.0) == NormalizeLatLng(180.0, 10.0)
- *  assert (-90.0, 10.0) == NormalizeLatLng(270.0, 10.0)
- *  assert (90.0, 10.0) == NormalizeLatLng(-270.0, 10.0)
- *  The code in logs/storage/validator/logs_validator_traits.cc treats this type
- *  as if it were annotated as ST_LOCATION.
  */
 @interface GTLRPartners_LatLng : GTLRObject
 
@@ -4162,6 +4051,9 @@ GTLR_EXTERN NSString * const kGTLRPartners_SpecializationStatus_BadgeSpecializat
  *    @arg @c kGTLRPartners_LogUserEventRequest_EventAction_AgencySelectedMobileFromAddChannel
  *        Agency selected `mobile` from add channel drop-down. (Value:
  *        "AGENCY_SELECTED_MOBILE_FROM_ADD_CHANNEL")
+ *    @arg @c kGTLRPartners_LogUserEventRequest_EventAction_AgencySelectedOptInAfaMigration
+ *        Agency opted in for migrating their exams to Academy for Ads. (Value:
+ *        "AGENCY_SELECTED_OPT_IN_AFA_MIGRATION")
  *    @arg @c kGTLRPartners_LogUserEventRequest_EventAction_AgencySelectedOptInBetaTestsAndMktResearch
  *        Agency selected `opt-in beta tests and market research`. (Value:
  *        "AGENCY_SELECTED_OPT_IN_BETA_TESTS_AND_MKT_RESEARCH")
@@ -4183,6 +4075,9 @@ GTLR_EXTERN NSString * const kGTLRPartners_SpecializationStatus_BadgeSpecializat
  *    @arg @c kGTLRPartners_LogUserEventRequest_EventAction_AgencySelectedOptInSelectAllEmailNotifications
  *        Agency selected `opt-in select all email notifications`. (Value:
  *        "AGENCY_SELECTED_OPT_IN_SELECT_ALL_EMAIL_NOTIFICATIONS")
+ *    @arg @c kGTLRPartners_LogUserEventRequest_EventAction_AgencySelectedOptOutAfaMigration
+ *        Agency opted out for migrating their exams to Academy for Ads. (Value:
+ *        "AGENCY_SELECTED_OPT_OUT_AFA_MIGRATION")
  *    @arg @c kGTLRPartners_LogUserEventRequest_EventAction_AgencySelectedOptOutUnselectAllEmailNotifications
  *        Agency selected `opt-out unselect all email notifications`. (Value:
  *        "AGENCY_SELECTED_OPT_OUT_UNSELECT_ALL_EMAIL_NOTIFICATIONS")
@@ -4317,8 +4212,8 @@ GTLR_EXTERN NSString * const kGTLRPartners_SpecializationStatus_BadgeSpecializat
  *        Advertiser entered website in contact form. (Value:
  *        "SMB_ENTERED_WEBSITE_IN_CONTACT_PARTNER_FORM")
  *    @arg @c kGTLRPartners_LogUserEventRequest_EventAction_SmbFailedRecaptchaInContactPartnerForm
- *        Advertiser failed <a
- *        href="https://www.google.com/recaptcha/">reCaptcha</a>
+ *        Advertiser failed
+ *        <a href="https://www.google.com/recaptcha/">reCaptcha</a>
  *        in contact form. (Value:
  *        "SMB_FAILED_RECAPTCHA_IN_CONTACT_PARTNER_FORM")
  *    @arg @c kGTLRPartners_LogUserEventRequest_EventAction_SmbNoPartnersAvailableWithSearchCriteria
@@ -4345,6 +4240,9 @@ GTLR_EXTERN NSString * const kGTLRPartners_SpecializationStatus_BadgeSpecializat
  *    @arg @c kGTLRPartners_LogUserEventRequest_EventAction_SmbViewedAPartnerProfile
  *        Advertiser viewed a partner profile. (Value:
  *        "SMB_VIEWED_A_PARTNER_PROFILE")
+ *    @arg @c kGTLRPartners_LogUserEventRequest_EventAction_SmbViewedDigitalSalesCertificate
+ *        Advertiser viewed Digital Sales certificate. (Value:
+ *        "SMB_VIEWED_DIGITAL_SALES_CERTIFICATE")
  *    @arg @c kGTLRPartners_LogUserEventRequest_EventAction_SmbViewedDoubleclickCertificate
  *        Advertiser viewed DoubleClick certificate. (Value:
  *        "SMB_VIEWED_DOUBLECLICK_CERTIFICATE")
@@ -4820,6 +4718,12 @@ GTLR_EXTERN NSString * const kGTLRPartners_SpecializationStatus_BadgeSpecializat
 @property(nonatomic, copy, nullable) NSString *identifier;
 
 /**
+ *  The internal user ID.
+ *  Only available for a whitelisted set of api clients.
+ */
+@property(nonatomic, copy, nullable) NSString *internalId;
+
+/**
  *  The most recent time the user interacted with the Partners site.
  *  \@OutputOnly
  */
@@ -4908,6 +4812,13 @@ GTLR_EXTERN NSString * const kGTLRPartners_SpecializationStatus_BadgeSpecializat
 /** A list of ids representing which markets the user was interested in. */
 @property(nonatomic, strong, nullable) NSArray<NSString *> *markets;
 
+/**
+ *  Whether or not to migrate the user's exam data to Academy for Ads.
+ *
+ *  Uses NSNumber of boolValue.
+ */
+@property(nonatomic, strong, nullable) NSNumber *migrateToAfa;
+
 /** The user's phone number. */
 @property(nonatomic, copy, nullable) NSString *phoneNumber;
 
@@ -4924,3 +4835,5 @@ GTLR_EXTERN NSString * const kGTLRPartners_SpecializationStatus_BadgeSpecializat
 @end
 
 NS_ASSUME_NONNULL_END
+
+#pragma clang diagnostic pop

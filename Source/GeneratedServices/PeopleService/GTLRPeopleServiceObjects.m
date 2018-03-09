@@ -2,7 +2,7 @@
 
 // ----------------------------------------------------------------------------
 // API:
-//   Google People API (people/v1)
+//   People API (people/v1)
 // Description:
 //   Provides access to information about profiles and contacts.
 // Documentation:
@@ -23,6 +23,11 @@ NSString * const kGTLRPeopleService_AgeRangeType_AgeRange_TwentyOneOrOlder = @"T
 NSString * const kGTLRPeopleService_Biography_ContentType_ContentTypeUnspecified = @"CONTENT_TYPE_UNSPECIFIED";
 NSString * const kGTLRPeopleService_Biography_ContentType_TextHtml = @"TEXT_HTML";
 NSString * const kGTLRPeopleService_Biography_ContentType_TextPlain = @"TEXT_PLAIN";
+
+// GTLRPeopleService_ContactGroup.groupType
+NSString * const kGTLRPeopleService_ContactGroup_GroupType_GroupTypeUnspecified = @"GROUP_TYPE_UNSPECIFIED";
+NSString * const kGTLRPeopleService_ContactGroup_GroupType_SystemContactGroup = @"SYSTEM_CONTACT_GROUP";
+NSString * const kGTLRPeopleService_ContactGroup_GroupType_UserContactGroup = @"USER_CONTACT_GROUP";
 
 // GTLRPeopleService_Nickname.type
 NSString * const kGTLRPeopleService_Nickname_Type_Default    = @"DEFAULT";
@@ -46,6 +51,12 @@ NSString * const kGTLRPeopleService_PersonMetadata_ObjectType_Person = @"PERSON"
 NSString * const kGTLRPeopleService_ProfileMetadata_ObjectType_ObjectTypeUnspecified = @"OBJECT_TYPE_UNSPECIFIED";
 NSString * const kGTLRPeopleService_ProfileMetadata_ObjectType_Page = @"PAGE";
 NSString * const kGTLRPeopleService_ProfileMetadata_ObjectType_Person = @"PERSON";
+
+// GTLRPeopleService_ProfileMetadata.userTypes
+NSString * const kGTLRPeopleService_ProfileMetadata_UserTypes_GoogleAppsUser = @"GOOGLE_APPS_USER";
+NSString * const kGTLRPeopleService_ProfileMetadata_UserTypes_GoogleUser = @"GOOGLE_USER";
+NSString * const kGTLRPeopleService_ProfileMetadata_UserTypes_GplusUser = @"GPLUS_USER";
+NSString * const kGTLRPeopleService_ProfileMetadata_UserTypes_UserTypeUnknown = @"USER_TYPE_UNKNOWN";
 
 // GTLRPeopleService_Source.type
 NSString * const kGTLRPeopleService_Source_Type_Account        = @"ACCOUNT";
@@ -73,6 +84,24 @@ NSString * const kGTLRPeopleService_Source_Type_SourceTypeUnspecified = @"SOURCE
 
 @implementation GTLRPeopleService_AgeRangeType
 @dynamic ageRange, metadata;
+@end
+
+
+// ----------------------------------------------------------------------------
+//
+//   GTLRPeopleService_BatchGetContactGroupsResponse
+//
+
+@implementation GTLRPeopleService_BatchGetContactGroupsResponse
+@dynamic responses;
+
++ (NSDictionary<NSString *, Class> *)arrayPropertyToClassMap {
+  NSDictionary<NSString *, Class> *map = @{
+    @"responses" : [GTLRPeopleService_ContactGroupResponse class]
+  };
+  return map;
+}
+
 @end
 
 
@@ -108,11 +137,54 @@ NSString * const kGTLRPeopleService_Source_Type_SourceTypeUnspecified = @"SOURCE
 
 // ----------------------------------------------------------------------------
 //
+//   GTLRPeopleService_ContactGroup
+//
+
+@implementation GTLRPeopleService_ContactGroup
+@dynamic ETag, formattedName, groupType, memberCount, memberResourceNames,
+         metadata, name, resourceName;
+
++ (NSDictionary<NSString *, NSString *> *)propertyToJSONKeyMap {
+  return @{ @"ETag" : @"etag" };
+}
+
++ (NSDictionary<NSString *, Class> *)arrayPropertyToClassMap {
+  NSDictionary<NSString *, Class> *map = @{
+    @"memberResourceNames" : [NSString class]
+  };
+  return map;
+}
+
+@end
+
+
+// ----------------------------------------------------------------------------
+//
 //   GTLRPeopleService_ContactGroupMembership
 //
 
 @implementation GTLRPeopleService_ContactGroupMembership
 @dynamic contactGroupId;
+@end
+
+
+// ----------------------------------------------------------------------------
+//
+//   GTLRPeopleService_ContactGroupMetadata
+//
+
+@implementation GTLRPeopleService_ContactGroupMetadata
+@dynamic deleted, updateTime;
+@end
+
+
+// ----------------------------------------------------------------------------
+//
+//   GTLRPeopleService_ContactGroupResponse
+//
+
+@implementation GTLRPeopleService_ContactGroupResponse
+@dynamic contactGroup, requestedResourceName, status;
 @end
 
 
@@ -128,6 +200,16 @@ NSString * const kGTLRPeopleService_Source_Type_SourceTypeUnspecified = @"SOURCE
   return @{ @"defaultProperty" : @"default" };
 }
 
+@end
+
+
+// ----------------------------------------------------------------------------
+//
+//   GTLRPeopleService_CreateContactGroupRequest
+//
+
+@implementation GTLRPeopleService_CreateContactGroupRequest
+@dynamic contactGroup;
 @end
 
 
@@ -158,6 +240,15 @@ NSString * const kGTLRPeopleService_Source_Type_SourceTypeUnspecified = @"SOURCE
 
 @implementation GTLRPeopleService_EmailAddress
 @dynamic displayName, formattedType, metadata, type, value;
+@end
+
+
+// ----------------------------------------------------------------------------
+//
+//   GTLRPeopleService_Empty
+//
+
+@implementation GTLRPeopleService_Empty
 @end
 
 
@@ -235,7 +326,7 @@ NSString * const kGTLRPeopleService_Source_Type_SourceTypeUnspecified = @"SOURCE
 //
 
 @implementation GTLRPeopleService_ListConnectionsResponse
-@dynamic connections, nextPageToken, nextSyncToken, totalPeople;
+@dynamic connections, nextPageToken, nextSyncToken, totalItems, totalPeople;
 
 + (NSDictionary<NSString *, Class> *)arrayPropertyToClassMap {
   NSDictionary<NSString *, Class> *map = @{
@@ -246,6 +337,28 @@ NSString * const kGTLRPeopleService_Source_Type_SourceTypeUnspecified = @"SOURCE
 
 + (NSString *)collectionItemsKey {
   return @"connections";
+}
+
+@end
+
+
+// ----------------------------------------------------------------------------
+//
+//   GTLRPeopleService_ListContactGroupsResponse
+//
+
+@implementation GTLRPeopleService_ListContactGroupsResponse
+@dynamic contactGroups, nextPageToken, nextSyncToken, totalItems;
+
++ (NSDictionary<NSString *, Class> *)arrayPropertyToClassMap {
+  NSDictionary<NSString *, Class> *map = @{
+    @"contactGroups" : [GTLRPeopleService_ContactGroup class]
+  };
+  return map;
+}
+
++ (NSString *)collectionItemsKey {
+  return @"contactGroups";
 }
 
 @end
@@ -268,6 +381,43 @@ NSString * const kGTLRPeopleService_Source_Type_SourceTypeUnspecified = @"SOURCE
 
 @implementation GTLRPeopleService_Membership
 @dynamic contactGroupMembership, domainMembership, metadata;
+@end
+
+
+// ----------------------------------------------------------------------------
+//
+//   GTLRPeopleService_ModifyContactGroupMembersRequest
+//
+
+@implementation GTLRPeopleService_ModifyContactGroupMembersRequest
+@dynamic resourceNamesToAdd, resourceNamesToRemove;
+
++ (NSDictionary<NSString *, Class> *)arrayPropertyToClassMap {
+  NSDictionary<NSString *, Class> *map = @{
+    @"resourceNamesToAdd" : [NSString class],
+    @"resourceNamesToRemove" : [NSString class]
+  };
+  return map;
+}
+
+@end
+
+
+// ----------------------------------------------------------------------------
+//
+//   GTLRPeopleService_ModifyContactGroupMembersResponse
+//
+
+@implementation GTLRPeopleService_ModifyContactGroupMembersResponse
+@dynamic notFoundResourceNames;
+
++ (NSDictionary<NSString *, Class> *)arrayPropertyToClassMap {
+  NSDictionary<NSString *, Class> *map = @{
+    @"notFoundResourceNames" : [NSString class]
+  };
+  return map;
+}
+
 @end
 
 
@@ -326,7 +476,7 @@ NSString * const kGTLRPeopleService_Source_Type_SourceTypeUnspecified = @"SOURCE
          interests, locales, memberships, metadata, names, nicknames,
          occupations, organizations, phoneNumbers, photos, relations,
          relationshipInterests, relationshipStatuses, residences, resourceName,
-         skills, taglines, urls;
+         skills, taglines, urls, userDefined;
 
 + (NSDictionary<NSString *, NSString *> *)propertyToJSONKeyMap {
   return @{ @"ETag" : @"etag" };
@@ -359,7 +509,8 @@ NSString * const kGTLRPeopleService_Source_Type_SourceTypeUnspecified = @"SOURCE
     @"residences" : [GTLRPeopleService_Residence class],
     @"skills" : [GTLRPeopleService_Skill class],
     @"taglines" : [GTLRPeopleService_Tagline class],
-    @"urls" : [GTLRPeopleService_Url class]
+    @"urls" : [GTLRPeopleService_Url class],
+    @"userDefined" : [GTLRPeopleService_UserDefined class]
   };
   return map;
 }
@@ -394,7 +545,7 @@ NSString * const kGTLRPeopleService_Source_Type_SourceTypeUnspecified = @"SOURCE
 //
 
 @implementation GTLRPeopleService_PersonResponse
-@dynamic httpStatusCode, person, requestedResourceName;
+@dynamic httpStatusCode, person, requestedResourceName, status;
 @end
 
 
@@ -414,7 +565,12 @@ NSString * const kGTLRPeopleService_Source_Type_SourceTypeUnspecified = @"SOURCE
 //
 
 @implementation GTLRPeopleService_Photo
-@dynamic metadata, url;
+@dynamic defaultProperty, metadata, url;
+
++ (NSDictionary<NSString *, NSString *> *)propertyToJSONKeyMap {
+  return @{ @"defaultProperty" : @"default" };
+}
+
 @end
 
 
@@ -424,7 +580,15 @@ NSString * const kGTLRPeopleService_Source_Type_SourceTypeUnspecified = @"SOURCE
 //
 
 @implementation GTLRPeopleService_ProfileMetadata
-@dynamic objectType;
+@dynamic objectType, userTypes;
+
++ (NSDictionary<NSString *, Class> *)arrayPropertyToClassMap {
+  NSDictionary<NSString *, Class> *map = @{
+    @"userTypes" : [NSString class]
+  };
+  return map;
+}
+
 @end
 
 
@@ -484,7 +648,7 @@ NSString * const kGTLRPeopleService_Source_Type_SourceTypeUnspecified = @"SOURCE
 //
 
 @implementation GTLRPeopleService_Source
-@dynamic ETag, identifier, profileMetadata, type;
+@dynamic ETag, identifier, profileMetadata, type, updateTime;
 
 + (NSDictionary<NSString *, NSString *> *)propertyToJSONKeyMap {
   NSDictionary<NSString *, NSString *> *map = @{
@@ -492,6 +656,38 @@ NSString * const kGTLRPeopleService_Source_Type_SourceTypeUnspecified = @"SOURCE
     @"identifier" : @"id"
   };
   return map;
+}
+
+@end
+
+
+// ----------------------------------------------------------------------------
+//
+//   GTLRPeopleService_Status
+//
+
+@implementation GTLRPeopleService_Status
+@dynamic code, details, message;
+
++ (NSDictionary<NSString *, Class> *)arrayPropertyToClassMap {
+  NSDictionary<NSString *, Class> *map = @{
+    @"details" : [GTLRPeopleService_Status_Details_Item class]
+  };
+  return map;
+}
+
+@end
+
+
+// ----------------------------------------------------------------------------
+//
+//   GTLRPeopleService_Status_Details_Item
+//
+
+@implementation GTLRPeopleService_Status_Details_Item
+
++ (Class)classForAdditionalProperties {
+  return [NSObject class];
 }
 
 @end
@@ -509,9 +705,29 @@ NSString * const kGTLRPeopleService_Source_Type_SourceTypeUnspecified = @"SOURCE
 
 // ----------------------------------------------------------------------------
 //
+//   GTLRPeopleService_UpdateContactGroupRequest
+//
+
+@implementation GTLRPeopleService_UpdateContactGroupRequest
+@dynamic contactGroup;
+@end
+
+
+// ----------------------------------------------------------------------------
+//
 //   GTLRPeopleService_Url
 //
 
 @implementation GTLRPeopleService_Url
 @dynamic formattedType, metadata, type, value;
+@end
+
+
+// ----------------------------------------------------------------------------
+//
+//   GTLRPeopleService_UserDefined
+//
+
+@implementation GTLRPeopleService_UserDefined
+@dynamic key, metadata, value;
 @end

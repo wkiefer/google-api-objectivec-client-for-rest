@@ -18,6 +18,113 @@
 
 @end
 
+@implementation GTLRLoggingQuery_BillingAccountsExclusionsCreate
+
+@dynamic parent;
+
++ (instancetype)queryWithObject:(GTLRLogging_LogExclusion *)object
+                         parent:(NSString *)parent {
+  if (object == nil) {
+    GTLR_DEBUG_ASSERT(object != nil, @"Got a nil object");
+    return nil;
+  }
+  NSArray *pathParams = @[ @"parent" ];
+  NSString *pathURITemplate = @"v2/{+parent}/exclusions";
+  GTLRLoggingQuery_BillingAccountsExclusionsCreate *query =
+    [[self alloc] initWithPathURITemplate:pathURITemplate
+                               HTTPMethod:@"POST"
+                       pathParameterNames:pathParams];
+  query.bodyObject = object;
+  query.parent = parent;
+  query.expectedObjectClass = [GTLRLogging_LogExclusion class];
+  query.loggingName = @"logging.billingAccounts.exclusions.create";
+  return query;
+}
+
+@end
+
+@implementation GTLRLoggingQuery_BillingAccountsExclusionsDelete
+
+@dynamic name;
+
++ (instancetype)queryWithName:(NSString *)name {
+  NSArray *pathParams = @[ @"name" ];
+  NSString *pathURITemplate = @"v2/{+name}";
+  GTLRLoggingQuery_BillingAccountsExclusionsDelete *query =
+    [[self alloc] initWithPathURITemplate:pathURITemplate
+                               HTTPMethod:@"DELETE"
+                       pathParameterNames:pathParams];
+  query.name = name;
+  query.expectedObjectClass = [GTLRLogging_Empty class];
+  query.loggingName = @"logging.billingAccounts.exclusions.delete";
+  return query;
+}
+
+@end
+
+@implementation GTLRLoggingQuery_BillingAccountsExclusionsGet
+
+@dynamic name;
+
++ (instancetype)queryWithName:(NSString *)name {
+  NSArray *pathParams = @[ @"name" ];
+  NSString *pathURITemplate = @"v2/{+name}";
+  GTLRLoggingQuery_BillingAccountsExclusionsGet *query =
+    [[self alloc] initWithPathURITemplate:pathURITemplate
+                               HTTPMethod:nil
+                       pathParameterNames:pathParams];
+  query.name = name;
+  query.expectedObjectClass = [GTLRLogging_LogExclusion class];
+  query.loggingName = @"logging.billingAccounts.exclusions.get";
+  return query;
+}
+
+@end
+
+@implementation GTLRLoggingQuery_BillingAccountsExclusionsList
+
+@dynamic pageSize, pageToken, parent;
+
++ (instancetype)queryWithParent:(NSString *)parent {
+  NSArray *pathParams = @[ @"parent" ];
+  NSString *pathURITemplate = @"v2/{+parent}/exclusions";
+  GTLRLoggingQuery_BillingAccountsExclusionsList *query =
+    [[self alloc] initWithPathURITemplate:pathURITemplate
+                               HTTPMethod:nil
+                       pathParameterNames:pathParams];
+  query.parent = parent;
+  query.expectedObjectClass = [GTLRLogging_ListExclusionsResponse class];
+  query.loggingName = @"logging.billingAccounts.exclusions.list";
+  return query;
+}
+
+@end
+
+@implementation GTLRLoggingQuery_BillingAccountsExclusionsPatch
+
+@dynamic name, updateMask;
+
++ (instancetype)queryWithObject:(GTLRLogging_LogExclusion *)object
+                           name:(NSString *)name {
+  if (object == nil) {
+    GTLR_DEBUG_ASSERT(object != nil, @"Got a nil object");
+    return nil;
+  }
+  NSArray *pathParams = @[ @"name" ];
+  NSString *pathURITemplate = @"v2/{+name}";
+  GTLRLoggingQuery_BillingAccountsExclusionsPatch *query =
+    [[self alloc] initWithPathURITemplate:pathURITemplate
+                               HTTPMethod:@"PATCH"
+                       pathParameterNames:pathParams];
+  query.bodyObject = object;
+  query.name = name;
+  query.expectedObjectClass = [GTLRLogging_LogExclusion class];
+  query.loggingName = @"logging.billingAccounts.exclusions.patch";
+  return query;
+}
+
+@end
+
 @implementation GTLRLoggingQuery_BillingAccountsLogsDelete
 
 @dynamic logName;
@@ -138,9 +245,34 @@
 
 @end
 
+@implementation GTLRLoggingQuery_BillingAccountsSinksPatch
+
+@dynamic sinkName, uniqueWriterIdentity, updateMask;
+
++ (instancetype)queryWithObject:(GTLRLogging_LogSink *)object
+                       sinkName:(NSString *)sinkName {
+  if (object == nil) {
+    GTLR_DEBUG_ASSERT(object != nil, @"Got a nil object");
+    return nil;
+  }
+  NSArray *pathParams = @[ @"sinkName" ];
+  NSString *pathURITemplate = @"v2/{+sinkName}";
+  GTLRLoggingQuery_BillingAccountsSinksPatch *query =
+    [[self alloc] initWithPathURITemplate:pathURITemplate
+                               HTTPMethod:@"PATCH"
+                       pathParameterNames:pathParams];
+  query.bodyObject = object;
+  query.sinkName = sinkName;
+  query.expectedObjectClass = [GTLRLogging_LogSink class];
+  query.loggingName = @"logging.billingAccounts.sinks.patch";
+  return query;
+}
+
+@end
+
 @implementation GTLRLoggingQuery_BillingAccountsSinksUpdate
 
-@dynamic sinkName, uniqueWriterIdentity;
+@dynamic sinkName, uniqueWriterIdentity, updateMask;
 
 + (instancetype)queryWithObject:(GTLRLogging_LogSink *)object
                        sinkName:(NSString *)sinkName {
@@ -198,6 +330,220 @@
   query.bodyObject = object;
   query.expectedObjectClass = [GTLRLogging_WriteLogEntriesResponse class];
   query.loggingName = @"logging.entries.write";
+  return query;
+}
+
+@end
+
+@implementation GTLRLoggingQuery_ExclusionsCreate
+
+@dynamic parent;
+
++ (instancetype)queryWithObject:(GTLRLogging_LogExclusion *)object
+                         parent:(NSString *)parent {
+  if (object == nil) {
+    GTLR_DEBUG_ASSERT(object != nil, @"Got a nil object");
+    return nil;
+  }
+  NSArray *pathParams = @[ @"parent" ];
+  NSString *pathURITemplate = @"v2/{+parent}/exclusions";
+  GTLRLoggingQuery_ExclusionsCreate *query =
+    [[self alloc] initWithPathURITemplate:pathURITemplate
+                               HTTPMethod:@"POST"
+                       pathParameterNames:pathParams];
+  query.bodyObject = object;
+  query.parent = parent;
+  query.expectedObjectClass = [GTLRLogging_LogExclusion class];
+  query.loggingName = @"logging.exclusions.create";
+  return query;
+}
+
+@end
+
+@implementation GTLRLoggingQuery_ExclusionsDelete
+
+@dynamic name;
+
++ (instancetype)queryWithName:(NSString *)name {
+  NSArray *pathParams = @[ @"name" ];
+  NSString *pathURITemplate = @"v2/{+name}";
+  GTLRLoggingQuery_ExclusionsDelete *query =
+    [[self alloc] initWithPathURITemplate:pathURITemplate
+                               HTTPMethod:@"DELETE"
+                       pathParameterNames:pathParams];
+  query.name = name;
+  query.expectedObjectClass = [GTLRLogging_Empty class];
+  query.loggingName = @"logging.exclusions.delete";
+  return query;
+}
+
+@end
+
+@implementation GTLRLoggingQuery_ExclusionsGet
+
+@dynamic name;
+
++ (instancetype)queryWithName:(NSString *)name {
+  NSArray *pathParams = @[ @"name" ];
+  NSString *pathURITemplate = @"v2/{+name}";
+  GTLRLoggingQuery_ExclusionsGet *query =
+    [[self alloc] initWithPathURITemplate:pathURITemplate
+                               HTTPMethod:nil
+                       pathParameterNames:pathParams];
+  query.name = name;
+  query.expectedObjectClass = [GTLRLogging_LogExclusion class];
+  query.loggingName = @"logging.exclusions.get";
+  return query;
+}
+
+@end
+
+@implementation GTLRLoggingQuery_ExclusionsList
+
+@dynamic pageSize, pageToken, parent;
+
++ (instancetype)queryWithParent:(NSString *)parent {
+  NSArray *pathParams = @[ @"parent" ];
+  NSString *pathURITemplate = @"v2/{+parent}/exclusions";
+  GTLRLoggingQuery_ExclusionsList *query =
+    [[self alloc] initWithPathURITemplate:pathURITemplate
+                               HTTPMethod:nil
+                       pathParameterNames:pathParams];
+  query.parent = parent;
+  query.expectedObjectClass = [GTLRLogging_ListExclusionsResponse class];
+  query.loggingName = @"logging.exclusions.list";
+  return query;
+}
+
+@end
+
+@implementation GTLRLoggingQuery_ExclusionsPatch
+
+@dynamic name, updateMask;
+
++ (instancetype)queryWithObject:(GTLRLogging_LogExclusion *)object
+                           name:(NSString *)name {
+  if (object == nil) {
+    GTLR_DEBUG_ASSERT(object != nil, @"Got a nil object");
+    return nil;
+  }
+  NSArray *pathParams = @[ @"name" ];
+  NSString *pathURITemplate = @"v2/{+name}";
+  GTLRLoggingQuery_ExclusionsPatch *query =
+    [[self alloc] initWithPathURITemplate:pathURITemplate
+                               HTTPMethod:@"PATCH"
+                       pathParameterNames:pathParams];
+  query.bodyObject = object;
+  query.name = name;
+  query.expectedObjectClass = [GTLRLogging_LogExclusion class];
+  query.loggingName = @"logging.exclusions.patch";
+  return query;
+}
+
+@end
+
+@implementation GTLRLoggingQuery_FoldersExclusionsCreate
+
+@dynamic parent;
+
++ (instancetype)queryWithObject:(GTLRLogging_LogExclusion *)object
+                         parent:(NSString *)parent {
+  if (object == nil) {
+    GTLR_DEBUG_ASSERT(object != nil, @"Got a nil object");
+    return nil;
+  }
+  NSArray *pathParams = @[ @"parent" ];
+  NSString *pathURITemplate = @"v2/{+parent}/exclusions";
+  GTLRLoggingQuery_FoldersExclusionsCreate *query =
+    [[self alloc] initWithPathURITemplate:pathURITemplate
+                               HTTPMethod:@"POST"
+                       pathParameterNames:pathParams];
+  query.bodyObject = object;
+  query.parent = parent;
+  query.expectedObjectClass = [GTLRLogging_LogExclusion class];
+  query.loggingName = @"logging.folders.exclusions.create";
+  return query;
+}
+
+@end
+
+@implementation GTLRLoggingQuery_FoldersExclusionsDelete
+
+@dynamic name;
+
++ (instancetype)queryWithName:(NSString *)name {
+  NSArray *pathParams = @[ @"name" ];
+  NSString *pathURITemplate = @"v2/{+name}";
+  GTLRLoggingQuery_FoldersExclusionsDelete *query =
+    [[self alloc] initWithPathURITemplate:pathURITemplate
+                               HTTPMethod:@"DELETE"
+                       pathParameterNames:pathParams];
+  query.name = name;
+  query.expectedObjectClass = [GTLRLogging_Empty class];
+  query.loggingName = @"logging.folders.exclusions.delete";
+  return query;
+}
+
+@end
+
+@implementation GTLRLoggingQuery_FoldersExclusionsGet
+
+@dynamic name;
+
++ (instancetype)queryWithName:(NSString *)name {
+  NSArray *pathParams = @[ @"name" ];
+  NSString *pathURITemplate = @"v2/{+name}";
+  GTLRLoggingQuery_FoldersExclusionsGet *query =
+    [[self alloc] initWithPathURITemplate:pathURITemplate
+                               HTTPMethod:nil
+                       pathParameterNames:pathParams];
+  query.name = name;
+  query.expectedObjectClass = [GTLRLogging_LogExclusion class];
+  query.loggingName = @"logging.folders.exclusions.get";
+  return query;
+}
+
+@end
+
+@implementation GTLRLoggingQuery_FoldersExclusionsList
+
+@dynamic pageSize, pageToken, parent;
+
++ (instancetype)queryWithParent:(NSString *)parent {
+  NSArray *pathParams = @[ @"parent" ];
+  NSString *pathURITemplate = @"v2/{+parent}/exclusions";
+  GTLRLoggingQuery_FoldersExclusionsList *query =
+    [[self alloc] initWithPathURITemplate:pathURITemplate
+                               HTTPMethod:nil
+                       pathParameterNames:pathParams];
+  query.parent = parent;
+  query.expectedObjectClass = [GTLRLogging_ListExclusionsResponse class];
+  query.loggingName = @"logging.folders.exclusions.list";
+  return query;
+}
+
+@end
+
+@implementation GTLRLoggingQuery_FoldersExclusionsPatch
+
+@dynamic name, updateMask;
+
++ (instancetype)queryWithObject:(GTLRLogging_LogExclusion *)object
+                           name:(NSString *)name {
+  if (object == nil) {
+    GTLR_DEBUG_ASSERT(object != nil, @"Got a nil object");
+    return nil;
+  }
+  NSArray *pathParams = @[ @"name" ];
+  NSString *pathURITemplate = @"v2/{+name}";
+  GTLRLoggingQuery_FoldersExclusionsPatch *query =
+    [[self alloc] initWithPathURITemplate:pathURITemplate
+                               HTTPMethod:@"PATCH"
+                       pathParameterNames:pathParams];
+  query.bodyObject = object;
+  query.name = name;
+  query.expectedObjectClass = [GTLRLogging_LogExclusion class];
+  query.loggingName = @"logging.folders.exclusions.patch";
   return query;
 }
 
@@ -323,9 +669,34 @@
 
 @end
 
+@implementation GTLRLoggingQuery_FoldersSinksPatch
+
+@dynamic sinkName, uniqueWriterIdentity, updateMask;
+
++ (instancetype)queryWithObject:(GTLRLogging_LogSink *)object
+                       sinkName:(NSString *)sinkName {
+  if (object == nil) {
+    GTLR_DEBUG_ASSERT(object != nil, @"Got a nil object");
+    return nil;
+  }
+  NSArray *pathParams = @[ @"sinkName" ];
+  NSString *pathURITemplate = @"v2/{+sinkName}";
+  GTLRLoggingQuery_FoldersSinksPatch *query =
+    [[self alloc] initWithPathURITemplate:pathURITemplate
+                               HTTPMethod:@"PATCH"
+                       pathParameterNames:pathParams];
+  query.bodyObject = object;
+  query.sinkName = sinkName;
+  query.expectedObjectClass = [GTLRLogging_LogSink class];
+  query.loggingName = @"logging.folders.sinks.patch";
+  return query;
+}
+
+@end
+
 @implementation GTLRLoggingQuery_FoldersSinksUpdate
 
-@dynamic sinkName, uniqueWriterIdentity;
+@dynamic sinkName, uniqueWriterIdentity, updateMask;
 
 + (instancetype)queryWithObject:(GTLRLogging_LogSink *)object
                        sinkName:(NSString *)sinkName {
@@ -348,6 +719,44 @@
 
 @end
 
+@implementation GTLRLoggingQuery_LogsDelete
+
+@dynamic logName;
+
++ (instancetype)queryWithLogName:(NSString *)logName {
+  NSArray *pathParams = @[ @"logName" ];
+  NSString *pathURITemplate = @"v2/{+logName}";
+  GTLRLoggingQuery_LogsDelete *query =
+    [[self alloc] initWithPathURITemplate:pathURITemplate
+                               HTTPMethod:@"DELETE"
+                       pathParameterNames:pathParams];
+  query.logName = logName;
+  query.expectedObjectClass = [GTLRLogging_Empty class];
+  query.loggingName = @"logging.logs.delete";
+  return query;
+}
+
+@end
+
+@implementation GTLRLoggingQuery_LogsList
+
+@dynamic pageSize, pageToken, parent;
+
++ (instancetype)queryWithParent:(NSString *)parent {
+  NSArray *pathParams = @[ @"parent" ];
+  NSString *pathURITemplate = @"v2/{+parent}/logs";
+  GTLRLoggingQuery_LogsList *query =
+    [[self alloc] initWithPathURITemplate:pathURITemplate
+                               HTTPMethod:nil
+                       pathParameterNames:pathParams];
+  query.parent = parent;
+  query.expectedObjectClass = [GTLRLogging_ListLogsResponse class];
+  query.loggingName = @"logging.logs.list";
+  return query;
+}
+
+@end
+
 @implementation GTLRLoggingQuery_MonitoredResourceDescriptorsList
 
 @dynamic pageSize, pageToken;
@@ -360,6 +769,113 @@
                        pathParameterNames:nil];
   query.expectedObjectClass = [GTLRLogging_ListMonitoredResourceDescriptorsResponse class];
   query.loggingName = @"logging.monitoredResourceDescriptors.list";
+  return query;
+}
+
+@end
+
+@implementation GTLRLoggingQuery_OrganizationsExclusionsCreate
+
+@dynamic parent;
+
++ (instancetype)queryWithObject:(GTLRLogging_LogExclusion *)object
+                         parent:(NSString *)parent {
+  if (object == nil) {
+    GTLR_DEBUG_ASSERT(object != nil, @"Got a nil object");
+    return nil;
+  }
+  NSArray *pathParams = @[ @"parent" ];
+  NSString *pathURITemplate = @"v2/{+parent}/exclusions";
+  GTLRLoggingQuery_OrganizationsExclusionsCreate *query =
+    [[self alloc] initWithPathURITemplate:pathURITemplate
+                               HTTPMethod:@"POST"
+                       pathParameterNames:pathParams];
+  query.bodyObject = object;
+  query.parent = parent;
+  query.expectedObjectClass = [GTLRLogging_LogExclusion class];
+  query.loggingName = @"logging.organizations.exclusions.create";
+  return query;
+}
+
+@end
+
+@implementation GTLRLoggingQuery_OrganizationsExclusionsDelete
+
+@dynamic name;
+
++ (instancetype)queryWithName:(NSString *)name {
+  NSArray *pathParams = @[ @"name" ];
+  NSString *pathURITemplate = @"v2/{+name}";
+  GTLRLoggingQuery_OrganizationsExclusionsDelete *query =
+    [[self alloc] initWithPathURITemplate:pathURITemplate
+                               HTTPMethod:@"DELETE"
+                       pathParameterNames:pathParams];
+  query.name = name;
+  query.expectedObjectClass = [GTLRLogging_Empty class];
+  query.loggingName = @"logging.organizations.exclusions.delete";
+  return query;
+}
+
+@end
+
+@implementation GTLRLoggingQuery_OrganizationsExclusionsGet
+
+@dynamic name;
+
++ (instancetype)queryWithName:(NSString *)name {
+  NSArray *pathParams = @[ @"name" ];
+  NSString *pathURITemplate = @"v2/{+name}";
+  GTLRLoggingQuery_OrganizationsExclusionsGet *query =
+    [[self alloc] initWithPathURITemplate:pathURITemplate
+                               HTTPMethod:nil
+                       pathParameterNames:pathParams];
+  query.name = name;
+  query.expectedObjectClass = [GTLRLogging_LogExclusion class];
+  query.loggingName = @"logging.organizations.exclusions.get";
+  return query;
+}
+
+@end
+
+@implementation GTLRLoggingQuery_OrganizationsExclusionsList
+
+@dynamic pageSize, pageToken, parent;
+
++ (instancetype)queryWithParent:(NSString *)parent {
+  NSArray *pathParams = @[ @"parent" ];
+  NSString *pathURITemplate = @"v2/{+parent}/exclusions";
+  GTLRLoggingQuery_OrganizationsExclusionsList *query =
+    [[self alloc] initWithPathURITemplate:pathURITemplate
+                               HTTPMethod:nil
+                       pathParameterNames:pathParams];
+  query.parent = parent;
+  query.expectedObjectClass = [GTLRLogging_ListExclusionsResponse class];
+  query.loggingName = @"logging.organizations.exclusions.list";
+  return query;
+}
+
+@end
+
+@implementation GTLRLoggingQuery_OrganizationsExclusionsPatch
+
+@dynamic name, updateMask;
+
++ (instancetype)queryWithObject:(GTLRLogging_LogExclusion *)object
+                           name:(NSString *)name {
+  if (object == nil) {
+    GTLR_DEBUG_ASSERT(object != nil, @"Got a nil object");
+    return nil;
+  }
+  NSArray *pathParams = @[ @"name" ];
+  NSString *pathURITemplate = @"v2/{+name}";
+  GTLRLoggingQuery_OrganizationsExclusionsPatch *query =
+    [[self alloc] initWithPathURITemplate:pathURITemplate
+                               HTTPMethod:@"PATCH"
+                       pathParameterNames:pathParams];
+  query.bodyObject = object;
+  query.name = name;
+  query.expectedObjectClass = [GTLRLogging_LogExclusion class];
+  query.loggingName = @"logging.organizations.exclusions.patch";
   return query;
 }
 
@@ -485,9 +1001,34 @@
 
 @end
 
+@implementation GTLRLoggingQuery_OrganizationsSinksPatch
+
+@dynamic sinkName, uniqueWriterIdentity, updateMask;
+
++ (instancetype)queryWithObject:(GTLRLogging_LogSink *)object
+                       sinkName:(NSString *)sinkName {
+  if (object == nil) {
+    GTLR_DEBUG_ASSERT(object != nil, @"Got a nil object");
+    return nil;
+  }
+  NSArray *pathParams = @[ @"sinkName" ];
+  NSString *pathURITemplate = @"v2/{+sinkName}";
+  GTLRLoggingQuery_OrganizationsSinksPatch *query =
+    [[self alloc] initWithPathURITemplate:pathURITemplate
+                               HTTPMethod:@"PATCH"
+                       pathParameterNames:pathParams];
+  query.bodyObject = object;
+  query.sinkName = sinkName;
+  query.expectedObjectClass = [GTLRLogging_LogSink class];
+  query.loggingName = @"logging.organizations.sinks.patch";
+  return query;
+}
+
+@end
+
 @implementation GTLRLoggingQuery_OrganizationsSinksUpdate
 
-@dynamic sinkName, uniqueWriterIdentity;
+@dynamic sinkName, uniqueWriterIdentity, updateMask;
 
 + (instancetype)queryWithObject:(GTLRLogging_LogSink *)object
                        sinkName:(NSString *)sinkName {
@@ -505,6 +1046,113 @@
   query.sinkName = sinkName;
   query.expectedObjectClass = [GTLRLogging_LogSink class];
   query.loggingName = @"logging.organizations.sinks.update";
+  return query;
+}
+
+@end
+
+@implementation GTLRLoggingQuery_ProjectsExclusionsCreate
+
+@dynamic parent;
+
++ (instancetype)queryWithObject:(GTLRLogging_LogExclusion *)object
+                         parent:(NSString *)parent {
+  if (object == nil) {
+    GTLR_DEBUG_ASSERT(object != nil, @"Got a nil object");
+    return nil;
+  }
+  NSArray *pathParams = @[ @"parent" ];
+  NSString *pathURITemplate = @"v2/{+parent}/exclusions";
+  GTLRLoggingQuery_ProjectsExclusionsCreate *query =
+    [[self alloc] initWithPathURITemplate:pathURITemplate
+                               HTTPMethod:@"POST"
+                       pathParameterNames:pathParams];
+  query.bodyObject = object;
+  query.parent = parent;
+  query.expectedObjectClass = [GTLRLogging_LogExclusion class];
+  query.loggingName = @"logging.projects.exclusions.create";
+  return query;
+}
+
+@end
+
+@implementation GTLRLoggingQuery_ProjectsExclusionsDelete
+
+@dynamic name;
+
++ (instancetype)queryWithName:(NSString *)name {
+  NSArray *pathParams = @[ @"name" ];
+  NSString *pathURITemplate = @"v2/{+name}";
+  GTLRLoggingQuery_ProjectsExclusionsDelete *query =
+    [[self alloc] initWithPathURITemplate:pathURITemplate
+                               HTTPMethod:@"DELETE"
+                       pathParameterNames:pathParams];
+  query.name = name;
+  query.expectedObjectClass = [GTLRLogging_Empty class];
+  query.loggingName = @"logging.projects.exclusions.delete";
+  return query;
+}
+
+@end
+
+@implementation GTLRLoggingQuery_ProjectsExclusionsGet
+
+@dynamic name;
+
++ (instancetype)queryWithName:(NSString *)name {
+  NSArray *pathParams = @[ @"name" ];
+  NSString *pathURITemplate = @"v2/{+name}";
+  GTLRLoggingQuery_ProjectsExclusionsGet *query =
+    [[self alloc] initWithPathURITemplate:pathURITemplate
+                               HTTPMethod:nil
+                       pathParameterNames:pathParams];
+  query.name = name;
+  query.expectedObjectClass = [GTLRLogging_LogExclusion class];
+  query.loggingName = @"logging.projects.exclusions.get";
+  return query;
+}
+
+@end
+
+@implementation GTLRLoggingQuery_ProjectsExclusionsList
+
+@dynamic pageSize, pageToken, parent;
+
++ (instancetype)queryWithParent:(NSString *)parent {
+  NSArray *pathParams = @[ @"parent" ];
+  NSString *pathURITemplate = @"v2/{+parent}/exclusions";
+  GTLRLoggingQuery_ProjectsExclusionsList *query =
+    [[self alloc] initWithPathURITemplate:pathURITemplate
+                               HTTPMethod:nil
+                       pathParameterNames:pathParams];
+  query.parent = parent;
+  query.expectedObjectClass = [GTLRLogging_ListExclusionsResponse class];
+  query.loggingName = @"logging.projects.exclusions.list";
+  return query;
+}
+
+@end
+
+@implementation GTLRLoggingQuery_ProjectsExclusionsPatch
+
+@dynamic name, updateMask;
+
++ (instancetype)queryWithObject:(GTLRLogging_LogExclusion *)object
+                           name:(NSString *)name {
+  if (object == nil) {
+    GTLR_DEBUG_ASSERT(object != nil, @"Got a nil object");
+    return nil;
+  }
+  NSArray *pathParams = @[ @"name" ];
+  NSString *pathURITemplate = @"v2/{+name}";
+  GTLRLoggingQuery_ProjectsExclusionsPatch *query =
+    [[self alloc] initWithPathURITemplate:pathURITemplate
+                               HTTPMethod:@"PATCH"
+                       pathParameterNames:pathParams];
+  query.bodyObject = object;
+  query.name = name;
+  query.expectedObjectClass = [GTLRLogging_LogExclusion class];
+  query.loggingName = @"logging.projects.exclusions.patch";
   return query;
 }
 
@@ -737,9 +1385,34 @@
 
 @end
 
+@implementation GTLRLoggingQuery_ProjectsSinksPatch
+
+@dynamic sinkName, uniqueWriterIdentity, updateMask;
+
++ (instancetype)queryWithObject:(GTLRLogging_LogSink *)object
+                       sinkName:(NSString *)sinkName {
+  if (object == nil) {
+    GTLR_DEBUG_ASSERT(object != nil, @"Got a nil object");
+    return nil;
+  }
+  NSArray *pathParams = @[ @"sinkName" ];
+  NSString *pathURITemplate = @"v2/{+sinkName}";
+  GTLRLoggingQuery_ProjectsSinksPatch *query =
+    [[self alloc] initWithPathURITemplate:pathURITemplate
+                               HTTPMethod:@"PATCH"
+                       pathParameterNames:pathParams];
+  query.bodyObject = object;
+  query.sinkName = sinkName;
+  query.expectedObjectClass = [GTLRLogging_LogSink class];
+  query.loggingName = @"logging.projects.sinks.patch";
+  return query;
+}
+
+@end
+
 @implementation GTLRLoggingQuery_ProjectsSinksUpdate
 
-@dynamic sinkName, uniqueWriterIdentity;
+@dynamic sinkName, uniqueWriterIdentity, updateMask;
 
 + (instancetype)queryWithObject:(GTLRLogging_LogSink *)object
                        sinkName:(NSString *)sinkName {
@@ -757,6 +1430,113 @@
   query.sinkName = sinkName;
   query.expectedObjectClass = [GTLRLogging_LogSink class];
   query.loggingName = @"logging.projects.sinks.update";
+  return query;
+}
+
+@end
+
+@implementation GTLRLoggingQuery_SinksCreate
+
+@dynamic parent, uniqueWriterIdentity;
+
++ (instancetype)queryWithObject:(GTLRLogging_LogSink *)object
+                         parent:(NSString *)parent {
+  if (object == nil) {
+    GTLR_DEBUG_ASSERT(object != nil, @"Got a nil object");
+    return nil;
+  }
+  NSArray *pathParams = @[ @"parent" ];
+  NSString *pathURITemplate = @"v2/{+parent}/sinks";
+  GTLRLoggingQuery_SinksCreate *query =
+    [[self alloc] initWithPathURITemplate:pathURITemplate
+                               HTTPMethod:@"POST"
+                       pathParameterNames:pathParams];
+  query.bodyObject = object;
+  query.parent = parent;
+  query.expectedObjectClass = [GTLRLogging_LogSink class];
+  query.loggingName = @"logging.sinks.create";
+  return query;
+}
+
+@end
+
+@implementation GTLRLoggingQuery_SinksDelete
+
+@dynamic sinkName;
+
++ (instancetype)queryWithSinkName:(NSString *)sinkName {
+  NSArray *pathParams = @[ @"sinkName" ];
+  NSString *pathURITemplate = @"v2/{+sinkName}";
+  GTLRLoggingQuery_SinksDelete *query =
+    [[self alloc] initWithPathURITemplate:pathURITemplate
+                               HTTPMethod:@"DELETE"
+                       pathParameterNames:pathParams];
+  query.sinkName = sinkName;
+  query.expectedObjectClass = [GTLRLogging_Empty class];
+  query.loggingName = @"logging.sinks.delete";
+  return query;
+}
+
+@end
+
+@implementation GTLRLoggingQuery_SinksGet
+
+@dynamic sinkName;
+
++ (instancetype)queryWithSinkName:(NSString *)sinkName {
+  NSArray *pathParams = @[ @"sinkName" ];
+  NSString *pathURITemplate = @"v2/{+sinkName}";
+  GTLRLoggingQuery_SinksGet *query =
+    [[self alloc] initWithPathURITemplate:pathURITemplate
+                               HTTPMethod:nil
+                       pathParameterNames:pathParams];
+  query.sinkName = sinkName;
+  query.expectedObjectClass = [GTLRLogging_LogSink class];
+  query.loggingName = @"logging.sinks.get";
+  return query;
+}
+
+@end
+
+@implementation GTLRLoggingQuery_SinksList
+
+@dynamic pageSize, pageToken, parent;
+
++ (instancetype)queryWithParent:(NSString *)parent {
+  NSArray *pathParams = @[ @"parent" ];
+  NSString *pathURITemplate = @"v2/{+parent}/sinks";
+  GTLRLoggingQuery_SinksList *query =
+    [[self alloc] initWithPathURITemplate:pathURITemplate
+                               HTTPMethod:nil
+                       pathParameterNames:pathParams];
+  query.parent = parent;
+  query.expectedObjectClass = [GTLRLogging_ListSinksResponse class];
+  query.loggingName = @"logging.sinks.list";
+  return query;
+}
+
+@end
+
+@implementation GTLRLoggingQuery_SinksUpdate
+
+@dynamic sinkName, uniqueWriterIdentity, updateMask;
+
++ (instancetype)queryWithObject:(GTLRLogging_LogSink *)object
+                       sinkName:(NSString *)sinkName {
+  if (object == nil) {
+    GTLR_DEBUG_ASSERT(object != nil, @"Got a nil object");
+    return nil;
+  }
+  NSArray *pathParams = @[ @"sinkName" ];
+  NSString *pathURITemplate = @"v2/{+sinkName}";
+  GTLRLoggingQuery_SinksUpdate *query =
+    [[self alloc] initWithPathURITemplate:pathURITemplate
+                               HTTPMethod:@"PUT"
+                       pathParameterNames:pathParams];
+  query.bodyObject = object;
+  query.sinkName = sinkName;
+  query.expectedObjectClass = [GTLRLogging_LogSink class];
+  query.loggingName = @"logging.sinks.update";
   return query;
 }
 

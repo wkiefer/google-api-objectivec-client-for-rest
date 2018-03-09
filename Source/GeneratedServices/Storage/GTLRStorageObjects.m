@@ -16,8 +16,9 @@
 //
 
 @implementation GTLRStorage_Bucket
-@dynamic acl, cors, defaultObjectAcl, ETag, identifier, kind, labels, lifecycle,
-         location, logging, metageneration, name, owner, projectNumber,
+@dynamic acl, billing, cors, defaultEventBasedHold, defaultObjectAcl,
+         encryption, ETag, identifier, kind, labels, lifecycle, location,
+         logging, metageneration, name, owner, projectNumber, retentionPolicy,
          selfLink, storageClass, timeCreated, updated, versioning, website;
 
 + (NSDictionary<NSString *, NSString *> *)propertyToJSONKeyMap {
@@ -42,6 +43,16 @@
 
 // ----------------------------------------------------------------------------
 //
+//   GTLRStorage_Bucket_Billing
+//
+
+@implementation GTLRStorage_Bucket_Billing
+@dynamic requesterPays;
+@end
+
+
+// ----------------------------------------------------------------------------
+//
 //   GTLRStorage_Bucket_Cors_Item
 //
 
@@ -57,6 +68,16 @@
   return map;
 }
 
+@end
+
+
+// ----------------------------------------------------------------------------
+//
+//   GTLRStorage_Bucket_Encryption
+//
+
+@implementation GTLRStorage_Bucket_Encryption
+@dynamic defaultKmsKeyName;
 @end
 
 
@@ -109,6 +130,16 @@
 
 @implementation GTLRStorage_Bucket_Owner
 @dynamic entity, entityId;
+@end
+
+
+// ----------------------------------------------------------------------------
+//
+//   GTLRStorage_Bucket_RetentionPolicy
+//
+
+@implementation GTLRStorage_Bucket_RetentionPolicy
+@dynamic effectiveTime, isLocked, retentionPeriod;
 @end
 
 
@@ -375,10 +406,10 @@
 @implementation GTLRStorage_Object
 @dynamic acl, bucket, cacheControl, componentCount, contentDisposition,
          contentEncoding, contentLanguage, contentType, crc32c,
-         customerEncryption, ETag, generation, identifier, kind, md5Hash,
-         mediaLink, metadata, metageneration, name, owner, selfLink, size,
-         storageClass, timeCreated, timeDeleted, timeStorageClassUpdated,
-         updated;
+         customerEncryption, ETag, eventBasedHold, generation, identifier, kind,
+         kmsKeyName, md5Hash, mediaLink, metadata, metageneration, name, owner,
+         retentionExpirationTime, selfLink, size, storageClass, temporaryHold,
+         timeCreated, timeDeleted, timeStorageClassUpdated, updated;
 
 + (NSDictionary<NSString *, NSString *> *)propertyToJSONKeyMap {
   NSDictionary<NSString *, NSString *> *map = @{
@@ -527,7 +558,7 @@
 //
 
 @implementation GTLRStorage_Policy_Bindings_Item
-@dynamic members, role;
+@dynamic condition, members, role;
 
 + (NSDictionary<NSString *, Class> *)arrayPropertyToClassMap {
   NSDictionary<NSString *, Class> *map = @{

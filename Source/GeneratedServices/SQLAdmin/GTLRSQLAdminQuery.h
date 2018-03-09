@@ -23,6 +23,7 @@
 @class GTLRSQLAdmin_Database;
 @class GTLRSQLAdmin_DatabaseInstance;
 @class GTLRSQLAdmin_InstancesCloneRequest;
+@class GTLRSQLAdmin_InstancesDemoteMasterRequest;
 @class GTLRSQLAdmin_InstancesExportRequest;
 @class GTLRSQLAdmin_InstancesFailoverRequest;
 @class GTLRSQLAdmin_InstancesImportRequest;
@@ -31,6 +32,11 @@
 @class GTLRSQLAdmin_SslCertsCreateEphemeralRequest;
 @class GTLRSQLAdmin_SslCertsInsertRequest;
 @class GTLRSQLAdmin_User;
+
+// Generated comments include content from the discovery document; avoid them
+// causing warnings since clang's checks are some what arbitrary.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdocumentation"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -568,6 +574,43 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 /**
+ *  Reserved for future use.
+ *
+ *  Method: sql.instances.demoteMaster
+ *
+ *  Authorization scope(s):
+ *    @c kGTLRAuthScopeSQLAdminCloudPlatform
+ *    @c kGTLRAuthScopeSQLAdminSqlserviceAdmin
+ */
+@interface GTLRSQLAdminQuery_InstancesDemoteMaster : GTLRSQLAdminQuery
+// Previous library name was
+//   +[GTLQuerySQLAdmin queryForInstancesDemoteMasterWithObject:project:instance:]
+
+/** Cloud SQL instance name. */
+@property(nonatomic, copy, nullable) NSString *instance;
+
+/** ID of the project that contains the instance. */
+@property(nonatomic, copy, nullable) NSString *project;
+
+/**
+ *  Fetches a @c GTLRSQLAdmin_Operation.
+ *
+ *  Reserved for future use.
+ *
+ *  @param object The @c GTLRSQLAdmin_InstancesDemoteMasterRequest to include in
+ *    the query.
+ *  @param project ID of the project that contains the instance.
+ *  @param instance Cloud SQL instance name.
+ *
+ *  @returns GTLRSQLAdminQuery_InstancesDemoteMaster
+ */
++ (instancetype)queryWithObject:(GTLRSQLAdmin_InstancesDemoteMasterRequest *)object
+                        project:(NSString *)project
+                       instance:(NSString *)instance;
+
+@end
+
+/**
  *  Exports data from a Cloud SQL instance to a Google Cloud Storage bucket as a
  *  MySQL dump file.
  *
@@ -764,7 +807,10 @@ NS_ASSUME_NONNULL_BEGIN
 // Previous library name was
 //   +[GTLQuerySQLAdmin queryForInstancesListWithproject:]
 
-/** A filter expression for filtering listed instances. */
+/**
+ *  An expression for filtering the results of the request, such as by name or
+ *  label.
+ */
 @property(nonatomic, copy, nullable) NSString *filter;
 
 /** The maximum number of results to return per response. */
@@ -1614,3 +1660,5 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 NS_ASSUME_NONNULL_END
+
+#pragma clang diagnostic pop

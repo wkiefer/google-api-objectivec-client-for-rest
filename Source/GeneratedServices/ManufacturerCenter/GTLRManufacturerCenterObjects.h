@@ -28,6 +28,11 @@
 @class GTLRManufacturerCenter_Product;
 @class GTLRManufacturerCenter_ProductDetail;
 
+// Generated comments include content from the discovery document; avoid them
+// causing warnings since clang's checks are some what arbitrary.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdocumentation"
+
 NS_ASSUME_NONNULL_BEGIN
 
 // ----------------------------------------------------------------------------
@@ -55,6 +60,18 @@ GTLR_EXTERN NSString * const kGTLRManufacturerCenter_Image_Status_CrawlSkipped;
  */
 GTLR_EXTERN NSString * const kGTLRManufacturerCenter_Image_Status_DecodingError;
 /**
+ *  The image crawl was postponed to avoid overloading the host.
+ *
+ *  Value: "HOSTLOADED"
+ */
+GTLR_EXTERN NSString * const kGTLRManufacturerCenter_Image_Status_Hostloaded;
+/**
+ *  The image URL returned a "404 Not Found" error.
+ *
+ *  Value: "HTTP_404"
+ */
+GTLR_EXTERN NSString * const kGTLRManufacturerCenter_Image_Status_Http404;
+/**
  *  The image was processed and it meets the requirements.
  *
  *  Value: "OK"
@@ -67,7 +84,7 @@ GTLR_EXTERN NSString * const kGTLRManufacturerCenter_Image_Status_Ok;
  */
 GTLR_EXTERN NSString * const kGTLRManufacturerCenter_Image_Status_PendingCrawl;
 /**
- *  Image was uploaded and is being processed.
+ *  The image was uploaded and is being processed.
  *
  *  Value: "PENDING_PROCESSING"
  */
@@ -85,7 +102,7 @@ GTLR_EXTERN NSString * const kGTLRManufacturerCenter_Image_Status_ProcessingErro
  */
 GTLR_EXTERN NSString * const kGTLRManufacturerCenter_Image_Status_Roboted;
 /**
- *  Status is unspecified. Should not be used.
+ *  The image status is unspecified. Should not be used.
  *
  *  Value: "STATUS_UNSPECIFIED"
  */
@@ -299,7 +316,7 @@ GTLR_EXTERN NSString * const kGTLRManufacturerCenter_Issue_Severity_Warning;
 @property(nonatomic, copy, nullable) NSString *productPageUrl;
 
 /**
- *  The category of the product. For more information, see
+ *  The type or category of the product. For more information, see
  *  https://support.google.com/manufacturers/answer/6124116#producttype.
  */
 @property(nonatomic, strong, nullable) NSArray<NSString *> *productType;
@@ -339,6 +356,12 @@ GTLR_EXTERN NSString * const kGTLRManufacturerCenter_Issue_Severity_Warning;
  *  see https://support.google.com/manufacturers/answer/6124116#price.
  */
 @property(nonatomic, strong, nullable) GTLRManufacturerCenter_Price *suggestedRetailPrice;
+
+/**
+ *  The target client id. Should only be used in the accounts of the data
+ *  partners.
+ */
+@property(nonatomic, copy, nullable) NSString *targetClientId;
 
 /**
  *  The theme of the product. For more information, see
@@ -400,6 +423,19 @@ GTLR_EXTERN NSString * const kGTLRManufacturerCenter_Issue_Severity_Warning;
 
 
 /**
+ *  A generic empty message that you can re-use to avoid defining duplicated
+ *  empty messages in your APIs. A typical example is to use it as the request
+ *  or the response type of an API method. For instance:
+ *  service Foo {
+ *  rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty);
+ *  }
+ *  The JSON representation for `Empty` is empty JSON object `{}`.
+ */
+@interface GTLRManufacturerCenter_Empty : GTLRObject
+@end
+
+
+/**
  *  A feature description of the product. For more information, see
  *  https://support.google.com/manufacturers/answer/6124116#featuredesc.
  */
@@ -440,18 +476,23 @@ GTLR_EXTERN NSString * const kGTLRManufacturerCenter_Issue_Severity_Warning;
  *        manually overridden and will not be crawled. (Value: "CRAWL_SKIPPED")
  *    @arg @c kGTLRManufacturerCenter_Image_Status_DecodingError The image
  *        cannot be decoded. (Value: "DECODING_ERROR")
+ *    @arg @c kGTLRManufacturerCenter_Image_Status_Hostloaded The image crawl
+ *        was postponed to avoid overloading the host. (Value: "HOSTLOADED")
+ *    @arg @c kGTLRManufacturerCenter_Image_Status_Http404 The image URL
+ *        returned a "404 Not Found" error. (Value: "HTTP_404")
  *    @arg @c kGTLRManufacturerCenter_Image_Status_Ok The image was processed
  *        and it meets the requirements. (Value: "OK")
  *    @arg @c kGTLRManufacturerCenter_Image_Status_PendingCrawl The image crawl
  *        is still pending. (Value: "PENDING_CRAWL")
- *    @arg @c kGTLRManufacturerCenter_Image_Status_PendingProcessing Image was
- *        uploaded and is being processed. (Value: "PENDING_PROCESSING")
+ *    @arg @c kGTLRManufacturerCenter_Image_Status_PendingProcessing The image
+ *        was uploaded and is being processed. (Value: "PENDING_PROCESSING")
  *    @arg @c kGTLRManufacturerCenter_Image_Status_ProcessingError The image
  *        cannot be processed. (Value: "PROCESSING_ERROR")
  *    @arg @c kGTLRManufacturerCenter_Image_Status_Roboted The image URL is
  *        protected by robots.txt file and cannot be crawled. (Value: "ROBOTED")
- *    @arg @c kGTLRManufacturerCenter_Image_Status_StatusUnspecified Status is
- *        unspecified. Should not be used. (Value: "STATUS_UNSPECIFIED")
+ *    @arg @c kGTLRManufacturerCenter_Image_Status_StatusUnspecified The image
+ *        status is unspecified. Should not be used. (Value:
+ *        "STATUS_UNSPECIFIED")
  *    @arg @c kGTLRManufacturerCenter_Image_Status_TooBig The image is too big.
  *        (Value: "TOO_BIG")
  *    @arg @c kGTLRManufacturerCenter_Image_Status_Xroboted The image URL is
@@ -489,7 +530,7 @@ GTLR_EXTERN NSString * const kGTLRManufacturerCenter_Issue_Severity_Warning;
 @property(nonatomic, copy, nullable) NSString *attribute;
 
 /**
- *  Description of the issue.
+ *  Longer description of the issue focused on how to resolve it.
  *
  *  Remapped to 'descriptionProperty' to avoid NSObject's 'description'.
  */
@@ -666,3 +707,5 @@ GTLR_EXTERN NSString * const kGTLRManufacturerCenter_Issue_Severity_Warning;
 @end
 
 NS_ASSUME_NONNULL_END
+
+#pragma clang diagnostic pop

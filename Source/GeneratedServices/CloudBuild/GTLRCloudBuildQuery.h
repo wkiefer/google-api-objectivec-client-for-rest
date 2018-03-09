@@ -2,7 +2,7 @@
 
 // ----------------------------------------------------------------------------
 // API:
-//   Google Cloud Container Builder API (cloudbuild/v1)
+//   Cloud Container Builder API (cloudbuild/v1)
 // Description:
 //   Builds container images in the cloud.
 // Documentation:
@@ -22,6 +22,13 @@
 @class GTLRCloudBuild_BuildTrigger;
 @class GTLRCloudBuild_CancelBuildRequest;
 @class GTLRCloudBuild_CancelOperationRequest;
+@class GTLRCloudBuild_RepoSource;
+@class GTLRCloudBuild_RetryBuildRequest;
+
+// Generated comments include content from the discovery document; avoid them
+// causing warnings since clang's checks are some what arbitrary.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdocumentation"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -119,8 +126,13 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  *  Lists operations that match the specified filter in the request. If the
  *  server doesn't support this method, it returns `UNIMPLEMENTED`.
- *  NOTE: the `name` binding below allows API services to override the binding
- *  to use different resource name schemes, such as `users/ * /operations`.
+ *  NOTE: the `name` binding allows API services to override the binding
+ *  to use different resource name schemes, such as `users/ * /operations`. To
+ *  override the binding, API services can add a binding such as
+ *  `"/v1/{name=users/ *}/operations"` to their service configuration.
+ *  For backwards compatibility, the default name includes the operations
+ *  collection id, however overriding users must ensure the name binding
+ *  is the parent resource, without the operations collection id.
  *
  *  Method: cloudbuild.operations.list
  *
@@ -134,7 +146,7 @@ NS_ASSUME_NONNULL_BEGIN
 /** The standard list filter. */
 @property(nonatomic, copy, nullable) NSString *filter;
 
-/** The name of the operation collection. */
+/** The name of the operation's parent resource. */
 @property(nonatomic, copy, nullable) NSString *name;
 
 /** The standard list page size. */
@@ -148,10 +160,15 @@ NS_ASSUME_NONNULL_BEGIN
  *
  *  Lists operations that match the specified filter in the request. If the
  *  server doesn't support this method, it returns `UNIMPLEMENTED`.
- *  NOTE: the `name` binding below allows API services to override the binding
- *  to use different resource name schemes, such as `users/ * /operations`.
+ *  NOTE: the `name` binding allows API services to override the binding
+ *  to use different resource name schemes, such as `users/ * /operations`. To
+ *  override the binding, API services can add a binding such as
+ *  `"/v1/{name=users/ *}/operations"` to their service configuration.
+ *  For backwards compatibility, the default name includes the operations
+ *  collection id, however overriding users must ensure the name binding
+ *  is the parent resource, without the operations collection id.
  *
- *  @param name The name of the operation collection.
+ *  @param name The name of the operation's parent resource.
  *
  *  @returns GTLRCloudBuildQuery_OperationsList
  *
@@ -164,7 +181,7 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 /**
- *  Cancels a requested build in progress.
+ *  Cancels a build in progress.
  *
  *  Method: cloudbuild.projects.builds.cancel
  *
@@ -188,7 +205,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  *  Fetches a @c GTLRCloudBuild_Build.
  *
- *  Cancels a requested build in progress.
+ *  Cancels a build in progress.
  *
  *  @param object The @c GTLRCloudBuild_CancelBuildRequest to include in the
  *    query.
@@ -205,9 +222,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  *  Starts a build with the specified configuration.
- *  The long-running Operation returned by this method will include the ID of
- *  the build, which can be passed to GetBuild to determine its status (e.g.,
- *  success or failure).
+ *  This method returns a long-running `Operation`, which includes the build ID.
+ *  Pass the build ID to `GetBuild` to determine the build status
+ *  (such as `SUCCESS` or `FAILURE`).
  *
  *  Method: cloudbuild.projects.builds.create
  *
@@ -225,9 +242,9 @@ NS_ASSUME_NONNULL_BEGIN
  *  Fetches a @c GTLRCloudBuild_Operation.
  *
  *  Starts a build with the specified configuration.
- *  The long-running Operation returned by this method will include the ID of
- *  the build, which can be passed to GetBuild to determine its status (e.g.,
- *  success or failure).
+ *  This method returns a long-running `Operation`, which includes the build ID.
+ *  Pass the build ID to `GetBuild` to determine the build status
+ *  (such as `SUCCESS` or `FAILURE`).
  *
  *  @param object The @c GTLRCloudBuild_Build to include in the query.
  *  @param projectId ID of the project.
@@ -241,8 +258,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  *  Returns information about a previously requested build.
- *  The Build that is returned includes its status (e.g., success or failure,
- *  or in-progress), and timing information.
+ *  The `Build` that is returned includes its status (such as `SUCCESS`,
+ *  `FAILURE`, or `WORKING`), and timing information.
  *
  *  Method: cloudbuild.projects.builds.get
  *
@@ -267,8 +284,8 @@ NS_ASSUME_NONNULL_BEGIN
  *  Fetches a @c GTLRCloudBuild_Build.
  *
  *  Returns information about a previously requested build.
- *  The Build that is returned includes its status (e.g., success or failure,
- *  or in-progress), and timing information.
+ *  The `Build` that is returned includes its status (such as `SUCCESS`,
+ *  `FAILURE`, or `WORKING`), and timing information.
  *
  *  @param projectId ID of the project.
  *  @param identifier ID of the build.
@@ -326,7 +343,85 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 /**
- *  Creates a new BuildTrigger.
+ *  Creates a new build based on the specified build.
+ *  This method creates a new build using the original build request, which may
+ *  or may not result in an identical build.
+ *  For triggered builds:
+ *  * Triggered builds resolve to a precise revision; therefore a retry of a
+ *  triggered build will result in a build that uses the same revision.
+ *  For non-triggered builds that specify `RepoSource`:
+ *  * If the original build built from the tip of a branch, the retried build
+ *  will build from the tip of that branch, which may not be the same revision
+ *  as the original build.
+ *  * If the original build specified a commit sha or revision ID, the retried
+ *  build will use the identical source.
+ *  For builds that specify `StorageSource`:
+ *  * If the original build pulled source from Google Cloud Storage without
+ *  specifying the generation of the object, the new build will use the current
+ *  object, which may be different from the original build source.
+ *  * If the original build pulled source from Cloud Storage and specified the
+ *  generation of the object, the new build will attempt to use the same
+ *  object, which may or may not be available depending on the bucket's
+ *  lifecycle management settings.
+ *
+ *  Method: cloudbuild.projects.builds.retry
+ *
+ *  Authorization scope(s):
+ *    @c kGTLRAuthScopeCloudBuildCloudPlatform
+ */
+@interface GTLRCloudBuildQuery_ProjectsBuildsRetry : GTLRCloudBuildQuery
+// Previous library name was
+//   +[GTLQueryCloudBuild queryForProjectsBuildsRetryWithObject:projectId:identifier:]
+
+/**
+ *  Build ID of the original build.
+ *
+ *  identifier property maps to 'id' in JSON (to avoid Objective C's 'id').
+ */
+@property(nonatomic, copy, nullable) NSString *identifier;
+
+/** ID of the project. */
+@property(nonatomic, copy, nullable) NSString *projectId;
+
+/**
+ *  Fetches a @c GTLRCloudBuild_Operation.
+ *
+ *  Creates a new build based on the specified build.
+ *  This method creates a new build using the original build request, which may
+ *  or may not result in an identical build.
+ *  For triggered builds:
+ *  * Triggered builds resolve to a precise revision; therefore a retry of a
+ *  triggered build will result in a build that uses the same revision.
+ *  For non-triggered builds that specify `RepoSource`:
+ *  * If the original build built from the tip of a branch, the retried build
+ *  will build from the tip of that branch, which may not be the same revision
+ *  as the original build.
+ *  * If the original build specified a commit sha or revision ID, the retried
+ *  build will use the identical source.
+ *  For builds that specify `StorageSource`:
+ *  * If the original build pulled source from Google Cloud Storage without
+ *  specifying the generation of the object, the new build will use the current
+ *  object, which may be different from the original build source.
+ *  * If the original build pulled source from Cloud Storage and specified the
+ *  generation of the object, the new build will attempt to use the same
+ *  object, which may or may not be available depending on the bucket's
+ *  lifecycle management settings.
+ *
+ *  @param object The @c GTLRCloudBuild_RetryBuildRequest to include in the
+ *    query.
+ *  @param projectId ID of the project.
+ *  @param identifier Build ID of the original build.
+ *
+ *  @returns GTLRCloudBuildQuery_ProjectsBuildsRetry
+ */
++ (instancetype)queryWithObject:(GTLRCloudBuild_RetryBuildRequest *)object
+                      projectId:(NSString *)projectId
+                     identifier:(NSString *)identifier;
+
+@end
+
+/**
+ *  Creates a new `BuildTrigger`.
  *  This API is experimental.
  *
  *  Method: cloudbuild.projects.triggers.create
@@ -344,7 +439,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  *  Fetches a @c GTLRCloudBuild_BuildTrigger.
  *
- *  Creates a new BuildTrigger.
+ *  Creates a new `BuildTrigger`.
  *  This API is experimental.
  *
  *  @param object The @c GTLRCloudBuild_BuildTrigger to include in the query.
@@ -358,7 +453,7 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 /**
- *  Deletes an BuildTrigger by its project ID and trigger ID.
+ *  Deletes a `BuildTrigger` by its project ID and trigger ID.
  *  This API is experimental.
  *
  *  Method: cloudbuild.projects.triggers.delete
@@ -373,17 +468,17 @@ NS_ASSUME_NONNULL_BEGIN
 /** ID of the project that owns the trigger. */
 @property(nonatomic, copy, nullable) NSString *projectId;
 
-/** ID of the BuildTrigger to delete. */
+/** ID of the `BuildTrigger` to delete. */
 @property(nonatomic, copy, nullable) NSString *triggerId;
 
 /**
  *  Fetches a @c GTLRCloudBuild_Empty.
  *
- *  Deletes an BuildTrigger by its project ID and trigger ID.
+ *  Deletes a `BuildTrigger` by its project ID and trigger ID.
  *  This API is experimental.
  *
  *  @param projectId ID of the project that owns the trigger.
- *  @param triggerId ID of the BuildTrigger to delete.
+ *  @param triggerId ID of the `BuildTrigger` to delete.
  *
  *  @returns GTLRCloudBuildQuery_ProjectsTriggersDelete
  */
@@ -393,7 +488,7 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 /**
- *  Gets information about a BuildTrigger.
+ *  Returns information about a `BuildTrigger`.
  *  This API is experimental.
  *
  *  Method: cloudbuild.projects.triggers.get
@@ -408,17 +503,17 @@ NS_ASSUME_NONNULL_BEGIN
 /** ID of the project that owns the trigger. */
 @property(nonatomic, copy, nullable) NSString *projectId;
 
-/** ID of the BuildTrigger to get. */
+/** ID of the `BuildTrigger` to get. */
 @property(nonatomic, copy, nullable) NSString *triggerId;
 
 /**
  *  Fetches a @c GTLRCloudBuild_BuildTrigger.
  *
- *  Gets information about a BuildTrigger.
+ *  Returns information about a `BuildTrigger`.
  *  This API is experimental.
  *
  *  @param projectId ID of the project that owns the trigger.
- *  @param triggerId ID of the BuildTrigger to get.
+ *  @param triggerId ID of the `BuildTrigger` to get.
  *
  *  @returns GTLRCloudBuildQuery_ProjectsTriggersGet
  */
@@ -428,7 +523,7 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 /**
- *  Lists existing BuildTrigger.
+ *  Lists existing `BuildTrigger`s.
  *  This API is experimental.
  *
  *  Method: cloudbuild.projects.triggers.list
@@ -446,7 +541,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  *  Fetches a @c GTLRCloudBuild_ListBuildTriggersResponse.
  *
- *  Lists existing BuildTrigger.
+ *  Lists existing `BuildTrigger`s.
  *  This API is experimental.
  *
  *  @param projectId ID of the project for which to list BuildTriggers.
@@ -458,7 +553,7 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 /**
- *  Updates an BuildTrigger by its project ID and trigger ID.
+ *  Updates a `BuildTrigger` by its project ID and trigger ID.
  *  This API is experimental.
  *
  *  Method: cloudbuild.projects.triggers.patch
@@ -473,18 +568,18 @@ NS_ASSUME_NONNULL_BEGIN
 /** ID of the project that owns the trigger. */
 @property(nonatomic, copy, nullable) NSString *projectId;
 
-/** ID of the BuildTrigger to update. */
+/** ID of the `BuildTrigger` to update. */
 @property(nonatomic, copy, nullable) NSString *triggerId;
 
 /**
  *  Fetches a @c GTLRCloudBuild_BuildTrigger.
  *
- *  Updates an BuildTrigger by its project ID and trigger ID.
+ *  Updates a `BuildTrigger` by its project ID and trigger ID.
  *  This API is experimental.
  *
  *  @param object The @c GTLRCloudBuild_BuildTrigger to include in the query.
  *  @param projectId ID of the project that owns the trigger.
- *  @param triggerId ID of the BuildTrigger to update.
+ *  @param triggerId ID of the `BuildTrigger` to update.
  *
  *  @returns GTLRCloudBuildQuery_ProjectsTriggersPatch
  */
@@ -494,4 +589,41 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+/**
+ *  Runs a `BuildTrigger` at a particular source revision.
+ *
+ *  Method: cloudbuild.projects.triggers.run
+ *
+ *  Authorization scope(s):
+ *    @c kGTLRAuthScopeCloudBuildCloudPlatform
+ */
+@interface GTLRCloudBuildQuery_ProjectsTriggersRun : GTLRCloudBuildQuery
+// Previous library name was
+//   +[GTLQueryCloudBuild queryForProjectsTriggersRunWithObject:projectId:triggerId:]
+
+/** ID of the project. */
+@property(nonatomic, copy, nullable) NSString *projectId;
+
+/** ID of the trigger. */
+@property(nonatomic, copy, nullable) NSString *triggerId;
+
+/**
+ *  Fetches a @c GTLRCloudBuild_Operation.
+ *
+ *  Runs a `BuildTrigger` at a particular source revision.
+ *
+ *  @param object The @c GTLRCloudBuild_RepoSource to include in the query.
+ *  @param projectId ID of the project.
+ *  @param triggerId ID of the trigger.
+ *
+ *  @returns GTLRCloudBuildQuery_ProjectsTriggersRun
+ */
++ (instancetype)queryWithObject:(GTLRCloudBuild_RepoSource *)object
+                      projectId:(NSString *)projectId
+                      triggerId:(NSString *)triggerId;
+
+@end
+
 NS_ASSUME_NONNULL_END
+
+#pragma clang diagnostic pop

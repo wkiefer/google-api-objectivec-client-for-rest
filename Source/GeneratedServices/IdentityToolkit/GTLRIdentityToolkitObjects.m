@@ -17,11 +17,12 @@
 
 @implementation GTLRIdentityToolkit_CreateAuthUriResponse
 @dynamic allProviders, authUri, captchaRequired, forExistingProvider, kind,
-         providerId, registered, sessionId;
+         providerId, registered, sessionId, signinMethods;
 
 + (NSDictionary<NSString *, Class> *)arrayPropertyToClassMap {
   NSDictionary<NSString *, Class> *map = @{
-    @"allProviders" : [NSString class]
+    @"allProviders" : [NSString class],
+    @"signinMethods" : [NSString class]
   };
   return map;
 }
@@ -58,6 +59,16 @@
   return @"users";
 }
 
+@end
+
+
+// ----------------------------------------------------------------------------
+//
+//   GTLRIdentityToolkit_EmailLinkSigninResponse
+//
+
+@implementation GTLRIdentityToolkit_EmailLinkSigninResponse
+@dynamic email, expiresIn, idToken, isNewUser, kind, localId, refreshToken;
 @end
 
 
@@ -194,16 +205,27 @@
 
 // ----------------------------------------------------------------------------
 //
+//   GTLRIdentityToolkit_RelyingpartyEmailLinkSigninRequest
+//
+
+@implementation GTLRIdentityToolkit_RelyingpartyEmailLinkSigninRequest
+@dynamic email, idToken, oobCode;
+@end
+
+
+// ----------------------------------------------------------------------------
+//
 //   GTLRIdentityToolkit_RelyingpartyGetAccountInfoRequest
 //
 
 @implementation GTLRIdentityToolkit_RelyingpartyGetAccountInfoRequest
-@dynamic delegatedProjectNumber, email, idToken, localId;
+@dynamic delegatedProjectNumber, email, idToken, localId, phoneNumber;
 
 + (NSDictionary<NSString *, Class> *)arrayPropertyToClassMap {
   NSDictionary<NSString *, Class> *map = @{
     @"email" : [NSString class],
-    @"localId" : [NSString class]
+    @"localId" : [NSString class],
+    @"phoneNumber" : [NSString class]
   };
   return map;
 }
@@ -259,15 +281,35 @@
 
 // ----------------------------------------------------------------------------
 //
+//   GTLRIdentityToolkit_RelyingpartySendVerificationCodeRequest
+//
+
+@implementation GTLRIdentityToolkit_RelyingpartySendVerificationCodeRequest
+@dynamic iosReceipt, iosSecret, phoneNumber, recaptchaToken;
+@end
+
+
+// ----------------------------------------------------------------------------
+//
+//   GTLRIdentityToolkit_RelyingpartySendVerificationCodeResponse
+//
+
+@implementation GTLRIdentityToolkit_RelyingpartySendVerificationCodeResponse
+@dynamic sessionInfo;
+@end
+
+
+// ----------------------------------------------------------------------------
+//
 //   GTLRIdentityToolkit_RelyingpartySetAccountInfoRequest
 //
 
 @implementation GTLRIdentityToolkit_RelyingpartySetAccountInfoRequest
-@dynamic captchaChallenge, captchaResponse, createdAt, delegatedProjectNumber,
-         deleteAttribute, deleteProvider, disableUser, displayName, email,
-         emailVerified, idToken, instanceId, lastLoginAt, localId, oobCode,
-         password, photoUrl, provider, returnSecureToken,
-         upgradeToFederatedLogin, validSince;
+@dynamic captchaChallenge, captchaResponse, createdAt, customAttributes,
+         delegatedProjectNumber, deleteAttribute, deleteProvider, disableUser,
+         displayName, email, emailVerified, idToken, instanceId, lastLoginAt,
+         localId, oobCode, password, phoneNumber, photoUrl, provider,
+         returnSecureToken, upgradeToFederatedLogin, validSince;
 
 + (NSDictionary<NSString *, Class> *)arrayPropertyToClassMap {
   NSDictionary<NSString *, Class> *map = @{
@@ -340,7 +382,8 @@
 
 @implementation GTLRIdentityToolkit_RelyingpartySignupNewUserRequest
 @dynamic captchaChallenge, captchaResponse, disabled, displayName, email,
-         emailVerified, idToken, instanceId, localId, password, photoUrl;
+         emailVerified, idToken, instanceId, localId, password, phoneNumber,
+         photoUrl;
 @end
 
 
@@ -350,8 +393,9 @@
 //
 
 @implementation GTLRIdentityToolkit_RelyingpartyUploadAccountRequest
-@dynamic allowOverwrite, delegatedProjectNumber, hashAlgorithm, memoryCost,
-         rounds, saltSeparator, sanityCheck, signerKey, targetProjectId, users;
+@dynamic allowOverwrite, blockSize, cpuMemCost, delegatedProjectNumber, dkLen,
+         hashAlgorithm, memoryCost, parallelization, rounds, saltSeparator,
+         sanityCheck, signerKey, targetProjectId, users;
 
 + (NSDictionary<NSString *, Class> *)arrayPropertyToClassMap {
   NSDictionary<NSString *, Class> *map = @{
@@ -393,6 +437,29 @@
 @implementation GTLRIdentityToolkit_RelyingpartyVerifyPasswordRequest
 @dynamic captchaChallenge, captchaResponse, delegatedProjectNumber, email,
          idToken, instanceId, password, pendingIdToken, returnSecureToken;
+@end
+
+
+// ----------------------------------------------------------------------------
+//
+//   GTLRIdentityToolkit_RelyingpartyVerifyPhoneNumberRequest
+//
+
+@implementation GTLRIdentityToolkit_RelyingpartyVerifyPhoneNumberRequest
+@dynamic code, idToken, operation, phoneNumber, sessionInfo, temporaryProof,
+         verificationProof;
+@end
+
+
+// ----------------------------------------------------------------------------
+//
+//   GTLRIdentityToolkit_RelyingpartyVerifyPhoneNumberResponse
+//
+
+@implementation GTLRIdentityToolkit_RelyingpartyVerifyPhoneNumberResponse
+@dynamic expiresIn, idToken, isNewUser, localId, phoneNumber, refreshToken,
+         temporaryProof, temporaryProofExpiresIn, verificationProof,
+         verificationProofExpiresIn;
 @end
 
 
@@ -479,10 +546,10 @@
 //
 
 @implementation GTLRIdentityToolkit_UserInfo
-@dynamic createdAt, customAuth, disabled, displayName, email, emailVerified,
-         lastLoginAt, localId, passwordHash, passwordUpdatedAt, phoneNumber,
-         photoUrl, providerUserInfo, rawPassword, salt, screenName, validSince,
-         version;
+@dynamic createdAt, customAttributes, customAuth, disabled, displayName, email,
+         emailVerified, lastLoginAt, localId, passwordHash, passwordUpdatedAt,
+         phoneNumber, photoUrl, providerUserInfo, rawPassword, salt, screenName,
+         validSince, version;
 
 + (NSDictionary<NSString *, Class> *)arrayPropertyToClassMap {
   NSDictionary<NSString *, Class> *map = @{
@@ -536,7 +603,7 @@
 //
 
 @implementation GTLRIdentityToolkit_VerifyCustomTokenResponse
-@dynamic expiresIn, idToken, kind, refreshToken;
+@dynamic expiresIn, idToken, isNewUser, kind, refreshToken;
 @end
 
 

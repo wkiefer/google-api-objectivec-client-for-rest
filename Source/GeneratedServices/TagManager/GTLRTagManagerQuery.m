@@ -53,6 +53,10 @@ NSString * const kGTLRTagManagerTypeContainerId                = @"containerId";
 NSString * const kGTLRTagManagerTypeContainerVersion           = @"containerVersion";
 NSString * const kGTLRTagManagerTypeDebugMode                  = @"debugMode";
 NSString * const kGTLRTagManagerTypeDeviceName                 = @"deviceName";
+NSString * const kGTLRTagManagerTypeElementVisibilityFirstTime = @"elementVisibilityFirstTime";
+NSString * const kGTLRTagManagerTypeElementVisibilityRatio     = @"elementVisibilityRatio";
+NSString * const kGTLRTagManagerTypeElementVisibilityRecentTime = @"elementVisibilityRecentTime";
+NSString * const kGTLRTagManagerTypeElementVisibilityTime      = @"elementVisibilityTime";
 NSString * const kGTLRTagManagerTypeEnvironmentName            = @"environmentName";
 NSString * const kGTLRTagManagerTypeErrorLine                  = @"errorLine";
 NSString * const kGTLRTagManagerTypeErrorMessage               = @"errorMessage";
@@ -103,7 +107,18 @@ NSString * const kGTLRTagManagerTypePlatform                   = @"platform";
 NSString * const kGTLRTagManagerTypeRandomNumber               = @"randomNumber";
 NSString * const kGTLRTagManagerTypeReferrer                   = @"referrer";
 NSString * const kGTLRTagManagerTypeResolution                 = @"resolution";
+NSString * const kGTLRTagManagerTypeScrollDepthDirection       = @"scrollDepthDirection";
+NSString * const kGTLRTagManagerTypeScrollDepthThreshold       = @"scrollDepthThreshold";
+NSString * const kGTLRTagManagerTypeScrollDepthUnits           = @"scrollDepthUnits";
 NSString * const kGTLRTagManagerTypeSdkVersion                 = @"sdkVersion";
+NSString * const kGTLRTagManagerTypeVideoCurrentTime           = @"videoCurrentTime";
+NSString * const kGTLRTagManagerTypeVideoDuration              = @"videoDuration";
+NSString * const kGTLRTagManagerTypeVideoPercent               = @"videoPercent";
+NSString * const kGTLRTagManagerTypeVideoProvider              = @"videoProvider";
+NSString * const kGTLRTagManagerTypeVideoStatus                = @"videoStatus";
+NSString * const kGTLRTagManagerTypeVideoTitle                 = @"videoTitle";
+NSString * const kGTLRTagManagerTypeVideoUrl                   = @"videoUrl";
+NSString * const kGTLRTagManagerTypeVideoVisible               = @"videoVisible";
 
 // ----------------------------------------------------------------------------
 // Query Classes

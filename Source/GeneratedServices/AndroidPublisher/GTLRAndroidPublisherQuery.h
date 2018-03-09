@@ -24,12 +24,16 @@
 @class GTLRAndroidPublisher_AppEdit;
 @class GTLRAndroidPublisher_ExpansionFile;
 @class GTLRAndroidPublisher_InAppProduct;
-@class GTLRAndroidPublisher_InappproductsBatchRequest;
 @class GTLRAndroidPublisher_Listing;
 @class GTLRAndroidPublisher_ReviewsReplyRequest;
 @class GTLRAndroidPublisher_SubscriptionPurchasesDeferRequest;
 @class GTLRAndroidPublisher_Testers;
 @class GTLRAndroidPublisher_Track;
+
+// Generated comments include content from the discovery document; avoid them
+// causing warnings since clang's checks are some what arbitrary.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdocumentation"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -71,18 +75,6 @@ GTLR_EXTERN NSString * const kGTLRAndroidPublisherImageTypeTvBanner;
 GTLR_EXTERN NSString * const kGTLRAndroidPublisherImageTypeTvScreenshots;
 /** Value: "wearScreenshots" */
 GTLR_EXTERN NSString * const kGTLRAndroidPublisherImageTypeWearScreenshots;
-
-// ----------------------------------------------------------------------------
-// track
-
-/** Value: "alpha" */
-GTLR_EXTERN NSString * const kGTLRAndroidPublisherTrackAlpha;
-/** Value: "beta" */
-GTLR_EXTERN NSString * const kGTLRAndroidPublisherTrackBeta;
-/** Value: "production" */
-GTLR_EXTERN NSString * const kGTLRAndroidPublisherTrackProduction;
-/** Value: "rollout" */
-GTLR_EXTERN NSString * const kGTLRAndroidPublisherTrackRollout;
 
 // ----------------------------------------------------------------------------
 // Query Classes
@@ -1795,13 +1787,8 @@ GTLR_EXTERN NSString * const kGTLRAndroidPublisherTrackRollout;
 @property(nonatomic, copy, nullable) NSString *packageName;
 
 /**
- *  track
- *
- *  Likely values:
- *    @arg @c kGTLRAndroidPublisherTrackAlpha Value "alpha"
- *    @arg @c kGTLRAndroidPublisherTrackBeta Value "beta"
- *    @arg @c kGTLRAndroidPublisherTrackProduction Value "production"
- *    @arg @c kGTLRAndroidPublisherTrackRollout Value "rollout"
+ *  The track to read or modify. Acceptable values are: "alpha", "beta",
+ *  "production" or "rollout".
  */
 @property(nonatomic, copy, nullable) NSString *track;
 
@@ -1811,13 +1798,8 @@ GTLR_EXTERN NSString * const kGTLRAndroidPublisherTrackRollout;
  *  @param packageName Unique identifier for the Android app that is being
  *    updated; for example, "com.spiffygame".
  *  @param editId Unique identifier for this edit.
- *  @param track NSString
- *
- *  Likely values for @c track:
- *    @arg @c kGTLRAndroidPublisherTrackAlpha Value "alpha"
- *    @arg @c kGTLRAndroidPublisherTrackBeta Value "beta"
- *    @arg @c kGTLRAndroidPublisherTrackProduction Value "production"
- *    @arg @c kGTLRAndroidPublisherTrackRollout Value "rollout"
+ *  @param track The track to read or modify. Acceptable values are: "alpha",
+ *    "beta", "production" or "rollout".
  *
  *  @returns GTLRAndroidPublisherQuery_EditsTestersGet
  */
@@ -1849,13 +1831,8 @@ GTLR_EXTERN NSString * const kGTLRAndroidPublisherTrackRollout;
 @property(nonatomic, copy, nullable) NSString *packageName;
 
 /**
- *  track
- *
- *  Likely values:
- *    @arg @c kGTLRAndroidPublisherTrackAlpha Value "alpha"
- *    @arg @c kGTLRAndroidPublisherTrackBeta Value "beta"
- *    @arg @c kGTLRAndroidPublisherTrackProduction Value "production"
- *    @arg @c kGTLRAndroidPublisherTrackRollout Value "rollout"
+ *  The track to read or modify. Acceptable values are: "alpha", "beta",
+ *  "production" or "rollout".
  */
 @property(nonatomic, copy, nullable) NSString *track;
 
@@ -1866,13 +1843,8 @@ GTLR_EXTERN NSString * const kGTLRAndroidPublisherTrackRollout;
  *  @param packageName Unique identifier for the Android app that is being
  *    updated; for example, "com.spiffygame".
  *  @param editId Unique identifier for this edit.
- *  @param track NSString
- *
- *  Likely values for @c track:
- *    @arg @c kGTLRAndroidPublisherTrackAlpha Value "alpha"
- *    @arg @c kGTLRAndroidPublisherTrackBeta Value "beta"
- *    @arg @c kGTLRAndroidPublisherTrackProduction Value "production"
- *    @arg @c kGTLRAndroidPublisherTrackRollout Value "rollout"
+ *  @param track The track to read or modify. Acceptable values are: "alpha",
+ *    "beta", "production" or "rollout".
  *
  *  @returns GTLRAndroidPublisherQuery_EditsTestersPatch
  */
@@ -1905,13 +1877,8 @@ GTLR_EXTERN NSString * const kGTLRAndroidPublisherTrackRollout;
 @property(nonatomic, copy, nullable) NSString *packageName;
 
 /**
- *  track
- *
- *  Likely values:
- *    @arg @c kGTLRAndroidPublisherTrackAlpha Value "alpha"
- *    @arg @c kGTLRAndroidPublisherTrackBeta Value "beta"
- *    @arg @c kGTLRAndroidPublisherTrackProduction Value "production"
- *    @arg @c kGTLRAndroidPublisherTrackRollout Value "rollout"
+ *  The track to read or modify. Acceptable values are: "alpha", "beta",
+ *  "production" or "rollout".
  */
 @property(nonatomic, copy, nullable) NSString *track;
 
@@ -1922,13 +1889,8 @@ GTLR_EXTERN NSString * const kGTLRAndroidPublisherTrackRollout;
  *  @param packageName Unique identifier for the Android app that is being
  *    updated; for example, "com.spiffygame".
  *  @param editId Unique identifier for this edit.
- *  @param track NSString
- *
- *  Likely values for @c track:
- *    @arg @c kGTLRAndroidPublisherTrackAlpha Value "alpha"
- *    @arg @c kGTLRAndroidPublisherTrackBeta Value "beta"
- *    @arg @c kGTLRAndroidPublisherTrackProduction Value "production"
- *    @arg @c kGTLRAndroidPublisherTrackRollout Value "rollout"
+ *  @param track The track to read or modify. Acceptable values are: "alpha",
+ *    "beta", "production" or "rollout".
  *
  *  @returns GTLRAndroidPublisherQuery_EditsTestersUpdate
  */
@@ -1962,13 +1924,8 @@ GTLR_EXTERN NSString * const kGTLRAndroidPublisherTrackRollout;
 @property(nonatomic, copy, nullable) NSString *packageName;
 
 /**
- *  The track type to read or modify.
- *
- *  Likely values:
- *    @arg @c kGTLRAndroidPublisherTrackAlpha Value "alpha"
- *    @arg @c kGTLRAndroidPublisherTrackBeta Value "beta"
- *    @arg @c kGTLRAndroidPublisherTrackProduction Value "production"
- *    @arg @c kGTLRAndroidPublisherTrackRollout Value "rollout"
+ *  The track to read or modify. Acceptable values are: "alpha", "beta",
+ *  "production" or "rollout".
  */
 @property(nonatomic, copy, nullable) NSString *track;
 
@@ -1981,13 +1938,8 @@ GTLR_EXTERN NSString * const kGTLRAndroidPublisherTrackRollout;
  *  @param packageName Unique identifier for the Android app that is being
  *    updated; for example, "com.spiffygame".
  *  @param editId Unique identifier for this edit.
- *  @param track The track type to read or modify.
- *
- *  Likely values for @c track:
- *    @arg @c kGTLRAndroidPublisherTrackAlpha Value "alpha"
- *    @arg @c kGTLRAndroidPublisherTrackBeta Value "beta"
- *    @arg @c kGTLRAndroidPublisherTrackProduction Value "production"
- *    @arg @c kGTLRAndroidPublisherTrackRollout Value "rollout"
+ *  @param track The track to read or modify. Acceptable values are: "alpha",
+ *    "beta", "production" or "rollout".
  *
  *  @returns GTLRAndroidPublisherQuery_EditsTracksGet
  */
@@ -2058,13 +2010,8 @@ GTLR_EXTERN NSString * const kGTLRAndroidPublisherTrackRollout;
 @property(nonatomic, copy, nullable) NSString *packageName;
 
 /**
- *  The track type to read or modify.
- *
- *  Likely values:
- *    @arg @c kGTLRAndroidPublisherTrackAlpha Value "alpha"
- *    @arg @c kGTLRAndroidPublisherTrackBeta Value "beta"
- *    @arg @c kGTLRAndroidPublisherTrackProduction Value "production"
- *    @arg @c kGTLRAndroidPublisherTrackRollout Value "rollout"
+ *  The track to read or modify. Acceptable values are: "alpha", "beta",
+ *  "production" or "rollout".
  */
 @property(nonatomic, copy, nullable) NSString *track;
 
@@ -2079,13 +2026,8 @@ GTLR_EXTERN NSString * const kGTLRAndroidPublisherTrackRollout;
  *  @param packageName Unique identifier for the Android app that is being
  *    updated; for example, "com.spiffygame".
  *  @param editId Unique identifier for this edit.
- *  @param track The track type to read or modify.
- *
- *  Likely values for @c track:
- *    @arg @c kGTLRAndroidPublisherTrackAlpha Value "alpha"
- *    @arg @c kGTLRAndroidPublisherTrackBeta Value "beta"
- *    @arg @c kGTLRAndroidPublisherTrackProduction Value "production"
- *    @arg @c kGTLRAndroidPublisherTrackRollout Value "rollout"
+ *  @param track The track to read or modify. Acceptable values are: "alpha",
+ *    "beta", "production" or "rollout".
  *
  *  @returns GTLRAndroidPublisherQuery_EditsTracksPatch
  */
@@ -2120,13 +2062,8 @@ GTLR_EXTERN NSString * const kGTLRAndroidPublisherTrackRollout;
 @property(nonatomic, copy, nullable) NSString *packageName;
 
 /**
- *  The track type to read or modify.
- *
- *  Likely values:
- *    @arg @c kGTLRAndroidPublisherTrackAlpha Value "alpha"
- *    @arg @c kGTLRAndroidPublisherTrackBeta Value "beta"
- *    @arg @c kGTLRAndroidPublisherTrackProduction Value "production"
- *    @arg @c kGTLRAndroidPublisherTrackRollout Value "rollout"
+ *  The track to read or modify. Acceptable values are: "alpha", "beta",
+ *  "production" or "rollout".
  */
 @property(nonatomic, copy, nullable) NSString *track;
 
@@ -2141,13 +2078,8 @@ GTLR_EXTERN NSString * const kGTLRAndroidPublisherTrackRollout;
  *  @param packageName Unique identifier for the Android app that is being
  *    updated; for example, "com.spiffygame".
  *  @param editId Unique identifier for this edit.
- *  @param track The track type to read or modify.
- *
- *  Likely values for @c track:
- *    @arg @c kGTLRAndroidPublisherTrackAlpha Value "alpha"
- *    @arg @c kGTLRAndroidPublisherTrackBeta Value "beta"
- *    @arg @c kGTLRAndroidPublisherTrackProduction Value "production"
- *    @arg @c kGTLRAndroidPublisherTrackRollout Value "rollout"
+ *  @param track The track to read or modify. Acceptable values are: "alpha",
+ *    "beta", "production" or "rollout".
  *
  *  @returns GTLRAndroidPublisherQuery_EditsTracksUpdate
  */
@@ -2235,30 +2167,6 @@ GTLR_EXTERN NSString * const kGTLRAndroidPublisherTrackRollout;
  *  @returns GTLRAndroidPublisherQuery_EntitlementsList
  */
 + (instancetype)queryWithPackageName:(NSString *)packageName;
-
-@end
-
-/**
- *  GTLRAndroidPublisherQuery_InappproductsBatch
- *
- *  Method: androidpublisher.inappproducts.batch
- *
- *  Authorization scope(s):
- *    @c kGTLRAuthScopeAndroidPublisher
- */
-@interface GTLRAndroidPublisherQuery_InappproductsBatch : GTLRAndroidPublisherQuery
-// Previous library name was
-//   +[GTLQueryAndroidPublisher queryForInappproductsBatchWithObject:]
-
-/**
- *  Fetches a @c GTLRAndroidPublisher_InappproductsBatchResponse.
- *
- *  @param object The @c GTLRAndroidPublisher_InappproductsBatchRequest to
- *    include in the query.
- *
- *  @returns GTLRAndroidPublisherQuery_InappproductsBatch
- */
-+ (instancetype)queryWithObject:(GTLRAndroidPublisher_InappproductsBatchRequest *)object;
 
 @end
 
@@ -2801,7 +2709,7 @@ GTLR_EXTERN NSString * const kGTLRAndroidPublisherTrackRollout;
 @end
 
 /**
- *  Lists the purchases that were cancelled, refunded or charged-back.
+ *  Lists the purchases that were canceled, refunded or charged-back.
  *
  *  Method: androidpublisher.purchases.voidedpurchases.list
  *
@@ -2816,7 +2724,9 @@ GTLR_EXTERN NSString * const kGTLRAndroidPublisherTrackRollout;
  *  The time, in milliseconds since the Epoch, of the newest voided in-app
  *  product purchase that you want to see in the response. The value of this
  *  parameter cannot be greater than the current time and is ignored if a
- *  pagination token is set. Default value is current time.
+ *  pagination token is set. Default value is current time. Note: This filter is
+ *  applied on the time at which the record is seen as voided by our systems and
+ *  not the actual voided time returned in the response.
  */
 @property(nonatomic, assign) long long endTime;
 
@@ -2834,7 +2744,9 @@ GTLR_EXTERN NSString * const kGTLRAndroidPublisherTrackRollout;
  *  The time, in milliseconds since the Epoch, of the oldest voided in-app
  *  product purchase that you want to see in the response. The value of this
  *  parameter cannot be older than 30 days and is ignored if a pagination token
- *  is set. Default value is current time minus 30 days.
+ *  is set. Default value is current time minus 30 days. Note: This filter is
+ *  applied on the time at which the record is seen as voided by our systems and
+ *  not the actual voided time returned in the response.
  */
 @property(nonatomic, assign) long long startTime;
 
@@ -2843,7 +2755,7 @@ GTLR_EXTERN NSString * const kGTLRAndroidPublisherTrackRollout;
 /**
  *  Fetches a @c GTLRAndroidPublisher_VoidedPurchasesListResponse.
  *
- *  Lists the purchases that were cancelled, refunded or charged-back.
+ *  Lists the purchases that were canceled, refunded or charged-back.
  *
  *  @param packageName The package name of the application for which voided
  *    purchases need to be returned (for example, 'com.some.thing').
@@ -2972,3 +2884,5 @@ GTLR_EXTERN NSString * const kGTLRAndroidPublisherTrackRollout;
 @end
 
 NS_ASSUME_NONNULL_END
+
+#pragma clang diagnostic pop

@@ -23,6 +23,21 @@ NSString * const kGTLRDatastore_CommitRequest_Mode_Transactional = @"TRANSACTION
 NSString * const kGTLRDatastore_CompositeFilter_Op_And         = @"AND";
 NSString * const kGTLRDatastore_CompositeFilter_Op_OperatorUnspecified = @"OPERATOR_UNSPECIFIED";
 
+// GTLRDatastore_GoogleDatastoreAdminV1beta1CommonMetadata.operationType
+NSString * const kGTLRDatastore_GoogleDatastoreAdminV1beta1CommonMetadata_OperationType_ExportEntities = @"EXPORT_ENTITIES";
+NSString * const kGTLRDatastore_GoogleDatastoreAdminV1beta1CommonMetadata_OperationType_ImportEntities = @"IMPORT_ENTITIES";
+NSString * const kGTLRDatastore_GoogleDatastoreAdminV1beta1CommonMetadata_OperationType_OperationTypeUnspecified = @"OPERATION_TYPE_UNSPECIFIED";
+
+// GTLRDatastore_GoogleDatastoreAdminV1beta1CommonMetadata.state
+NSString * const kGTLRDatastore_GoogleDatastoreAdminV1beta1CommonMetadata_State_Cancelled = @"CANCELLED";
+NSString * const kGTLRDatastore_GoogleDatastoreAdminV1beta1CommonMetadata_State_Cancelling = @"CANCELLING";
+NSString * const kGTLRDatastore_GoogleDatastoreAdminV1beta1CommonMetadata_State_Failed = @"FAILED";
+NSString * const kGTLRDatastore_GoogleDatastoreAdminV1beta1CommonMetadata_State_Finalizing = @"FINALIZING";
+NSString * const kGTLRDatastore_GoogleDatastoreAdminV1beta1CommonMetadata_State_Initializing = @"INITIALIZING";
+NSString * const kGTLRDatastore_GoogleDatastoreAdminV1beta1CommonMetadata_State_Processing = @"PROCESSING";
+NSString * const kGTLRDatastore_GoogleDatastoreAdminV1beta1CommonMetadata_State_StateUnspecified = @"STATE_UNSPECIFIED";
+NSString * const kGTLRDatastore_GoogleDatastoreAdminV1beta1CommonMetadata_State_Successful = @"SUCCESSFUL";
+
 // GTLRDatastore_PropertyFilter.op
 NSString * const kGTLRDatastore_PropertyFilter_Op_Equal        = @"EQUAL";
 NSString * const kGTLRDatastore_PropertyFilter_Op_GreaterThan  = @"GREATER_THAN";
@@ -118,6 +133,7 @@ NSString * const kGTLRDatastore_Value_NullValue_NullValue = @"NULL_VALUE";
 //
 
 @implementation GTLRDatastore_BeginTransactionRequest
+@dynamic transactionOptions;
 @end
 
 
@@ -187,6 +203,15 @@ NSString * const kGTLRDatastore_Value_NullValue_NullValue = @"NULL_VALUE";
 
 // ----------------------------------------------------------------------------
 //
+//   GTLRDatastore_Empty
+//
+
+@implementation GTLRDatastore_Empty
+@end
+
+
+// ----------------------------------------------------------------------------
+//
 //   GTLRDatastore_Entity
 //
 
@@ -226,6 +251,149 @@ NSString * const kGTLRDatastore_Value_NullValue_NullValue = @"NULL_VALUE";
 
 @implementation GTLRDatastore_Filter
 @dynamic compositeFilter, propertyFilter;
+@end
+
+
+// ----------------------------------------------------------------------------
+//
+//   GTLRDatastore_GoogleDatastoreAdminV1beta1CommonMetadata
+//
+
+@implementation GTLRDatastore_GoogleDatastoreAdminV1beta1CommonMetadata
+@dynamic endTime, labels, operationType, startTime, state;
+@end
+
+
+// ----------------------------------------------------------------------------
+//
+//   GTLRDatastore_GoogleDatastoreAdminV1beta1CommonMetadata_Labels
+//
+
+@implementation GTLRDatastore_GoogleDatastoreAdminV1beta1CommonMetadata_Labels
+
++ (Class)classForAdditionalProperties {
+  return [NSString class];
+}
+
+@end
+
+
+// ----------------------------------------------------------------------------
+//
+//   GTLRDatastore_GoogleDatastoreAdminV1beta1EntityFilter
+//
+
+@implementation GTLRDatastore_GoogleDatastoreAdminV1beta1EntityFilter
+@dynamic kinds, namespaceIds;
+
++ (NSDictionary<NSString *, Class> *)arrayPropertyToClassMap {
+  NSDictionary<NSString *, Class> *map = @{
+    @"kinds" : [NSString class],
+    @"namespaceIds" : [NSString class]
+  };
+  return map;
+}
+
+@end
+
+
+// ----------------------------------------------------------------------------
+//
+//   GTLRDatastore_GoogleDatastoreAdminV1beta1ExportEntitiesMetadata
+//
+
+@implementation GTLRDatastore_GoogleDatastoreAdminV1beta1ExportEntitiesMetadata
+@dynamic common, entityFilter, outputUrlPrefix, progressBytes, progressEntities;
+@end
+
+
+// ----------------------------------------------------------------------------
+//
+//   GTLRDatastore_GoogleDatastoreAdminV1beta1ExportEntitiesResponse
+//
+
+@implementation GTLRDatastore_GoogleDatastoreAdminV1beta1ExportEntitiesResponse
+@dynamic outputUrl;
+@end
+
+
+// ----------------------------------------------------------------------------
+//
+//   GTLRDatastore_GoogleDatastoreAdminV1beta1ImportEntitiesMetadata
+//
+
+@implementation GTLRDatastore_GoogleDatastoreAdminV1beta1ImportEntitiesMetadata
+@dynamic common, entityFilter, inputUrl, progressBytes, progressEntities;
+@end
+
+
+// ----------------------------------------------------------------------------
+//
+//   GTLRDatastore_GoogleDatastoreAdminV1beta1Progress
+//
+
+@implementation GTLRDatastore_GoogleDatastoreAdminV1beta1Progress
+@dynamic workCompleted, workEstimated;
+@end
+
+
+// ----------------------------------------------------------------------------
+//
+//   GTLRDatastore_GoogleLongrunningListOperationsResponse
+//
+
+@implementation GTLRDatastore_GoogleLongrunningListOperationsResponse
+@dynamic nextPageToken, operations;
+
++ (NSDictionary<NSString *, Class> *)arrayPropertyToClassMap {
+  NSDictionary<NSString *, Class> *map = @{
+    @"operations" : [GTLRDatastore_GoogleLongrunningOperation class]
+  };
+  return map;
+}
+
++ (NSString *)collectionItemsKey {
+  return @"operations";
+}
+
+@end
+
+
+// ----------------------------------------------------------------------------
+//
+//   GTLRDatastore_GoogleLongrunningOperation
+//
+
+@implementation GTLRDatastore_GoogleLongrunningOperation
+@dynamic done, error, metadata, name, response;
+@end
+
+
+// ----------------------------------------------------------------------------
+//
+//   GTLRDatastore_GoogleLongrunningOperation_Metadata
+//
+
+@implementation GTLRDatastore_GoogleLongrunningOperation_Metadata
+
++ (Class)classForAdditionalProperties {
+  return [NSObject class];
+}
+
+@end
+
+
+// ----------------------------------------------------------------------------
+//
+//   GTLRDatastore_GoogleLongrunningOperation_Response
+//
+
+@implementation GTLRDatastore_GoogleLongrunningOperation_Response
+
++ (Class)classForAdditionalProperties {
+  return [NSObject class];
+}
+
 @end
 
 
@@ -486,11 +654,57 @@ NSString * const kGTLRDatastore_Value_NullValue_NullValue = @"NULL_VALUE";
 
 // ----------------------------------------------------------------------------
 //
+//   GTLRDatastore_ReadOnly
+//
+
+@implementation GTLRDatastore_ReadOnly
+@end
+
+
+// ----------------------------------------------------------------------------
+//
 //   GTLRDatastore_ReadOptions
 //
 
 @implementation GTLRDatastore_ReadOptions
 @dynamic readConsistency, transaction;
+@end
+
+
+// ----------------------------------------------------------------------------
+//
+//   GTLRDatastore_ReadWrite
+//
+
+@implementation GTLRDatastore_ReadWrite
+@dynamic previousTransaction;
+@end
+
+
+// ----------------------------------------------------------------------------
+//
+//   GTLRDatastore_ReserveIdsRequest
+//
+
+@implementation GTLRDatastore_ReserveIdsRequest
+@dynamic databaseId, keys;
+
++ (NSDictionary<NSString *, Class> *)arrayPropertyToClassMap {
+  NSDictionary<NSString *, Class> *map = @{
+    @"keys" : [GTLRDatastore_Key class]
+  };
+  return map;
+}
+
+@end
+
+
+// ----------------------------------------------------------------------------
+//
+//   GTLRDatastore_ReserveIdsResponse
+//
+
+@implementation GTLRDatastore_ReserveIdsResponse
 @end
 
 
@@ -530,6 +744,48 @@ NSString * const kGTLRDatastore_Value_NullValue_NullValue = @"NULL_VALUE";
 
 @implementation GTLRDatastore_RunQueryResponse
 @dynamic batch, query;
+@end
+
+
+// ----------------------------------------------------------------------------
+//
+//   GTLRDatastore_Status
+//
+
+@implementation GTLRDatastore_Status
+@dynamic code, details, message;
+
++ (NSDictionary<NSString *, Class> *)arrayPropertyToClassMap {
+  NSDictionary<NSString *, Class> *map = @{
+    @"details" : [GTLRDatastore_Status_Details_Item class]
+  };
+  return map;
+}
+
+@end
+
+
+// ----------------------------------------------------------------------------
+//
+//   GTLRDatastore_Status_Details_Item
+//
+
+@implementation GTLRDatastore_Status_Details_Item
+
++ (Class)classForAdditionalProperties {
+  return [NSObject class];
+}
+
+@end
+
+
+// ----------------------------------------------------------------------------
+//
+//   GTLRDatastore_TransactionOptions
+//
+
+@implementation GTLRDatastore_TransactionOptions
+@dynamic readOnly, readWrite;
 @end
 
 

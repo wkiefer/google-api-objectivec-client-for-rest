@@ -183,7 +183,7 @@ NSString * const kGTLRBigqueryStateFilterRunning = @"running";
 
 @implementation GTLRBigqueryQuery_JobsCancel
 
-@dynamic jobId, projectId;
+@dynamic jobId, location, projectId;
 
 + (instancetype)queryWithProjectId:(NSString *)projectId
                              jobId:(NSString *)jobId {
@@ -206,7 +206,7 @@ NSString * const kGTLRBigqueryStateFilterRunning = @"running";
 
 @implementation GTLRBigqueryQuery_JobsGet
 
-@dynamic jobId, projectId;
+@dynamic jobId, location, projectId;
 
 + (instancetype)queryWithProjectId:(NSString *)projectId
                              jobId:(NSString *)jobId {
@@ -229,7 +229,8 @@ NSString * const kGTLRBigqueryStateFilterRunning = @"running";
 
 @implementation GTLRBigqueryQuery_JobsGetQueryResults
 
-@dynamic jobId, maxResults, pageToken, projectId, startIndex, timeoutMs;
+@dynamic jobId, location, maxResults, pageToken, projectId, startIndex,
+         timeoutMs;
 
 + (instancetype)queryWithProjectId:(NSString *)projectId
                              jobId:(NSString *)jobId {
@@ -279,7 +280,8 @@ NSString * const kGTLRBigqueryStateFilterRunning = @"running";
 
 @implementation GTLRBigqueryQuery_JobsList
 
-@dynamic allUsers, maxResults, pageToken, projectId, projection, stateFilter;
+@dynamic allUsers, maxCreationTime, maxResults, minCreationTime, pageToken,
+         projectId, projection, stateFilter;
 
 + (NSDictionary<NSString *, Class> *)arrayPropertyToClassMap {
   NSDictionary<NSString *, Class> *map = @{
@@ -323,6 +325,25 @@ NSString * const kGTLRBigqueryStateFilterRunning = @"running";
   query.projectId = projectId;
   query.expectedObjectClass = [GTLRBigquery_QueryResponse class];
   query.loggingName = @"bigquery.jobs.query";
+  return query;
+}
+
+@end
+
+@implementation GTLRBigqueryQuery_ProjectsGetServiceAccount
+
+@dynamic projectId;
+
++ (instancetype)queryWithProjectId:(NSString *)projectId {
+  NSArray *pathParams = @[ @"projectId" ];
+  NSString *pathURITemplate = @"projects/{projectId}/serviceAccount";
+  GTLRBigqueryQuery_ProjectsGetServiceAccount *query =
+    [[self alloc] initWithPathURITemplate:pathURITemplate
+                               HTTPMethod:nil
+                       pathParameterNames:pathParams];
+  query.projectId = projectId;
+  query.expectedObjectClass = [GTLRBigquery_GetServiceAccountResponse class];
+  query.loggingName = @"bigquery.projects.getServiceAccount";
   return query;
 }
 

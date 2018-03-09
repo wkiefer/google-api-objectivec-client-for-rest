@@ -34,7 +34,7 @@ NSString * const kGTLRAuthScopeAnalyticsReadonly            = @"https://www.goog
     self.servicePath = @"analytics/v3/";
     self.resumableUploadPath = @"resumable/upload/";
     self.simpleUploadPath = @"upload/";
-    self.batchPath = @"batch";
+    self.batchPath = @"batch/analytics/v3";
     self.prettyPrintQueryParameterNames = @[ @"prettyPrint" ];
   }
   return self;
@@ -48,6 +48,8 @@ NSString * const kGTLRAuthScopeAnalyticsReadonly            = @"https://www.goog
     @"analytics#accountSummaries" : [GTLRAnalytics_AccountSummaries class],
     @"analytics#accountSummary" : [GTLRAnalytics_AccountSummary class],
     @"analytics#accountTicket" : [GTLRAnalytics_AccountTicket class],
+    @"analytics#accountTreeRequest" : [GTLRAnalytics_AccountTreeRequest class],
+    @"analytics#accountTreeResponse" : [GTLRAnalytics_AccountTreeResponse class],
     @"analytics#adWordsAccount" : [GTLRAnalytics_AdWordsAccount class],
     @"analytics#column" : [GTLRAnalytics_Column class],
     @"analytics#columns" : [GTLRAnalytics_Columns class],

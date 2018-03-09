@@ -14,16 +14,41 @@
 // ----------------------------------------------------------------------------
 // Constants
 
+// GTLRFirebaseRules_GetReleaseExecutableResponse.executableVersion
+NSString * const kGTLRFirebaseRules_GetReleaseExecutableResponse_ExecutableVersion_FirebaseRulesExecutableV1 = @"FIREBASE_RULES_EXECUTABLE_V1";
+NSString * const kGTLRFirebaseRules_GetReleaseExecutableResponse_ExecutableVersion_FirebaseRulesExecutableV2 = @"FIREBASE_RULES_EXECUTABLE_V2";
+NSString * const kGTLRFirebaseRules_GetReleaseExecutableResponse_ExecutableVersion_ReleaseExecutableVersionUnspecified = @"RELEASE_EXECUTABLE_VERSION_UNSPECIFIED";
+
+// GTLRFirebaseRules_GetReleaseExecutableResponse.language
+NSString * const kGTLRFirebaseRules_GetReleaseExecutableResponse_Language_EventFlowTriggers = @"EVENT_FLOW_TRIGGERS";
+NSString * const kGTLRFirebaseRules_GetReleaseExecutableResponse_Language_FirebaseRules = @"FIREBASE_RULES";
+NSString * const kGTLRFirebaseRules_GetReleaseExecutableResponse_Language_LanguageUnspecified = @"LANGUAGE_UNSPECIFIED";
+
 // GTLRFirebaseRules_Issue.severity
 NSString * const kGTLRFirebaseRules_Issue_Severity_Deprecation = @"DEPRECATION";
 NSString * const kGTLRFirebaseRules_Issue_Severity_Error       = @"ERROR";
 NSString * const kGTLRFirebaseRules_Issue_Severity_SeverityUnspecified = @"SEVERITY_UNSPECIFIED";
 NSString * const kGTLRFirebaseRules_Issue_Severity_Warning     = @"WARNING";
 
+// GTLRFirebaseRules_TestCase.expectation
+NSString * const kGTLRFirebaseRules_TestCase_Expectation_Allow = @"ALLOW";
+NSString * const kGTLRFirebaseRules_TestCase_Expectation_Deny  = @"DENY";
+NSString * const kGTLRFirebaseRules_TestCase_Expectation_ExpectationUnspecified = @"EXPECTATION_UNSPECIFIED";
+
 // GTLRFirebaseRules_TestResult.state
 NSString * const kGTLRFirebaseRules_TestResult_State_Failure   = @"FAILURE";
 NSString * const kGTLRFirebaseRules_TestResult_State_StateUnspecified = @"STATE_UNSPECIFIED";
 NSString * const kGTLRFirebaseRules_TestResult_State_Success   = @"SUCCESS";
+
+// ----------------------------------------------------------------------------
+//
+//   GTLRFirebaseRules_Arg
+//
+
+@implementation GTLRFirebaseRules_Arg
+@dynamic anyValue, exactValue;
+@end
+
 
 // ----------------------------------------------------------------------------
 //
@@ -59,6 +84,34 @@ NSString * const kGTLRFirebaseRules_TestResult_State_Success   = @"SUCCESS";
   return map;
 }
 
+@end
+
+
+// ----------------------------------------------------------------------------
+//
+//   GTLRFirebaseRules_FunctionMock
+//
+
+@implementation GTLRFirebaseRules_FunctionMock
+@dynamic args, function, result;
+
++ (NSDictionary<NSString *, Class> *)arrayPropertyToClassMap {
+  NSDictionary<NSString *, Class> *map = @{
+    @"args" : [GTLRFirebaseRules_Arg class]
+  };
+  return map;
+}
+
+@end
+
+
+// ----------------------------------------------------------------------------
+//
+//   GTLRFirebaseRules_GetReleaseExecutableResponse
+//
+
+@implementation GTLRFirebaseRules_GetReleaseExecutableResponse
+@dynamic executable, executableVersion, language, rulesetName, updateTime;
 @end
 
 
@@ -133,6 +186,16 @@ NSString * const kGTLRFirebaseRules_TestResult_State_Success   = @"SUCCESS";
 
 // ----------------------------------------------------------------------------
 //
+//   GTLRFirebaseRules_Result
+//
+
+@implementation GTLRFirebaseRules_Result
+@dynamic undefined, value;
+@end
+
+
+// ----------------------------------------------------------------------------
+//
 //   GTLRFirebaseRules_Ruleset
 //
 
@@ -171,6 +234,24 @@ NSString * const kGTLRFirebaseRules_TestResult_State_Success   = @"SUCCESS";
 
 // ----------------------------------------------------------------------------
 //
+//   GTLRFirebaseRules_TestCase
+//
+
+@implementation GTLRFirebaseRules_TestCase
+@dynamic expectation, functionMocks, request, resource;
+
++ (NSDictionary<NSString *, Class> *)arrayPropertyToClassMap {
+  NSDictionary<NSString *, Class> *map = @{
+    @"functionMocks" : [GTLRFirebaseRules_FunctionMock class]
+  };
+  return map;
+}
+
+@end
+
+
+// ----------------------------------------------------------------------------
+//
 //   GTLRFirebaseRules_TestResult
 //
 
@@ -194,7 +275,7 @@ NSString * const kGTLRFirebaseRules_TestResult_State_Success   = @"SUCCESS";
 //
 
 @implementation GTLRFirebaseRules_TestRulesetRequest
-@dynamic source;
+@dynamic source, testSuite;
 @end
 
 
@@ -212,6 +293,39 @@ NSString * const kGTLRFirebaseRules_TestResult_State_Success   = @"SUCCESS";
     @"testResults" : [GTLRFirebaseRules_TestResult class]
   };
   return map;
+}
+
+@end
+
+
+// ----------------------------------------------------------------------------
+//
+//   GTLRFirebaseRules_TestSuite
+//
+
+@implementation GTLRFirebaseRules_TestSuite
+@dynamic testCases;
+
++ (NSDictionary<NSString *, Class> *)arrayPropertyToClassMap {
+  NSDictionary<NSString *, Class> *map = @{
+    @"testCases" : [GTLRFirebaseRules_TestCase class]
+  };
+  return map;
+}
+
+@end
+
+
+// ----------------------------------------------------------------------------
+//
+//   GTLRFirebaseRules_UpdateReleaseRequest
+//
+
+@implementation GTLRFirebaseRules_UpdateReleaseRequest
+@dynamic releaseProperty, updateMask;
+
++ (NSDictionary<NSString *, NSString *> *)propertyToJSONKeyMap {
+  return @{ @"releaseProperty" : @"release" };
 }
 
 @end
