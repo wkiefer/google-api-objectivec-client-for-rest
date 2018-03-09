@@ -7,4 +7,5 @@
 	url = https://github.com/openid/AppAuth-iOS.git
 [submodule "Deps/GTMAppAuth"]
 	path = Deps/GTMAppAuth
-	url = https://github.com/google/GTMAppAuth.git
+	url = https://github.com/alanjrogers/GTMAppAuth.git
+
