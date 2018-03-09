@@ -1,6 +1,6 @@
 [submodule "Deps/gtm-session-fetcher"]
 	path = Deps/gtm-session-fetcher
-	url = https://github.com/google/gtm-session-fetcher.git
+	url = https://github.com/wkiefer/gtm-session-fetcher.git
 	branch = master
 [submodule "Deps/AppAuth"]
 	path = Deps/AppAuth
